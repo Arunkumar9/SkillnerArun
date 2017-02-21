@@ -1,0 +1,1541 @@
+
+.x-tab button {
+	height: 16px !important;
+	line-height: 16px !important;
+}
+
+.x-tab button .x-tab-icon {
+	top: auto !important;
+}
+
+body {
+	background-image: url(../../../images/ajax-loader.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+/**
+ * Icons
+ */
+.summary {
+	background-image: url(../../../images/details.gif) !important;
+}
+
+   /*
+	*	To attach iconCls for attachments button in new topic window.
+	*/
+
+
+
+.reading,.quiz {
+	background-image: url(../../../images/article.gif) !important;
+}
+
+.post-go {
+	background-image: url(../../../images/post_go.gif) !important;
+}
+
+.tab-new {
+	background-image: url(../../../images/tab_new.gif) !important;
+}
+
+.feed-add {
+	background-image: url(../../../images/rss_add.gif) !important;
+}
+
+.feed-remove {
+	background-image: url(../../../images/rss_delete.gif) !important;
+}
+
+.feed-load {
+	background-image: url(../../../images/rss_load.gif) !important;
+}
+
+.details {
+	background-image: url(../../../images/details.gif) !important;
+}
+
+.open-all {
+	background-image: url(../../../images/tabs.gif) !important;
+}
+
+/* .icon-next-question { */
+/* 	background: url(/resources/images/sprite_light.png) -46px -368px !important; */
+/* } */
+/* .next-img-over { */
+
+/* 	background: url(/resources/images/sprite_light.png) -44px -388px !important; */
+/* } */
+
+/* .x-ie8 .next-img-over { */
+
+/* 	background: url(/resources/images/sprite_light.png) -43px -387px !important; */
+/* } */
+
+
+/* .icon-next-question:hover { */
+/* 		background: url(/resources/images/sprite_light.png) -46px -390px !important; */
+/* } */
+
+/* .icon-prev-question { */
+/* 	background: url(/resources/images/sprite_light.png) -26px -368px !important; */
+/* } */
+
+/* .prev-img-over { */
+
+/* 	background: url(/resources/images/sprite_light.png) -24px -388px !important; */
+/* } */
+
+/* .x-ie8 .prev-img-over { */
+
+/* 	background: url(/resources/images/sprite_light.png) -23px -387px !important; */
+/* } */
+
+/* .x-over .icon-prev-question{ */
+/* 	background: url(/resources/images/sprite_light.png) -26px -390px !important; */
+/* } */
+
+/* .icon-summary { */
+/* 	background: url(/resources/images/sprite_light.png) -53px -4px !important; */
+/* } */
+
+/* .x-over .icon-summary { */
+/* 	background: url(/resources/images/sprite_light.png) -53px -31px !important; */
+/* } */
+
+
+/* .icon-figures { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -78px -4px !important; */
+/* 	width: 26px !important; */
+/* 	height: 18px !important; */
+/* } */
+
+/*.x-btn-default-toolbar-small-disabled .icon-figures:hover{*/
+/*	*/
+/*	background: url(/resources/images/sprite_light.png) -78px -5px !important;*/
+/*}*/
+
+/* .x-over .icon-figures { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -79px -29px !important; */
+/* } */
+
+/* .icon-video { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -4px -5px !important; */
+/* 	width: 20px !important; */
+/* 	height: 17px !important; */
+/* } */
+
+/* .x-btn-default-toolbar-small-disabled .icon-video:hover{ */
+	
+/* 	background: url(/resources/images/sprite_light.png) -4px -5px !important; */
+/* } */
+
+/* .x-over .icon-video{ */
+	
+/* 	background: url(/resources/images/sprite_light.png) -4px -31px !important; */
+/* } */
+
+.film-start {
+	background-image: url(../images/control_play_blue.png) !important;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.seen-chapter .x-grid-cell-inner{
+	display: none !important;
+}
+
+.now-seen.seen-chapter .x-grid-cell-inner{
+	margin-top: -4px;
+	display: block !important;
+}
+
+.icon-size {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.film-open {
+	background-image: url(../../../images/folder-open-film.png) !important;
+}
+
+/* .result-ok { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -157px -314px !important; */
+	margin-left: 11px;
+/* 	width: 16.5px; */
+/* 	height: 17px; */
+/* 	margin-top: 4px !important; */
+/* 	margin-left: 1px; */
+/* } */
+
+/* .result-error { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -139px -314px !important; */
+	margin-left: 10px;
+/* 	width: 17.5px; */
+/* 	height: 17px; */
+/* 	margin-top: 4px !important; */
+/* } */
+
+.quiz-summary {
+	
+	text-align:left;
+	font-size:12px;
+	height:100%;
+	overflow:auto !important;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.row-seen {
+	background-color: #ccd8e7 !important;
+}
+
+.feed {
+	width: 16px;
+	height: 16px;
+	background-image: url(../../../images/rss.gif) !important;
+}
+
+/**
+         * Other styles
+         */
+.feed-picker-url {
+	float: left;
+	width: 425px;
+}
+
+.feed-picker-title { /*    float: left;*/
+	color: #777;
+	font-size: 10px;
+}
+
+.feed-list {
+	padding: 0 3px 0 3px;
+}
+
+.feed-list-item,
+.x-grid-cell .film,
+.x-grid-cell .film-start
+{
+    margin-top: 3px;
+    padding-left: 20px;
+    font-size: 11px;
+    line-height: 20px;
+    cursor: pointer;
+    background: url(../../../images/film.png) no-repeat 0 2px;
+    border: 1px solid #fff;
+}
+.feed-list .x-item-selected {
+	font-weight: bold;
+	color: #15428B;
+	background-color: #DFE8F6;
+	border: 1px dotted #A3BAE9;
+}
+
+.feed-list-item-hover {
+	background-color: #eee;
+}
+
+.topic {
+	padding: 2px 0 0 20px;
+	background: transparent url(images/post.gif) no-repeat;
+}
+
+.topic b {
+	font-family: tahoma, verdana;
+	display: block;
+	color: #333;
+}
+
+.author: {
+	color: #333
+}
+
+.post-date {
+	font-weight: bold;
+	color: #333;
+}
+
+.feed-grid .x-grid-rowbody {
+	margin: 5px 20px 10px 25px !important;
+	color: #555;
+	font-size: 11px;
+}
+
+/* Preview classes */
+.preview .x-panel-body {
+	background: #fff;
+	color: #222;
+	font: normal 12px tahoma, verdana, arial, sans-serif;
+}
+
+.preview .x-panel-body p {
+	line-height: 18px;
+	margin: 8px 0;
+}
+
+.preview .x-panel-body ul {
+	margin-left: 18px;
+}
+
+.preview .x-panel-body ul li {
+	display: list-item;
+	list-style-image: none !important;
+	list-style-position: outside !important;
+	list-style-type: disc !important;
+	margin-left: 18px;
+}
+
+.preview .x-panel-body pre,#preview .x-panel-body code {
+	background: #f1f1f1;
+	display: block;
+}
+
+.preview .x-panel-body h4.post-author {
+	font-weight: normal;
+	color: #555;
+	font-size: 11px;
+}
+.now-playing {
+	margin-left: 10px !important;
+	margin-top: 6px !important;						
+}
+
+.chapter-tb-text {
+	
+	font-weight: bold !important;
+	font-size: 11px !important;
+	overflow: hidden;
+	margin: 1px !important;
+	padding-left: 5px;
+	margin-top: 7px !important;
+	font-family: tahoma,arial,verdana,sans-serif;
+	
+}
+
+.preview .x-panel-body span.post-date {
+	font-weight: normal;
+	color: #555;
+	float: right;
+	font-size: 11px;
+}
+
+.preview .x-panel-body div.post-data {
+	background: #f1f2f4;
+	padding: 5px;
+	border-bottom: 1px solid #dadadb;
+}
+
+.preview .x-panel-body div.post-body {
+	padding: 10px;
+}
+
+.x-tab-bar-body {
+	border-width: 1px 1px 0 1px !important;
+}
+
+.fw-rw-mv button {
+	width : 26px !important;
+}
+
+/* .previouslesson { */
+/* 	background: url(../../../resources/images/sprite_light.png) -136px -64px !important; */
+/* } */
+
+/* .x-over .previouslesson { */
+/* 	background: url(../../../resources/images/sprite_light.png) -136px -90px !important; */
+/* } */
+
+/* .previouschapter { */
+/* 	background: url(../../../resources/images/sprite_light.png)  -160px -64px !important; */
+/* } */
+
+/* .x-over .previouschapter { */
+/* 	background: url(../../../resources/images/sprite_light.png)  -160px -90px !important; */
+/* } */
+
+/* .rewindmovie { */
+/* 	background: url(../../../resources/images/sprite_light.png) -183px -64px !important; */
+/* 	width: 30px !important; */
+/* } */
+
+/* .x-over .rewindmovie { */
+/* 	background: url(../../../resources/images/sprite_light.png) -183px -90px !important; */
+/* } */
+
+/* .forwardmovie { */
+/* 	background: url(../../../resources/images/sprite_light.png) -209px -64px !important; */
+/* 	width: 25px !important; */
+/* } */
+
+/* .x-over .forwardmovie { */
+/* 	background: url(../../../resources/images/sprite_light.png) -209px -90px !important; */
+/* } */
+
+/* .nextchapter { */
+/* 	background: url(../../../resources/images/sprite_light.png) -240px -64px !important; */
+/* } */
+
+/* .x-over .nextchapter { */
+/* 	background: url(../../../resources/images/sprite_light.png) -240px -90px !important; */
+/* } */
+
+/* .nextlesson { */
+/* 	background: url(../../../resources/images/sprite_light.png) -265px -64px !important; */
+/* } */
+
+/* .x-over .nextlesson { */
+/* 	background: url(../../../resources/images/sprite_light.png) -265px -90px !important; */
+/* } */
+
+.downloadfile-icon {
+	background-image: url(../../../images/arrow_down.png) !important;
+}
+
+.deleteitems-icon {
+	background-image: url(../../../images/cross.png) !important;
+}
+
+#images-view .thumb-wrap span {
+	display: block;
+	overflow: hidden;
+	text-align: center;
+	width: 128px;
+}
+
+#images-view .thumb img {
+	height: 128px;
+	width: 128px;
+}
+
+.upload-popup-css{
+	overflow:hidden !important;
+}
+
+
+.icon-cross {
+	color: blue !important;
+}
+
+.x-newtopic-file-cross {
+cursor: pointer;
+position: relative;
+}
+
+
+.upload-popup-css .x-grid .x-grid-view {
+width: 100% !important;
+height:100% !important;
+overflow : auto !important;
+}
+
+.x-btn-css{
+	background: url(/images/taskbutton.gif) repeat-x 0 -140px;
+	color: white;
+	z-index: 1000;
+	text-align: center;
+	background-color : black;
+	}
+.x-btn-css-toggle{
+	background-color: transparent;
+	vertical-align: middle;
+	text-align: center;
+	z-index: 1000;
+	overflow: visible;
+}
+.x-btn-css .x-btn-inner {
+	color: white !important;
+	background-color : black !important;
+}
+
+#msg-div {
+	
+    position:absolute;
+    right:0%;
+    top:10px;
+    width:300px;
+    z-index:20000;
+    
+}
+
+#msg-div .msg {
+	
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    background: #F6F6F6;
+    border: 2px solid #ccc;
+    margin-top: 2px;
+    padding: 10px 15px;
+    color: #555;
+}
+
+#msg-div .msg h3 {
+	
+    margin: 0 0 8px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#msg-div .msg p {
+	
+    margin: 0;
+}
+
+.ch{
+	
+	display : none;
+}
+/* .x-grid-center-icon-make-discussion{ */
+	
+/* 	background: url(../../../resources/images/sprite_light.png) -56px -63px !important; */
+/* 	width: 19px !important; */
+/* 	display: visible; */
+/* 	margin: 0 auto; */
+/* 	cursor: hand; */
+/* } */
+
+/* .x-grid-center-icon-make-discussion:hover { */
+	
+/* 	background: url(../../../resources/images/sprite_light.png) -56px -89px !important; */
+/* 	width: 19px !important; */
+/* 	display: visible; */
+/* 	margin: 0 auto; */
+/* 	cursor: hand; */
+/* } */
+
+/* .x-grid-center-icon-view-discussion{ */
+	
+/* 	background: url(../../../resources/images/sprite_light.png) -29px -63px !important; */
+/* 	width: 19px !important; */
+/*     display:visible;  */
+/*     margin:0 auto;  */
+/*     cursor:hand; */
+/* } */
+/* .x-grid-center-icon-view-discussion:hover { */
+	
+/* 	background: url(../../../resources/images/sprite_light.png) -29px -89px !important; */
+/* 	width: 19px !important; */
+/*     display:visible;  */
+/*     margin:0 auto;  */
+/*     cursor:hand; */
+/* } */
+/* .x-grid-with-row-lines .x-grid-cell-inner .deletebutton{ */
+	
+/* 	background: url(../../../resources/images/sprite_light.png) -5px -63px !important; */
+/* 	padding-right: 1px !important; */
+/* 	width: 20px !important; */
+/* 	background-repeat: no-repeat; */
+/* } */
+
+/* .x-grid-with-row-lines .x-grid-cell-inner .deletebutton:hover { */
+	
+/* 	background: url(../../../resources/images/sprite_light.png) -4px -89px !important; */
+/* 	padding-right: 1px !important; */
+/* 	width: 20px !important; */
+/* 	background-repeat: no-repeat; */
+/* } */
+
+.x-grid-with-row-lines .x-grid-cell-inner .makediscussion {
+	
+background-image :url(/images/makediscussion.jpg) !important;
+padding-right: 1px !important;
+width: 16px !important;
+background-repeat: no-repeat;
+
+}
+.x-grid-with-row-lines .x-grid-cell-inner .x-item-disabled {
+
+opacity:0.5;
+filter: alpha(opacity = 50) !important; 
+zoom:1;
+}
+.training files {
+style:float:right;
+white-space:nowrap;
+}
+
+.x-combo-list-group	{
+	font : bold 12px tahoma,arial,helvetica,sans-serif;
+	padding : 2px;
+	border : 1px solid #fff;
+	white-space : nowrap;
+	overflow : hidden;
+	text-overflow : ellipsis;
+
+}
+#flashbutton-body {
+	display: none !important;
+	height : 0px !important;
+}
+
+.fully-completed{
+	
+	background-image: url(/images/bulb16.png) ! important;
+	width: 20px !important;
+	height: 20px !important;
+	margin-left: 2px;
+	margin-top: 2px;
+}
+
+/* .x-wtc-link-btn.fully-completed,  .x-wtc-link-btn-over .x-wtc-link-btn.fully-completed{ */
+/* 	background-color: transperant !important; */
+/* }    */
+.partially-completed {
+background-image: url(/images/cog.png) ! important;
+width: 16px;
+height: 16px;
+}
+.image{
+	
+background-image: url(/images/yellow.jpg) ! important;
+width: 16px;
+height: 16px;
+
+}
+
+.x-action-col-icon{
+	margin-right : 5px !important;
+}
+
+.badge-task {
+	
+	background-image: url(/images/badge.jpg) ! important;
+	background-repeat: no-repeat;
+	width: 18px;
+	height: 18px;
+	position: relative !important;
+	left: -6;
+	top: -7px;
+	
+}
+
+.instructions-win{
+	overflow : auto;
+	background-color:white !important;
+}
+
+.course-template {
+	
+	padding: 5px 0px 0px 0px !important;
+}
+
+.x-tab-icon.status04 , .x-tab-icon.status03, .x-tab-icon.status05 , .x-tab-icon.status099{
+	
+	display :inline !important;
+	
+}
+.hide-vscroll-bar{
+	
+	display:none !important;
+	
+}
+/* .seek-icon-cls { */
+/* 	background-color : green !important; */
+/* 	background: url(/resources/images/sprite_light.png) -80px -63px !important; */
+/* 	width: 18px !important; */
+/* 	height: 18px !important; */
+/* } */
+
+/* .seek-icon-cls:hover { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -82px -90px !important; */
+/* 	width: 18px !important; */
+/* 	height: 18px !important; */
+/* 	border-color: #9d9d9d; */
+/* 	background-color: #f3f3f3 !important; */
+/* 	-webkit-border-radius: 3px; */
+/* 	border-style: solid; */
+/* 	border-width: 1px; */
+/* } */
+
+/* .seek-icon-cls-onrow-select { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -82px -90px !important; */
+/* 	width: 18px !important; */
+/* 	height: 18px !important; */
+/* 	border-color: #9d9d9d; */
+/* 	background-color: #f3f3f3 !important; */
+/* 	-webkit-border-radius: 3px; */
+/* 	border-style: solid; */
+/* 	border-width: 1px; */
+/* } */
+
+.x-action-col-cell .x-grid-cell-inner {
+	
+	padding: 0px !important;
+}
+
+/* .x-tbar-page-first { */
+
+/* 	background: url(/resources/images/sprite_light.png) -5px -368px !important; */
+/* } */
+
+/* .x-over .x-tbar-page-first { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -5px -390px !important; */
+/* } */
+
+/* .x-item-disabled .x-tbar-page-first{ */
+
+/* 	background: url(/resources/images/sprite_light.png) -5px -368px !important; */
+/* } */
+
+/* .x-tbar-page-prev { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -25px -368px !important; */
+/* } */
+
+/* .x-over .x-tbar-page-prev { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -25px -390px !important; */
+/* } */
+
+/* .x-item-disabled .x-tbar-page-prev{ */
+
+/* 	background: url(/resources/images/sprite_light.png) -28px -368px !important; */
+/* } */
+
+/* .x-tbar-page-next { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -46px -368px !important; */
+/* } */
+
+/* .x-over .x-tbar-page-next { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -46px -390px !important; */
+/* } */
+
+/* .x-item-disabled .x-tbar-page-next{ */
+
+/* 	background: url(/resources/images/sprite_light.png) -46px -368px !important; */
+/* } */
+
+/* .x-tbar-page-last { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -68px -368px !important; */
+/* } */
+
+/* .x-over .x-tbar-page-last { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -68px -390px !important; */
+/* } */
+
+/* .x-item-disabled .x-tbar-page-last{ */
+
+/* 	background: url(/resources/images/sprite_light.png) -69px -368px !important; */
+/* } */
+
+/* .x-tbar-loading{ */
+	
+/* 	background: url(/resources/images/sprite_light.png) -91px -368px !important; */
+/* } */
+
+/* .x-over .x-tbar-loading { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -91px -389px !important; */
+/* } */
+
+.x-toolbar-text.x-box-item.x-toolbar-item.x-toolbar-text-default{
+
+	font-weight: bold !important;
+	 
+	/*font-family: Arial !important;*/
+}
+.x-ie8 .x-toolbar-text.x-box-item.x-toolbar-item.x-toolbar-text-default{
+	margin-top : -1px !important; 
+}
+/* .icon-close { */
+
+/* 	background: url(/resources/images/sprite_light.png) -30px -5px !important; */
+/* 	width:25px !important; */
+/* 	height:25px !important; */
+/* } */
+
+/* .x-over .icon-close{ */
+
+/* 	background: url(/resources/images/sprite_light.png) -30px -31px !important; */
+/* } */
+.x-panel-body-default-docked-bottom .x-box-inner .x-form-item-body .x-form-trigger-wrap .x-form-trigger-input-cell .x-form-field.x-form-text{
+	border: none !important;
+	text-align: center !important;
+	background: #d6d6d6 !important;
+	font-weight : bold !important;
+}
+
+.hide-expand-collapse{
+	
+	background-image: none !important;
+}
+
+.group-header-icon {
+	
+	position: absolute;
+	margin-top: -2px;
+	width: 18px;
+	height: 25px;
+	left: 3px;
+}
+
+/* .quizOpenCls { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -67px -290px !important; */
+/* 	background-repeat: no-repeat !important; */
+	
+/* } */
+
+/* .quizClosedCls { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -86px -290px !important; */
+/* 	background-repeat: no-repeat !important; */
+/* 	font-weight : bold !important; */
+/* } */
+
+/* .lesson-open-expanded { */
+	
+/* 	background: url(/resources/images/sprite_light.png) -13px -289px !important; */
+/* 	background-repeat: no-repeat !important; */
+/* } */
+
+/* .lesson-open-collapsed { */
+	
+/* 	background: url(/resources/images/sprite_light.png) 4px -289px !important; */
+/* 	background-repeat: no-repeat !important; */
+/* } */
+
+/* .lesson-close-expanded { */
+
+/* 	background: url(/resources/images/sprite_light.png) -45px -289px !important; */
+/* 	background-repeat: no-repeat !important; */
+/* } */
+
+
+/* .lesson-close-collapsed { */
+
+/* 	background: url(/resources/images/sprite_light.png) -31px -289px !important; */
+/* 	background-repeat: no-repeat !important; */
+/* 	width:14px !important ; */
+/* } */
+/* .curr { */
+	
+/* 	color : #595959 !important; */
+/* } */
+
+/* .total { */
+	
+/* 	color : #868686 !important; */
+/* } */
+
+.sum {
+	color : red !important;
+	font-weight : bold;
+}
+
+.x-boxselect ul.x-boxselect-list {
+	
+	margin-top: 0px !important;
+}
+
+.x-group-badge-default{
+	
+	float: right;
+/*	width: 20% !important;*/
+	min-width: 40px !important;
+	margin-right: 2px !important;
+	height: 22px !important;
+}
+
+.x-tab-close-btn {
+	
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	width: 11px;
+	height: 11px;
+	font-size: 0;
+	line-height: 0;
+	text-indent: -999px;
+	background: no-repeat;
+	background-image: url('../../../ext/resources/themes/images/gray/tab/tab-default-close.gif') !important;
+	filter: alpha(opacity=60);
+	opacity: .6;
+	
+}
+.hidequiz-cls {
+	
+	display : none !important;
+}
+
+.questionlabel{
+	top: 5px !important;
+}
+
+/* .seen-font { */
+/* 	color : #868686 !important; */
+/* } */
+
+/* .notseen-font{ */
+/* 	color : #595959 !important; */
+/* } */
+
+.currentlyselected  { 
+/*      background-color: lightgrey !important;  */
+    font-weight : bold !important;
+}
+
+.messagewindowCls .x-window-header-text-default {
+	
+		 font-size:16px !important;
+}
+
+.mceContentBody {
+  background-color: red !important;
+  color: #000;
+  text-align: left;
+}
+
+.data-grid-cls .x-grid-body{
+	background: #d6d6d6 !important ;  
+	color: #595959 !important ; 
+}
+
+.data-grid-cls .x-grid-row .x-grid-cell { 
+     background-color: #c6c6c6 !important ;   
+} 
+ 
+.data-grid-cls .x-grid-row-alt .x-grid-cell { 
+     background-color: #cbcbcb !important ;  
+}
+
+.x-toolbar-separator-horizontal{
+	border: none !important;
+}
+
+.x-ie8 .x-tab-default-icon-text-left .x-tab-inner {
+
+	margin-left: -5px !important;
+	float: left !important ;
+}
+
+/* this css used for questions tab text adjest after the badgetext is hide */
+.x-tab-default-icon-text-left .x-tab-inner {
+	padding-left: 0px !important;
+	float: left !important ;
+}
+
+.x-ie .taskStatus .x-btn-default-small .x-btn-inner {	
+	display: none !important ;
+}
+
+.message-details-toolbar {
+	
+	background-image: none !important;
+}
+
+.message-details-toolbar .x-btn-default-toolbar-small-mc{
+	
+	background-color: #e1e1e1 !important ;
+}
+
+.message-details-toolbar .x-btn-default-toolbar-small {
+	
+	border-color: #e1e1e1 !important ;
+	background-image: none;
+	background-color: #e1e1e1 !important ;
+}
+
+/* .message-details-toolbar .x-btn-default-toolbar-small-over { */
+	
+/* 	border-color: #cdcdcd !important; */
+/* 	background-image: none; */
+/* 	background-color: #f5f5f5; */
+/* 	background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#f5f5f5),color-stop(48%,#efefef),color-stop(52%,#ddd),color-stop(100%,#e2e2e2)); */
+/* 	background-image: -webkit-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: -moz-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: -o-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* } */
+
+/* .message-details-toolbar .x-btn-default-toolbar-small-mc-over { */
+	
+/* 	border-color: #cdcdcd !important; */
+/* 	background-image: none; */
+/* 	background-color: #f5f5f5; */
+/* 	background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#f5f5f5),color-stop(48%,#efefef),color-stop(52%,#ddd),color-stop(100%,#e2e2e2)); */
+/* 	background-image: -webkit-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: -moz-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: -o-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* } */
+
+.rowcls .x-grid-body {
+	border-bottom: 0px !important;
+}
+
+.datalist-toolbar-cls{
+	border-width: 0px !important;
+	padding: 0px !important;
+	background-image: none !important;
+}
+
+.counttext-cls{
+	background-color: lightgrey;
+	padding: 7px 0px 0px 6px;
+	color: black !important;
+	height: 29px;
+	top: -4px !important;
+	margin: 2px !important;
+}
+
+/**
+  * Remove the group header bottom border width,grid view top border 
+  **/
+.x-grid-group-hd{
+	border-width: 1px 0px 1px 0px !important;
+}
+.x-grid-with-row-lines .x-grid-table {
+	border-top: 0px !important;
+}
+
+/**
+  * Comments grid border settings
+  **/
+.comments-grid-cls{
+	border-style: solid !important;
+	border-width: 5px !important;
+	border-bottom-width: 0px !important;
+	border-top-width: 0px !important;
+}
+
+/**
+  * cell editor text field adjustments 
+  **/
+.comments-grid-cls .x-grid-editor .x-form-text {
+	height: 28px !important ;
+	margin-top: 5px !important;
+	background: none !important;
+}
+.comments-grid-cls  .x-grid-cell-inner{
+	padding: 6px 6px 4px 6px;
+}
+
+/**
+  * Make the text field background image none.
+  **/
+.x-form-text {
+	background-image:none !important ;
+	box-shadow: none !important;
+}
+
+/**
+  *Remove the suppurate line b/w the toolbar,window body in message details window.
+  **/
+.messagedetails-cls .x-panel-body-default {
+	border-top-color: #c1c1c1 !important;
+}
+
+/**
+  *Remove the suppurate line b/w the toolbar,window body in datalist.
+  **/
+.rowcls .x-grid-header-ct {
+	border-top-color: #c1c1c1 !important;
+}
+
+/**
+  * Make datalist Top toolbar button icons background white 
+  **/
+.datalist-top-toolbar .x-btn-default-toolbar-small {
+	
+	border-color: #e1e1e1 !important ;
+	background-color: #e1e1e1 !important ;
+}
+/**
+  * For IE
+  **/
+.datalist-top-toolbar .x-btn-default-toolbar-small-mc{
+	
+	background-color: #e1e1e1 !important ;
+}
+
+/**
+  *datalist Top toolbar button over cls
+  **/
+/* .datalist-top-toolbar .x-btn-default-toolbar-small-over { */
+	
+/* 	border-color: #cdcdcd !important; */
+/* 	background-image: none; */
+/* 	background-color: #f5f5f5; */
+/* 	background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#f5f5f5),color-stop(48%,#efefef),color-stop(52%,#ddd),color-stop(100%,#e2e2e2)); */
+/* 	background-image: -webkit-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: -moz-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: -o-linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* 	background-image: linear-gradient(top,#f5f5f5,#efefef 48%,#ddd 52%,#e2e2e2); */
+/* } */
+
+/**
+  *BRS6.5.7 the selected tab there is a horizontal line across the entire width in the same color #e2e2e2.
+  **/
+.tabview-cls .x-tab-bar-horizontal .x-tab-bar-strip {
+	background-color: #e2e2e2 !important;
+}
+.tabview-cls .x-panel-body-default{
+	border-top: 0px !important;
+}
+
+/**
+  * The unselected tab background color in messaging window 
+  **/
+.tabview-cls .x-tab-default-top{
+	
+	background-color: #939393 !important;
+	background-image: none !important ;
+	border-bottom: 1px solid #939393 !important;
+	box-shadow :none !important;
+	/* Netscape */
+	-moz-opacity: 0.5;
+	
+	/* Good browsers */
+	opacity:0.5 ;
+
+}
+/**
+  * For IE
+  **/
+.tabview-cls .x-tab-default-top-mc{
+	background-color: #939393 !important;
+	background-image: none !important ;
+	/* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+    /* IE 5-7 */
+  filter: alpha(opacity=50);.x-tab-default-top-tc{
+ background-color:red !important;
+ }
+
+.x-tab-default-top-ml{
+	 background-color:red !important;
+}
+.x-tab-default-top-mr{
+/*   border-width:1px !important;  */
+/*   border-color:red !important; */
+  background-color:red !important;
+}
+}
+
+/**
+  * The selected tab background color in messaging window 
+  **/
+.tabview-cls .x-tab-default-top-active{
+	background-color: #e2e2e2 !important;
+	border-bottom: 1px solid #e2e2e2 !important;
+	/* Netscape */
+	-moz-opacity: 1;
+	
+	/* Good browsers */
+	opacity: 1;
+	
+}
+/**
+  * For IE
+  **/
+.tabview-cls .x-tab-default-top-active .x-frame-mc{
+	background-color: #e2e2e2 !important;
+	/* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    /* IE 5-7 */
+  filter: alpha(opacity=100);
+}
+
+/**
+  * Tab text color in messaging window 
+  **/
+.tabview-cls .x-tab-default .x-tab-inner {
+	color: #595959 !important;
+}
+
+/**
+  * Remove the player window center region border
+  **/
+.center-region-cls .x-panel-body-default{
+	border-width: 0px !important;
+}
+
+/**
+  *the question tab body border top become 0 here
+  * */
+.quiz-panel-cls .x-panel-body-default{
+	border-top-width: 0px !important;
+	overflow:hidden !important;
+/* 	margin-left: -4px !important; */
+}
+
+/**
+  * remove the space b/w the group header and Chepters rows
+  **/
+.chapterslist-grid-cls .x-grid-table {
+	
+	margin-top: -3px !important;
+}
+
+/**
+  * The search text color in  datalist,details window is #595959
+  **/
+.datalist-top-toolbar .x-form-text{
+	color: #595959 !important;
+}
+.message-details-toolbar .x-form-text{
+	color: #595959 !important;
+}
+
+/**
+  *BRS 6.5.8 The vertical separator line on the left side, separating the selection checkboxes and the rows of 
+  *the threads segment is of the color: #c6c6c6
+  **/
+.rowcls .x-grid-cell-special{
+	border-right-color: #c6c6c6 !important;
+}
+
+.quiz-panel-cls .x-panel-default{
+ 	padding: 0px 0px 0px 0px !important;
+}
+
+.quiz-panel-cls .quiz-summary {
+	margin-left: 10px !important;
+}
+ 
+ /**
+  * panel header box shadow is removed 
+  **/
+.x-panel-header-default-top{
+	-webkit-box-shadow:none !important;
+	-moz-box-shadow: none !important;
+	box-shadow:none !important;
+}
+
+/** 
+  * Quiz panel bottom toolbar top border should be container background 
+  **/
+.quiz-panel-cls .x-toolbar-default{
+	
+	border-top-width:2px !important;
+}
+
+/**
+  * Show the separator line for the Datagrid
+  **/
+.summary-window-cls .x-window-body-default {
+	border-color: #d6d6d6 !important;
+	border-width: 6px !important;
+}
+
+.x-btn-default-toolbar-small{
+	background-image: none !important;
+}
+
+.summary-window-cls .x-grid-header-ct{
+	border-bottom-style: none !important;
+}
+
+.tabview-cls .x-docked-bottom {
+	left: 3px !important;
+}
+
+.task-status-column{
+	padding: 2px 0px 2px 10px !important;
+	text-align:left !important;
+
+}
+
+/**
+  * the search field trigger icons border is none.
+  **/
+.x-form-trigger{
+	border-style: none !important;
+}
+
+.datalist-top-toolbar .x-btn-default-toolbar-small-ml,
+.message-details-toolbar .x-btn-default-toolbar-small-ml,
+.datalist-top-toolbar .x-btn-default-toolbar-small-mr,
+.message-details-toolbar .x-btn-default-toolbar-small-mr,
+.datalist-top-toolbar .x-btn-default-toolbar-small-bc,
+.message-details-toolbar .x-btn-default-toolbar-small-bc,
+.datalist-top-toolbar .x-btn-default-toolbar-small-tc,
+.message-details-toolbar .x-btn-default-toolbar-small-tc,
+.datalist-top-toolbar .x-btn-default-toolbar-small-tr,
+.message-details-toolbar .x-btn-default-toolbar-small-tr,
+.datalist-top-toolbar .x-btn-default-toolbar-small-tl,
+.message-details-toolbar .x-btn-default-toolbar-small-tl,
+.datalist-top-toolbar .x-btn-default-toolbar-small-bl,
+.message-details-toolbar .x-btn-default-toolbar-small-bl,
+.datalist-top-toolbar .x-btn-default-toolbar-small-br,
+.message-details-toolbar .x-btn-default-toolbar-small-br{
+	
+	background-image: none !important;
+}
+
+.comments-grid-cls .x-column-header-trigger {
+	display : none !important;
+}
+
+.hide-expand-collapse.quizlocked{
+	padding: 0px !important;
+}
+
+.your-score{
+/*	width: 36%;*/
+	position: relative;
+	float: left;
+	padding-left: 5px;
+}
+
+.required-score{
+/*	width: 42%;*/
+	position: relative;
+	float: left;
+	padding-left:20px;
+}
+
+.quiz-result{
+	padding-left:10px;
+	position: relative;
+	float: left;
+	
+}
+#quiz-reset{
+	padding:15px;
+	float:right;
+
+
+}
+
+.summary-answer-results {
+width: 95%;
+overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis !important;
+padding:0px 0px 3px 3px;
+}
+
+.coursesummary-form-cls,.coursesummary-form-cls .x-panel-body-default {
+	
+	height : 100% !important;
+}
+
+.coursesummary-form-cls .x-panel-body-default {
+	
+	margin: 10px !important;
+}
+
+/**
+ *  This css is not include in scss file.
+ **/
+.zoomout-btn .x-btn-inner {
+	line-height: 30px !important;
+	font-size: 20px;
+	margin: -16px 0px !important;
+}
+
+.zoomin-btn .x-btn-inner {
+	
+	line-height: 30px !important;
+	font-size: 20px;
+	margin: -12px 0px !important;
+}
+
+.quiz-name{
+	cursor: pointer !important;
+}
+.x-grid-row-editor{
+	z-index: 3;
+}
+
+.message-comment-group{
+	float:right;
+	height:32px;
+	width:110px;
+}
+
+.message-comment-group .x-btn{
+	background: none !important;
+	height:30px !important;
+}
+
+.x-playercontrols{
+	left:50%;
+	margin-left: 95px ;
+
+}
+
+ .quiz-question .x-form-cb-label{
+
+	display: table !important;
+	margin-left: 15px !important;
+	margin-top: -15px !important;
+	margin-right: 10px !important;
+}
+
+#buttonscontainer{
+top:16%;
+left:50%;
+margin-left:-10px;
+position:absolute;
+border-color:#FFFFFF;
+borderStyle:solid;
+ borderWidth:1px;
+ opacity:0.9;
+ background-color:#FFFFFF;
+}
+
+#buttonscontainer.quiz-pnl-expanded{
+	left:35%;
+}
+
+#buttonscontainer.chapters-pnl-expanded{
+	margin-left:-130px !important;
+}
+
+#buttonscontainer.comments-pnl-expanded{
+	margin-top:100px !important;
+}
+
+
+.hmr-bar:hover{
+	border:1px solid #444444;
+}
+
+.hmr-bar{
+				cursor:pointer;
+			}
+
+			.clickable{
+	cursor:pointer;
+	padding-left: 7px;
+	width: 50%;
+}
+.reportstreestylecls .x-tree-node-text{
+cursor: pointer !important;	
+}
+.x-tip-body-default {
+	white-space: nowrap !important;
+	height: auto !important;
+}
+.x-ie9 .zoomingContainer .x-btn-default-small {
+background-image: none;
+}
+
+.collapse-qtip{
+	margin: 0px 20px !important;
+}
+
+.resumeAlertStyles .vscrollerbase, .hscrollerbase{
+	background:none !important;
+ 	background-color: none !important; 
+	width: 0px !important;
+	height: 0px !important;
+}
+.resumeAlertStyles .vscrollerbar, .hscrollerbar {
+	background:none !important;
+	background-color: none !important;
+	width: 0px !important;
+	height: 0px !important;
+}
+.resumeAlertStyles .hscrollerbasebeg {
+	width: 0px !important;
+}
+.resumeAlertStyles .vscrollerbasebeg {
+	width: 0px !important;
+}
+.resumeAlertStyles .vscrollerbarmid, .hscrollerbarmid {
+	background-image :none !important ;
+}
+.resumeAlertStyles .vscrollerbaseend {
+	height: 0px !important;
+}
+.x-ie9 .x-tip-body-default {
+	white-space: nowrap !important;
+	height: auto !important;
+ 	margin-left: -2px; 
+}
+.download-container{
+	white-space: nowrap !important;	
+}
+.varticalZoomScroll {
+	vertical-align: baseline !important;
+}
+
+
+.quiz-card-overlowy{
+	overflow-y:hidden !important;
+}
+
+/**
+  * This CSS is written for alert message showing unnecessary vertical scrollbar. 
+  **/
+.x-message-box .x-window-body .scrollwrapper .vscrollerbase{
+   visibility: hidden !important;
+}
+
+/**
+  * This CSS is written for remove the alert window buttons background color in IE10,9.
+  **/
+.x-window .x-btn-default-small{
+     background-image: none !important;
+}
+
+.evaluate-btn-cls{
+	position: absolute;
+	margin-top: 10px !important;
+}
+
+.evaluate-msg{
+	text-align: center;
+	border: solid;
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+	border-color: rgb(179, 69, 47);
+	padding: 10px;
+}
+
+.reset-msg-cls{
+	border: solid;
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+	border-color: rgb(179, 69, 47);
+	padding: 10px;
+	margin: 10px;
+}
+
+.reset-msg2-cls{
+	float: left;
+	border: solid;
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+	border-color: rgb(179, 69, 47);
+	padding: 10px;
+	margin-left: 10px;
+	margin-top: 5px;
+}
+
+/**
+  * This CSS is written to fix the width of the summary message box in quiz
+  **/
+
+.quiz-moreinfo { 
+	left: auto !important;
+	position: relative !important;
+	} 
+	
+.evaluate-msg ul { 
+	max-width: 435px;
+	margin: 0 auto;
+	}
+
+.x-btn-default-medium { 
+	position: relative !important;
+	top: 0 !important;
+}

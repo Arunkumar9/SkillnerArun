@@ -1,0 +1,7 @@
+.x-tab button {
+	height: 16px !important;
+	line-height: 16px !important;
+}
+.x-tab button .x-tab-icon {
+	top: auto !important;
+}

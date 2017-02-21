@@ -1,0 +1,79 @@
+{"id":"customer-win","title":"CRM Customers","width":this.winWidth,"height":this.winHeight,"x":this.desktop
+
+.getWinX(this.winWidth),"y":this.desktop.getWinY(this.winHeight),"iconCls":"icon-crm-customer","shim"
+
+:false,"animCollapse":false,"constrainHeader":true,"minimizable":true,"maximizable":true,"layout":"border"
+
+,"tbar":[{"text":"Exit","iconCls":"icon-exit"},{"text":"New preference","iconCls":"icon-action"},{"text"
+
+:"New action","iconCls":"icon-action"},{"text":"New fundraiser event","iconCls":"icon-action"},{"text"
+
+:"New complaint","iconCls":"icon-action"}],"items":[{"title":"Admins & Filters","region":"west","elements"
+
+:"body","id":"FilterAdmins","xtype":"tabpanel","autoScroll":true,"collapsible":true,"layout":"fit","cmargins"
+
+:"0 0 0 0","margins":"0 0 0 0","split":true,"width":parseFloat(this.winWidth*0.3) < 301 ? parseFloat
+
+(this.winWidth*0.3) : 300,"items":[{"autoScroll":true,"elements":"body","xtype":"tabpanel","layoutOnTabChange"
+
+:true,"anchor":"100%","activeTab":0,"items":[{"xtype":"treepanel","id":"adm-tree","layout":"fit","loader"
+
+:new Ext.tree.TreeLoader(),"rootVisible":true,"lines":false,"autoScroll":true,"autoHeight":false,"root"
+
+:new Ext.tree.AsyncTreeNode(%adminRootDef%)},{"xtype":"treepanel","id":"fi-tree-admin","layout":"fit"
+
+,"loader":new Ext.tree.TreeLoader(),"rootVisible":true,"lines":false,"autoScroll":true,"autoHeight":false
+
+,"tbar":[{"text":"New filter","iconCls":"icon-action"},{"text":"Edit filter","iconCls":"icon-action"
+
+},{"text":"Delete filter","iconCls":"icon-action"}],"root":new Ext.tree.AsyncTreeNode({"text":"No filter"
+
+,"expanded":true,"children":[{"text":"Shared","expanded":true,"children":[{"text":"Payment not resolveds"
+
+,"iconCls":"icon-action","leaf":true},{"text":"To be called","iconCls":"icon-action","leaf":true},{"text"
+
+:"Complaints","iconCls":"icon-action","leaf":true}]},{"text":"My filters","expanded":true,"children"
+
+:[{"text":"All from Sydney fundraise","iconCls":"icon-action","leaf":true}]}]})}]}]},{"region":"center"
+
+,"border":false,"layout":"border","margins":"0 0 0 0","items":[{"title":"List of Customers","region"
+
+:"west","elements":"body","width":parseFloat(this.winWidth*0.3) < 311 ? parseFloat(this.winWidth*0.3
+
+) : 310,"split":true,"layout":"fit","collapsible":true,"items":[{"xtype":"autogrid","loadMask":true,"store"
+
+:this.store,"stripeRows":true,"viewConfig":{"forceFit":true},"anchor":"100% 100%","bbar":new Ext.PagingToolbar
+
+({"pageSize":20,"store":this.store,"displayInfo":true,"displayMsg":"Count {2}","autoShow":true,"emptyMsg"
+
+:"No customers to display"})}]},{"title":"Customer","region":"center","border":false,"margins":"0 0 0
+
+ 0","layout":"fit","items":[{"xtype":"form","border":false,"items":[{"autoScroll":true,"elements":"body"
+
+,"id":"Details","xtype":"tabpanel","defaults":{"autoHeight":true,"border":false},"layoutOnTabChange"
+
+:true,"anchor":"100%","activeTab":0,"items":[{"title":"Profile","labelAlign":"left","labelWidth":70,"bodyStyle"
+
+:{"padding":"5px 5px 0"},"xtype":"panel","frame":true,"autoWidth":true,"items":[{"layout":"form","defaultType"
+
+:"textfield","anchor":"100%","items":[{"layout":"column","anchor":"100%","items":[{"columnWidth":0.500000
+
+,"layout":"form","defaultType":"textfield","anchor":"100%","items":[{"fieldLabel":"CustNo","name":"custno"
+
+,"anchor":"95%"},{"fieldLabel":"WebCustID","name":"custnoWeb","anchor":"95%"},{"fieldLabel":"Date of
+
+ Debt","name":"dateofdebt","xtype":"datefield","anchor":"95%"}]},{"columnWidth":0.500000,"layout":"form"
+
+,"defaultType":"textfield","anchor":"100%","items":[{"fieldLabel":"First Name","name":"first","anchor"
+
+:"95%"},{"fieldLabel":"Last Name","name":"last","anchor":"95%"},{"fieldLabel":"Street","name":"last"
+
+,"anchor":"95%"},{"fieldLabel":"Email","name":"email","vtype":"email","anchor":"95%"}]}]}]}]},{"title"
+
+:"Preferences","xtype":"panel"},{"title":"Special","xtype":"panel"},{"title":"Notes","xtype":"panel"
+
+,"frame":true,"items":[{"labelAlign":"top","layout":"form","autoScroll":true,"anchor":"100% 100%","bodyStyle"
+
+:{"padding":"5px 5px 0"},"items":[{"fieldLabel":"Notes about customer ...","name":"notes","xtype":"htmleditor"
+
+,"anchor":"95% b"}]}]},{"title":"Search","xtype":"panel"}]}]}]}]}]}

@@ -1,0 +1,15 @@
+-	%table.standardForm			
+	-	%tr
+			-	%th: ~Ulice
+			-	%td
+			$TTextBox#Street.textBox
+				:Columns 30 
+				:Text= $this->Cart->Address->Street
+			$TRequiredFieldValidator
+				:ControlToValidate Street
+				:Text *
+				:EnableClientScript false
+				:ErrorMessage~ Zadejte ulici 
+				:ValidationGroup PersonalData 
+				:Display Fixed
+& include.file

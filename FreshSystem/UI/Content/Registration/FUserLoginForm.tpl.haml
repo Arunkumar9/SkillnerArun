@@ -1,0 +1,77 @@
+$FActivePanelReceiver#UserLoginForm
+	:ListenOn OnLogin,OnLogout
+	:CssClass= $this->CssClass
+	$TMultiView#View{ ActiveViewIndex='000' }
+		$TView#LoginView
+			%p~ Zadejte, prosím, přihlašovací jméno a heslo.
+			%br
+			%div.objednavkaForm.middle
+				%table
+					%tr
+						%th~ Jméno:
+						%td
+							$TTextBox#Username.textBox
+								:Columns 30
+								:Text= $this->Username->SafeText
+							$TRequiredFieldValidator
+								:ControlToValidate Username
+								:Text *
+								:EnableClientScript false
+								:ErrorMessage~ Zadejte jméno
+								:ValidationGroup LoginData
+								:Display Fixed
+					%tr
+						%th~ Heslo:
+						%td
+							$TTextBox#Password.textBox
+								:Columns 30
+								:TextMode Password
+							$TRequiredFieldValidator
+								:ControlToValidate Password
+								:Text *
+								:EnableClientScript false
+								:ErrorMessage~ Zadejte heslo
+								:ValidationGroup LoginData
+								:Display Fixed
+			%div.standardForm.centered
+				$TValidationSummary#Summary.valError
+					:AutoUpdate true
+					:EnableClientScript false
+					:ValidationGroup LoginData
+			$TActiveButton.buttLogin
+				:Text~ Přihlásit
+				:ValidationGroup LoginData
+				:OnClick loginButtonClicked
+				:OnCallback loginButtonClicked
+		$TView#SuccessView
+			%p
+				%span~ Nyní jste přihlášeni jako&nbsp;
+				%span= $this->User->Name
+			%p
+				%span~ Můžete pokračovat&nbsp;
+				$THyperLink
+					:Text~ zde.
+					:NavigateUrl= $this->Page->getContainer('Home')->Href
+		$TView#LoggedInView
+			%h2
+				%span~ Jste již přihlášeni jako&nbsp;
+				%span= $this->User->Name
+			$TActiveLinkButton#LogoutLink
+				:Text~ Odhlásit
+				:OnClick LogoutButtonClicked
+				:OnCallback LogoutButtonClicked
+			%p
+				%span~ Můžete pokračovat&nbsp;
+				$THyperLink
+					:Text~ zde.
+					:NavigateUrl= $this->Page->getContainer('Home')->Href
+$FWidgetControl#MetaData:=
+	properties:
+		-	afterlogoutpageid
+	fields:
+		-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[After Logout Page]%>
+			name: <%= $this->MetaData->getFieldName('afterlogoutpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200

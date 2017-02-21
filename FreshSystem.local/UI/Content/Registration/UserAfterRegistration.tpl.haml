@@ -1,0 +1,10 @@
+%div{ class=`$this->cssClass` }
+	%h1~ Registrace  
+	%h3~ Vaše registrace byla dokončena. Děkujeme
+	%br
+	%p
+		%span~ Přihlásit se můžete
+		$THyperLink
+			:Text~ zde
+			:NavigateUrl= $this->Page->getContainer('Login')->HRef
+	%br 

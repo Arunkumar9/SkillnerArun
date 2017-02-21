@@ -1,0 +1,46 @@
+$FActivePanelReceiver#UserBoxPanel
+	:ListenOn OnLogin,OnLogout
+	:CssClass= $this->CssClass
+	 $THyperLink#LoginLink
+	 	:Text~ Login
+	 $TLinkButton#LogoutLink 
+	 	:Text~ Logout
+		:OnCommand LogoutButtonClicked
+		%br
+     $THyperLink#RegisterLink 
+	 	:Text~ Registration
+		%br 
+     $THyperLink#AccountLink
+		:Text~ My Account
+		%br 
+$FWidgetControl#MetaData:=
+	properties:
+		-	afterlogoutpageid
+		-	loginpageid
+		-	registerpageid
+		-	accountpageid
+	fields:
+	    -	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Login Page]%>
+			name: <%= $this->MetaData->getFieldName('loginpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200
+	    -	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[After Logout Page]%>
+			name: <%= $this->MetaData->getFieldName('afterlogoutpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200
+	    -	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Register Page]%>
+			name: <%= $this->MetaData->getFieldName('registerpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200
+	    -	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Account Page]%>
+			name: <%= $this->MetaData->getFieldName('accountpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200

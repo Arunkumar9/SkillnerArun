@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<html>
+	<!-- Copyright (c) Atomic Inc. 2007-2008 http://jsorm.com -->
+	<head>
+		<title>Write Store Sample</title>
+ 		<style type='text/css'>
+		  @import url('ext/resources/css/ext-all.css');
+		  @import url('ext/resources/css/xtheme-aero.css');
+		</style>
+		<style>
+			#persons {
+				position: absolute;
+				left: 5%;
+				top: 10%;
+				width: 25%;
+				height: 150px;
+			}		
+			#grids {
+				position: relative;
+				top: 0%;
+				width: 100%;
+				height: 150px;
+			}		
+			#contacts {
+				position: absolute;
+				left: 50%;
+				top: 10%;
+				width: 25%;
+				height: 150px;
+			}		
+			#content {
+				position: absolute;
+				left: 5%;
+				top: 10%;
+				width: 50%;
+				height: 300px;
+			}	
+			.grid-cell {
+				float: left;
+				width: 33%;
+				height: 100%;
+			}	
+			#output6 {
+				width: 60%;
+				height: 200px;
+			}
+			.clear {
+				clear: both;				
+			}
+			.sample-set {
+				border:1px ridge;
+				margin:4px;
+				padding:7px;				
+			}
+			.padding-button {
+				padding-left: 20px;
+				
+			}
+			ol.std {
+				list-style-position:inside;
+				list-style-type:decimal;
+			}
+		</style>
+		<script type="text/javascript" src="ext/ext-base.js"></script>
+		<script type="text/javascript" src="ext/ext-all-debug.js"></script>
+		<script type="text/javascript" src="localXHR2.js"></script>
+		<script type="text/javascript" src="write-store-src.js"></script>
+		<script type="text/javascript" src="write-store-sample.js"></script>
+	</head>
+	<body>
+		<div id="content">
+			<div id="instructions">
+				<h2>Overview</h2>
+			Be sure to examine the source code to this file. CSS is included in this file, while JavaScript is unminified
+			in <a href="write-store-sample.js">write-store-sample.js</a>.
+			<p/><br/>
+			<h2>Grids</h2>
+			There are several grids. Any cell in any grid can be double-clicked to edit it. The 'Save'
+			button, if available, calls commitChanges() on the appropriate store. The 'Reject' button, if available,
+			calls rejectChanges() on the appropriate store. Finally, the 'Undo' button, if available, rolls back
+			the last individual change within this transaction. These buttons become available if there are any
+			changes in the store that have not yet been committed or rejected.<p/>
+			 <br/>
+			</div>
+			<div id="grids">
+				<div id="basic-sample" class="sample-set">
+					These grids demonstrate success and failure of commitChanges(). All commits in this
+					row pop up an Ext MessageBox to show the success or failure of the commit.<p/>
+					<div id="grid1" class="grid-cell"></div>
+					<div id="grid2" class="grid-cell"></div>
+					<div id="grid3" class="grid-cell"></div>
+					<div class="clear"></div>
+				</div>
+				<div id="object-reader-sample" class="sample-set">
+					These grids demonstrate using one Store as the data source for another Store. 
+					The grid on the left is the list of persons. The one on the right is the 
+					addresses for the selected person. Select a person on the left to view their addresses on 
+					the right. Make a change to any address, then click 'Save' to update the store displayed on
+					the left via a StoreProxy.
+					<div id="grid4" class="grid-cell"></div>
+					<div id="grid5" class="grid-cell"></div>
+					<div class="clear"></div>
+				</div>
+				<div id="write-modes-sample" class="sample-set">
+					This grid demonstrates the effects of different write modes. The grid is not editable. When you click
+					the "Execute" button below, changes will be made, and the information that would be transmitted to the 
+					server is shown in the appropriate box.<br/>
+					The changes are as follows, in order:
+					<ol class="std">
+						<li>Change the first record last name from "Smith" to "Smithers"</li>
+						<li>Change the second record last name from "Stein" to "Steiner"</li>
+						<li>Change the first record first name from "John" to "Jane"</li>
+					</ol> 
+					<br/>
+					<div id="grid6" class="grid-cell"></div>
+					<div id="output6" class="grid-cell"></div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

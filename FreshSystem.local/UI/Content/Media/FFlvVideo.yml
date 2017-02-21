@@ -1,0 +1,7 @@
+FlvVideo:
+    name: FlvVideo
+    description: flash videomovie
+    t: content
+    data: 
+        ContentEditClass: FreshSystem.UI.Content.Media.FFlvVideo
+        iconCls: image

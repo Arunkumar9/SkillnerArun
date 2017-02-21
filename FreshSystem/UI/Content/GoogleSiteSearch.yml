@@ -1,0 +1,7 @@
+GoogleSiteSearch:
+    name: GoogleSiteSearch
+    description: google site search
+    t: content
+    data: 
+        ContentEditClass: FreshSystem.UI.Content.GoogleSiteSearch
+        iconCls: search

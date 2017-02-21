@@ -1,0 +1,1725 @@
+/**
+ * Ext JS Library 2.0
+ * Copyright(c) 2006-2007, Ext JS, LLC.
+ * licensing@extjs.com
+ * 
+ * http://www.extjs.com/license
+ * 
+ */
+
+html, body {
+	font: normal 12px tahoma, arial, verdana, sans-serif;
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	overflow: hidden;
+	height: 100%;
+	/*
+background:#FFFFFF url(../../../../resources/img/bg-pg.png) repeat-x;
+*/
+	background-position: top;
+}
+
+.transparent {
+	-moz-opacity: 0.8;
+    opacity: .80;
+    filter: alpha(opacity=80);
+}
+.wallpaper-tile {
+	background-repeat: repeat;
+}
+.wallpaper-center {
+	/*background-position: center;*/
+}
+
+.start {
+	background-image: url(../images/default/taskbar/startbutton-icon.gif) !important;
+/*
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='resources/images/flem/apricot-icon.png', sizingMethod='scale');
+
+*/}
+
+.quickstart-menubutton {
+	background-image: url(../images/default/taskbar/quickstart-menubutton-icon.gif) !important;
+}
+
+.bogus {
+	background-image: url(../images/default/icons/bogus.png) !important;
+}
+
+.logout {
+	background-image: url(../images/default/icons/logout.png) !important;
+}
+
+.settings {
+	background-image: url(../images/default/icons/gears.png) !important;
+}
+
+#dpanels {
+	width: 250px;
+	float: right;
+}
+
+#dpanels .x-panel {
+	margin: 15px;
+}
+
+#dpanels .x-date-picker {
+	border: 0 none;
+	border-top: 0 none;
+	background: transparent;
+}
+
+#dpanels .x-date-picker td.x-date-active {
+	background: #ffffff;
+}
+
+#dpanels .x-date-picker {
+	width: 100% !important;
+}
+
+#x-desktop {
+	width: 100%;
+	height: 100%;
+	border: 0 none;
+	position: relative;
+    overflow:hidden;
+    zoom:1;
+    /* background:#f9f9f9 url(../wallpapers/qwikioffice.jpg) no-repeat fixed center center; */
+}
+
+#ux-taskbar .x-btn {
+	float: left;
+	margin: 1px 0 0 1px;
+    position:relative;
+}
+
+#ux-taskbar-start .x-btn {
+	float: left;
+	margin: 0;
+	padding-left: 8px;
+    position:relative;
+}
+
+#ux-taskbar button {
+	/* width: 150px;
+	overflow: hidden; */
+	text-align: left;
+	color: #ffffff;
+}
+#title-bar-wrapper {
+	height:35px;
+}
+
+#title-bar {
+	color: #225599;
+	padding: 9px 7px;
+	font: bold 16px tahoma,arial,verdana,sans-serif;
+	float:left;
+}
+
+#x-logout {
+	float:right;
+	padding:6px 7px;
+}
+
+.x-btn-text-icon .x-btn-center .logout {
+	background-position:0pt 3px;
+	background-repeat:no-repeat;
+	padding:3px 0pt 3px 18px;
+}
+
+#ux-taskbar {
+	background:transparent none;
+	height:30px;
+	margin:0;
+	padding:0;
+	position:relative;
+	z-index:12001;
+}
+
+.x-btn-icon .ux-quickstart-button-center .x-btn-text{
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 16px;
+	width: 16px;
+	cursor:pointer;
+	white-space: nowrap;
+    padding:0;
+}
+
+.x-btn-icon .ux-taskbutton-center .x-btn-text{
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 16px;
+	width: 16px;
+	cursor:pointer;
+	white-space: nowrap;
+    padding:0;
+}
+
+.x-btn-icon .ux-taskbutton-center{
+	padding:1px;
+}
+
+.x-btn-text-icon .ux-taskbutton-center .x-btn-text{
+	background-position: 0 6px;
+	background-repeat: no-repeat;
+	padding:7px 0px 7px 20px;
+}
+
+.x-btn-text-icon .ux-startbutton-center .x-btn-text{
+	background-position: 0 4px;
+	background-repeat: no-repeat;
+	color:#000000 !important;
+	font-weight:bold;
+	padding:8px 0px 8px 28px;
+}
+
+.ux-taskbutton-left, .ux-taskbutton-right{
+	font-size:1px;
+    line-height:1px;
+}
+.ux-taskbutton-left{
+	width:4px;
+	height:28px;
+	background:url(../images/default/taskbar/taskbutton.gif) no-repeat 0 0;
+}
+.ux-taskbutton-right{
+	width:4px;
+	height:28px;
+	background:url(../images/default/taskbar/taskbutton.gif) no-repeat 0 -28px;
+}
+.ux-taskbutton-left i, .ux-taskbutton-right i{
+	display:block;
+    width:4px;
+    overflow:hidden;
+    font-size:1px;
+    line-height:1px;
+}
+.ux-taskbutton-center{
+	background:url(../images/default/taskbar/taskbutton.gif) repeat-x 0 -56px;
+	vertical-align: middle;
+	text-align:center;
+	padding:0 5px;
+	cursor:pointer;
+	white-space:nowrap;
+}
+
+#ux-taskbar .ux-taskbutton-left{ 
+	background-position:0 0;
+}
+#ux-taskbar .ux-taskbutton-right{
+	background-position:0 -28px;
+}
+#ux-taskbar .ux-taskbutton-center{
+	background-position:0 -56px;
+}
+
+#ux-taskbar .x-btn-over .ux-taskbutton-left{
+	background-position:0 -252px;
+}
+#ux-taskbar .x-btn-over  .ux-taskbutton-right{
+	background-position:0 -280px;
+}
+#ux-taskbar .x-btn-over .ux-taskbutton-center{
+	background-position:0 -308px;
+}
+
+#ux-taskbar .x-btn-click .ux-taskbutton-left{
+	background-position:0 -168px;
+}
+#ux-taskbar .x-btn-click  .ux-taskbutton-right{
+	background-position:0 -196px;
+}
+#ux-taskbar .x-btn-click .ux-taskbutton-center{
+	background-position:0 -224px;
+}
+
+#ux-taskbar .active-win .ux-taskbutton-left{
+	background-position:0 -84px;
+}
+#ux-taskbar .active-win  .ux-taskbutton-right{
+	background:url(../images/default/taskbar/taskbutton.gif) no-repeat 0 -112px;
+}
+#ux-taskbar .active-win .ux-taskbutton-center{
+	background:url(../images/default/taskbar/taskbutton.gif) repeat-x 0 -140px;
+}
+#ux-taskbar .active-win .ux-taskbutton-center button {
+    color:#fff;
+}
+
+#spacer {
+	height: 25px;
+	float: left;
+	width: 0;
+	overflow: hidden;
+	margin-top: 2px;
+}
+
+.x-window-body p,.x-panel-body p {
+	padding: 10px;
+	margin: 0;
+}
+/* fix for scrolling issue in firefox 
+.x-window-mc {
+	background:#ffffff none;
+	border:1px solid #000000;
+}
+.x-border-layout-ct {
+	background:transparent none;
+}
+.x-panel-body {
+	background:transparent none;
+}
+.x-tree .x-panel-body {
+	background-color:transparent;
+}
+/* end fix */
+
+.x-window-maximized .x-window-bc {
+	height:0;
+}
+
+.x-grid3-row-dirty-color { background-color: #FA0000 !important;}
+
+.x-flag{
+        background-image: url(../../../../resources/images/default/s.gif);
+        background-repeat: no-repeat !important;
+        background-position:  2px center !important;
+        text-indent: 17px !important;
+    }
+	body.ext-ie6 .x-flag .x-superboxselect-item-close {
+		top: 4px;
+		right: 2px;
+	}
+.icon-damage {
+    background-image:url(../images/fugueicons/exclamation-octagon.png) !important;
+}
+.icon-tick {
+    background-image:url(../images/fugueicons/tick-octagon.png) !important;
+}
+.icon-doc {
+    background-image:url(../images/LinspireClear/16x16/mimetypes/doc.png) !important;
+}
+.icon-xls {
+    background-image:url(../images/LinspireClear/16x16/mimetypes/spreadsheet.png) !important;
+}
+.icon-exit {
+    background-image:url(../images/LinspireClear/16x16/actions/exit.png) !important;
+}
+
+.icon-exit32 {
+    background-image:url(../images/LinspireClear/32x32/actions/exit.png) !important;
+}
+
+.icon-edit,.icon-edit-record {
+    background-image:url(../images/LinspireClear/16x16/actions/edit.png) !important;
+}
+
+.icon-cancel,.icon-delete-record {
+    background-image:url(../images/LinspireClear/16x16/actions/no.png) !important;
+    width: 16px;
+    height: 16px;
+}
+
+.icon-new {
+    background-image:url(../images/LinspireClear/16x16/actions/filenew.png) !important;
+}
+
+.icon-folder-new {
+    background-image:url(../images/LinspireClear/16x16/actions/folder_new.png) !important;
+}
+
+.icon-delete {
+    background-image:url(../images/LinspireClear/16x16/actions/editdelete.png) !important;
+}
+.icon-delete-user {
+    background-image:url(../images/LinspireClear/16x16/actions/delete_user.png) !important;
+}
+.icon-new-user {
+    background-image:url(../images/LinspireClear/16x16/actions/add_user.png) !important;
+}
+.icon-edit-user {
+    background-image:url(../images/LinspireClear/16x16/actions/edit_user.png) !important;
+}
+.branch {
+    background-image:url(../images/LinspireClear/16x16/filesystems/folder_home2.png) !important;
+}
+.brand {
+    background-image:url(../images/LinspireClear/16x16/filesystems/folder_yellow.png) !important;
+}
+.icon-action {
+    background-image:url(../images/default/icons/gears.png) !important;
+}
+
+.icon-grid {
+    background-image:url(../images/default/icons/grid.png) !important;
+}
+.icon-crm-admin {
+    background-image:url(../images/LinspireClear/16x16/apps/kspread.png) !important;
+}
+.icon-crm-customer {
+    background-image:url(../images/LinspireClear/16x16/apps/CommunityHelp.png) !important;
+}
+.icon-crm-users,.icon-users-win {
+    background-image:url(../images/LinspireClear/16x16/apps/kuser.png) !important;
+}
+.icon-crm-archive {
+    background-image:url(../images/LinspireClear/16x16/filesystems/database.png) !important;
+}
+.icon-crm-import {
+    background-image:url(../images/LinspireClear/16x16/apps/ark.png) !important;
+}
+.icon-order-win {
+    background-image:url(../images/LinspireClear/16x16/apps/package_editors.png) !important;
+}
+.icon-products-win {
+    background-image:url(../images/LinspireClear/16x16/apps/warehause.png) !important;
+}
+.icon-container-win {
+    background-image:url(../images/LinspireClear/16x16/apps/kdisknav.png);
+}
+.icon-gadgets-win {
+    background-image:url(../images/LinspireClear/16x16/apps/ksirtet.png) !important;
+}
+.icon-bonuses-win {
+    background-image:url(../images/LinspireClear/16x16/apps/klines.png) !important;
+}
+
+.icon-filemanager-win {
+    background-image:url(../images/LinspireClear/16x16/apps/harddrive.png) !important;
+}
+
+.icon-roles-win {
+    background-image:url(../images/LinspireClear/16x16/actions/agt_family.png) !important;
+}
+
+.icon-videos-win {
+    background-image:url(../images/LinspireClear/16x16/mimetypes/video.png) !important;
+}
+
+.icon-help-win {
+    background-image:url(../images/LinspireClear/16x16/actions/help.png) !important;
+}
+
+.icon-resources-win {
+    background-image:url(../images/LinspireClear/16x16/mimetypes/resource.png) !important;
+}
+
+.icon-definitions-win {
+    background-image:url(../images/LinspireClear/16x16/apps/lists.png) !important;
+}
+
+.icon-contacts-win {
+    background-image:url(../images/LinspireClear/16x16/mimetypes/vcard.png) !important;
+}
+
+.icon-newsletter-win {
+    background-image: url(../images/LinspireClear/16x16/apps/mailreminder.png)  !important;
+}
+.icon-mailing-win {
+    background-image:url(../images/LinspireClear/16x16/apps/mailreminder.png) !important;
+}
+.icon-qa-win {
+    background-image:url(../images/LinspireClear/16x16/actions/agt_support.png) !important;
+}
+
+.icon-gear32 {
+    background-image:url(../images/LinspireClear/32x32/actions/gear.png) !important;
+}
+
+.icon-xls32 {
+    background-image:url(../images/LinspireClear/32x32/mimetypes/spreadsheet.png) !important;
+}
+
+.icon-print32 {
+    background-image:url(../images/LinspireClear/32x32/actions/printer.png) !important;
+}
+
+.icon-gallery-win {
+    background-image:url(../images/LinspireClear/16x16/mimetypes/image.png) !important;
+}
+
+.icon-tasks-win {
+    background-image:url(../images/LinspireClear/16x16/apps/palm.png) ;
+}
+.icon-start-vendor-win {
+    background-image:url(../images/LinspireClear/16x16/apps/starthere.png) !important;
+}
+.add {
+    background-image:url(../../../ext/shared/icons/fam/add.gif) !important;
+}
+
+.row-edit {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    background-image:url(../images/LinspireClear/16x16/actions/edit.png) !important;
+}
+.row-plus {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    background-image:url(../../../ext/shared/icons/fam/add.gif) !important;
+    background-image:url(../images/LinspireClear/16x16/actions/edit_add.png) !important;
+}
+.row-archive {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    background-image:url(../images/LinspireClear/16x16/filesystems/database.png) !important;
+}
+
+.row-minus {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    background-image:url(../../../ext/shared/icons/fam/delete.gif) !important;
+    background-image:url(../images/LinspireClear/16x16/actions/edit_remove.png) !important;
+}
+.option {
+    background-image:url(../../../ext/shared/icons/fam/plugin.gif) !important;
+}
+.remove {
+    background-image:url(../../../ext/shared/icons/fam/delete.gif) !important;
+}
+.save {
+    background-image:url(../../../ext/shared/icons/save.gif) !important;
+}
+.accordion {
+    background-image:url(../images/default/icons/accordian.gif) !important;
+}
+.tabs {
+    background-image:url(../images/default/icons/tabs.gif) !important;
+}
+
+.user-manager {
+    background-image:url(../images/default/icons/member.png) !important;
+}
+/* IM window icons */
+
+
+.table {
+    background-image:url(../images/LinspireClear/16x16/apps/kexi.png) !important;
+}
+
+.folder {
+    background-image:url(../images/LinspireClear/16x16/filesystems/folder_blue.png) !important;
+}
+
+.filter {
+    background-image:url(../images/LinspireClear/16x16/actions/filefind.png) !important;
+}
+
+.recycle-bin {
+    background-image:url(../images/LinspireClear/16x16/filesystems/trashcan_empty.png) !important;
+}
+.icon-rename {
+    background-image:url(../images/LinspireClear/16x16/actions/cell_edit.png) !important;
+}
+.icon-open {
+    background-image:url(../images/LinspireClear/16x16/actions/fileopen.png) !important;
+}
+.icon-save {
+    background-image:url(../images/LinspireClear/16x16/actions/filesave.png) !important;
+}
+
+
+.user {
+    background-image:url(../images/default/icons/member.png) !important;
+}
+
+.group {
+    background-image:url(../../../ext/shared/icons/fam/group.png) !important;
+}
+.user {
+    background-image:url(../../../ext/shared/icons/fam/user.png) !important;
+}
+
+.user-root {
+    background-image:url(../images/LinspireClear/16x16/filesystems/folder_blue.png) !important;
+}
+
+.reload {
+    background-image:url(../images/LinspireClear/16x16/actions/reload.png) !important;
+}
+
+.collapse {
+    background-image:url(../../../ext/shared/icons/fam/arrow_in.png) !important;
+}
+
+.expand {
+    background-image:url(../../../ext/shared/icons/fam/arrow_out.png) !important;
+}
+
+.user-add {
+    background-image:url(../../../ext/shared/icons/fam/user_add.png) !important;
+}
+
+.user-edit {
+    background-image:url(../../../ext/shared/icons/fam/user_edit.png) !important;
+}
+
+.user-delete {
+    background-image:url(../../../ext/shared/icons/fam/user_delete.png) !important;
+}
+
+.connect {
+    background-image:url(../../../ext/shared/icons/fam/connect.png) !important;
+}
+
+.user-girl {
+    background-image:url(../../../ext/shared/icons/fam/user_female.png) !important;
+}
+
+.user-kid {
+    background-image:url(../../../ext/shared/icons/fam/user_green.png) !important;
+}
+
+.user-suit {
+    background-image:url(../../../ext/shared/icons/fam/user_suit.png) !important;
+}
+.icon-viewmag {
+   background-image: url(../images/LinspireClear/16x16/actions/viewmag.png)  !important;
+}
+
+.icon-photo-win {
+   background-image: url(../images/LinspireClear/16x16/apps/lphoto.png)  !important;
+}    
+
+.icon-setup-win {
+   background-image: url(../images/LinspireClear/16x16/apps/advancedsettings.png)  !important;
+}    
+
+.icon-market-win {
+   background-image: url(../images/LinspireClear/16x16/apps/kword.png)  !important;
+}    
+
+.icon-comments-win {
+   background-image: url(../images/LinspireClear/16x16/apps/easymoblog.png)  !important;
+}    
+
+.icon-feusers-win {
+   background-image: url(../images/LinspireClear/16x16/apps/package_toys.png)  !important;
+}
+
+
+.icon-news-win {
+   background-image: url(../images/LinspireClear/16x16/apps/knewsticker.png)  !important;
+}    
+
+.icon-translations-win {
+   background-image: url(../images/LinspireClear/16x16/apps/internet.png)  !important;
+}    
+
+.ux-start-menu {
+	background:transparent none !important;
+	border:0px none !important;
+	padding:0 !important;
+}
+
+.ux-start-menu-tl .x-window-header {
+	color:#f1f1f1;
+	font:bold 11px tahoma,arial,verdana,sans-serif;
+    padding:5px 0 4px 0;
+}
+
+.x-panel-tl .x-panel-icon, .ux-start-menu-tl .x-panel-icon {
+	background-position:0pt 4px;
+	background-repeat:no-repeat;
+	padding-left:20px !important;
+}
+
+.ux-start-menu-tl {
+	background: transparent url(../images/default/startmenu/start-menu-left-corners.png) no-repeat 0 0;
+	padding-left:6px;
+    zoom:1;
+    z-index:1;
+    position:relative;
+}
+
+.ux-start-menu-tr {
+	background: transparent url(../images/default/startmenu/start-menu-right-corners.png) no-repeat right 0;
+	padding-right:6px;
+}
+
+.ux-start-menu-tc {
+	background: transparent url(../images/default/startmenu/start-menu-top-bottom.png) repeat-x 0 0;
+	overflow:hidden;
+    zoom:1;
+}
+
+.ux-start-menu-ml {
+	background: transparent url(../images/default/startmenu/start-menu-left-right.png) repeat-y 0 0;
+	padding-left:6px;
+    zoom:1;
+}
+
+.ux-start-menu-bc {
+	background: transparent url(../images/default/startmenu/start-menu-top-bottom.png) repeat-x 0 bottom;
+    zoom:1;
+}
+
+.ux-start-menu-bc .x-window-footer {
+    padding-bottom:6px;
+    zoom:1;
+    font-size:0;
+    line-height:0;
+}
+
+.ux-start-menu-bl {
+	background: transparent url(../images/default/startmenu/start-menu-left-corners.png) no-repeat 0 bottom;
+	padding-left:6px;
+    zoom:1;
+}
+
+.ux-start-menu-br {
+	background: transparent url(../images/default/startmenu/start-menu-right-corners.png) no-repeat right bottom;
+	padding-right:6px;
+    zoom:1;
+}
+
+.x-panel-nofooter .ux-start-menu-bc {
+	height:6px;
+}
+
+.ux-start-menu-splitbar-h {
+	background-color:#d0d0d0;
+}
+
+
+.ux-start-menu-bwrap {
+	background:transparent none !important;
+	border:0px none;
+}
+
+.ux-start-menu-body {
+	background:transparent none !important;
+	border:0px none;
+}
+
+.ux-start-menu-apps-panel {
+	background:#ffffff none;
+	border:1px solid #1e2124;
+}
+
+.ux-start-menu-tools-panel {
+	border:0px none;
+	background:transparent url(../images/default/startmenu/start-menu-right.png) repeat-y scroll right 0pt;
+}
+
+#ux-taskbar-start {
+	background:transparent url(../images/default/taskbar/taskbar-start-panel-bg.gif) repeat-x left top;
+	left:0px;
+	padding:0;
+	position:absolute;
+}
+
+#ux-quickstart-panel {
+	background:transparent url(../images/default/taskbar/taskbar-start-panel-bg.gif) repeat-x left top;
+	left:0px;
+	padding:0;
+	position:absolute;
+}
+#ux-tray-panel {
+        background:transparent url(../images/default/taskbar/taskbar-start-panel-bg.gif) repeat-x left top;
+        left:0px;
+        padding:0;
+        position:absolute;
+}
+#ux-taskbar-start .x-toolbar {
+	background: none;
+	padding:0px;
+	border:0px none;
+}
+
+#ux-taskbar-panel-wrap {
+	background:transparent none;
+}
+
+#ux-taskbuttons-panel {
+	background:transparent url(../images/default/taskbar/taskbuttons-panel-bg.gif) repeat-x left top;
+	padding-top:0;
+	position:relative;
+}
+
+.ux-quickstart-strip-wrap {
+	width:100%;
+    overflow:hidden;
+    position:relative;
+    zoom:1;
+}
+
+ul.ux-quickstart-strip {
+	display:block;
+	width:5000px;
+    zoom:1;
+}
+
+ul.ux-quickstart-strip li {
+    float:left;
+    margin-left:0px;
+}
+
+
+ul.ux-quickstart-strip li.ux-quickstart-edge {
+    float:left;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 none !important;
+    font-size:1px !important;
+    line-height:1px !important;
+    overflow:hidden;
+    zoom:1;
+    background:transparent !important;
+    width:1px;
+}
+
+.ux-taskbuttons-strip-wrap {
+	/* overflow:hidden;
+	position:relative;
+	width:100%; */
+	
+	width:100%;
+    overflow:hidden;
+    position:relative;
+    zoom:1;
+}
+
+ul.ux-taskbuttons-strip {
+	display:block;
+	width:5000px;
+    zoom:1;
+}
+
+ul.ux-taskbuttons-strip li {
+    float:left;
+    margin-left:2px;
+}
+
+
+ul.ux-taskbuttons-strip li.ux-taskbuttons-edge {
+    float:left;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 none !important;
+    font-size:1px !important;
+    line-height:1px !important;
+    overflow:hidden;
+    zoom:1;
+    background:transparent !important;
+    width:1px;
+}
+
+.x-clear {
+    clear:both;
+    height:0;
+    overflow:hidden;
+    line-height:0;
+    font-size:0;
+}
+
+.x-taskbuttons-scrolling {
+	position:relative;
+}
+
+.x-taskbuttons-scrolling .ux-taskbuttons-strip-wrap {
+	margin-left:18px;
+	margin-right:18px;
+}
+td.ux-taskButtons-edge {
+    /*float:left;*/
+    margin:0 !important;
+    padding:0 !important;
+    border:0 none !important;
+    font-size:1px !important;
+    line-height:1px !important;
+    overflow:hidden;
+    zoom:1;
+    background:transparent !important;
+    width:1px;
+}
+.ux-taskbuttons-scroller-left {
+    background: transparent url(../images/default/taskbar/scroll-left.gif) no-repeat -18px 0;
+    width:18px;
+    position:absolute;
+    left:1px;
+    top:0px;
+    z-index:10;
+    cursor:pointer;
+}
+.ux-taskbuttons-scroller-left-over {
+    background-position: 0 0;
+}
+.ux-taskbuttons-scroller-left-disabled {
+    background-position: -18px 0;
+    opacity:.5;
+    -moz-opacity:.5;
+    filter:alpha(opacity=50);
+    cursor:default;
+}
+.ux-taskbuttons-scroller-right {
+    background: transparent url(../images/default/taskbar/scroll-right.gif) no-repeat 0 0;
+    width:18px;
+    position:absolute;
+    right:0;
+    top:0px;
+    z-index:10;
+    cursor:pointer;
+}
+.ux-taskbuttons-scroller-right-over {
+    background-position: -18px 0;
+}
+.ux-taskbuttons-scroller-right-disabled {
+    background-position: 0 0;
+    opacity:.5;
+    -moz-opacity:.5;
+    filter:alpha(opacity=50);
+    cursor:default;
+}
+
+.ux-toolmenu-sep {
+	background-color:#18191a;
+	border-bottom:1px solid #858789;
+	display:block;
+	font-size:1px;
+	line-height:1px;
+	margin:2px 3px;
+}
+
+.x-menu-item-active {
+	background: #f5f8fb url(../images/default/taskbar/app-item-over.gif) repeat-x left bottom;
+	border:1px solid #b0c4ca;
+	padding: 0;
+}
+
+.ux-start-menu-tools-panel ul.x-menu-list li.x-menu-list-item a.x-menu-item {
+	color:#ffffff;
+}
+
+.ux-start-menu-tools-panel ul.x-menu-list li.x-menu-list-item .x-menu-item-active a.x-menu-item {
+	color:#000000;	
+}
+
+#ux-taskbar .x-splitbar-h {
+	background:transparent url(../images/default/taskbar/taskbar-split-h.gif) no-repeat 0 0;
+	width:14px;
+}
+
+.x-window-header-text {
+	cursor:default;
+}
+
+/*
+ * Begin Start button
+ */
+.ux-startbutton-left, .ux-startbutton-right{
+	font-size:1px;
+    line-height:1px;
+}
+.ux-startbutton-left{
+	width:10px;
+	height:30px;
+	background:url(../images/default/taskbar/startbutton.gif) no-repeat 0 0;
+}
+.ux-startbutton-right{
+	width:10px;
+	height:30px;
+	background:url(../images/default/taskbar/startbutton.gif) no-repeat 0 -28px;
+}
+.ux-startbutton-left i, .ux-startbutton-right i{
+	display:block;
+    width:10px;
+    overflow:hidden;
+    font-size:1px;
+    line-height:1px;
+}
+.ux-startbutton-center{
+	background:url(../images/default/taskbar/startbutton.gif) repeat-x 0 -56px;
+	vertical-align: middle;
+	text-align:center;
+	padding:0;
+	cursor:pointer;
+	white-space:nowrap;
+}
+
+#ux-taskbar .ux-startbutton-left{ 
+	background-position:0 0;
+}
+#ux-taskbar .ux-startbutton-right{
+	background-position:0 -30px;
+}
+#ux-taskbar .ux-startbutton-center{
+	background-position:0 -60px;
+}
+
+#ux-taskbar .x-btn-over .ux-startbutton-left{
+	background-position:0 -270px;
+}
+#ux-taskbar .x-btn-over  .ux-startbutton-right{
+	background-position:0 -300px;
+}
+#ux-taskbar .x-btn-over .ux-startbutton-center{
+	background-position:0 -330px;
+}
+
+#ux-taskbar .x-btn-click .ux-startbutton-left{
+	background-position:0 -180px;
+}
+#ux-taskbar .x-btn-click  .ux-startbutton-right{
+	background-position:0 -210px;
+}
+#ux-taskbar .x-btn-click .ux-startbutton-center{
+	background-position:0 -240px;
+}
+
+#ux-taskbar .active-win .ux-startbutton-left{
+	background-position:0 -90px;
+}
+#ux-taskbar .active-win  .ux-startbutton-right{
+	background:url(../images/default/taskbar/startbutton.gif) no-repeat 0 -120px;
+}
+#ux-taskbar .active-win .ux-startbutton-center{
+	background:url(../images/default/taskbar/startbutton.gif) repeat-x 0 -150px;
+}
+#ux-taskbar .active-win .ux-startbutton-center button {
+    color:#fff;
+}
+/*
+ * End Start button
+ */
+ 
+ 
+ 
+ /*
+ * Begin QuickStart button
+ */
+.ux-quickstart-button-left, .ux-quickstart-button-right{
+	font-size:1px;
+    line-height:1px;
+}
+.ux-quickstart-button-left{
+	width:4px;
+	height:28px;
+	background:url(../images/default/taskbar/quickstart-button.gif) no-repeat 0 0;
+}
+.ux-quickstart-button-right{
+	width:4px;
+	height:28px;
+	background:url(../images/default/taskbar/quickstart-button.gif) no-repeat 0 -28px;
+}
+.ux-quickstart-button-left i, .ux-quickstart-button-right i{
+	display:block;
+    width:4px;
+    overflow:hidden;
+    font-size:1px;
+    line-height:1px;
+}
+.ux-quickstart-button-center{
+	background:url(../images/default/taskbar/quickstart-button.gif) repeat-x 0 -56px;
+	vertical-align: middle;
+	text-align:center;
+	padding:0;
+	cursor:pointer;
+	white-space:nowrap;
+}
+
+#ux-taskbar .ux-quickstart-button-left{ 
+	background-position:0 0;
+}
+#ux-taskbar .ux-quickstart-button-right{
+	background-position:0 0;
+}
+#ux-taskbar .ux-quickstart-button-center{
+	background-position:0 0;
+}
+
+#ux-taskbar .x-btn-over .ux-quickstart-button-left,
+#ux-taskbar .x-btn-menu-active .ux-quickstart-button-left{
+	background-position:0 -250px;
+}
+#ux-taskbar .x-btn-over  .ux-quickstart-button-right,
+#ux-taskbar .x-btn-menu-active .ux-quickstart-button-right{
+	background-position:0 -279px;
+}
+#ux-taskbar .x-btn-over .ux-quickstart-button-center,
+#ux-taskbar .x-btn-menu-active .ux-quickstart-button-center{
+	background-position:0 -308px;
+}
+
+#ux-taskbar .x-btn-click .ux-quickstart-button-left{
+	background-position:0 -163px;
+}
+#ux-taskbar .x-btn-click  .ux-quickstart-button-right{
+	background-position:0 -192px;
+}
+#ux-taskbar .x-btn-click .ux-quickstart-button-center{
+	background-position:0 -221px;
+}
+
+#ux-taskbar .active-win .ux-quickstart-button-left{
+	background-position:0 -84px;
+}
+#ux-taskbar .active-win  .ux-quickstart-button-right{
+	background-position:0 -112px;
+}
+#ux-taskbar .active-win .ux-quickstart-button-center{
+	background-position:0 -140px;
+}
+/*
+ * End QuickStart button
+ */
+ 
+ 
+ 
+ /*
+  * Begin QuickStart MenuButton
+  */
+ .ux-quickstart-menubutton-wrap {
+    /* width:18px; */
+    position:absolute;
+    right:0;
+    top:0px;
+    z-index:10;
+}
+/*
+ * End QuickStart MenuButton
+ */
+ 
+/* Begin Notification area */
+#ux-tray-panel .x-btn-icon .x-btn-center .x-btn-text{
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 16px;
+        width: 16px;
+        cursor:pointer;
+        white-space: nowrap;
+    padding:0;
+}
+#ux-tray-panel .x-btn-left, #ux-tray-panel .x-btn-right{
+        font-size:1px;
+    line-height:1px;
+}
+#ux-tray-panel .x-btn-left{
+        width:4px;
+        height:28px;
+        background:url(../images/default/taskbar/quickstart-button.gif) no-repeat 0 0;
+}
+#ux-tray-panel .x-btn-right{
+        width:4px;
+        height:28px;
+        background:url(../images/default/taskbar/quickstart-button.gif) no-repeat 0 -28px;
+}
+#ux-tray-panel .x-btn-left i, #ux-tray-panel .x-btn-right i{
+        display:block;
+    width:4px;
+    overflow:hidden;
+    font-size:1px;
+    line-height:1px;
+}
+#ux-tray-panel .x-btn-center{
+        background:url(../images/default/taskbar/quickstart-button.gif) repeat-x 0 -56px;
+        vertical-align: middle;
+        text-align:center;
+        padding:0;
+        cursor:pointer;
+        white-space:nowrap;
+}
+#ux-tray-panel .x-btn-left{
+        background-position:0 0;
+}
+#ux-tray-panel .x-btn-right{
+        background-position:0 0;
+}
+
+#ux-tray-panel .x-btn-center{
+        background-position:0 0;
+}
+#ux-tray-panel .x-btn-over .x-btn-left,
+#ux-tray-panel .x-btn-menu-active .x-btn-left{
+        background-position:0 -250px;
+}
+#ux-tray-panel .x-btn-over  .x-btn-right,
+#ux-tray-panel .x-btn-menu-active .x-btn-right{
+        background-position:0 -279px;
+}
+#ux-tray-panel .x-btn-over .x-btn-center,
+#ux-tray-panel .x-btn-menu-active .x-btn-center{
+        background-position:0 -308px;
+}
+#ux-tray-panel .x-btn-click .x-btn-left{
+        background-position:0 -163px;
+}
+#ux-tray-panel .x-btn-click  .x-btn-right{
+        background-position:0 -192px;
+}
+#ux-tray-panel .x-btn-click .x-btn-center{
+        background-position:0 -221px;
+}
+#ux-tray-panel .active-win .x-btn-left{
+        background-position:0 -84px;
+}
+#ux-tray-panel .active-win  .x-btn-right{
+        background-position:0 -112px;
+}
+#ux-tray-panel .active-win .x-btn-center{
+        background-position:0 -140px;
+}
+/* End: Notification area */
+
+
+
+/* Begin: tray button */
+.ux-tray-button-wrap {
+    position:absolute;
+    right:0;
+    top:0px;
+    z-index:10;
+}
+#ux-tray-panel .x-btn-with-menu .x-btn-center em {
+       /* background-image: url(../images/default/taskbar/quickstart-menubutton-icon.gif) !important; */
+        display:block;
+        padding-right:0;
+}
+#ux-tray-panel .x-btn-with-menu .x-btn-center {
+        padding-right:0 !important;
+}
+.ux-tray-strip-wrap {
+        width:100%;
+    overflow:hidden;
+    position:relative;
+    zoom:1;
+}
+
+ul.ux-tray-strip {
+        display:block;
+        width:5000px;
+    zoom:1;
+}
+
+ul.ux-tray-strip li {
+    float:left;
+    margin-left:0px;
+}
+
+
+ul.ux-tray-strip li.ux-tray-edge {
+    float:left;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 none !important;
+    font-size:1px !important;
+    line-height:1px !important;
+    overflow:hidden;
+    zoom:1;
+    background:transparent !important;
+    width:1px;
+}
+/* End: tray button */
+ 
+ 
+/*
+ * Begin Start Menu Tool
+ */
+.ux-start-menu-tools-panel .x-btn-over {
+	background:transparent none;
+	border-color:transparent;
+	/* padding: 0; */
+}
+
+/* .ux-startmenu-tool {
+	width:100%;
+} */
+
+.x-btn-icon .ux-startmenu-tool-center .x-btn-text{
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 16px;
+	width: 16px;
+	cursor:pointer;
+	white-space: nowrap;
+    padding:0;
+}
+
+.x-btn-icon .ux-startmenu-tool-center{
+	padding:1px;
+}
+
+.x-btn-text-icon .ux-startmenu-tool-center .x-btn-text{
+	background-position: 0 6px;
+	background-repeat: no-repeat;
+	padding:7px 0px 7px 20px;
+}
+
+.x-btn .ux-startmenu-tool-center .x-btn-text
+{
+	color:#ffffff;
+	padding:6px 0px 8px 0px;
+	text-align:left;
+}
+#ux-tray-panel SPAN.x-btn-text
+{
+	color:#ffffff;
+	background-position: 0 6px;
+	background-repeat: no-repeat;
+	padding:7px 10px 7px 20px;
+	text-align:left;
+        
+}
+
+.ux-startmenu-tool-left, .ux-startmenu-tool-right{
+	font-size:1px;
+    line-height:1px;
+}
+.ux-startmenu-tool-left{
+	width:10px;
+	height:27px;
+	background:url(../images/default/startmenu/start-menu-tool.png) no-repeat 0 -81px;
+}
+
+.x-btn-over .ux-startmenu-tool-left{
+	background-position:0 0;
+}
+
+.ux-startmenu-tool-right{
+	width:10px;
+	height:27px;
+	background:url(../images/default/startmenu/start-menu-tool.png) no-repeat 0 -81px;
+}
+
+.x-btn-over .ux-startmenu-tool-right{
+	background-position:0 -27px;
+}
+
+.ux-startmenu-tool-left i, .ux-startmenu-tool-right i{
+	display:block;
+    width:10px;
+    overflow:hidden;
+    font-size:1px;
+    line-height:1px;
+}
+
+.ux-startmenu-tool-center{
+	background:url(../images/default/startmenu/start-menu-tool.png) repeat-x 0 -81px;
+	cursor:pointer;
+	padding:0 5px 0 0;
+	text-align:left;
+	vertical-align:bottom;
+	white-space:nowrap;
+}
+
+.x-btn-over .ux-startmenu-tool-center{
+	background-position:0 -54px;
+}
+
+/*
+ * End Start Menu Tool
+ */
+
+.x-resizable-proxy{
+    background:#C7DFFC;
+    opacity:.5;
+    -moz-opacity:.5;
+    filter:alpha(opacity=50);
+    border: 1px solid #3b5a82;
+}
+ 
+/* Desktop Shortcuts */
+DL#x-shortcuts { 
+  width: 100%;
+  display: block;
+}
+#x-shortcuts dt {
+    float:left;
+    margin:15px 0 0 15px;
+  /*  clear:left; */
+    width:64px;
+    font:normal 10px tahoma,arial,verdana,sans-serif;
+    text-align:center;
+    zoom:1;
+    display:block;
+}
+#x-shortcuts dt a {
+    width:64px;
+    display:block;
+    color:white;
+    text-decoration:none;
+	font-weight: bold;
+}
+#x-shortcuts dt div {
+    width:100%;
+    color:#000;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    cursor: pointer;
+}
+#x-shortcuts dt img {
+    cursor: pointer;
+}
+.ext-ie #x-shortcuts dt img {
+    background:transparent !important;
+}
+#x-shortcuts dt a:hover {
+    text-decoration:none;
+	font-weight: bold;
+}
+/* shortcuts */
+#x-shortcuts img {
+    width:48px;
+    height:48px;
+}
+#order-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/package_editors.png);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/package_editors.png', sizingMethod='scale');
+}
+#customer-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/CommunityHelp.png);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/CommunityHelp.png', sizingMethod='scale');
+}
+#admin-win-shortcut img, #admin-win-alternative-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/kspread.png);
+    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/kspread.png', sizingMethod='scale');
+}
+#users-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/LoginManager.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/LoginManager.png', sizingMethod='scale');
+}
+#gadgets-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/ksirtet.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/ksirtet.png', sizingMethod='scale');
+}
+#induction-wizard-shortcut img,
+#setup-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/advancedsettings.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/advancedsettings.png', sizingMethod='scale');
+}
+
+#market-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/kword.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/kword.png', sizingMethod='scale');
+}
+
+#feusers-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/package_toys.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/package_toys.png', sizingMethod='scale');
+}
+
+#comments-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/easymoblog.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/easymoblog.png', sizingMethod='scale');
+}
+#roles-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/actions/agt_family.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/actions/agt_family.png', sizingMethod='scale');
+}
+#resources-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/mimetypes/resource.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/mimetypes/resource.png', sizingMethod='scale');
+}
+
+#definitions-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/lists.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/lists.png', sizingMethod='scale');
+}
+
+#contacts-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/mimetypes/vcard.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/mimetypes/vcard.png', sizingMethod='scale');
+}
+
+#news-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/knewsticker.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/knewsticker.png', sizingMethod='scale');
+}
+
+#mailing-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/mailreminder.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/mailreminder.png', sizingMethod='scale');
+}
+#newsletter-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/mailreminder.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/mailreminder.png', sizingMethod='scale');
+}
+#filemanager-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/harddrive.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/harddrive.png', sizingMethod='scale');
+}
+#translations-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/internet.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/internet.png', sizingMethod='scale');
+}
+
+#archive-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/filesystems/database.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/filesystems/database.png', sizingMethod='scale');
+}
+
+#import-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/ark.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/ark.png', sizingMethod='scale');
+}
+
+#products-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/warehause.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/warehause.png', sizingMethod='scale');
+}
+
+#bonuses-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/klines.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/klines.png', sizingMethod='scale');
+}
+
+#photo-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/lphoto.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/lphoto.png', sizingMethod='scale');
+}
+
+#container-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/kdisknav.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/kdisknav.png', sizingMethod='scale');
+}
+
+#tasks-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/palm.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/palm.png', sizingMethod='scale');
+}
+#start-vendor-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/starthere.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/starthere.png', sizingMethod='scale');
+}
+
+#qadr-win-shortcut img,
+#qa-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/actions/agt_support.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/actions/agt_support.png', sizingMethod='scale');
+}
+
+#gallery-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/mimetypes/image.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/mimetypes/image.png', sizingMethod='scale');
+}
+
+#roles-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/actions/agt_family.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/actions/agt_family.png', sizingMethod='scale');
+}
+
+#resources-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/mimetypes/resource.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/mimetypes/resource.png', sizingMethod='scale');
+}
+
+#definitions-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/apps/lists.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/apps/lists.png', sizingMethod='scale');
+}
+
+#contacts-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/mimetypes/vcard.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/mimetypes/vcard.png', sizingMethod='scale');
+}
+
+#videos-win-shortcut img {
+    background-image: url(../images/LinspireClear/48x48/mimetypes/video.png);
+   filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='lib/desktop/resources/images/LinspireClear/48x48/mimetypes/video.png', sizingMethod='scale');
+}
+
+.x-window-dlg .mb-loading-icon {
+	background:transparent url(../images/LinspireClear/48x48/actions/launch.png) no-repeat top left;
+	height:48px;
+    width: 48px;
+}
+
+.msg .x-box-mc {
+    font-size:14px;
+}
+#msg-div {
+   position:absolute;
+    left:35%;
+    top:10px;
+    width:250px;
+    z-index:20000;
+}
+
+.money-trigger {
+    background-image:url(../../../ext/ux/money-trigger.gif) !important;
+}
+
+
+.thumb{
+	background: #dddddd;
+	padding: 3px;
+}
+.thumb img{
+}
+.thumb-wrap{
+	float: left;
+	margin: 3px;
+	margin-right: 0;
+    margin-left: 0px;
+	padding: 5px;
+}
+.thumb-wrap span {
+	display: block;
+	overflow: hidden;
+	text-align: center;
+}
+
+.xcheckbox-wrap {
+   line-height: 18px;
+   padding-top:2px;
+}
+.xcheckbox-wrap a {
+   display:block;
+   width:16px;
+   height:16px;
+   float:left;
+}
+.x-toolbar .xcheckbox-wrap {
+   padding: 0 0 2px 0;
+}
+.xcheckbox-on {
+   background:transparent url(../../../ext/2.0/resources/images/default/menu/checked.gif) no-repeat 0 0;
+}
+.xcheckbox-off {
+   background:transparent url(../../../ext/2.0/resources/images/default/menu/unchecked.gif) no-repeat 0 0;
+}
+.xcheckbox-disabled {
+   opacity: 0.5;
+   -moz-opacity: 0.5;
+   filter: alpha(opacity=50);
+   cursor:default;
+}
+
+.course-tag-all-checked{
+background-position: -23px 1px;	
+}
+
+.icon-wrench-config {
+	
+	background-image:url(../images/default/icons/quizsettings.png);
+	width : 16px;
+	height : 16px;
+}
+.quizsettings-form-cls .x-form-element {
+	
+	padding-left : 0px !important;
+}
+.quizsettings-form-cls .x-form-label-left .x-form-item-label {
+	
+	display : none !important;
+}
+.quizsettings-form-cls .spinnerfiled-cls .x-form-item-label {
+	
+	display : block !important;
+}
+.quizsettings-form-cls .sub-sequent-lock-cls .x-form-item-label {
+	
+	width : 226px !important;
+}
+.spinnerfiled-cls {
+
+	margin-top: 12px;
+	margin-bottom: 10px;
+}
+.quizsettings-form-cls .x-fieldset {
+	
+	margin : 10px !important;
+}
+#unviewlessons-area{
+	margin:0px !important;
+}
+.editsettings-container-cls {
+	
+	font-size : 120% !important;
+}
+
+.grid-image-hide img{
+	
+	display : none !important;
+}
+
+
+.icon-cross-disabled .icon-cross,.icon-wrench-disabled .icon-wrench-config{
+	cursor:none !important;
+	opacity: 0.5 !important;
+}
+.windowsdatatabcls .x-form-item {
+    overflow: hidden !important;
+}
+
+.icon-cuepoints-help-win {
+    background-image:url(../images/LinspireClear/16x16/actions/help.png) !important;
+    align:right;
+}
+
+.window-title-text-align {
+	text-align:center;
+}
+
+.window-text-text-align{
+	text-align:left;
+}
+
+.cell-incorrect-data{
+	border: solid;
+	border-width: 1px;
+	border-color: red;
+	background-color:red;
+}
+
+.textfield-noborder{
+	border:0px;
+}
+.cuepointsgrid-prop{
+	top:2px;
+}
+
+.marker-error-cell{
+	height: 16px;
+	position: relative;
+	top: -15px;
+}
+
+.combo-filed-lessonSeenLock{
+	width : 224px !important;
+	padding-left : 0px !important;
+}
+
+.sub-sequent-lock-cls {
+
+	margin-top: 12px;
+	/*margin-bottom: -15px;*/
+	margin-left: 20px !important;
+}
+
+.lesson-subsequent-cls{
+	border: none !important;
+}
+
+.lessonName_checkbox_hidden{
+	visibility : hidden;
+	display: none;
+}
+
+.lesson-name-text{
+	width:90% !mportant;
+	padding-top:6px;
+}
+/*
+	#29017 
+	Answers grid cell disable/enable cls, hide check box cls.
+*/
+
+.disableCell{
+	background-color: #BEBEBE;
+	color: #BEBEBE;
+}
+.enableCell{
+	background: none !important;
+	color: #676767 !important;
+}
+.hideCheckBox{
+	background-image: none !important;
+}

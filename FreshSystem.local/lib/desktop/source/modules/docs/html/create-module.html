@@ -1,0 +1,52 @@
+<p><b>Creating A Module</b></p>
+
+<p>1. Green font shows code that utilizes methods of the desktop object.<br />
+2. Red font is code that is required for a module in this desktop environment.</p>
+
+<div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;">Code:</div>
+<pre>
+Ext.namespace("MyDesktop");
+
+MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
+
+	<font color="Green">appType : 'bogus',</font>
+	<font color="Red">id : 'bogus-win',</font>
+	
+	init : function(){
+		this.launcher = {
+			text: 'Bogus Window',
+			iconCls: 'bogus',
+			handler: this.createWindow,
+			scope: this
+		}
+	},
+
+	createWindow : function(){
+		var desktop = this.app.getDesktop();
+		var win = desktop.getWindow('bogus-win');
+        
+		<font color="Green">var winWidth = desktop.getWinWidth() / 1.1;</font> 
+		<font color="Green">var winHeight = desktop.getWinHeight() / 1.1;</font>
+
+		if(!win){
+			win = desktop.createWindow({
+				id: 'bogus-win',
+				title: 'Bogus Window',
+				width: <font color="Green">winWidth,</font>
+				height: <font color="Green">winHeight,</font>
+				html: 'Something useful would be in here.',
+				iconCls: 'bogus',
+				shim: false,
+				animCollapse: false,
+				constrainHeader: true,
+				x: <font color="Green">desktop.getWinX(winWidth),</font>
+				y: <font color="Green">desktop.getWinY(winHeight),</font>
+			});
+		}
+
+		win.show();
+	}
+});
+</pre>
+</div>

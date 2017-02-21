@@ -1,0 +1,411 @@
+text: 
+    uid: 4
+    name: text
+    description: text
+    t: content
+    data: 
+        ContentValueTag: p
+        ContentEditClass: ContentTextTinyMCE
+        iconCls: text
+        forPerex: 1
+        forSummary: 1
+        doNotAllowEmpty: true
+htmltext: 
+    uid: 4
+    name: htmltext
+    description: html text
+    t: content
+    data: 
+        ContentValueTag: p
+        ContentEditClass: HtmlContentText
+        iconCls: text
+        forPerex: 1
+        forSummary: 1
+rawhtml:
+    uid: 4
+    name: rawhtml
+    description: raw html
+    t: content
+    data:
+        ContentValueTag: p
+        ContentEditClass: RawHtmlContentText
+        iconCls: html
+        forPerex: 1
+        forSummary: 1
+tinymce:
+    uid: 4
+    name: tinymce
+    description: tinymce text
+    t: content
+    data:
+        ContentValueTag: p
+        ContentEditClass: ContentTextTinyMCE
+        iconCls: text
+        forPerex: 1
+        forSummary: 1
+        doNotAllowEmpty: true
+boxedText: 
+    uid: 16
+    name: boxedText
+    description: boxed text
+    t: content
+    data: 
+        ContentEditClass: MBasicBox
+        iconCls: text
+        forPerex: 1
+        forSummary: 1
+NormalPage: 
+    uid: 5
+    name: NormalPage
+    description: basic page
+    t: container
+    data: 
+        ContentEditClass: ContainerName
+        pagePath: NormalPage
+        iconCls: page
+NotInMenuPage:
+    uid: 5
+    name: NotInMenuPage
+    description: not in menu page
+    t: container
+    data:
+        ContentEditClass: ContainerName
+        pagePath: NormalPage
+        notInMenu: 1
+        iconCls: nomenupage
+ColumnPage: 
+    uid: 5
+    name: ColumnPage
+    description: 2 column page
+    t: container
+    data: 
+        ContentEditClass: ContainerName
+        pagePath: ColumnPage
+ShopDetailPage: 
+    uid: 10
+    name: ShopDetailPage
+    description: shop detail page
+    t: container
+    data: 
+        ContentEditClass: ContainerName
+        pagePath: shop.ProductDetail
+        iconCls: cartpage
+ShopCategoryPage: 
+    uid: 10
+    name: ShopCategoryPage
+    description: shop category page
+    t: container
+    data: 
+        ContentEditClass: ContainerName
+        pagePath: shop.CategoryProductDetail
+ShopProductListPage: 
+    uid: 19
+    name: ShopProductListPage
+    description: product list page
+    t: container
+    data: 
+        ContentEditClass: ContainerName
+        pagePath: shop.ProductListPage
+        iconCls: cart
+Image: 
+    uid: 2
+    name: Image
+    description: image
+    t: content
+    data: 
+        iconCls: image
+CategoryPage: 
+    uid: 3
+    name: CategoryPage
+    description: category page
+    RecordClass: ContainerCategoryRecord
+    t: container
+    data: 
+        iconCls: tag-green
+MenuRoot: 
+    uid: 6
+    name: MenuRoot
+    description: menu root
+    t: container
+    data: 
+        iconCls: brick
+        pagePath: NormalPage
+Service:
+    uid: 8
+    name: Service
+    description: service
+    t: container
+    data:
+        iconCls: gears
+        hidden: 1
+        notInMenu: 1
+        servicePage: 1
+RecycleBin: 
+    uid: 8
+    name: RecycleBin
+    description: recycle bin
+    t: container
+    data: 
+        iconCls: bin
+        hidden: 1
+        servicePage: 1
+Templates: 
+    uid: 9
+    name: Templates
+    description: templates
+    t: container
+    data: 
+        iconCls: templates
+        hidden: 1
+        servicePage: 1
+Heading1: 
+    uid: 11
+    name: Heading1
+    description: heading 1
+    t: content
+    data: 
+        ContentValueTag: H1
+        ContentEditClass: ContainerName
+        iconCls: heading1
+HomePage: 
+    uid: 12
+    name: HomePage
+    description: homepage
+    RecordClass: ContainerHomeRecord
+    t: container
+    data: 
+        ContentEditClass: ContainerName
+        pagePath: NormalPage
+        iconCls: homepage
+ContentColumn: 
+    uid: 13
+    name: ContentColumn
+    description: column
+    t: container
+    data: 
+        iconCls: column
+        notInMenu: 1
+        upLink: 1
+LinkFile: 
+    uid: 14
+    name: LinkFile
+    description: link to file
+    t: content
+    data: 
+        iconCls: link
+Heading2: 
+    uid: 15
+    name: Heading2
+    description: heading 2
+    t: content
+    data: 
+        ContentValueTag: H2
+        ContentEditClass: ContainerName
+        iconCls: heading2
+Downlink:
+    uid: 17
+    name: DownLink
+    description: down link
+    t: content
+    data: 
+        ContentEditClass: ContainerName
+        pagePath: NormalPage 
+        iconCls: link         
+Redirect: 
+    uid: 15
+    name: Redirect
+    description: redirect to page
+    t: content
+    data: 
+        ContentEditClass: ContentRedirect
+        iconCls: link
+LinkTarget:
+    uid: 15
+    name: LinkTarget
+    description: link target
+    t: content
+    data:
+        ContentEditClass: ContentLinkTarget
+        iconCls: link
+Link:
+    uid: 15
+    name: Link
+    description: link page
+    t: container
+    RecordClass: ContainerLinkRecord
+    data:
+        iconCls: link
+CategoriesRoot:
+    uid: 15
+    name: CategoriesRoot
+    description: categories root
+    t: container
+    RecordClass: ContainerCategoryRecord
+    data:
+        iconCls: tag-red
+        notInMenu: 1
+        pagePath: CategoryPage
+        minLevel: 199
+CoolUrl: 
+    uid: 15
+    name: CoolUrl
+    description: cool url
+    t: content
+    data: 
+        ContentEditClass: ContentCoolUrl
+        iconCls: link
+Domain:
+    uid: 15
+    name: Domain
+    description: domain
+    t: content
+    data:
+        ContentEditClass: ContentDomain
+        iconCls: internet
+Theme:
+    uid: 15
+    name: Theme
+    description: theme
+    t: content
+    data:
+        ContentEditClass: ContentTheme
+        iconCls: theme
+Master:
+    uid: 15
+    name: Master
+    description: master layout
+    t: content
+    data:
+        ContentEditClass: ContentMaster
+        iconCls: theme
+AncestorsHint:
+    uid: 15
+    name: AncestorsHint
+    description: ancestor hint
+    t: content
+    data:
+        ContentEditClass: FreshSystem.UI.FAncestorsHint
+        iconCls: gears
+ContainerLevel:
+    uid: 15
+    name: ContainerLevel
+    description: container security level
+    t: content
+    data:
+        ContentEditClass: ContainerLevel
+        iconCls: link
+        minLevel: 199
+ContentReadRights:
+    uid: 15
+    name: ContentReadRights
+    description: access read rights
+    t: content
+    data:
+        ContentEditClass: ContentReadRights
+        iconCls: lock
+        minLevel: 199
+PagePath:
+    uid: 15
+    name: PagePath
+    description: page path
+    t: content
+    data:
+        ContentEditClass: ContentPagePath
+        iconCls: pagepath
+        minLevel: 199
+Metadata: 
+    uid: 15
+    name: Metadata
+    description: meta data tags
+    t: content
+    data: 
+        ContentEditClass: FreshSystem.UI.Content.FContentMeta
+        iconCls: file-sh
+MenuSimple:
+    name: MenuSimple
+    description: menu simple
+    t: content
+    data:
+        ContentEditClass: FreshSystem.UI.FMenuSimple
+        iconCls: table
+MenuLang:
+    name: MenuLang
+    description: menu lang
+    t: content
+    data:
+        ContentEditClass: FreshSystem.UI.FMenuLang
+        iconCls: langlocale
+MenuTabbed:
+    name: MenuTabbed
+    description: menu tab panel
+    t: content
+    data:
+        ContentEditClass: FreshSystem.UI.FMenuTabPanel
+        iconCls: table
+ContentReader:
+    name: ContentReader
+    description: alias
+    t: content
+    data:
+        ContentEditClass: ContentReaderWidget
+        iconCls: table
+LanguageEn: 
+    uid: 20
+    name: LanguageEn
+    description: language EN
+    t: container
+    data: 
+        translation: 1
+        iconCls: ux-flag-gb
+        lang: en
+        notInMenu: true
+LanguageDe: 
+    uid: 20
+    name: LanguageDe
+    description: language DE
+    t: container
+    data: 
+        notInMenu: true
+        translation: 1
+        iconCls: ux-flag-de
+        lang: de
+LanguageFr: 
+    uid: 20
+    name: LanguageFr
+    description: language FR
+    t: container
+    data: 
+        notInMenu: true
+        translation: 1
+        iconCls: ux-flag-fr
+        lang: fr
+LanguageSk: 
+    uid: 20
+    name: LanguageSk
+    description: language SK
+    t: container
+    data: 
+        notInMenu: true
+        translation: 1
+        iconCls: ux-flag-sk
+        lang: sk
+LanguageRu:
+    uid: 20
+    name: LanguageRu
+    description: language RU
+    t: container
+    data:
+        notInMenu: true
+        translation: 1
+        iconCls: ux-flag-ru
+        lang: ru
+LanguageCs:
+    uid: 20
+    name: LanguageCs
+    description: language CS
+    t: container
+    data:
+        notInMenu: true
+        translation: 1
+        iconCls: ux-flag-cz
+        lang: cs

@@ -1,0 +1,86 @@
+{
+
+        title:'Nested Plugin Tab',
+		
+		//id: 'remotetab',
+
+		xtype:'tabpanel',
+
+        activeTab: 0,
+
+        defaults:{autoHeight:true, autoWidth:true, bodyStyle:'padding:10px', autoScroll:true}, 
+
+        resizeTabs:true, // turn on tab resizing
+
+        minTabWidth: 115,
+
+		height: 300,
+
+        tabWidth:135,
+		
+		header: true,
+
+        enableTabScroll:true,
+
+        deferHeight  : true,
+       
+        
+        
+
+		items:[{
+
+            title:'Remote Tab 3',
+
+            layout:'form',
+
+            defaults: {width: 230},
+
+            defaultType: 'textfield',
+
+            headerAsText : true,
+
+			deferHeight  : true,
+
+            items: [{
+
+                fieldLabel: 'First Name',
+
+                name: 'first',
+
+                allowBlank:false
+
+            },{
+
+                fieldLabel: 'Last Name',
+
+                name: 'last'
+
+            },{
+                text: 'Button1',
+
+                xtype: 'button'
+            }, {
+                text: 'Button2',
+
+                xtype: 'button'
+            }]
+
+        },{
+
+            title:'Remote Tab 4',
+
+            
+
+
+			
+            defaults: {width: 230},
+
+            //defaultType: 'textfield',
+
+			deferHeight  : true,
+
+            html: 'some content'
+
+        }]
+
+    }

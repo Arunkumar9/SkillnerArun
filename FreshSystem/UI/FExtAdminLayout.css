@@ -1,0 +1,157 @@
+/*
+*   FreshAdmin 
+*   Copyright(c) 2006-2007, FreshConcept s.r.o.
+*/
+/*
+ * Ext JS Library 1.0.1
+ * Copyright(c) 2006-2007, Ext JS, LLC.
+ * licensing@extjs.com
+ * 
+ * http://www.extjs.com/license
+ */
+
+.east-panel-btn {
+	padding: 5px;
+}
+.x-filetree-nodename {
+	font-weight: bold;
+	color: black;
+}
+
+.x-tree-node img.types, .x-tree-node-collapsed img.types, .x-tree-node-expanded img.types {
+    background-image:url(/FreshSystem/images/icons/kpersonalizer.png);
+}
+
+.x-tree-node img.menu, .x-tree-node-collapsed img.menu, .x-tree-node-expanded img.menu {
+    background-image:url(/FreshSystem/images/icons/fam/folder_page.png);
+}
+.x-tree-node img.Navigation, .x-tree-node-collapsed img.Navigation, .x-tree-node-expanded img.Navigation {
+    background-image:url(/FreshSystem/images/icons/fam/folder_page.png);
+}
+
+.x-tree-node img.users, .x-tree-node-collapsed img.users, .x-tree-node-collapsed img.users {
+    background-image:url(/FreshSystem/images/icons/fam/group.png);
+}
+.x-tree-node img.user, .x-tree-node-collapsed img.user, .x-tree-node-collapsed img.user {
+    background-image:url(/FreshSystem/images/icons/fam/user.png);
+}
+
+.x-tree-node img.folder, .x-tree-node-collapsed img.folder {
+    background-image:url(/FreshSystem/images/icons/folder.gif);
+}
+
+.x-tree-node-expanded img.folder {
+    background-image:url(/FreshSystem/images/icons/folder-open.gif);
+}
+
+.x-tree-node img.brick, .x-tree-node-collapsed img.brick {
+    background-image:url(/FreshSystem/images/icons/fam/brick.png);
+}
+
+.x-tree-node-expanded img.brick {
+    background-image:url(/FreshSystem/images/icons/fam/brick.png);
+}
+
+.x-tree-node img.homepage, .x-tree-node-collapsed img.homepage, .x-tree-node-expanded img.homepage {
+    background-image:url(/FreshSystem/images/icons/fam/house.png);
+}
+
+.x-tree-node img.column, .x-tree-node-collapsed img.column, .x-tree-node-expanded img.column {
+    background-image:url(/FreshSystem/images/icons/fam/text_columns.png);
+}
+
+.x-tree-node img.bin, .x-tree-node-collapsed img.bin {
+    background-image:url(/FreshSystem/images/icons/fam/bin_closed.png);
+}
+
+.x-tree-node-expanded img.bin {
+    background-image:url(/FreshSystem/images/icons/fam/bin.png);
+}
+
+.x-tree-node img.templates, .x-tree-node-collapsed img.templates {
+    background-image:url(/FreshSystem/images/icons/fam/brick_edit.png);
+}
+
+.x-tree-node-expanded img.templates {
+    background-image:url(/FreshSystem/images/icons/fam/brick_edit.png);
+}
+
+.x-tree-node-leaf img.image {
+    background-image:url(/FreshSystem/images/icons/fam/picture.png);
+}
+
+.x-tree-node-leaf img.table {
+    background-image:url(/FreshSystem/images/icons/fam/table.png);
+}
+
+.x-tree-node-leaf img.images {
+    background-image:url(/FreshSystem/images/icons/fam/images.png);
+}
+
+.x-tree-node-leaf img.link {
+    background-image:url(/FreshSystem/images/icons/fam/link.png);
+}
+
+.x-tree-node-leaf img.text {
+    background-image:url(/FreshSystem/images/icons/fam/text_dropcaps.png);
+}
+.x-tree-node-leaf img.heading1 {
+    background-image:url(/FreshSystem/images/icons/fam/text_heading_1.png);
+}
+.x-tree-node-leaf img.heading2 {
+    background-image:url(/FreshSystem/images/icons/fam/text_heading_2.png);
+}
+
+
+.x-tree-node .croot{
+    background:#c3daf9;
+}
+.x-tree-node div.cmp{
+    background:#eee url(/FreshSystem/images/icons/cmp-bg.gif) repeat-x;
+    margin-top:1px;
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ccc;
+    padding-top:2px;
+    padding-bottom:1px;
+}
+.modify .x-btn-text, .modify .x-menu-item-icon {
+    background-image:url(/FreshSystem/images/icons/fam/plugin.gif);
+}
+
+.reload .x-btn-text, .reload .x-menu-item-icon {
+    background-image:url(/FreshSystem/images/icons/reload.png);
+}
+
+.switch .x-btn-text, .switch .x-menu-item-icon {
+    background-image:url(/FreshSystem/images/icons/fam/arrow_switch.png);
+}
+
+.exit .x-btn-text, .exit .x-menu-item-icon, .x-btn-text-icon .exit {
+    background-image:url(/FreshSystem/images/icons/exit.png);
+}
+
+.add .x-btn-text, .add .x-menu-item-icon {
+    background-image:url(/FreshSystem/images/icons/fam/add.gif);
+}
+.tab-add .x-btn-text, .tab-add .x-menu-item-icon {
+    background-image:url(/FreshSystem/images/icons/fam/tab_add.png);
+}
+
+.remove .x-btn-text, .remove .x-menu-item-icon {
+    background-image:url(/FreshSystem/images/icons/fam/delete.gif);
+}
+
+.save .x-btn-text {
+    background-image:url(/FreshSystem/images/icons/save.gif);
+}
+
+.expand-all .x-menu-item-icon, .expand-all .x-btn-text {
+    background-image:url(/FreshSystem/images/icons/fam/arrow_out.png);
+}
+.collapse-all .x-menu-item-icon, .collapse-all .x-btn-text {
+    background-image:url(/FreshSystem/images/icons/fam/arrow_in.png);
+}
+
+.x-tree-node img.cmp, .menu-cmp .x-menu-item-icon{
+    background-image:url(/FreshSystem/images/icons/fam/plugin.gif);
+}

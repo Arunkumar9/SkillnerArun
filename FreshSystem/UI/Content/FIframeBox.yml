@@ -1,0 +1,7 @@
+IframeBox: 
+    name: IframeBox
+    description: iframe
+    t: content
+    data: 
+        ContentEditClass: FIframeBox
+        iconCls: text

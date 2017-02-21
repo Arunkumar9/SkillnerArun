@@ -1,0 +1,1 @@
+INSERT INTO `pjs_table` (`id`, `scriptpath`, `name`, `time_interval`, `fire_time`, `time_last_fired`, `run_only_once`, `currently_running`, `process_enable`) VALUES ('4', 'CheckUnReadMessageCount.php', 'CheckUnReadMessageCount', '60', '1398223626', '1398223566', '0', '0', '1');

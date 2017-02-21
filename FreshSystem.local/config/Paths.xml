@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+ <paths>
+    <using namespace="Application.common.CartItem" />
+    <using namespace="FreshSystem.*" />
+    <using namespace="FreshSystem.services.json.*" />
+    <using namespace="FreshSystem.UI.*" />
+    <using namespace="FreshSystem.UI.Components.*" />
+    <using namespace="FreshSystem.UI.FListMenu" />
+    <using namespace="FreshSystem.UI.FWidgetGateway" />
+    <using namespace="Application.scripts.*" />
+    <using namespace="Application.services.json.*" />
+    <using namespace="Application.model.*" />
+    <using namespace="Application.model.cms.*" />
+    <using namespace="Application.config.FIni" />
+    <using namespace="System.Data.ActiveRecord.*" />
+    <using namespace="System.Data.ActiveRecord.Relations.*" />
+    <using namespace="Application.scripts.*" />
+    <using namespace="Application.common.*" />
+    <using namespace="Application.pages.*" />
+    <using namespace="Application.layout.*" />
+    <using namespace="Application.layout.contents.*" />
+    <using namespace="FreshSystem.model.cms.*" />
+    <using namespace="FreshSystem.model.cms.ContentText" />
+    <using namespace="FreshSystem.model.cms.ContentRecord" />
+    <using namespace="FreshSystem.model.cms.ContainerContentRecord" />
+    <using namespace="System.common.*" />
+    <using namespace="System.Util.*" />
+    <using namespace="System.I18N.*" />
+    <using namespace="System.I18N.core.*" />
+    <using namespace="System.Web.UI.ActiveControls.*" />
+    <using namespace="ZF.*" />
+  </paths>
+  </configuration>

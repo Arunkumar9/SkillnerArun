@@ -1,0 +1,596 @@
+
+/*
+* All the close/open status related to Lesson and Quiz
+*/
+.quizOpenCls {
+	
+	background: url($spritePath) -68px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: -5px;
+	
+}
+
+.quizClosedCls {
+	background: url($spritePath) -86px -292px !important;
+	background-repeat: no-repeat !important;
+	font-weight : bold !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: -6px;
+}
+.required-subsequent-cls {
+	background: url($spritePath) -180px -295px !important;
+	background-repeat: no-repeat !important;
+	width: 10px !important;
+	height: 10px !important;
+	margin-left: 20px !important;
+	display: block;
+	margin-top: -1px !important;
+}
+
+.passed-score-cls{
+	background-color: $passed-score-background  ;
+	text-align: center;
+}
+
+.failed-score-cls{
+	background-color: $failed-score-background ;
+	color: $failed-score-text !important ;
+	text-align: center;
+}
+
+.required-score-cls,
+.quiz-reset-cls{
+	background-color: $quiz-reset-background ;
+	text-align: center;
+}
+
+.regular-quiz-completed{
+	background: url($spritePath) -68px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: -5px;
+
+}
+
+.regular-quiz-incomplete{
+	background: url($spritePath) -86px -292px !important;
+	background-repeat: no-repeat !important;
+	font-weight : bold !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: -6px;
+
+}
+
+.required-quiz-incomplete{
+	background: url($spritePath) -104px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: -5px;
+
+}
+
+.required-quiz-passed{
+	background: url($spritePath) -122px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: -6px;
+
+}
+
+.required-quiz-failed{
+	background: url($spritePath) -140px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: -6px;
+
+}
+
+.lesson-open-expanded {
+	background: url($spritePath) -14px -295px !important;
+	background-repeat: no-repeat !important;
+	width:13px !important;
+	height:10px !important;
+}
+
+.lesson-open-collapsed {
+	background: url($spritePath) 0px -295px !important;
+	background-repeat: no-repeat !important;
+	width:13px !important;
+	height:10px !important;
+}
+
+.lesson-close-expanded {
+	background: url($spritePath) -46px -295px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:10px !important;
+}
+
+.lesson-close-collapsed {
+	background: url($spritePath) -30px -295px !important;
+	background-repeat: no-repeat !important;
+	width:16px !important;
+	height:10px !important;
+}
+
+.instructions-cls {
+	background: url($spritePath) -104px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 18px !important;
+	height: 18px !important;
+}
+
+.instructions-cls:hover {
+	background: url($spritePath) -104px -224px !important;
+	background-repeat: no-repeat !important;
+}
+
+.group-header-badgeCls {
+	background: url($spritePath) -130px -205px !important;
+	width: 21px !important;
+	height: 18px !important;
+	background-clip: padding-box;
+	background-image: none;
+	color: white;
+	display: inline-block;
+	font-family: tahoma,arial,verdana,sans-serif;
+	font-size: 7pt;
+	font-weight: normal;
+	line-height: 1.2em;
+	min-width: 1.5em;
+	max-width: 95%;
+	overflow: visible;
+	padding: 0.2em;
+	position: relative;
+	text-align: center !important;
+	text-shadow: 0 -0.08em 0 rgba(0, 0, 0, 0.5);
+	width: auto;
+	z-index: 12;
+	padding-left : 6px;
+	padding-top: 2.5px;
+	left : 2px !important;
+}
+
+.x-ie8 .group-header-badgeCls {
+	background: url($spritePath) -130px -205px !important;
+	width: 21px !important;
+	height: 18px !important;
+	background-clip: padding-box;
+	background-image: none;
+	color: white;
+	display: inline-block;
+	font-family: tahoma,arial,verdana,sans-serif;
+	font-size: 7pt;
+	font-weight: normal;
+	line-height: 1.2em;
+	min-width: 1.5em;
+	max-width: 95%;
+	overflow: visible;
+	padding-left : 0.6em !important;
+	padding-bottom : 0px !important;
+	padding-right : 0px !important;
+	position: relative;
+	text-align: center !important;
+	text-shadow: 0 -0.08em 0 rgba(0, 0, 0, 0.5);
+	width: auto;
+	z-index: 12;
+}
+
+.course-task-badge {
+	background: url($spritePath) -130px -205px !important;
+	width: 21px !important;
+	height: 18px !important;
+	background-clip: padding-box;
+	background-image: none;
+	left: 9px;
+	color: white;
+	display: inline-block;
+	font-family: tahoma,arial,verdana,sans-serif;
+	font-size: 7pt;
+	font-weight: normal;
+	line-height: 1.2em;
+	overflow: visible;
+	padding: 0.2em;
+	position: relative;
+	text-align: center !important;
+	text-shadow: 0 -0.08em 0 rgba(0, 0, 0, 0.5);
+	z-index: 12;
+	top:1px;
+	padding-left: 8px !important;
+}
+
+.trainingfileicon {
+	background: url($spritePath) -264px -121px !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.trainingfileicon:hover{
+	background: url($spritePath) -264px -147px !important;
+	background-repeat: no-repeat !important;
+	background-color: $icon-background !important;
+}
+
+
+/*
+* All the cls related to courseTask summary status icon
+*/
+.course-status-03{
+	background: url($spritePath) -38px -250px no-repeat !important;
+	width: 18px !important;
+	height: 19px !important;
+}
+
+.course-status-03:hover{
+	background: url($spritePath) -38px -270px no-repeat !important;
+}
+
+.course-status-04{
+	background: url($spritePath) -19px -250px no-repeat !important;
+	width: 18px !important;
+	height: 19px !important;
+}
+
+.course-status-04:hover{
+	background: url($spritePath) -19px -270px no-repeat !important;
+}
+
+.course-status-05{
+	background: url($spritePath) 0px -250px no-repeat !important;
+	width: 18px !important;
+	height: 19px !important;
+}
+
+.course-status-05:hover{
+	background: url($spritePath) 0px -270px no-repeat !important;
+}
+
+.course-status-099{
+	background: url($spritePath) -56px -250px no-repeat !important;
+	width: 18px !important;
+	height: 19px !important;
+}
+
+.course-status-099:hover{
+	background: url($spritePath) -56px -270px no-repeat !important;
+}
+.status03 {
+
+	background: url($spritePath) -51px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+ 
+.status099 {
+
+	background: url($spritePath) -78px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+
+.status03-quiz {
+
+	background: url($spritePath) -180px -250px !important;
+	background-repeat: no-repeat !important;
+	width: 13px !important;
+	height: 13px !important;
+	margin-left: -5px;
+	margin-top: 2px;
+}
+
+.status03-quiz:hover {
+
+	background: url($spritePath) -180px -264px !important;
+}
+
+.student .status04-quiz,
+.instructor .status05-quiz {
+
+	background: url($spritePath) -208px -250px !important;
+	background-repeat: no-repeat !important;
+	width: 13px !important;
+	height: 13px !important;
+	margin-left: -5px;
+	margin-top: 2px;
+}
+
+.student .status04-quiz:hover,
+.instructor .status05-quiz:hover {
+	background: url($spritePath) -208px -264px !important;
+}
+
+.student .status05-quiz,
+.instructor .status04-quiz {
+
+	background: url($spritePath) -194px -250px !important;
+	background-repeat: no-repeat !important;
+	width: 13px !important;
+	height: 13px !important;
+	margin-left: -5px;
+	margin-top: 2px;
+	
+}
+
+.student .status05-quiz:hover,
+.instructor .status04-quiz:hover {
+	background: url($spritePath) -194px -264px !important;
+}
+
+.status099-quiz {
+
+	background: url($spritePath) -222px -250px !important;
+	background-repeat: no-repeat !important;
+	width: 13px !important;
+	height: 13px !important;
+	margin-left: -5px;
+	margin-top: 2px;
+}
+
+.status099-quiz:hover {
+	background: url($spritePath) -222px -264px !important;
+}
+
+.status03-3-summary {
+	background: url($spritePath) -51px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+
+.student .status04-4-summary,
+ .instructor .status05-5-summary{
+	background: url($spritePath)  -26px -205px !important ;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+
+.student .status05-5-summary,
+.instructor .status04-4-summary {
+	background: url($spritePath)  0px -205px !important ;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+
+.status099-99-summary {
+	background: url($spritePath)  -78px -205px !important ;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+.seen-font {
+	color : $seen-font-text !important;
+}
+
+.notseen-font{
+	color : $nonseen-font-text !important;
+}
+.even-row-cls {
+  	background: $grid-even-row  !important; 
+}
+
+.odd-row-cls {
+  	background: $grid-odd-row !important;  
+}
+
+.film-start {
+	background-image: url($film-start-image) !important;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.seen-chapter .x-grid-cell-inner{
+	display: none !important;
+}
+
+.now-seen.seen-chapter .x-grid-cell-inner{
+	display: block !important;
+}
+
+.film-open {
+	background-image: url($film-open-image) !important;
+}
+.row-seen {
+	background-color: $row-seen-background !important;
+}
+
+.feed-picker-url {
+	float: left;
+	width: 425px;
+}
+
+.feed-picker-title { 
+	color: #777;
+	font-size: 10px;
+}
+
+.feed-list {
+	padding: 0 3px 0 3px;
+}
+
+.feed-list-item,
+.x-grid-cell .film,
+.x-grid-cell .film-start
+{
+    margin-top: 3px;
+    padding-left: 20px;
+    font-size: 11px;
+    line-height: 20px;
+    cursor: pointer;
+    background: url($film-image) no-repeat 0 2px;
+    border: 1px solid $film-icon-border ;
+}
+.feed-list .x-item-selected {
+	font-weight: bold;
+	color: $feed-list-text ;
+	background-color: $feed-list-background;
+	border: 1px dotted $feed-list-border;
+}
+
+.feed-list-item-hover {
+	background-color: $feed-list-over-background ;
+}
+.ch{
+	
+	display : none;
+}
+
+.instructions-win{
+	overflow : auto;
+	background-color:white !important;
+}
+
+.course-template {
+	
+	padding: 5px 0px 0px 0px !important;
+}
+
+.hide-headerbadge{
+	
+	display:none !important;
+	
+}
+#msg-div {
+	
+    position:absolute;
+    right:0%;
+    top:10px;
+    width:300px;
+    z-index:20000;
+    
+}
+
+#msg-div .msg {
+	
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    background:  $notification-msg-background ;
+    border: 2px solid  $notification-msg-border ;
+    margin-top: 2px;
+    padding: 10px 15px;
+    color:  $notification-msg-text ;
+}
+
+#msg-div .msg h3 {
+	
+    margin: 0 0 8px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#msg-div .msg p {
+	
+    margin: 0;
+}
+.fully-completed{
+	
+	background-image: url($bulb-image) ! important;
+	width: 20px !important;
+	height: 20px !important;
+	margin-left: 2px;
+	margin-top: 2px;
+}
+
+.group-header-icon {
+	
+	position: absolute;
+	margin-top: -2px;
+	width: 18px;
+	height: 25px;
+	left: 3px;
+}
+.x-group-badge-default{
+	
+	float: right;
+	min-width: 40px !important;
+	margin-right: 2px !important;
+	height: 22px !important;
+}
+.currentlyselected  { 
+    font-weight : bold !important;
+}
+.x-grid-group-hd{
+	border-width: 1px 0px 1px 0px !important;
+}
+.x-grid-with-row-lines .x-grid-table {
+	border-top: 0px !important;
+}
+/**
+  * remove the space b/w the group header and Chepters rows
+  **/
+.chapterslist-grid-cls .x-grid-table {
+	
+	margin-top: -3px !important;
+}
+.hide-expand-collapse.quizlocked{
+	padding: 0px !important;
+}
+.chapter-list-toolbar-cls{
+	
+	background-image: none !important;
+	background-color: $sub-container-bgr !important;
+	border-color: $content-bgr !important;
+}
+
+/**
+  *Add the splitter line background color #161616 
+  **/
+.x-splitter-horizontal {
+	
+	background-color: $segment-separator-line !important;
+	height: 2px !important;
+}
+/**
+  * Group beader top border color is #444444,bottom border color is #e1e1e1
+  **/
+.chapterslist-grid-cls .x-grid-group-hd	{
+	border-top-color: $content-bgr !important ;
+	border-bottom-color: $main-menu-lesson-or-quiz-separator-line-cell-bottom !important ;
+}
+.not-yet-seen .x-grid-cell-inner {
+	margin-top: -4px ;
+	color: $not-yet-seen-text !important ;
+	font-size: 24px;
+	padding: 0px;
+	padding-bottom: 3px;
+}
+
+.now-seen .x-grid-cell-inner {
+	color: $main-menu-active-item-dot !important;
+	margin-top: -1px !important;
+	font-size: 15px !important;
+	padding: 0px !important;
+	padding-bottom: 3px !important;
+}
+.chapterslist-grid-cls .x-grid-row-alt .x-grid-cell { 
+	
+     background-color: $sub-container-bgr !important ; 
+}
+.chapterslist-grid-cls .x-grid-row .x-grid-cell { 
+	
+     background-color: $sub-container-bgr !important ;
+}
+
+.x-grid-group-title{
+	
+	white-space :normal !important;
+	word-wrap: break-word !important;
+	margin-top: -4px;
+	margin-left: 5px;
+}
+
+.hide-expand-collapse{
+	background-image: none !important;
+}

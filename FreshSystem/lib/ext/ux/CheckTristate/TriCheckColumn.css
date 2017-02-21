@@ -1,0 +1,77 @@
+/*
+.x-grid3-tricheck-col {
+    width:100%;
+    height:16px;
+    background-repeat:no-repeat;
+    background-color:transparent;
+}
+
+.x-grid3-tricheck-col-null {
+    height:16px;
+    width: 25px;
+    background-position-y: center;
+    background-position-x: 50;
+    background-repeat:no-repeat;
+    background-color:transparent;
+	background-image:url(images/tristate-check-sprite.gif);
+}
+
+
+.x-grid3-tricheck-col-on {
+    height:16px;
+    width: 25px;
+    background-position-y: center;
+    background-position-x: 25;
+    background-repeat:no-repeat;
+    background-color:transparent;
+	background-image:url(images/tristate-check-sprite.gif);
+}
+
+.x-grid3-tricheck-col-off {
+    height:16px;
+    width: 25px;
+    background-position:left center;
+    background-repeat:no-repeat;
+    background-color:transparent;
+	background-image:url(images/tristate-check-sprite.gif);
+}
+
+*/
+
+.x-grid3-tricheck-col-null,
+.x-grid3-tricheck-col-on,
+.x-grid3-tricheck-col-off {
+    width:100%;
+    height:16px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-position:left center;
+    background-repeat:no-repeat;
+    background-color:transparent;
+	background-image:url(images/checked-null.gif);
+}
+
+
+.x-grid3-tricheck-col-on {
+	background-image:url(images/checked-on.gif);
+}
+
+.x-grid3-tricheck-col-off {
+	background-image:url(images/checked-off.gif);
+}
+
+.x-grid3-check-col-null,
+.x-grid3-check-col-on {
+    width:100%;
+    height:16px;
+    background-position: center center;
+    background-repeat:no-repeat;
+    background-color:transparent;
+	background-image:url(images/checked-null.gif);
+}
+
+
+.x-grid3-check-col-on {
+	background-image:url(images/checked-on.gif);
+}
+

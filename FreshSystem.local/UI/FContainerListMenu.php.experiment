@@ -1,0 +1,171 @@
+<?php
+/*
+ * Created on 12.7.2006
+ *
+ * To change the template for this generated file go to
+ * Window - Preferences - PHPeclipse - PHP - Code Templates
+ */
+ 
+ class FContainerListMenu extends FListMenu implements INamingContainer
+ {
+ 	const DEFAULT_RECORD_CLASS = 'ContainerRecord';
+ 	private $_maxlevel;
+ 	private $_codename;
+	private $_finder;
+	protected $_recordclass;
+	protected $_ancestors;
+ 	
+	public function getFinder()
+	{
+		if (!$this->_finder) {
+			$this->_finder = TActiveRecord::finder($this->RecordClass);
+		}
+		return $this->_finder;
+	}
+
+	public function getOpenContainerId()
+	{
+		
+	}
+ 	public function getRecordClass() {
+ 		return ($this->_recordclass)?$this->_recordclass:self::DEFAULT_RECORD_CLASS;
+ 	}
+ 	
+ 	public function setRecordClass ($value) {
+		$this->_recordclass = $value;
+	}
+
+ 	public function getCodeName() {
+ 		return ($this->_codename)?$this->_codename:'uid';
+ 	}
+
+ 	public function setCodeName ($value) {
+		$this->_codename = $value;
+	}
+
+ 	public function getMaxLevel() {
+ 		return $this->_maxlevel;
+ 	}
+ 	
+ 	public function setMaxLevel ($value) {
+		$this->_maxlevel = $value;
+	}
+	
+ 	
+	public function getAncestors($container = null)
+	{
+		if ($this->_ancestors[$code] === null)
+		{
+			if ($container === null) 
+				$container = $this->finder->findByPk($this->Request[$this->CodeName]);
+				
+			$containers = array();
+			$c = $container;
+			while($c != null)
+			{
+					$containers[] = $c->{$this->CodeName};
+					$c = $c->parent;
+			}
+			if ($container != null && $container->children)
+				foreach($container->children as $c)
+						$containers[] = $c->{$this->CodeName};
+					
+			$this->_ancestors[$code] = $containers;
+		}
+		return $this->_ancestors[$code];
+	}	
+
+ 	public function createChildControls () {
+		
+Prado::Trace(__CLASS__.' createChildControls START '.$this->RootId);
+		$this->databind();
+  		parent::createChildControls ();
+    	$this->createChildControlsInternalDb ($this,$this->RootId);
+Prado::Trace(__CLASS__.' createChildControls FIN');
+
+	}
+	
+	protected function createChildControlsInternalDb ($parent,$container_id=null,$level=0) {
+		
+		$params = ($this->Request['noedit'])?array('noedit'=>1):array();
+		$level++;
+		if ($level>$this->MaxLevel) return;
+		//$finder = ContainerRecord::finder();
+		$criteria = new TActiveRecordCriteria;
+		if (!$container_id)
+		{
+			$criteria->Condition = '(parent_id is NULL or parent_id = 0) AND uid>1';
+			$criteria->OrdersBy['ordering'] = 'asc';
+			$containers = $this->finder->findAll($criteria); //withChildren()->
+		}
+		else
+		{
+			//$criteria->Condition = 'parent_id = :parent_id AND uid>1';
+			//$criteria->Parameters[':parent_id'] = $container_id;
+			//$criteria->OrdersBy['ordering'] = 'asc';
+			$p = $this->finder->findByPk($container_id);
+			$containers = $p->children;
+			//$containers = $this->finder->findAll($criteria); //withChildren()->
+		}
+		
+		foreach ($containers as $k => $v )
+		{
+			$typeData = $v->getTypeData();
+			
+			if ($typeData['notInMenu'])
+				continue;
+			
+			$c = $this->itemFactory();
+			$c->Text = $v->name;
+			
+			if ($c instanceof IDataRenderer) $c->setData($v);
+				
+			
+			$c->PagePath = (isset($typeData['pagePath']))?$typeData['pagePath']:'NormalPage';
+//			if ($v->type->data)
+//				$c->PagePath = $v->type->data;
+//			else
+//				$c->PagePath = 'ContentShow';
+   			//$params  = (is_array($typeData['pageParams']))?$typeData['pageParams']:array();
+			//$params[$this->CodeName]=$v->{$this->CodeName};
+			$c->NavigateUrl = $v->getHref(); //$this->Page->Service->constructUrl($c->PagePath,$params);
+			$parent->addParsedObject($c);
+//				Prado::trace(TVarDumper::dump($this->getAncestors()),'Json');
+
+			$children[] = $v->{$this->CodeName};
+			if ($v != null && $v->children)
+				foreach($v->children as $vc)
+						$children[] = $vc->{$this->CodeName};
+
+			if (in_array($this->Request[$this->CodeName],$children) || $this->GenerateAll || 
+				$this->CurrentUrl === $c->NavigateUrl || $this->wasOpen === $v->{$this->CodeName})
+			{
+//Prado::trace(TVarDumper::dump($this->wasOpen),'Json');
+//				if ($c->PagePath === $typeData['pagePath'] && $v->{$this->CodeName} === $this->Request[$this->CodeName]) //$this->CurrentUrl === $c->NavigateUrl && $level<100)
+//				if ()
+					$this->wasOpen = $children[0];
+				//$ch = $v->children;
+				if ($this->GenerateAll)
+					$this->wasOpen = false;
+//Prado::trace(TVarDumper::dump($this->Session),'Json');
+				if ($level < $this->MaxLevel && count($children)>1)
+				{
+//Prado::trace(count($children).$level,'Json');
+					$c = Prado::createComponent('FListMenu');
+					//$c->ActiveCssClass=$this->ActiveCssClass.$level;
+					//$c->InactiveCssClass=$this->InactiveCssClass.$level;
+					$parent->addParsedObject($c);
+					$this->createChildControlsInternalDb ($c,$v->{$this->CodeName},$level);
+				}
+			}
+		
+		}
+	}
+	
+	protected function itemFactory() {
+		return Prado::createComponent('FListMenuItem');
+	}
+ 	
+ }
+?>
+

@@ -1,0 +1,34 @@
+.x-flag-us {
+    background-image: url(flags/us.gif) !important;
+}
+
+.x-flag-de {
+    background-image: url(flags/de.gif) !important;
+}
+
+.x-flag-fr {
+    background-image: url(flags/fr.gif) !important;
+}
+
+.ux-icon-combo-item{
+  background-repeat: no-repeat !important;
+  background-position: 3px 50% !important;
+  padding-left: 24px;
+  
+}
+
+.ux-icon-combo-icon {
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+    width: 18px;
+    height: 14px;    
+}
+
+.ux-icon-combo-input {
+    padding-left: 26px;
+}
+
+.x-form-field-wrap .ux-icon-combo-icon {
+    top: 3px;
+    left: 6px;
+}

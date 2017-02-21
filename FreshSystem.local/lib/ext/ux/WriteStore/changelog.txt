@@ -1,0 +1,50 @@
+write-store changelog.txt file. Where ideas have been provided by others, the line is appended with one or more 
+of: their full name; their email address; their forum login.
+
+1.1B1:
+- when using 'new' as a key to a key/value pair in an object, some interpreters (IE, perhaps?) will not accept 
+  it unless explicitly wrapped in quotes. This was a problem with WriteRecord and usage in WriteStore.
+- when listing objects, if the last key/value pair contains an extra comma (,), some interpreters (IE, perhaps?) will not
+  accept it; you must explicitly get rid of the extra comma. Problem in WriteStore at the very end.
+- Ensure that options are a valid object before setting properties.
+- Ensure that lists of object properties do not end in comma in sample.
+
+1.1alpha:
+- options for writing: writeMode property is one of replace, update, condensed. Johughes, cimperia
+- options to commitChanges, options.mode is one of replace, update, condensed. Johughes, cimperia
+- send meta data back to the server, the metadata originally sent from the server, if provided. Frank Mueller
+- have failure event if anything fails, either the send (before write event), or if any write event fails. Nalfein
+- submit records' id, if the id field was set in the reader metadata. Johughes. 
+
+1.0RC5:
+- bug in calling Ext.data.Store.superclass rather than Ext.ux.WriteStore.superclass (occurs twice). Nalfein
+- create single this.superclass reference within each class
+
+1.0RC4:
+- Make sure WriteStore relays the updateexception event from the updateProxy. chriswa
+- add boolean isDirty() to determine if a commit or rollback is needed. Blackhand
+- add integer getModifiedCount() to list how many actions (i.e. journal size) will be done on next commit or rollback. Cimperia
+- Include WriteRecord to decorate the standard Ext.data.Record
+- Allow for rejectChanges of a specific number of changes or all changes
+
+1.0RC3:
+- Causes component error if update a record then delete same record then commit, all in one transaction. chriswa
+- use addEvents to add new events. pic_Nick
+
+1.0RC2:
+- include sample-data.json with distribution. mjlecomte 
+
+1.0RC1:
+- include versionizing in the zip distribution file name
+- Moved all assumptions about success or failure of write to event handler. GraemeBryce, marte, lostAtSea, cimperia
+- Created three events on write - write, writeexception, commit. writeexception is for network failure,
+  write is network success but before internal commit. If any handler returns false, the internal commit
+  is not performed.
+- ObjectReader able to move down into the object to start its root at an arbitrary place, rather than just the
+  root of the object. GraemeBryce 
+
+0.5:
+- pass commit and/or rollback to Store superclass. pic_Nick
+
+0.4:
+- fixed error in callback. tofsteel

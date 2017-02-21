@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<colorizer xmlns="http://www.aptana.com/2007/colorizer/1.0" language="text/plain">
+<category name="WHITESPACE" style="WHITESPACE">
+<token style="WHITESPACE_DOCUMENTATION" type="DOCUMENTATION"/>
+<token style="WHITESPACE_COMMENT" type="COMMENT"/>
+</category>
+<style foreground="rgb(0,0,0)" id="WHITESPACE"/>
+<style font-style="italic" foreground="rgb(127,127,127)" id="WHITESPACE_DOCUMENTATION"/>
+<style font-style="italic" foreground="rgb(0,153,0)" id="WHITESPACE_COMMENT"/>
+<category name="LITERAL" style="LITERAL">
+<token style="LITERAL_ELEMENT" type="ELEMENT"/>
+<token style="LITERAL_DOCTYPE" type="DOCTYPE"/>
+<token style="LITERAL_RUBY_CODE" type="RUBY_CODE"/>
+<token style="LITERAL_STRING" type="STRING"/>
+<token style="LITERAL_ID" type="ID"/>
+<token style="LITERAL_HEX_NUMBER" type="HEX_NUMBER"/>
+<token style="LITERAL_ERB_CODE" type="ERB_CODE"/>
+<token style="LITERAL_ESCAPED" type="ESCAPED"/>
+<token style="LITERAL_CLASS" type="CLASS"/>
+<token style="LITERAL_NUMBER" type="NUMBER"/>
+<token style="LITERAL_OCTAL_NUMBER" type="OCTAL_NUMBER"/>
+</category>
+<style foreground="rgb(32,128,32)" id="LITERAL"/>
+<style font-style="italic" font-weight="bold" foreground="rgb(137,42,115)" id="LITERAL_ELEMENT"/>
+<style font-style="italic" font-weight="bold" foreground="rgb(150,150,150)" id="LITERAL_DOCTYPE"/>
+<style font-weight="bold" foreground="rgb(0,0,0)" id="LITERAL_RUBY_CODE"/>
+<style font-weight="bold" foreground="rgb(32,128,32)" id="LITERAL_STRING"/>
+<style font-weight="bold" foreground="rgb(30,144,255)" id="LITERAL_ID"/>
+<style font-weight="bold" foreground="rgb(165,42,42)" id="LITERAL_HEX_NUMBER"/>
+<style font-weight="bold" foreground="rgb(0,0,0)" id="LITERAL_ERB_CODE"/>
+<style font-style="italic" foreground="rgb(160,32,240)" id="LITERAL_ESCAPED"/>
+<style font-weight="bold" foreground="rgb(108,69,127)" id="LITERAL_CLASS"/>
+<style font-weight="bold" foreground="rgb(0,128,255)" id="LITERAL_NUMBER"/>
+<style font-style="italic" font-weight="bold" foreground="rgb(0,128,255)" id="LITERAL_OCTAL_NUMBER"/>
+<category name="KEYWORD" style="KEYWORD"/>
+<style font-weight="bold" foreground="rgb(224,94,7)" id="KEYWORD"/>
+<category name="ERROR" style="ERROR"/>
+<style font-style="italic" foreground="rgb(255,0,0)" id="ERROR" text-decoration="underline"/>
+<category name="PUNCTUATOR" style="PUNCTUATOR"/>
+<style foreground="rgb(0,0,0)" id="PUNCTUATOR"/>
+<category name="IDENTIFIER" style="IDENTIFIER">
+<token style="IDENTIFIER_CONSTANT" type="CONSTANT"/>
+<token style="IDENTIFIER_GLOBAL_VARIABLE" type="GLOBAL_VARIABLE"/>
+<token style="IDENTIFIER_IDENTIFIER" type="IDENTIFIER"/>
+<token style="IDENTIFIER_INSTANCE_VARIABLE" type="INSTANCE_VARIABLE"/>
+<token style="IDENTIFIER_SYMBOL" type="SYMBOL"/>
+</category>
+<style font-weight="bold" foreground="rgb(0,64,128)" id="IDENTIFIER"/>
+<style font-style="italic" font-weight="bold" foreground="rgb(224,94,7)" id="IDENTIFIER_CONSTANT"/>
+<style font-style="italic" font-weight="bold" foreground="rgb(0,64,128)" id="IDENTIFIER_GLOBAL_VARIABLE"/>
+<style foreground="rgb(0,0,0)" id="IDENTIFIER_IDENTIFIER"/>
+<style font-weight="bold" foreground="rgb(0,64,128)" id="IDENTIFIER_INSTANCE_VARIABLE"/>
+<style font-weight="bold" foreground="rgb(214,0,2)" id="IDENTIFIER_SYMBOL"/>
+</colorizer>

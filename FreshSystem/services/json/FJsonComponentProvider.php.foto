@@ -1,0 +1,373 @@
+<?php
+/**
+ * 
+ * @project Fresh!
+ * 
+ * @package Fresh.web.services.json
+
+ * @fileOverview
+ * 
+ * @author Jan Rosa
+ * @copyright Copyright &copy; Jan Rosa, 2008
+ * @version	$Id$
+ * 
+ */
+
+class FJsonComponentProvider extends FJsonResponse
+{
+	private $_path=null;
+    protected $finder;
+    protected $config;
+    protected $context;
+    protected $metadata;
+
+	public function getJsonContent()
+	{
+		if (!$this->getIsAuthorized())
+			return array('success'=>false, 'nessage'=>'Not authorized!');
+
+		$user = $this->User;
+		$request = Prado::getApplication()->Request;
+
+		if (!($id = $request['id']))
+			return array('success'=>false, 'nessage'=>'Bad request!');
+					
+					
+		$key = $id;
+
+        $data = $this->getYamlData($key);
+		
+		//var_dump($data);die();
+        $data['component']['success'] = true;
+		return $data;
+
+	}
+
+    /**
+     * Reads hash array from yaml file defined by $key
+     * @return Array
+     * @param $key String    Key to define component
+     * @param $cache Boolean[optional]    Use cache (default=true)
+     */
+    public function getYamlData($key,$cache=true)
+    {
+        $application = Prado::getApplication();
+        $cacheKey = $key.$this->getUser()->Username;
+		if($cache && $application->Cache) {
+		    // retrieves data item from cache
+		    $data=$application->Cache->get($cacheKey);
+		}		
+		
+		if (!$data)
+		{
+			Prado::using('Root.resources.spyc.spyc');
+
+			$yaml = @file_get_contents($this->Path.'/'.$key.'.yml');
+			if (!$yaml)
+                throw new FJsonException('Component '.$key. ' not exists!');
+
+            $yaml = FU::parseExpressionTags($yaml);
+			$data = $this->readYaml($yaml);
+            
+            if ($data['description']['authLevels'])
+            {
+                $this->dataFilter(&$data); 
+               // var_dump($data)   ;
+            }
+			if($cache && $application->Cache) {
+			    // saves data item in cache
+			    $application->Cache->set($cacheKey,$data);
+			}		
+			
+		}
+        
+        return $data;
+
+    }
+    
+    public function filterBy(&$value,&$key,$method)
+    {
+        static $user;
+        $user = (!$user)?$this->getUser():$user;
+        if (is_array($value))
+        {
+             //echo $key."<br>";
+            
+            array_walk(&$value,array($this,$method),$method);
+            $assoc = false;
+            $changed = false;
+            foreach($value as $k=>$v)
+            {
+                if (!is_numeric($k))
+                    $assoc = true;
+                if (is_array($v)) {
+                        
+                    if (isset($v['authLevel']) && 
+                             ($v['authLevel']['min'] > $user->Level || 
+                                 $user->Level > $v['authLevel']['max']) || 
+                             isset($v['authRole']) && !$user->IsInRole($v['authRole'])
+                    )
+                    {
+                   //     echo $k.' '.$v['authLevel']['min']."\n";
+                       unset($value[$k]);
+                       $changed = true;
+                    }
+                }
+                
+            }
+            if (!$assoc && $changed)
+                $value = array_values($value);
+        }
+/*        else
+        {
+//echo $user->Level;
+            //echo $value;
+            $value = str_replace(array('%UserLevel%','%UserUid%','%UserName%','%UserFullName%'),
+                                 array($user->Level,$user->Uid,$user->Username,$user->Name),
+                                 $value
+            );
+        }*/
+    }
+    
+    public function dataFilter(&$data,$method='filterBy')
+    {
+        array_walk(&$data,array($this,$method),$method);
+    }
+
+
+	/**
+	 * Reads yaml string and 
+	 * @return 
+	 * @param $yaml Object
+	 */
+	public function readYaml($yaml)
+	{
+		
+		//$yaml = str_replace('%user%',$this->User,$yaml);
+		return Spyc::YAMLLoad($yaml);
+	}
+
+	/**
+	 * @return string	path to YAML config files 
+	 */
+	public function getPath()
+	{
+		return $this->_path;
+	}	
+
+
+	/**
+	 * @param string path to YAML in Prado dot format
+	 */
+	public function setPath($value)
+	{
+		$this->_path=Prado::getPathOfNamespace($value);
+	}
+
+
+    public function setContext($data,$contextName)
+    {
+        
+        $this->config = $data['serverSide'];
+        $this->metadata = $data['metaData'];
+        
+        if ($contextName === null)
+        {
+            $context = $this->config;
+            unset($context['context']);
+        }
+        else
+        {
+            $context = $this->config['context'][$contextName];
+            foreach($this->config as $key=>$val) 
+            {
+                if ($key != 'context' && !isset($context[$key])) {
+                    $context[$key] = $val;
+                }
+                unset($context['noBlankContext']);
+            }
+        }
+        $this->context = $context;
+        
+    }
+
+    public function evalError($message)
+    {
+        foreach($this->context['errors'] as $msg)
+        {
+            //var_dump($msg);
+            
+            if (preg_match($msg['regexp'],$message,$m))
+            {
+               array_shift($m);
+               return vsprintf ($msg['text'],$m);
+            }
+            
+        }
+    }
+    
+	
+}
+
+
+class FJsonException extends Exception {}
+
+class FJsonRecordProvider extends FJsonResponse
+{
+	const MAX_ORDERING = 65534;
+	
+	public function getJsonContent()
+	{
+		if (!$this->getIsAuthorized())
+			return array('success'=>false, 'nessage'=>'Not authorized!');
+
+		$json = Prado::createComponent('System.Web.Javascripts.TJSON');
+
+		$request = Prado::getApplication()->Request;
+
+
+		$action = $request['action'];
+		$recordClass = $request['record'];
+		
+		if (!$action || !$recordClass)
+			return array('success'=>false, 'nessage'=>'Bad request!');
+
+		$finder = call_user_func(array($recordClass, 'finder'));
+		//$rec = new $recordClass;
+		$recordFields = $finder->RecordGateway->getRecordTableInfo($finder)->LowerCaseColumnNames;		
+
+		$uid = $request['uid'];
+		$tid = $request['template'];
+		
+		if ($uid == 'null')
+			$uid = null;
+
+		if ($action == 'store')
+		{		
+			if (!$uid)
+			{
+				if ($tid && $recordClass == 'ContainerRecord')
+				{
+					$record = $this->copyTemplate($tid);
+				} else {
+					$record = new $recordClass;
+				}
+
+				$record->created = time();
+				$record->changed = time();
+				if (property_exists($record,'ordering')) //property_exists($record,'ordering'))
+					$record->ordering = constant($recordClass.'::MAX_ORDERING');
+				if (isset($recordFields['t']))
+					$record->t = str_replace('record','',strtolower($recordClass));
+			} else {
+				$record = $finder->findByPk($uid);
+				$record->changed = time();
+			}
+		
+			foreach($recordFields as $k => $v)
+			{
+				if (isset($request[$k]) && $k != 'uid')
+				{
+					if (!($tid && $recordClass == 'ContainerRecord') || $k!='type_id')
+					{
+						$record->$k = $record->ensurePropertyValue($k,$request[$k]);
+					}
+				}
+			}
+
+			if (isset($recordFields['parent_id'])) {
+				if ($record->parent_id == 'undefined')
+					$record->parent_id = null;
+			}
+			
+			if (property_exists($record,'type_id'))
+			{
+				$typeData = FU::readValues($record->type->data);
+				foreach($typeData as $k => $v)
+				{
+					if (isset($recordFields[$k]) && !isset($request[$k]) && $k != 'uid')
+						$record->$k = $v;
+				}
+			}
+			
+			try {
+				$record->save();
+				if (isset($recordFields['ordering']))
+					$record->reorderBranch($record->parent_id);
+	
+				$class_var = get_class_vars($recordClass);
+				//Prado::Trace('OOOBje'.TVarDumper::dump($obj_var));
+				if (isset($class_var['RELATIONS']['children']) && property_exists($record,'hidden'))				
+					$record->childrenAttributes(array('hidden'=>$record->hidden));	
+								
+				return array('success'=> true); //,'errors'=>array('field'=>array('id'=>'name','msg'=>'Error')));
+			}
+			catch (Exception $e) {
+				return array('success'=>false,'message'=>'SQL Error!');
+			}
+		}
+		
+		if ($action == 'load' && $uid)
+		{
+			$record = $finder->findByPk($uid);
+			
+			$values = array();
+			
+			foreach($recordFields as $k => $v)
+			{
+				$values[] = array('id'=>$k,'value'=>$record->$k);
+			}			
+			return array('success'=>true,'data'=>$values);
+			
+		}
+		
+		return array('success'=>false,'message'=>'Bad action requested!');
+
+	}
+		
+	public function copyTemplate($tid,$recordClass='ContainerRecord',$rec = null)
+	{
+		if (!($rec instanceof TActiveRecord))
+			$rec = new $recordClass;
+			
+		if ($tid instanceof TActiveRecord) {
+			$c = $tid;
+		} else {
+			$finder = call_user_func(array($recordClass, 'finder'));
+			$c = $finder->withContents()->findByPk($tid);
+		}
+		$rec->copyFrom($c);
+		$rec->uid = null;
+		foreach($c->contents as $child)
+		{
+			$data = get_object_vars($child);
+			unset($data['parent_id']);
+			unset($data['uid']);
+			$co = new ContentRecord($data);
+			//$co->uid = null;
+			$rec->contents[] = $co;
+			
+		}
+		foreach ($c->children as $child) {
+			$rec->childrem[] = $this->copyTemplate($child);
+		}
+		return $rec;
+	}
+
+    public function evalError($message)
+    {
+        foreach($this->context['errors'] as $msg)
+        {
+            //var_dump($msg);
+            
+            if (preg_match($msg['regexp'],$message,$m))
+            {
+               array_shift($m);
+               return vsprintf ($msg['text'],$m);
+            }
+            
+        }
+    }
+	
+}
+?>

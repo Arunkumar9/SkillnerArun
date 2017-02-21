@@ -1,0 +1,7 @@
+FjUniform:
+    name: FjUniform
+    description: jQuery.Uniform
+    t: content
+    data: 
+        ContentEditClass: FreshSystem.UI.Content.FjUniform
+        iconCls: gears

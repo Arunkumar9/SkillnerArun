@@ -1,0 +1,106 @@
+<%@  Theme="AdminBase" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<com:THead   >
+<meta http-equiv="Content-Type" content="text/html; utf-8" />
+<prop:title><%$ siteTitle %></prop:title>
+<!-- EXT -->
+<link rel="stylesheet" type="text/css" href="lib/ext/3.3.0/resources/css/ext-all.css" />
+<!---<script type="text/javascript" src="lib/ext/2.0/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="lib/ext/2.0/ext-all-debug.js"></script> 
+<com:TClientScriptLoader PackagePath="FreshSystem.admin.ext" PackageScripts="extAllBase"/> --->
+<!--<script type="text/javascript" src="http://cdn.freshsystems.cz/fa/clientscript_notminified.js"></script>-->
+<script type="text/javascript" src="clientscript_notminified.js"></script>
+<com:TClientScript ScriptUrl="index.php?json=localize" />
+<script type="text/javascript" src="lib/ext/ux/FileTree/locale/awesomeUploader_en_US.js"></script>
+<!-- THEME / DESKTOP STYLES
+<link id="theme" rel="stylesheet" type="text/css" href="lib/desktop/resources/themes/xtheme-vista/css/xtheme-vista.css" />
+-->
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/TinyMCE/css/styles.css" />
+<link rel="stylesheet" type="text/css" href="lib/desktop/resources/css/desktop.css" />
+<link rel="stylesheet" type="text/css" href="lib/desktop/resources/css/tree-content.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/cherry/resources/cherryonext.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/Multiselect/Multiselect.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/CheckTristate/TriCheckColumn.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/Spinner/Spinner.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/recordform/css/recordform.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/recordform/css/Ext.ux.grid.RowActions.css" />
+
+<link rel="stylesheet" type="text/css" href="lib/desktop/source/helpers/color-picker/color-picker.ux.css" />
+<link rel="stylesheet" type="text/css" href="lib/desktop/source/helpers/preferences/preferences.css" />
+<link rel="stylesheet" type="text/css" href="lib/desktop/source/modules/docs/css/docs.css" />
+<link rel="stylesheet" type="text/css" href="resources/ext.ux/carousel.layout.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/Ext.ux.grid.RowEditor.css" />
+<!---<link rel="stylesheet" type="text/css" href="FreshSystem/UI/FExtAdminLayout.css" /> --->
+
+<com:TControl Visible="<%= true || Prado::getApplication()->User->IsGuest %>">
+    <!--- LOGIN 
+    <script type="text/javascript" src="lib/desktop/source/login/cookies.js"></script>
+    <link rel="stylesheet" type="text/css" href="resources/css/login.css" /> 
+    <script type="text/javascript" src="lib/desktop/source/login/login.js"></script>
+	--->
+	<com:TClientScriptLoader PackagePath="JS.ext.ux.Login" PackageScripts="loginJs"/>
+	<com:FClientCssLoader PackagePath="JS.ext.ux.Login" PackageScripts="loginCss"/>
+</com:TControl>
+
+<com:TControl Visible="<%= true || !Prado::getApplication()->User->IsGuest %>">
+   <%include FreshSystem.admin.includes.desktopJs %>
+</com:TControl>
+<!---
+<style type="text/css">
+    .ux-icon-combo-icon {
+        background-repeat: no-repeat;
+        background-position: 0 50%;
+        width: 18px;
+        height: 14px;
+    }
+ 
+    /* X-BROWSER-WARNING: this is not being honored by Safari */
+    .ux-icon-combo-input {
+        padding-left: 25px;
+    }
+ 
+    .x-form-field-wrap .ux-icon-combo-icon {
+        top: 3px;
+        left: 5px;
+    }
+    .ux-icon-combo-item {
+        background-repeat: no-repeat ! important;
+        background-position: 3px 50% ! important;
+        padding-left: 24px ! important;
+    }
+</style>
+--->
+</com:THead>
+
+<body scroll="no" id="desktop-body">
+<com:FExtForm >
+
+<com:TControl Visible="<%= Prado::getApplication()->User->IsGuest %>" >
+    <div id='loginDialogId'></div>
+    <script>
+        Ext.onReady(function(){
+            this.culture = '<%= Prado::getApplication()->Globalization->Culture %>';
+            Login.Init();
+        }, Login);
+
+        Ext.onReady(function(){Fresh.setUser(<%= json_encode(unserialize(Prado::getApplication()->User->saveToString())); %>); });
+    </script>
+</com:TControl>
+
+<com:TControl Visible="<%= !Prado::getApplication()->User->IsGuest %>" >
+    <%include FreshSystem.admin.includes.desktopHtml %>
+    <script>
+        Fresh = Fresh || {};
+        Fresh.ComponentList = <%= json_encode($this->Page->ComponentList) %>;
+        Fresh.User = <%= json_encode(unserialize(Prado::getApplication()->User->saveToString())); %>;
+        Fresh.Config.ApplicationMode = '<%= strtolower(Prado::getApplication()->getMode()) %>';
+//        Ext.onReady(function(){Fresh.setUser(<%= json_encode(unserialize(Prado::getApplication()->User->saveToString())); %>); });
+        Ext.onReady(MyDesktop.initApp, MyDesktop);
+    </script>
+</com:TControl>
+
+</com:FExtForm>
+<script type="text/javascript" src="lib/ext/3.3.0/src/locale/ext-lang-<%= $this->Application->Globalization->Culture %>.js"></script>
+</body>
+</html>

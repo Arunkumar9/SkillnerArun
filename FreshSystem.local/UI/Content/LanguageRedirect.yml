@@ -1,0 +1,7 @@
+LanguageRedirect: 
+    name: LanguageRedirect
+    description: redirect if language different
+    t: content
+    data: 
+        ContentEditClass: LanguageRedirect
+        iconCls: link

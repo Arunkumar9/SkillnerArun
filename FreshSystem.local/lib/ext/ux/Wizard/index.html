@@ -1,0 +1,367 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="../../ext_2_0_2/resources/css/ext-all.css">	
+	<link rel="stylesheet" href="../icon-combo/Ext.ux.IconCombo.css">
+	<link rel="stylesheet" href="../countrycombo/Ext.ux.CountryCombo.css">
+	<link rel="stylesheet" href="../tbar-layout/ToolbarLayout.css">
+	<link rel="stylesheet" href="style.css">
+		
+    <script type="text/javascript" src="../../ext_2_0_2/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="../../ext_2_0_2/ext-all-debug.js"></script>
+	<script type="text/javascript" src="../tbar-layout/ToolbarLayout.js"></script>
+	<script type="text/javascript" src="../slickcard/Ext.ux.SlickCardLayout.js"></script>
+	<script type="text/javascript" src="../meta-form/Ext.ux.MetaForm.js"></script>
+	<script type="text/javascript" src="../icon-combo/Ext.ux.IconCombo.js"></script>
+	<script type="text/javascript" src="../countrycombo/Ext.ux.CountryCombo.js"></script>
+	<script type="text/javascript" src="../Ext.ux.ContinentCombo.js"></script>
+	<script type="text/javascript" src="../combo-loader/pComboLoader.js"></script>
+    <script type="text/javascript" src="Ext.ux.Wizard.js"></script>
+    <!-- A Localization Script File comes here -->
+    <script type="text/javascript">
+    	Ext.onReady(
+			function() {			    
+				Ext.QuickTips.init();
+				var wizard1 = {
+					xtype: 'wizard',
+					backBtnText: 'Previous',
+					endBtnText: 'End',
+					animate: true,
+					frame: false,
+					height: 350,								
+					items: [{
+			            id: 'card-0',
+						index: 0,
+			            html: '<h1>Welcome to the Wizard!</h1><p>Step 1 of 5</p>'
+			        },{
+			            id: 'card-1',
+						index: 1,
+						html: '<p>Step 2 of 5</p>'			            
+			        },
+					{
+						id: 'card-2',
+						index: 2,
+			            html: '<p>Step 3 of 5</p>'
+					},{
+			            id: 'card-3',
+						index: 3,
+			            html: '<p>Step 4 of 5</p>'
+			        },{
+			            id: 'card-4',
+						index: 4,
+			            html: '<p>Step 5 of 5</p>'
+			        },{
+			            id: 'card-5',
+						index: 5,
+			            html: '<h1>Congratulations!</h1><p>Steps - Complete</p>'
+			        }]
+				};
+				
+				var wizard2 = {
+					xtype: 'wizard',
+					backBtnText: 'Previous',
+					endBtnText: 'Submit',
+					url: 'wizardconfig.php',
+					animate: true,
+					frame: false,
+					height: 350,								
+					items: [{
+						index: 0,
+			            html: '<h1>Welcome to the Wizard!</h1><p>Step 1 of 3</p>'
+			        },{
+						index:1,
+						items: {
+				            xtype: 'fieldset',
+				            title: 'Phone Number',
+				            collapsible: true,
+				            autoHeight:true,
+				            defaults: {width: 210},
+				            defaultType: 'textfield',
+				            items :[{
+				                    fieldLabel: 'Home',
+				                    name: 'home',
+				                    value: '(888) 555-1212'
+				                },{
+				                    fieldLabel: 'Business',
+				                    name: 'business'
+				                },{
+				                    fieldLabel: 'Mobile',
+				                    name: 'mobile',
+									allowBlank: false
+				                },{
+				                    fieldLabel: 'Fax',
+				                    name: 'fax'
+				                }
+				            ]
+				        }
+			        },{
+						index: 2,
+			            html: '<h1>Congratulations!</h1><p>Steps - Complete</p>'
+			        }],
+					listeners: {
+						'beforefinish': function(wizard, dir){
+							var form = wizard.cards.getForm();
+							var isValid = form.isValid();				
+							if(isValid){
+								form.submit();
+							}
+							return isValid;
+						}
+					}
+				};
+				
+				var wizard3 = {
+					xtype: 'wizard',
+					autoInit: true, // must be set if in meta mode
+					url: 'wizardconfig.php', // same as this
+					backBtnText: 'Previous',
+					endBtnText: 'Finish',
+					animate: true,
+					frame: false,								
+					loadingText: 'Configuring Setup Wizard ...',
+					savingText: 'Saving Changes ...',
+					height: 350
+				};
+				
+				var wizard4 = {
+					xtype: 'wizard',
+					autoInit: true,
+					url: 'wizardconfig.php',
+					backBtnText: 'Previous',
+					nextBtnText: 'Next',
+					endBtnText: 'Finish',
+					animate: true,
+					frame: false,								
+					loadingText: 'Configuring Setup Wizard ...',
+					savingText: 'Saving Changes ...',
+					height: 350,
+					north:{
+						height: 65,
+						cls: 'wizard-north',
+						html: '<h1>Ext.ux.Wizard :: Wizard Component</h1>'
+					},
+					extraBtns: [
+						'', {
+			                tooltip:'Help',
+			                iconCls: 'icon-help'
+			            }
+					],
+					listeners: {
+						'beforefinish': function(wizard, dir){
+							var form = wizard.cards.getForm();
+							var isValid = form.isValid();				
+							wizard.cards.submit({
+								scope: wizard,
+								success: function(o){return true}
+							});
+						}
+					}
+				};
+				
+			    Ext.get('run-test1').on('click', function(e){
+					e.stopPropagation();
+	        		if(!Ext.get('test-win1')){
+	        			var win = new Ext.Window({
+					         id:'test-win1',
+							 layout:'fit',
+							 width:550,
+							 modal: true,
+							 constrain: true,
+							 height: 350,
+							 title: 'Ext.ux.Wizard :: Basic Wizard Component',							 
+							 items: wizard1 
+					    });				    
+					    win.show();	
+					    win.center();
+	        		}	        		
+	        	});
+				
+			    Ext.get('run-test2').on('click', function(e){
+					e.stopPropagation();
+	        		if(!Ext.get('test-win2')){
+	        			var win = new Ext.Window({
+					         id:'test-win2',
+							 layout:'fit',
+							 width:550,
+							 modal: true,
+							 constrain: true,
+							 height: 350,
+							 title: 'Ext.ux.Wizard :: Basic Wizard Component',							 
+							 items: wizard2 
+					    });				    
+					    win.show();	
+					    win.center();
+	        		}	        		
+	        	});
+				
+			    Ext.get('run-test3').on('click', function(e){
+					e.stopPropagation();
+	        		if(!Ext.get('test-win3')){
+	        			var win = new Ext.Window({
+					         id:'test-win3',
+							 layout:'fit',
+							 width:550,
+							 modal: true,
+							 constrain: true,
+							 height: 380,
+							 title: 'Ext.ux.Wizard :: Basic Wizard Component',							 
+							 items: wizard3 
+					    });				    
+					    win.show();	
+					    win.center();
+	        		}	        		
+	        	});
+				
+			    Ext.get('run-test4').on('click', function(e){
+					e.stopPropagation();
+	        		if(!Ext.get('test-win4')){
+	        			var win = new Ext.Window({
+					         id:'test-win4',
+							 layout:'fit',
+							 width:650,
+							 modal: true,
+							 constrain: true,
+							 height: 420,
+							 title: 'Fully Featured',
+							 items: wizard4 
+					    });				    
+					    win.show();	
+					    win.center();
+	        		}	        		
+	        	});
+			}
+		);
+	</script>
+    <title></title>
+	<style>
+		#tests th, #tests td {
+			border:1px solid #808080;
+			padding:10px;
+		}
+		
+		#desc{
+			width:70%;margin:0 auto;padding:10px;font-family:verdana;font-size:90%;
+		}
+		
+		#tests p{
+			margin-top:10px;
+			text-align:justify;
+			font-family:verdana;font-size:80%;
+		}
+		
+		#tests ol{
+			margin:5px 10px;
+			padding: 10px;
+			list-style:decimal;
+		}
+		
+		#tests ol li{
+			margin-bottom:10px;
+		}
+		
+		#tests #desc p{
+			margin-top:10px;
+			text-align:justify;
+		}
+	</style>
+</head>
+<body style='margin:10px;padding:10px;' id="test-page">
+<br /><br />
+<div id="desc">
+	<h1>Ext.ux.Wizard <small>v1.0</small></h1>
+	<h5>Custom Wizard Component For Ext2.0.2 <small>Beta</small></h5>
+	<p>If it's just a navigable set of text or html content, or a paginated form (for forms with very many input fields)
+	or a help system, or even a complex wizard with dynamic content and validation .... this component should be helpful.</p>
+</div>
+<table id="tests" width="70%" style="margin:0 auto;">
+	<tr>
+		<th colspan="2">
+			<h3>Static Content</h3>
+		</th>
+		<th>
+			<h3>Dynamic Content</h3>
+		</th>
+	</tr>
+	<tr>
+		<td>
+			<h4>Very Basic Usage</h4>
+			<a href='#' id='run-test1'>Run Test 1</a>
+		</td>
+		<td>
+			<h4>Static Content</h4>
+			<a href='#' id='run-test2'>Run Test 2</a>
+		</td>
+		<td>
+			<h4>Configured With MetaData</h4>
+			<a href='#' id='run-test3'>Run Test 3</a>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="3">
+			<h4>Final Tests</h4>
+		</th>
+	</tr>
+	<tr>		
+		<td colspan="3">
+			<h4>Fully Featured And Configured With MetaData</h4>
+			<b>Un-resolved Issues</b>
+			<ol>
+				<li>
+					<b>createInterceptor || createSequence || undefined</b>
+					<p>This component makes use of some custom events such as 'beforenavigate'
+					(fired before an navigation, can prevent the navigation with a return of false),
+					'afternavigate' (which is fired after 'beforenavigate'), 'beforefinish' and 'finish'
+					(which is fired after 'beforefinish' and if the handler for 'beforefinish' returns true).
+					The 'before' events (e.g 'beforefinish') are called as interceptors (with createInterceptor)
+					to the events they follow ('finish' event in the case of 'beforefinish'). All is well till this point.</p>
+					<p>An implementation (like this test) needs (for example)to submit user input with an Ajax call
+					in its 'beforefinish' handler and have its 'finish' handler display submssion status (or somthing that depends on the response of the Ajax call),
+					since Ajax calls are asynchrounous, the 'finish' handler (default or overriden) gets called immediately after 'beforefinish'
+					handler (suprisingly even with no explicit return of true) but not after the Ajax call (or whatever an implementation decides to do there)</p>
+					<p>We need a way to create a real 'createSequence' for these calls such that we have call_1.createRealSequence(call_2, args)
+					and call_2 is called after call_1, if call_1 returns true (important) and after call_1 'operations'</p>
+					<p>If call_1 is the 'beforefinish' handler, and call_2 the 'finish' handler, we 'could' resolve this by invoking call_2 (or firering 'finish')
+					in the success handler for the Ajax call. What if it's not an Ajax call but some deep || long process, even if it is, can we 
+					trust client code to always fire 'finish', in this case, in the Ajax success handler ????</p>
+				</li>
+				<li>
+					<b>MetaData Specified Validation</b>
+					<p>In 'Run Test 2' the wizard refuses to submit if it's validation fails e.g if a required field is empty.
+					We should have same for this test, which also has some mandatory fields, but the form gets submitted inspite of this.</p>
+				</li>
+				<li>
+					<b>Flexible Toolbar</b>
+					<p>Need to allow flexible toolbar (bbar) configurations without breaking the 'previous' || 'next' navigation structure</p>
+				</li>
+				<li>
+					<b>Loading Messages</b>
+					<p>loadingText config mask text not showing</p>
+				</li>
+				<li>
+					<b>Navigation || Steps Trail</b>
+					<p>Still experimenting with and 'west' config param, will add XTemplate feature for showing trails like:</p>
+					<p>
+						<small>
+							<ul style="margin-left:20px;">
+								<li>Step 1</li>
+								<li><b>Step 2</b></li>
+								<li>Step 3</li>
+							</ul>
+						</small>
+					</p>
+				</li>
+				<li>Assist with code review, thanks</li>
+			</ol>
+			<br />
+			<a href='#' id='run-test4'>Run Test 4</a>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<a href="Ext.ux.Wizard.rar">Download Demo || Tests Here</a>
+		</td>
+	</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+  <services>
+    <service id="page" class="TPageService" BasePath="FreshSystem" DefaultPage="admin.Open" >
+          <pages StatePersisterClass="System.Web.UI.TSessionPageStatePersister" Theme="AdminBase" />
+    </service>
+    <service id="json" class="FJsonService">
+        <json id="cmp" class="FJsonComponentProvider" Path="Application.clientside.components" YamlConfig="jsonCmpConfig" AuthLevel="60"/>
+        <json id="view" class="FJsonViewProvider" Path="Application.clientside.views" YamlConfig="jsonViewConfig" AuthLevel="60" />
+        <json id="tree" class="FJsonTreeProvider" Path="Application.clientside.views" YamlConfig="jsonViewConfig" AuthLevel="60" />
+        <json id="form" class="FJsonFormProvider" Path="Application.clientside.views" YamlConfig="jsonViewConfig" AuthLevel="60"/>
+        <json id="content" class="FJsonContentProvider" Path="Application.clientside.views" YamlConfig="jsonViewConfig"  AuthLevel="60"/>
+        <json id="login" class="FJsonLoginProvider" Path="Application.clientside.views" YamlConfig="jsonViewConfig" />
+        <json id="cmplist" class="FJsonComponentListProvider" Path="Application.clientside.components" YamlConfig="jsonCmpConfig" AuthLevel="60" />
+        <json id="localize" class="FJsonLocalizationProvider" Path="Application.clientside.other" YamlConfig="jsonCmpConfig"/>
+        <json id="mail" class="FJsonMailProvider" Path="Application.clientside.views" YamlConfig="jsonViewConfig" AuthLevel="60"/>
+        <json id="direct" class="FJsonDirectProvider" Path="Application.clientside.direct" YamlConfig="jsonViewConfig" AuthLevel="60"/>
+        <json id="fileProvider" class="FJsonFileProvider" AuthLevel="60" />
+        <json id="imagesProvider" class="FJsonImagesProvider" AuthLevel="60" />
+	<modules>
+		  <module class="FreshSystem.haml.FHamlTemplateManager" />
+	</modules>
+    </service>
+   <service id="image" class="FreshSystem.services.image.FImageService">
+        <image id="thumb" class="FreshSystem.services.image.FThumbnailProvider" />
+        <image id="dbpreview" class="FreshSystem.services.image.FPreviewDBProvider" />
+   </service>
+    <service id="rtf" class="FreshSystem.services.rtf.FRtfService">
+        <rtf id="report" class="FreshSystem.services.rtf.FRtfReport" YamlConfig="rtfConfig" />
+    </service>
+    <service id="xls" class="FreshSystem.services.xls.FXlsService">
+        <xls id="report" class="FreshSystem.services.xls.FXlsReport" YamlConfig="xlsConfig" Writer="CSV" />
+    </service>
+    <service id="download" class="FreshSystem.services.download.FDownloadService" />
+  </services>
+  </configuration>

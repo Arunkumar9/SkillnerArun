@@ -1,0 +1,260 @@
+
+/**
+* All the buttons in the quiz wizard tool bar, and there corresponding hover icon.
+*/
+.icon-next-question {
+	background: url($spritePath) -46px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-ie8 .next-img-over {
+	background: url($spritePath) -43px -387px !important;
+	background-color: $icon-background !important;
+}
+
+.x-over .icon-next-question{
+	background: url($spritePath) -46px -390px !important;
+	background-color: $icon-background !important;
+}
+
+.icon-prev-question {
+	background: url($spritePath) -26px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-ie8 .prev-img-over {
+	background: url($spritePath) -23px -387px !important;
+	background-color: $icon-background !important;
+}
+
+.x-over .icon-prev-question{
+	background: url($spritePath) -26px -390px !important;
+	background-color: $icon-background !important;
+}
+
+.icon-summary {
+	background: url($spritePath) -53px -4px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .icon-summary {
+	background: url($spritePath) -53px -31px !important;
+	background-color: $icon-background !important;
+}
+
+.icon-figures {
+	background: url($spritePath) -79px -4px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .icon-figures {
+	background: url($spritePath) -79px -30px !important;
+	background-color: $icon-background !important;
+}
+
+.icon-video {
+	background: url($spritePath) -4px -5px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-btn-default-toolbar-small-disabled .icon-video:hover{
+	background: url($spritePath) -4px -5px !important;
+	background-color: $icon-background !important;
+}
+
+.x-over .icon-video{
+	background: url($spritePath) -4px -31px !important;
+	background-color: $icon-background !important;
+}
+
+.icon-close {
+	background: url($spritePath) -30px -5px !important;
+	width:26px !important;
+	height:26px !important;
+}
+
+.x-over .icon-close{
+
+	background: url($spritePath) -30px -31px !important;
+	background-color: $icon-background !important;
+}
+/**
+  *Add the Quiz tab separator line color become #161616
+  **/
+.quiz-panel-cls .x-tab-bar-default {
+	top : 0px !important;
+	border-color: $quiz-tab-separator-line !important;
+	border-left-width: 0px !important;
+	border-right-width: 0px !important;
+}
+.quiz-panel-cls .x-tab-bar-horizontal .x-tab-bar-strip {
+	border-color: $quiz-tab-separator-line !important;
+}
+/**
+  *The tab color is the segment separator color #161616
+  **/
+.quiz-panel-cls .x-tab-default  {
+	border-color: $quiz-tab-separator-line ;
+}
+
+.quiz-panel-cls .x-tab-default-active {
+	border-bottom-color: $active-quiz-tab-bgr !important;
+}
+
+.quiz-panel-cls .x-tab-bar-strip-default {
+	background-color: $active-quiz-tab-bgr ;
+}
+/**
+  *	Change the Quiz panel body text color
+  * */
+.quiz-panel-cls .x-form-display-field{
+	margin-left : 5px !important;
+	color: $text-font-color  !important;
+}
+
+
+.result-ok {
+	background: url($spritePath) -157px -314px !important;
+	width: 16.5px !important;
+	height: 17px !important;
+	margin-top: 4px !important;
+	margin-left: 1px;
+}
+
+.result-ok:hover {
+	background: url($spritePath) -157px -331px !important;
+	background-color:  $icon-background !important;
+}
+
+.result-error {
+	background: url($spritePath) -140px -314px !important;
+	width: 17px !important;
+	height: 17px !important;
+	margin-top: 4px !important;
+}
+
+.result-error:hover {
+	background: url($spritePath) -140px -331px !important;
+	background-color:  $icon-background !important;
+}
+
+.quiz-summary {
+	
+	text-align:left;
+	font-size:12px;
+	height:100%;
+	overflow:auto !important;
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.sum {
+	color : red !important;
+	font-weight : bold;
+}
+.hidde-fbar-cls {
+	
+	display : none !important;
+	
+}
+
+.x-ie8 .x-btn-default-small-bc {
+	height : 0px !important;
+}
+.x-ie8 .x-btn-default-small-tc {
+
+	height : 0px !important;
+}
+.x-ie8 .x-btn-default-small-bl {
+	padding : 0px !important;
+	display : none !important;
+}
+.x-ie8 .fbarCls4 .x-btn-default-small-mc {
+padding : 0px !important;
+
+}
+
+.x-ie8 .fbarCls3 .x-btn-default-small-mc {
+padding : 0px !important;	
+}
+
+.x-ie8 .fbarCls5 .x-btn-default-small-mc {
+padding : 0px !important;
+
+}
+
+.x-ie8 .fbarCls99 .x-btn-default-small-mc {
+	
+padding : 0px !important;	
+
+}
+.x-tab-bar-body {
+	border-width: 1px 1px 0 1px !important;
+}
+.x-tab-icon.status04 , .x-tab-icon.status03, .x-tab-icon.status05 , .x-tab-icon.status099{
+	
+	display :inline !important;
+	
+}
+.hide-vscroll-bar{
+	
+	display:none !important;
+	
+}
+
+.x-panel-body-default-docked-bottom .x-box-inner .x-form-item-body .x-form-trigger-wrap .x-form-trigger-input-cell .x-form-field.x-form-text{
+	border: none !important;
+	text-align: center !important;
+	background: $body-content-background !important;
+	font-weight : bold !important;
+}
+.hidequiz-cls {
+	
+	display : none !important;
+}
+
+.questionlabel{
+	top: 5px !important;
+}
+.x-tab-default-icon-text-left .x-tab-inner {
+	padding-left: 12px !important;
+	float: left !important ;
+}
+
+.x-ie .taskStatus .x-btn-default-small .x-btn-inner {	
+	display: none !important ;
+}
+.x-form-text {
+	background-image:none !important ;
+}
+.quiz-panel-cls .x-panel-body-default{
+	border-top-width: 0px !important;
+}
+.quiz-panel-cls .x-panel-default{
+ 	padding: 0px 0px 0px 0px !important;
+}
+
+.quiz-panel-cls .quiz-summary {
+	margin-left: 10px !important;
+}
+ 
+ /**
+  * panel header box shadow is removed 
+  **/
+.x-panel-header-default-top{
+	-webkit-box-shadow:none !important;
+	-moz-box-shadow: none !important;
+	box-shadow:none !important;
+}
+
+/** 
+  * Quiz panel bottom toolbar top border should be container background 
+  **/
+.quiz-panel-cls .x-toolbar-default{
+	
+	border-top-width:2px !important;
+}

@@ -1,0 +1,519 @@
+%div{ class=`$this->cssClass` }
+	%h1~ Registrace nového uživatele 
+	%h3~ Zadejte, prosím, všechny povinné údaje. 
+	%br
+	%br
+	%h3~ Osobní údaje uživatele 
+	%table.standardForm
+		%tr
+			%th~ Jméno a příjmení 
+			%td
+				$TTextBox#CustomerName.textBox 
+					:Columns 30 
+					:Text= $this->CustomerName->SafeText 
+				$TRequiredFieldValidator 
+					:ControlToValidate CustomerName
+					:Text *
+					:EnableClientScript false
+					:ErrorMessage~ Zadejte jméno
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+		%tr
+			%th~ Ulice 
+			%td
+				$TTextBox#Street.textBox
+					:Columns 30 
+					:Text= $this->Street->SafeText 
+				$TRequiredFieldValidator 
+					:ControlToValidate Street 
+					:ErrorMessage~ Zadejte ulici 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+		%tr
+			%th~ Číslo popisné 
+			%td 
+				$TTextBox#StreetNumber.textBox
+					:Columns 05 
+					:Text= $this->StreetNumber->SafeText
+		%tr
+			%th~ Obec 
+			%td
+				$TTextBox#City.textBox
+					:Columns 30
+					:Text= $this->City->SafeText
+				$TRequiredFieldValidator 
+					:ControlToValidate City
+					:ErrorMessage~ Zadejte obec 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+		%tr
+			%th~ PSČ 
+			%td
+				$TTextBox#Zip.textBox
+					:Columns 05
+					:Text= $this->Zip->SafeText
+				$TRequiredFieldValidator 
+					:ControlToValidate Zip
+					:ErrorMessage~ Zadejte PSČ 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+		%tr
+			%th &nbsp;
+			%td &nbsp;
+		%tr
+			%th~ Telefon 
+			%td
+				$TTextBox#Phone.textBox
+					:Columns 30
+					:Text= $this->Phone->SafeText
+				$TRequiredFieldValidator 
+					:ControlToValidate Phone
+					:ErrorMessage~ Zadejte telefon 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+		%tr
+			%th~ Email 
+			%td
+				$TTextBox#Email.textBox
+					:Columns 30
+					:Text= $this->Email->SafeText
+				$TRequiredFieldValidator 
+					:ControlToValidate Email
+					:ErrorMessage~ Zadejte email 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+				$TCustomValidator 
+					:ControlToValidate Username
+					:ErrorMessage~ Takový email již existuje 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+					:OnServerValidate checkEmail
+				$TEmailAddressValidator 
+					:ControlToValidate Email
+					:ErrorMessage~ Nesprávně zadaný email
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+					:CheckMXRecord false
+	$TPanel{ Visible='true' }
+		%br
+		%br
+		%h3~ Fakturační údaje (pouze pokud se liší od osobních údajů)
+		%br
+	$TActiveCheckBox#BillingAddressDifferent
+		:Text~ liší se od osobních údajů
+		:OnCheckedChanged billingAddressDifferentClicked
+		:OnCallback billingAddressDifferentClicked
+		:CausesValidation false
+		:AutoPostBack true
+		:Visible true
+	$FActivePanelReceiver#BillingAddressReceiver
+		:ListenOn OnBillingAddressVisible 
+		$TPanel#BillingAddressForm{ Visible='false' }
+			%table.standardForm
+				%tr
+					%th~ Jméno a příjmení 
+					%td
+						$TTextBox#BillingCustomerName.textBox 
+							:Columns 30 
+							:Text= $this->BillingCustomerName->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate BillingCustomerName
+							:ControlToConfirm BillingAddressDifferent
+							:Text *
+							:EnableClientScript false
+							:ErrorMessage~ Zadejte jméno
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ Firma 
+					%td
+						$TTextBox#BillingCompanyName.textBox 
+							:Columns 30 
+							:Text= $this->BillingCompanyName->SafeText 
+				%tr
+					%th~ IČ
+					%td
+						$TTextBox#BillingIC.textBox
+							:Columns 30
+							:Text= $this->BillingIC->SafeText
+						$FRequiredConfirmValidator
+							:ControlToValidate BillingIC
+							:ControlToConfirm BillingCompanyName
+							:ErrorMessage~ Zadejte IČ
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed
+				%tr
+					%th~ DIČ
+					%td
+						$TTextBox#BillingDIC.textBox
+							:Columns 30
+							:Text= $this->BillingDIC->SafeText
+				%tr
+					%th~ Ulice 
+					%td
+						$TTextBox#BillingStreet.textBox
+							:Columns 30 
+							:Text= $this->BillingStreet->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate BillingStreet
+							:ControlToConfirm BillingAddressDifferent
+							:ErrorMessage~ Zadejte ulici
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ Číslo popisné 
+					%td
+						$TTextBox#BillingStreetNumber.textBox
+							:Columns 5
+							:Text= $this->BillingStreetNumber->SafeText
+				%tr
+					%th~ Obec 
+					%td
+						$TTextBox#BillingCity.textBox
+							:Columns 30 
+							:Text= $this->BillingCity->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate BillingCity
+							:ControlToConfirm BillingAddressDifferent
+							:ErrorMessage~ Zadejte obec 
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ PSČ 
+					%td
+						$TTextBox#BillingZip.textBox
+							:Columns 5 
+							:Text= $this->BillingZip->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate BillingZip
+							:ControlToConfirm BillingAddressDifferent
+							:ErrorMessage~ Zadejte PSČ 
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th &nbsp;
+					%td &nbsp;
+				%tr
+					%th~ Telefon 
+					%td
+						$TTextBox#BillingPhone.textBox
+							:Columns 30 
+							:Text= $this->BillingPhone->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate BillingPhone
+							:ControlToConfirm BillingAddressDifferent
+							:ErrorMessage~ Zadejte telefon 
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ Email 
+					%td
+						$TTextBox#BillingEmail.textBox
+							:Columns 30 
+							:Text= $this->BillingEmail->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate BillingEmail
+							:ControlToConfirm BillingAddressDifferent
+							:ErrorMessage~ Zadejte email
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+						$TEmailAddressValidator 
+							:ControlToValidate BillingEmail
+							:ErrorMessage~ Nesprávně zadaný email
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+	%h3 Dodací údaje
+	%br
+	$TActiveCheckBox#ShippingAddressDifferent
+		:Text~ liší se od fakturačních údajů
+		:OnCheckedChanged shippingAddressDifferentClicked
+		:OnCallback shippingAddressDifferentClicked
+		:CausesValidation false
+		:AutoPostBack true
+	$FActivePanelReceiver#ShippingAddressReceiver
+		:ListenOn OnShippingAddressVisible 
+		$TPanel#ShippingAddressForm{ Visible='false' }
+			%table.standardForm
+				%tr
+					%th~ Jméno a příjmení 
+					%td
+						$TTextBox#ShippingCustomerName.textBox 
+							:Columns 30 
+							:Text= $this->ShippingCustomerName->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate ShippingCustomerName
+							:ControlToConfirm ShippingAddressDifferent
+							:Text *
+							:EnableClientScript false
+							:ErrorMessage~ Zadejte jméno
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ Firma 
+					%td
+						$TTextBox#ShippingCompanyName.textBox 
+							:Columns 30 
+							:Text= $this->ShippingCompanyName->SafeText 
+				%tr
+					%th~ IČ 
+					%td
+						$TTextBox#ShippingIC.textBox 
+							:Columns 30 
+							:Text= $this->ShippingIC->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate ShippingIC
+							:ControlToConfirm ShippingCompanyName
+							:ErrorMessage~ Zadejte IČ
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ DIČ 
+					%td
+						$TTextBox#ShippingDIC.textBox 
+							:Columns 30 
+							:Text= $this->ShippingDIC->SafeText 
+				%tr
+					%th~ Ulice 
+					%td
+						$TTextBox#ShippingStreet.textBox
+							:Columns 30 
+							:Text= $this->ShippingStreet->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate ShippingStreet
+							:ControlToConfirm ShippingAddressDifferent
+							:ErrorMessage~ Zadejte ulici
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ Číslo popisné 
+					%td
+						$TTextBox#ShippingStreetNumber.textBox
+							:Columns 5
+							:Text= $this->ShippingStreetNumber->SafeText 
+				%tr
+					%th~ Obec 
+					%td
+						$TTextBox#ShippingCity.textBox
+							:Columns 30 
+							:Text= $this->ShippingCity->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate ShippingCity
+							:ControlToConfirm ShippingAddressDifferent
+							:ErrorMessage~ Zadejte obec 
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ PSČ 
+					%td
+						$TTextBox#ShippingZip.textBox
+							:Columns 5 
+							:Text= $this->ShippingZip->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate ShippingZip
+							:ControlToConfirm ShippingAddressDifferent
+							:ErrorMessage~ Zadejte PSČ 
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th &nbsp;
+					%td &nbsp;
+				%tr
+					%th~ Telefon 
+					%td
+						$TTextBox#ShippingPhone.textBox
+							:Columns 30 
+							:Text= $this->ShippingPhone->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate ShippingPhone
+							:ControlToConfirm ShippingAddressDifferent
+							:ErrorMessage~ Zadejte telefon 
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+				%tr
+					%th~ Email 
+					%td
+						$TTextBox#ShippingEmail.textBox
+							:Columns 30 
+							:Text= $this->ShippingEmail->SafeText 
+						$FRequiredConfirmValidator 
+							:ControlToValidate ShippingEmail
+							:ControlToConfirm ShippingAddressDifferent
+							:ErrorMessage~ Zadejte email
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+						$TEmailAddressValidator 
+							:ControlToValidate ShippingEmail
+							:ErrorMessage~ Nesprávně zadaný email
+							:Text *
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Display Fixed 
+	$TControl#ChildForm{ Visible='false' }
+		%br
+		%br
+		%h3~ Údaje o dětech
+		%p
+			~ Údaje o dětech
+			%em~ nejsou povinné
+			~ slouží pouze k rychlejší orientaci v produktech se zaměřením na věk dítěte.
+		%table.standardForm.centered
+			%tr
+				%td:= &nbsp;
+				%th~ Jméno:
+				%th~ Datum narození (DD.MM.YYYY):
+			%tr
+				%td 1.
+				%td
+					$TTextBox#Child1Name.textBox
+						:Text= $this->Child1Name->SafeText
+				%td
+					$TTextBox#Child1Birthdate.textBox
+						:Text= $this->Child1Birthdate->SafeText
+			%tr
+				%td 2.
+				%td
+					$TTextBox#Child2Name.textBox
+						:Text= $this->Child2Name->SafeText
+				%td
+					$TTextBox#Child2Birthdate.textBox
+						:Text= $this->Child2Birthdate->SafeText
+			%tr
+				%td 3.
+				%td
+					$TTextBox#Child3Name.textBox
+						:Text= $this->Child3Name->SafeText
+				%td
+					$TTextBox#Child3Birthdate.textBox
+						:Text= $this->Child3Birthdate->SafeText
+			%tr
+				%td 4.
+				%td
+					$TTextBox#Child4Name.textBox
+						:Text= $this->Child4Name->SafeText
+				%td
+					$TTextBox#Child4Birthdate.textBox
+						:Text= $this->Child4Birthdate->SafeText
+	%br
+	%br
+	%h3~ Přihlašovací údaje
+	%p~ Zvolte své přihlašovací jméno a heslo.
+	%table.standardForm.centered
+		%tr
+			%th~ Přihlašovací jméno (login):
+			%td
+				$TTextBox#Username.textBox
+					:Text= $this->Username->SafeText
+				$TRequiredFieldValidator 
+					:ControlToValidate Username
+					:ErrorMessage~ Zadejte přihlašovací jméno 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+				$TCustomValidator 
+					:ControlToValidate Username
+					:ErrorMessage~ Takové přihlašovací jméno již existuje 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+					:OnServerValidate checkUsername
+		%tr
+			%th~ Heslo: 
+			%td
+				$TTextBox#Password.textBox
+					:TextMode Password
+				$TRequiredFieldValidator 
+					:ControlToValidate Password
+					:ErrorMessage~ Zadejte heslo 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed 
+		%tr
+			%th~ Zopakovat heslo:
+			%td
+				$TTextBox#PasswordAgain.textBox
+					:TextMode Password
+				$TCompareValidator 
+					:ControlToValidate PasswordAgain
+					:ControlToCompare Password
+					:ErrorMessage~ Zadaná hesla nejsou stejná
+					:Operator: Equal 
+					:Text *
+					:EnableClientScript false
+					:ValidationGroup RegistrationData
+					:Display Fixed
+
+	%br
+	%br
+	%h3~ Ochrana proti spamu
+	$TControl{ Visible=`$this->UseCaptcha` }
+		%div.objednavkaForm.thin
+			%table.standardForm.centered
+				%tr
+					%th~ Zadejte znaky z obrázku:
+					%td
+						$TTextBox#CaptchaInput.textBox
+							:Text
+				%tr
+					%td{colspan=>`2`, align=`right`}
+						$TCaptcha#Captcha &nbsp;
+						$TCaptchaValidator
+							:CaptchaControl Captcha
+							:ControlToValidate CaptchaInput
+							:EnableClientScript false
+							:ValidationGroup RegistrationData
+							:Text *
+							:ErrorMessage~ Zadejte, prosím, znaky z obrázky znovu
+		%br
+		%br
+	%div.objednavkaForm.thin
+		$TValidationSummary#Summary.valError
+			:AutoUpdate true
+			:EnableClientScript false
+			:ValidationGroup RegistrationData
+	$TButton.buttRegistrovat
+		:Text~ Registrovat
+		:ValidationGroup RegistrationData
+		:OnCommand sendRegistrationDataClicked

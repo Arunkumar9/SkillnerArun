@@ -1,0 +1,555 @@
+<!-- vim: ts=2:sw=2:nu:fdc=2:spell
+ 
+Source viewer
+ 
+@author    Ing.Jozef Sakáloš
+@copyright (c) 2008, by Ing. Jozef Sakáloš
+@date      9. April 2008
+@version   $Id: source.php 630 2009-03-16 18:21:10Z jozo $
+ 
+@license application.html is licensed under the terms of the Open Source
+LGPL 3.0 license. Commercial use is permitted to the extent that the 
+code/component(s) do NOT become part of another Open Source or Commercially
+licensed development library or toolkit without explicit permission.
+ 
+License details: http://www.gnu.org/licenses/lgpl.html
+-->
+ 
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="../ext/resources/css/ext-all.css">
+  <link rel="shortcut icon" href="../img/extjs.ico" />
+
+  <script type="text/javascript" src="../ext/adapter/ext/ext-base.js"></script>
+  <script type="text/javascript" src="../ext/ext-all-debug.js"></script>
+
+  <title id="page-title">Source of gridsearch.js</title>
+  <style type="text/css">
+	#ct {
+		margin:8px;
+	}
+	#src-name {
+		font-size:13px;
+		font-family:arial, sans-serif;
+	}
+	#code {
+		position:relative;
+		padding:10px;
+		border:1px solid silver;
+		border-left-width:8px;
+		background:#f8f8f8;
+		font-size:12px;
+		font-family:monospace;
+		margin: 0 0 8px 0;
+	}
+	#code ol {
+		list-style:decimal outside;
+		margin: 0px 0px 0px 44px;
+	}
+	#code li {
+		white-space:pre;
+	}
+  #code li:hover {
+		background:#e8e8e8;
+	}
+	#themect {
+		position:absolute;
+		top:100px;
+		right:9px;
+	}
+	.adsense {
+		margin: 0 0 10px 0;
+	}
+  </style>
+	<script type="text/javascript">
+		Ext.BLANK_IMAGE_URL = '../ext/resources/images/default/s.gif';
+		Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+		Ext.onReady(function() {
+			var theme = Ext.state.Manager.get('srctheme') || 'typical';
+			var tc = new Ext.form.ComboBox({
+				store:new Ext.data.SimpleStore({
+					 id:0
+					,fields:['theme', 'themeName']
+					,data:[["acid","Acid"],["bipolar","Bipolar"],["blacknblue","Blacknblue"],["bright","Bright"],["contrast","Contrast"],["darkblue","Darkblue"],["darkness","Darkness"],["desert","Desert"],["easter","Easter"],["emacs","Emacs"],["golden","Golden"],["greenlcd","Greenlcd"],["ide-anjuta","Ide-anjuta"],["ide-codewarrior","Ide-codewarrior"],["ide-devcpp","Ide-devcpp"],["ide-eclipse","Ide-eclipse"],["ide-kdev","Ide-kdev"],["ide-msvcpp","Ide-msvcpp"],["ide-xcode","Ide-xcode"],["kwrite","Kwrite"],["lucretia","Lucretia"],["matlab","Matlab"],["moe","Moe"],["navy","Navy"],["nedit","Nedit"],["neon","Neon"],["night","Night"],["orion","Orion"],["pablo","Pablo"],["peachpuff","Peachpuff"],["print","Print"],["rand01","Rand01"],["seashell","Seashell"],["the","The"],["typical","Typical"],["vampire","Vampire"],["vim-dark","Vim-dark"],["vim","Vim"],["whitengrey","Whitengrey"],["zellner","Zellner"]]
+				})
+				,renderTo:'themect'
+				,valueField:'theme'
+				,displayField:'themeName'
+				,forceSelection:true
+				,editable:false
+				,mode:'local'
+				,triggerAction:'all'
+				,value:theme
+				,listeners:{
+					select:function() {
+						var theme = this.getValue();
+						Ext.getDoc().dom.cookie = 'srctheme=' + theme;
+						Ext.state.Manager.set('srctheme', theme);
+						window.location.search = "srctheme=" + theme + '&file=' + 'gridsearch.js';
+					}
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+<div id="ct">
+	<div id="themect"></div>
+	<div class="adsense">
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-2768521146228687";
+		/* 728x90, for sources */
+		google_ad_slot = "3128262044";
+		google_ad_width = 728;
+		google_ad_height = 90;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+	</div>
+	<span id="src-name" style="line-height:22px;">Source of <b>gridsearch.js:</b></span>
+	<div id="code"><ol><li style="color:#666666"><span style="color:#666666; font-style:italic">// vim: sw=4:ts=4:nu:nospell:fdc=4</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">/**</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * Ext.ux.grid.Search Plugin Example Application</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> *</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * &#64;author    Ing. Jozef Sakáloš</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * &#64;copyright (c) 2008, by Ing. Jozef Sakáloš</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * &#64;date      5. April 2008</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * &#64;version   $Id: gridsearch.js 127 2009-02-13 21:26:31Z jozo $</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> *</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * &#64;license gridsearch.js is licensed under the terms of the Open Source</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * LGPL 3.0 license. Commercial use is permitted to the extent that the</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * code/component(s) do NOT become part of another Open Source or Commercially</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * licensed development library or toolkit without explicit permission.</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> *</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> * License details: http://www.gnu.org/licenses/lgpl.html</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic"> */</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">/*global Ext, Example, WebPage, window */</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">ns</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'Example'</span><span style="color:#ff0000">,</span> <span style="color:#ff0000">'WebPage'</span><span style="color:#ff0000">);</span></li>
+<li style="color:#666666">Ext<span style="color:#ff0000">.</span>BLANK_IMAGE_URL <span style="color:#ff0000">=</span> <span style="color:#ff0000">'./ext/resources/images/default/s.gif'</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">Ext<span style="color:#ff0000">.</span>state<span style="color:#ff0000">.</span>Manager<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">setProvider</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>state<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">CookieProvider</span><span style="color:#ff0000">());</span></li>
+<li style="color:#666666">Example<span style="color:#ff0000">.</span>version <span style="color:#ff0000">=</span> <span style="color:#ff0000">'1.1'</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">Example<span style="color:#ff0000">.</span>Grid1 <span style="color:#ff0000">=</span> Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">extend</span><span style="color:#ff0000">(</span>Ext<span style="color:#ff0000">.</span>grid<span style="color:#ff0000">.</span>EditorGridPanel<span style="color:#ff0000">, {</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// defaults - can be changed from outside</span></li>
+<li style="color:#666666">     layout<span style="color:#ff0000">:</span><span style="color:#ff0000">'fit'</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span><span style="color:#ec7f15">border</span><span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>stateful<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>url<span style="color:#ff0000">:</span><span style="color:#ff0000">'process-request.php'</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>objName<span style="color:#ff0000">:</span><span style="color:#ff0000">'company'</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>idName<span style="color:#ff0000">:</span><span style="color:#ff0000">'compID'</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>initComponent<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">() {</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// create row actions</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>rowActions <span style="color:#ff0000">=</span> <span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>ux<span style="color:#ff0000">.</span>grid<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">RowActions</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">             actions<span style="color:#ff0000">:[{</span></li>
+<li style="color:#666666">                 iconCls<span style="color:#ff0000">:</span><span style="color:#ff0000">'icon-minus'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>qtip<span style="color:#ff0000">:</span><span style="color:#ff0000">'Delete Record'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>style<span style="color:#ff0000">:</span><span style="color:#ff0000">'margin:0 0 0 3px'</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">}]</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">});</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>rowActions<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">on</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'action'</span><span style="color:#ff0000">,</span> <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>onRowAction<span style="color:#ff0000">,</span> <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">);</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// hard coded - cannot be changed from outside</span></li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">var</span> config <span style="color:#ff0000">= {</span></li>
+<li style="color:#666666">            <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">            store<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>data<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">Store</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                reader<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>data<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">JsonReader</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                     id<span style="color:#ff0000">:</span><span style="color:#ff0000">'compID'</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>totalProperty<span style="color:#ff0000">:</span><span style="color:#ff0000">'totalCount'</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>root<span style="color:#ff0000">:</span><span style="color:#ff0000">'rows'</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>fields<span style="color:#ff0000">:[</span></li>
+<li style="color:#666666">                         <span style="color:#ff0000">{</span><span style="color:#ec7f15">name</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'compID'</span><span style="color:#ff0000">,</span> <span style="color:#ec7f15">type</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'int'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,{</span><span style="color:#ec7f15">name</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'company'</span><span style="color:#ff0000">,</span> <span style="color:#ec7f15">type</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'string'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,{</span><span style="color:#ec7f15">name</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'price'</span><span style="color:#ff0000">,</span> <span style="color:#ec7f15">type</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'float'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,{</span><span style="color:#ec7f15">name</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'change'</span><span style="color:#ff0000">,</span> <span style="color:#ec7f15">type</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'float'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,{</span><span style="color:#ec7f15">name</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'pctChange'</span><span style="color:#ff0000">,</span> <span style="color:#ec7f15">type</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'float'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,{</span><span style="color:#ec7f15">name</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'lastChange'</span><span style="color:#ff0000">,</span> <span style="color:#ec7f15">type</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'date'</span><span style="color:#ff0000">,</span> dateFormat<span style="color:#ff0000">:</span><span style="color:#ff0000">'n/j/Y'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,{</span><span style="color:#ec7f15">name</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'industry'</span><span style="color:#ff0000">,</span> <span style="color:#ec7f15">type</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'string'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//                      ,{name:'action1', type:'string'}</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//                      ,{name:'qtip1', type:'string'}</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//                      ,{name:'action2', type:'string'}</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//                      ,{name:'qtip2', type:'string'}</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//                      ,{name:'action3', type:'string'}</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//                      ,{name:'qtip3', type:'string'}</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,{</span><span style="color:#ec7f15">name</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'note'</span><span style="color:#ff0000">,</span> <span style="color:#ec7f15">type</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'string'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>proxy<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>data<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">HttpProxy</span><span style="color:#ff0000">({</span>url<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>url<span style="color:#ff0000">})</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>baseParams<span style="color:#ff0000">:{</span>cmd<span style="color:#ff0000">:</span><span style="color:#ff0000">'getData'</span><span style="color:#ff0000">,</span> objName<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>objName<span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>remoteSort<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">            <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">            <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>columns<span style="color:#ff0000">:[{</span></li>
+<li style="color:#666666">                 header<span style="color:#ff0000">:</span><span style="color:#ff0000">'Company'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>id<span style="color:#ff0000">:</span><span style="color:#ff0000">'company'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>dataIndex<span style="color:#ff0000">:</span><span style="color:#ff0000">'company'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span><span style="color:#ec7f15">width</span><span style="color:#ff0000">:</span><span style="color:#a900a9">160</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>sortable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>editor<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>form<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">TextField</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                    allowBlank<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">},{</span></li>
+<li style="color:#666666">                 header<span style="color:#ff0000">:</span><span style="color:#ff0000">'Price'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>dataIndex<span style="color:#ff0000">:</span><span style="color:#ff0000">'price'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span><span style="color:#ec7f15">width</span><span style="color:#ff0000">:</span><span style="color:#a900a9">40</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>sortable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>align<span style="color:#ff0000">:</span><span style="color:#ff0000">'right'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>editor<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>form<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">NumberField</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                     allowBlank<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>decimalPrecision<span style="color:#ff0000">:</span><span style="color:#a900a9">2</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>selectOnFocus<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">},{</span></li>
+<li style="color:#666666">                 header<span style="color:#ff0000">:</span><span style="color:#ff0000">'Change'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>dataIndex<span style="color:#ff0000">:</span><span style="color:#ff0000">'change'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span><span style="color:#ec7f15">width</span><span style="color:#ff0000">:</span><span style="color:#a900a9">40</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>sortable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>align<span style="color:#ff0000">:</span><span style="color:#ff0000">'right'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>editor<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>form<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">NumberField</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                     allowBlank<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>decimalPrecision<span style="color:#ff0000">:</span><span style="color:#a900a9">2</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>selectOnFocus<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">},{</span></li>
+<li style="color:#666666">                 header<span style="color:#ff0000">:</span><span style="color:#ff0000">'Change [%]'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>dataIndex<span style="color:#ff0000">:</span><span style="color:#ff0000">'pctChange'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span><span style="color:#ec7f15">width</span><span style="color:#ff0000">:</span><span style="color:#a900a9">50</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>sortable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>align<span style="color:#ff0000">:</span><span style="color:#ff0000">'right'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>editor<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>form<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">NumberField</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                     allowBlank<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>decimalPrecision<span style="color:#ff0000">:</span><span style="color:#a900a9">2</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>selectOnFocus<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">},{</span></li>
+<li style="color:#666666">                 header<span style="color:#ff0000">:</span><span style="color:#ff0000">'Last Updated'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>dataIndex<span style="color:#ff0000">:</span><span style="color:#ff0000">'lastChange'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span><span style="color:#ec7f15">width</span><span style="color:#ff0000">:</span><span style="color:#a900a9">70</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>sortable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>align<span style="color:#ff0000">:</span><span style="color:#ff0000">'right'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>editor<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>form<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">DateField</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">})</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//              ,renderer:Ext.util.Format.dateRenderer('n/j/Y')</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>renderer<span style="color:#ff0000">:</span>Ext<span style="color:#ff0000">.</span>util<span style="color:#ff0000">.</span>Format<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">dateRenderer</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'m/d/Y h:i A T'</span><span style="color:#ff0000">)</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">},{</span></li>
+<li style="color:#666666">                 header<span style="color:#ff0000">:</span><span style="color:#ff0000">'Industry'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>dataIndex<span style="color:#ff0000">:</span><span style="color:#ff0000">'industry'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span><span style="color:#ec7f15">width</span><span style="color:#ff0000">:</span><span style="color:#a900a9">75</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>sortable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>editor<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>form<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">ComboBox</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                    store<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>data<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">SimpleStore</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                         id<span style="color:#ff0000">:</span><span style="color:#a900a9">0</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,</span>fields<span style="color:#ff0000">:[</span><span style="color:#ff0000">'industry'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">,</span>data<span style="color:#ff0000">:[</span></li>
+<li style="color:#666666">                             <span style="color:#ff0000">[</span><span style="color:#ff0000">'Automotive'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                            <span style="color:#ff0000">,[</span><span style="color:#ff0000">'Computer'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                            <span style="color:#ff0000">,[</span><span style="color:#ff0000">'Finance'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                            <span style="color:#ff0000">,[</span><span style="color:#ff0000">'Food'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                            <span style="color:#ff0000">,[</span><span style="color:#ff0000">'Manufacturing'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                            <span style="color:#ff0000">,[</span><span style="color:#ff0000">'Medical'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                            <span style="color:#ff0000">,[</span><span style="color:#ff0000">'Retail'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                            <span style="color:#ff0000">,[</span><span style="color:#ff0000">'Services'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                        <span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>displayField<span style="color:#ff0000">:</span><span style="color:#ff0000">'industry'</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>valueField<span style="color:#ff0000">:</span><span style="color:#ff0000">'industry'</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>triggerAction<span style="color:#ff0000">:</span><span style="color:#ff0000">'all'</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>mode<span style="color:#ff0000">:</span><span style="color:#ff0000">'local'</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>editable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>lazyRender<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span>forceSelection<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">},{</span></li>
+<li style="color:#666666">                 header<span style="color:#ff0000">:</span><span style="color:#ff0000">'Note'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>dataIndex<span style="color:#ff0000">:</span><span style="color:#ff0000">'note'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span><span style="color:#ec7f15">width</span><span style="color:#ff0000">:</span><span style="color:#a900a9">75</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>sortable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>editor<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>form<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">TextArea</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                    grow<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">})</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">},</span> <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>rowActions<span style="color:#ff0000">]</span></li>
+<li style="color:#666666">            <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span><span style="color:#ec7f15">plugins</span><span style="color:#ff0000">:[</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>ux<span style="color:#ff0000">.</span>grid<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">Search</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">                iconCls<span style="color:#ff0000">:</span><span style="color:#ff0000">'icon-zoom'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>readonlyIndexes<span style="color:#ff0000">:[</span><span style="color:#ff0000">'note'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>disableIndexes<span style="color:#ff0000">:[</span><span style="color:#ff0000">'pctChange'</span><span style="color:#ff0000">]</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>minChars<span style="color:#ff0000">:</span><span style="color:#a900a9">2</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>autoFocus<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//              ,menuStyle:'radio'</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">}),</span> <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>rowActions<span style="color:#ff0000">]</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>viewConfig<span style="color:#ff0000">:{</span>forceFit<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>buttons<span style="color:#ff0000">:[{</span></li>
+<li style="color:#666666">                 <span style="color:#ec7f15">text</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'Save'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>iconCls<span style="color:#ff0000">:</span><span style="color:#ff0000">'icon-disk'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>scope<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>handler<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>commitChanges</li>
+<li style="color:#666666">            <span style="color:#ff0000">},{</span></li>
+<li style="color:#666666">                 <span style="color:#ec7f15">text</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'Reset'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>iconCls<span style="color:#ff0000">:</span><span style="color:#ff0000">'icon-undo'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>scope<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>handler<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">() {</span></li>
+<li style="color:#666666">                    <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>store<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">rejectChanges</span><span style="color:#ff0000">();</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">}]</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>tbar<span style="color:#ff0000">:[{</span></li>
+<li style="color:#666666">                 <span style="color:#ec7f15">text</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'Add Record'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>iconCls<span style="color:#ff0000">:</span><span style="color:#ff0000">'icon-plus'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>listeners<span style="color:#ff0000">:{</span></li>
+<li style="color:#666666">                     scope<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">,</span><span style="color:#ec7f15">click</span><span style="color:#ff0000">:{</span>fn<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>addRecord<span style="color:#ff0000">,</span>buffer<span style="color:#ff0000">:</span><span style="color:#a900a9">200</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">}]</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">};</span> <span style="color:#666666; font-style:italic">// eo config object</span></li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// apply config</span></li>
+<li style="color:#666666">        Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">apply</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">,</span> config<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">        Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">apply</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>initialConfig<span style="color:#ff0000">,</span> config<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// create bottom paging toolbar</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>bbar <span style="color:#ff0000">=</span> <span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">PagingToolbar</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">             store<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>store</li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>displayInfo<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>pageSize<span style="color:#ff0000">:</span><span style="color:#a900a9">10</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">});</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// call parent</span></li>
+<li style="color:#666666">        Example<span style="color:#ff0000">.</span>Grid1<span style="color:#ff0000">.</span>superclass<span style="color:#ff0000">.</span>initComponent<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">apply</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">,</span> arguments<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo function initComponent</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>onRender<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">() {</span></li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// call parent</span></li>
+<li style="color:#666666">        Example<span style="color:#ff0000">.</span>Grid1<span style="color:#ff0000">.</span>superclass<span style="color:#ff0000">.</span>onRender<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">apply</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">,</span> arguments<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>bbar2 <span style="color:#ff0000">=</span> <span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">Toolbar</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">            renderTo<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>bbar</li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>items<span style="color:#ff0000">:[</span><span style="color:#ff0000">'Example of second toolbar'</span><span style="color:#ff0000">,</span> <span style="color:#ff0000">'-'</span><span style="color:#ff0000">, {</span></li>
+<li style="color:#666666">                 <span style="color:#ec7f15">text</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'Button'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>iconCls<span style="color:#ff0000">:</span><span style="color:#ff0000">'icon-key'</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">},</span> <span style="color:#ff0000">'-'</span><span style="color:#ff0000">, {</span></li>
+<li style="color:#666666">                 xtype<span style="color:#ff0000">:</span><span style="color:#ff0000">'checkbox'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>boxLabel<span style="color:#ff0000">:</span><span style="color:#ff0000">'A Checkbox'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span><span style="color:#ec7f15">checked</span><span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">}]</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">});</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">        <span style="color:#666666; font-style:italic">// load store</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>store<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">load</span><span style="color:#ff0000">({</span>params<span style="color:#ff0000">:{</span>start<span style="color:#ff0000">:</span><span style="color:#a900a9">0</span><span style="color:#ff0000">,</span>limit<span style="color:#ff0000">:</span><span style="color:#a900a9">10</span><span style="color:#ff0000">}});</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo function onRender</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>afterRender<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">() {</span></li>
+<li style="color:#666666">        Example<span style="color:#ff0000">.</span>Grid1<span style="color:#ff0000">.</span>superclass<span style="color:#ff0000">.</span>afterRender<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">apply</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">,</span> arguments<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">getBottomToolbar</span><span style="color:#ff0000">().</span><span style="color:#000000; font-weight:bold">add</span><span style="color:#ff0000">({</span><span style="color:#ec7f15">text</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'A test button'</span><span style="color:#ff0000">,</span>iconCls<span style="color:#ff0000">:</span><span style="color:#ff0000">'icon-info'</span><span style="color:#ff0000">});</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo function afterRender</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>addRecord<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">() {</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//      console.info(&quot;adding record&quot;);</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo function addRecord</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>onRowAction<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">(</span>grid<span style="color:#ff0000">,</span> record<span style="color:#ff0000">,</span> action<span style="color:#ff0000">,</span> row<span style="color:#ff0000">,</span> col<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">switch</span><span style="color:#ff0000">(</span>action<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">case</span> <span style="color:#ff0000">'icon-minus'</span><span style="color:#ff0000">:</span></li>
+<li style="color:#666666">                <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">deleteRecord</span><span style="color:#ff0000">(</span>record<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">break</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">default</span><span style="color:#ff0000">:</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">break</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo onRowAction</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>commitChanges<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">() {</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">var</span> records <span style="color:#ff0000">=</span> <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>store<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">getModifiedRecords</span><span style="color:#ff0000">();</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">if</span><span style="color:#ff0000">(!</span>records<span style="color:#ff0000">.</span><span style="color:#ec7f15">length</span><span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">return</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">var</span> data <span style="color:#ff0000">= [];</span></li>
+<li style="color:#666666">        Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">each</span><span style="color:#ff0000">(</span>records<span style="color:#ff0000">,</span> <span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">(</span>r<span style="color:#ff0000">,</span> i<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">            data<span style="color:#ff0000">.</span><span style="color:#ec7f15">push</span><span style="color:#ff0000">(</span>r<span style="color:#ff0000">.</span>data<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">},</span> <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">);</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">var</span> o <span style="color:#ff0000">= {</span></li>
+<li style="color:#666666">             url<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>url</li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span><span style="color:#ec7f15">method</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'post'</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>callback<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>requestCallback</li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>scope<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>params<span style="color:#ff0000">:{</span></li>
+<li style="color:#666666">                 cmd<span style="color:#ff0000">:</span><span style="color:#ff0000">'saveData'</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>objName<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>objName</li>
+<li style="color:#666666">                <span style="color:#ff0000">,</span>data<span style="color:#ff0000">:</span>Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">encode</span><span style="color:#ff0000">(</span>data<span style="color:#ff0000">)</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">};</span></li>
+<li style="color:#666666">        Ext<span style="color:#ff0000">.</span>Ajax<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">request</span><span style="color:#ff0000">(</span>o<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo function commitChanges</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>requestCallback<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">(</span><span style="color:#ec7f15">options</span><span style="color:#ff0000">,</span> success<span style="color:#ff0000">,</span> response<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">if</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">true</span> <span style="color:#ff0000">!==</span> success<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">showError</span><span style="color:#ff0000">(</span>response<span style="color:#ff0000">.</span>responseText<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">return</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">try</span> <span style="color:#ff0000">{</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">var</span> o <span style="color:#ff0000">=</span> Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">decode</span><span style="color:#ff0000">(</span>response<span style="color:#ff0000">.</span>responseText<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">catch</span><span style="color:#ff0000">(</span>e<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">showError</span><span style="color:#ff0000">(</span>response<span style="color:#ff0000">.</span>responseText<span style="color:#ff0000">,</span> <span style="color:#ff0000">'Cannot decode JSON object'</span><span style="color:#ff0000">);</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">return</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">if</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">true</span> <span style="color:#ff0000">!==</span> o<span style="color:#ff0000">.</span>success<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">showError</span><span style="color:#ff0000">(</span>o<span style="color:#ff0000">.</span>error <span style="color:#ff0000">||</span> <span style="color:#ff0000">'Unknown error'</span><span style="color:#ff0000">);</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">return</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">        <span style="color:#0000ff; font-weight:bold">switch</span><span style="color:#ff0000">(</span><span style="color:#ec7f15">options</span><span style="color:#ff0000">.</span>params<span style="color:#ff0000">.</span>cmd<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">case</span> <span style="color:#ff0000">'saveData'</span><span style="color:#ff0000">:</span></li>
+<li style="color:#666666">                <span style="color:#0000ff; font-weight:bold">var</span> records <span style="color:#ff0000">=</span> <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>store<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">getModifiedRecords</span><span style="color:#ff0000">();</span></li>
+<li style="color:#666666">                Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">each</span><span style="color:#ff0000">(</span>records<span style="color:#ff0000">,</span> <span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">(</span>r<span style="color:#ff0000">,</span> i<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">                    <span style="color:#0000ff; font-weight:bold">if</span><span style="color:#ff0000">(</span>o<span style="color:#ff0000">.</span>insertIds <span style="color:#ff0000">&amp;&amp;</span> o<span style="color:#ff0000">.</span>insertIds<span style="color:#ff0000">[</span>i<span style="color:#ff0000">]) {</span></li>
+<li style="color:#666666">                        r<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">set</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>idName<span style="color:#ff0000">,</span> o<span style="color:#ff0000">.</span>insertIds<span style="color:#ff0000">[</span>i<span style="color:#ff0000">]);</span></li>
+<li style="color:#666666">                        <span style="color:#0000ff; font-weight:bold">delete</span><span style="color:#ff0000">(</span>r<span style="color:#ff0000">.</span>data<span style="color:#ff0000">.</span>newRecord<span style="color:#ff0000">);</span></li>
+<li style="color:#666666">                    <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">});</span></li>
+<li style="color:#666666">                <span style="color:#0000ff; font-weight:bold">this</span><span style="color:#ff0000">.</span>store<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">commitChanges</span><span style="color:#ff0000">();</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">break</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">case</span> <span style="color:#ff0000">'deleteData'</span><span style="color:#ff0000">:</span></li>
+<li style="color:#666666">            <span style="color:#0000ff; font-weight:bold">break</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo function requestCallback</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>showError<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">(</span>msg<span style="color:#ff0000">,</span> <span style="color:#ec7f15">title</span><span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">        Ext<span style="color:#ff0000">.</span>Msg<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">show</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">             <span style="color:#ec7f15">title</span><span style="color:#ff0000">:</span><span style="color:#ec7f15">title</span> <span style="color:#ff0000">||</span> <span style="color:#ff0000">'Error'</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>msg<span style="color:#ff0000">:</span>Ext<span style="color:#ff0000">.</span>util<span style="color:#ff0000">.</span>Format<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">ellipsis</span><span style="color:#ff0000">(</span>msg<span style="color:#ff0000">,</span> <span style="color:#a900a9">2000</span><span style="color:#ff0000">)</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>icon<span style="color:#ff0000">:</span>Ext<span style="color:#ff0000">.</span>Msg<span style="color:#ff0000">.</span>ERROR</li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>buttons<span style="color:#ff0000">:</span>Ext<span style="color:#ff0000">.</span>Msg<span style="color:#ff0000">.</span>OK</li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>minWidth<span style="color:#ff0000">:</span><span style="color:#a900a9">1200</span> <span style="color:#ff0000">&gt;</span> <span style="color:#ec7f15">String</span><span style="color:#ff0000">(</span>msg<span style="color:#ff0000">).</span><span style="color:#ec7f15">length</span> ? <span style="color:#a900a9">360</span> <span style="color:#ff0000">:</span> <span style="color:#a900a9">600</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">});</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo function showError</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// {{{</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">,</span>deleteRecord<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">(</span>record<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">        Ext<span style="color:#ff0000">.</span>Msg<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">show</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">             <span style="color:#ec7f15">title</span><span style="color:#ff0000">:</span><span style="color:#ff0000">'Delete record?'</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>msg<span style="color:#ff0000">:</span><span style="color:#ff0000">'Do you really want to delete &lt;b&gt;'</span> <span style="color:#ff0000">+</span> record<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">get</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'company'</span><span style="color:#ff0000">) +</span> <span style="color:#ff0000">'&lt;/b&gt;&lt;br/&gt;There is no undo.'</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>icon<span style="color:#ff0000">:</span>Ext<span style="color:#ff0000">.</span>Msg<span style="color:#ff0000">.</span>QUESTION</li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>buttons<span style="color:#ff0000">:</span>Ext<span style="color:#ff0000">.</span>Msg<span style="color:#ff0000">.</span>YESNO</li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>scope<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">this</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">,</span>fn<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">(</span>response<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">                <span style="color:#0000ff; font-weight:bold">if</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'yes'</span> <span style="color:#ff0000">!==</span> response<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">                    <span style="color:#0000ff; font-weight:bold">return</span><span style="color:#ff0000">;</span></li>
+<li style="color:#666666">                <span style="color:#ff0000">}</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//              console.info('Deleting record');</span></li>
+<li style="color:#666666">            <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">});</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span> <span style="color:#666666; font-style:italic">// eo function deleteRecord</span></li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666"><span style="color:#ff0000">});</span> <span style="color:#666666; font-style:italic">// eo extend</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">// register xtype</span></li>
+<li style="color:#666666">Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">reg</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'examplegrid1'</span><span style="color:#ff0000">,</span> Example<span style="color:#ff0000">.</span>Grid1<span style="color:#ff0000">);</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">// }}}</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">// application main entry point</span></li>
+<li style="color:#666666">Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">onReady</span><span style="color:#ff0000">(</span><span style="color:#0000ff; font-weight:bold">function</span><span style="color:#ff0000">() {</span></li>
+<li style="color:#666666">    Ext<span style="color:#ff0000">.</span>QuickTips<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">init</span><span style="color:#ff0000">();</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//  var tip = Ext.QuickTips.getQuickTip();</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//  Ext.apply(tip, {</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//      autoHide:false</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//  });</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">    <span style="color:#0000ff; font-weight:bold">var</span> adsenseHost <span style="color:#ff0000">=</span></li>
+<li style="color:#666666">           <span style="color:#ff0000">'gridsearch.localhost'</span> <span style="color:#ff0000">===</span> <span style="color:#ec7f15">window</span><span style="color:#ff0000">.</span><span style="color:#ec7f15">location</span><span style="color:#ff0000">.</span><span style="color:#ec7f15">host</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">||</span> <span style="color:#ff0000">'gridsearch.extjs.eu'</span> <span style="color:#ff0000">===</span> <span style="color:#ec7f15">window</span><span style="color:#ff0000">.</span><span style="color:#ec7f15">location</span><span style="color:#ff0000">.</span><span style="color:#ec7f15">host</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">;</span></li>
+<li style="color:#666666">    <span style="color:#0000ff; font-weight:bold">var</span> page <span style="color:#ff0000">=</span> <span style="color:#0000ff; font-weight:bold">new</span> <span style="color:#000000; font-weight:bold">WebPage</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">         version<span style="color:#ff0000">:</span>Example<span style="color:#ff0000">.</span>version</li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>westContent<span style="color:#ff0000">:</span><span style="color:#ff0000">'west-content'</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>centerContent<span style="color:#ff0000">:</span><span style="color:#ff0000">'center-content'</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>adRowContent<span style="color:#ff0000">:</span>adsenseHost ? <span style="color:#ff0000">'adrow-content'</span> <span style="color:#ff0000">:</span> undefined</li>
+<li style="color:#666666">    <span style="color:#ff0000">});</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">    <span style="color:#0000ff; font-weight:bold">var</span> ads <span style="color:#ff0000">=</span> Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">getBody</span><span style="color:#ff0000">().</span><span style="color:#000000; font-weight:bold">select</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'div.adsense'</span><span style="color:#ff0000">);</span></li>
+<li style="color:#666666">    <span style="color:#0000ff; font-weight:bold">if</span><span style="color:#ff0000">(</span>adsenseHost<span style="color:#ff0000">) {</span></li>
+<li style="color:#666666">        ads<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">removeClass</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'x-hidden'</span><span style="color:#ff0000">);</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">    <span style="color:#0000ff; font-weight:bold">else</span> <span style="color:#ff0000">{</span></li>
+<li style="color:#666666">        ads<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">remove</span><span style="color:#ff0000">();</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">}</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666">    <span style="color:#666666; font-style:italic">// create and show window</span></li>
+<li style="color:#666666">    <span style="color:#0000ff; font-weight:bold">var</span> win <span style="color:#ff0000">=</span> <span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">Window</span><span style="color:#ff0000">({</span></li>
+<li style="color:#666666">         id<span style="color:#ff0000">:</span><span style="color:#ff0000">'gswin'</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span><span style="color:#ec7f15">title</span><span style="color:#ff0000">:</span>Ext<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">get</span><span style="color:#ff0000">(</span><span style="color:#ff0000">'page-title'</span><span style="color:#ff0000">).</span>dom<span style="color:#ff0000">.</span><span style="color:#ec7f15">innerHTML</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>iconCls<span style="color:#ff0000">:</span><span style="color:#ff0000">'icon-grid'</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span><span style="color:#ec7f15">width</span><span style="color:#ff0000">:</span><span style="color:#a900a9">700</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span><span style="color:#ec7f15">height</span><span style="color:#ff0000">:</span><span style="color:#a900a9">400</span></li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">//      ,stateful:false</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>x<span style="color:#ff0000">:</span><span style="color:#a900a9">320</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>y<span style="color:#ff0000">:</span><span style="color:#a900a9">82</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>plain<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>layout<span style="color:#ff0000">:</span><span style="color:#ff0000">'fit'</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>closable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span><span style="color:#ec7f15">border</span><span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">false</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>maximizable<span style="color:#ff0000">:</span><span style="color:#0000ff; font-weight:bold">true</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span>items<span style="color:#ff0000">:{</span>xtype<span style="color:#ff0000">:</span><span style="color:#ff0000">'examplegrid1'</span><span style="color:#ff0000">,</span> id<span style="color:#ff0000">:</span><span style="color:#ff0000">'examplegrid1'</span><span style="color:#ff0000">}</span></li>
+<li style="color:#666666">        <span style="color:#ff0000">,</span><span style="color:#ec7f15">plugins</span><span style="color:#ff0000">:[</span><span style="color:#0000ff; font-weight:bold">new</span> Ext<span style="color:#ff0000">.</span>ux<span style="color:#ff0000">.</span>menu<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">IconMenu</span><span style="color:#ff0000">()]</span></li>
+<li style="color:#666666">    <span style="color:#ff0000">});</span></li>
+<li style="color:#666666">    win<span style="color:#ff0000">.</span><span style="color:#000000; font-weight:bold">show</span><span style="color:#ff0000">();</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666"><span style="color:#ff0000">});</span> <span style="color:#666666; font-style:italic">// eo function onReady</span></li>
+<li style="color:#666666">&nbsp;</li>
+<li style="color:#666666"><span style="color:#666666; font-style:italic">// eof</span></li>
+
+</ol></div>
+
+	<div class="adsense">
+		<script type="text/javascript"><!--
+		google_ad_client = "pub-2768521146228687";
+		/* 728x90, for sources */
+		google_ad_slot = "3128262044";
+		google_ad_width = 728;
+		google_ad_height = 90;
+		//-->
+		</script>
+		<script type="text/javascript"
+		src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+		</script>
+	</div>
+</div>
+<!-- delete following line if you don not want stats included -->
+<!-- phpmyvisites -->
+<a href="http://www.phpmyvisites.net/" style="text-decoration:none" title="Free web analytics, website statistics"
+onclick="window.open(this.href);return(false);"><script type="text/javascript">
+<!--
+var a_vars = Array();
+var pagename='sources/gridsearch_js';
+
+var phpmyvisitesSite = 1;
+var phpmyvisitesURL = "http://extjs.eu/phpmv2/phpmyvisites.php";
+//-->
+</script>
+<script language="javascript" src="http://extjs.eu/phpmv2/phpmyvisites.js" type="text/javascript"></script>
+<object><noscript><p>Free web analytics, website statistics
+<img src="http://extjs.eu/phpmv2/phpmyvisites.php" alt="Statistics" style="border:0" />
+</p></noscript></object></a>
+<!-- /phpmyvisites -->
+</body>
+</html>
+<!-- eof -->

@@ -1,0 +1,23 @@
+body {
+	background-image: url($ajax-loader-image);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.icon-size {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.center-region-cls .x-panel-body-default{
+	border-width: 0px !important;
+}
+.x-window-default {
+
+	border-style: none !important;
+}
+.x-window-header-default-top {
+
+	border-style: none !important;
+}

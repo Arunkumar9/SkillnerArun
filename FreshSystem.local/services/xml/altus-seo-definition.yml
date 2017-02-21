@@ -1,0 +1,85 @@
+# Definitions of SEO xml feeds.
+# zbozi.xml  http://napoveda.seznam.cz/cz/specifikace-xml.html
+# http://sluzby.heureka.cz/napoveda/import/
+---
+auto-read-types:
+		products:	zbozi.xml
+    sitemap: sitemap.xml
+    sitemap.products: sitemap.products.xml
+zbozi.cz:
+	encoding: utf-8
+	rootItem: SHOP
+	recordClass: ProductRecord
+	condition: 1=1
+	item:
+		tagname: SHOPITEM
+		content:
+				PRODUCT: $nameLangCs
+				DESCRIPTION: $descriptionLangCs
+				URL: $DetailUrl
+				ITEM_TYPE: $type
+				AVAILABILITY: $availability
+				IMGURL: $FirstImageAbsoluteUrl
+				PRICE: $PriceLangCs
+zbozi.centrum.cz:
+	encoding: utf-8
+	rootItem: SHOP
+	recordClass: ProductRecord
+	condition: 1=1
+	item:
+		tagname: SHOPITEM
+		content: 
+				PRODUCT: nameLangCs
+				DESCRIPTION: descriptionLangCs
+				URL: url
+				ITEM_TYPE: type
+				AVAILABILITY: availability
+				IMGURL: FirstImageUrl
+				PRICE: priceLangCs
+        CATEGORYTEXT: FirstCategoryPath
+sitemap.xml:
+		encoding: utf-8
+		recordClass: ContainerRecord
+		rootItem: urlset
+		rootItemAttributes:
+					xmlns: http://www.sitemaps.org/schemas/sitemap/0.9
+		condition: 1=1
+		item:
+				tagname: url
+				flag: AbsoluteHref
+				content:
+						loc: $AbsoluteHref
+						lastmod: $changed
+						priority: 1
+						changefreq: weekly
+sitemap.products.xml:
+		encoding: utf-8
+		recordClass: ProductRecord
+		rootItem: urlset
+		rootItemAttributes:
+					xmlns: http://www.sitemaps.org/schemas/sitemap/0.9
+		condition: 1=1
+		item:
+				tagname: url
+				flag: DetailUrl
+				content:
+						loc: $DetailUrl
+						lastmod: $date_updated
+						priority: 1
+						changefreq: weekly
+rss.newsletter.xml:
+		encoding: utf-8
+		recordClass: NewsletterRecord
+		rootItem: rss
+		rootItemAttributes:
+					version: 2.0
+		condition: 1=1
+		item:
+				tagname: item
+				flag: Href
+				content:
+						title: $name
+						description: $DefaultPerex
+            link: Href
+						pubDate: fromDateAsDate
+						guid: Href

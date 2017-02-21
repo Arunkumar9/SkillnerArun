@@ -1,0 +1,87 @@
+
+/* basic container styling
+ * zakladni styling kontejneru
+ *
+ */
+ 
+
+.FListMenu1, .FListMenu1 * {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.canopen A {
+	background-attachment: scroll;
+	background-image: url('/fresh/images/Crystal/16x16/actions/down.png');
+	background-position: center right;
+	background-repeat: no-repeat;
+}
+
+/* Level 1 */
+.FListMenu1 {
+	width: 109px;
+}
+.FListMenu1 LI {
+	width: 109px;
+	height: auto;
+	display: block;
+	background-color: transparent;
+}
+
+.FListMenu1 LI IMG {
+float: right;
+	height: 8px;
+	border: 0;
+}
+
+.FListMenu1 A {
+	display: block;
+	width: 110px;
+	height: 15px;
+	background-color: deepskyblue;
+	text-decoration: none;
+	padding: 5px;
+	color: white;
+	border-bottom: 1px solid Gray;
+	font-weight: bold;
+}
+
+/* Level 2 */
+
+.FListMenu2 {
+	width: 110px;
+	height: auto;
+	display: block;
+}
+
+.FListMenu2 LI {
+	margin-left: 0px;
+	background-color: transparent;
+	display: block;
+	width: 100px;
+}
+
+.FListMenu2 A {
+	background-color: white;
+	color: Black;
+	width: 110px;
+	background-image: none;
+	display: block;
+}
+
+.FListMenu2 .canopen A {
+	background-attachment: scroll;
+	background-image: url('/fresh/images/Crystal/16x16/actions/down.png');
+}
+/* Level 3 */
+
+.FListMenu3 LI {
+	margin-left: 10px;
+}
+.FListMenu3 A {
+	background-color: yellowgreen;
+	color: White;
+	width: 100px;
+	background-image: none;
+}

@@ -1,0 +1,45 @@
+<?php
+echo "
+<html>
+<head>
+<script type='text/javascript'>
+           var opener =   window.opener.close();
+           var playerUrl = 'http://admin.local/?page=admin.Message&token=7694fc8eaf27d960ce0cb5445eb1d2ff88133e4d';
+           var popupPlayer= window.open('', 'messageinstructor', 'width=150,height=100') ;
+            if(popupPlayer.location == 'about:blank' ){
+                 popupPlayer.location = playerUrl ;
+            }
+            popupPlayer.focus();
+</script>
+</head>
+<body>
+</body>
+</html>
+
+";
+
+?>
+
+
+
+
+
+<?php
+
+$courseInstanceID      =  $_REQUEST['courseInstanceID'];
+$userName                 =  $_REQUEST['userID'];
+
+//$order = "http://admin.local/?page=admin.Message&token=7694fc8eaf27d960ce0cb5445eb1d2ff88133e4d";
+$order = 'arun.php';
+//$order = 'arun.html';
+$ini_array = parse_ini_file('../images/Email/Template.ini');
+$values = array();
+    	foreach( $ini_array as $k=>$v ) {
+    		$values[$k] = $v;
+    	}
+    	
+    	$bssurl = $values['bssurl'];
+    	$url = $bssurl.'?courseInstanceID='.$courseInstanceID.'&userID='.$userName.'&transactionType=messagingwin';
+//            $order =$url;
+echo "<script>window.open('$order', 'messageinstructor','_blank'); window.focus();</script>";
+?>

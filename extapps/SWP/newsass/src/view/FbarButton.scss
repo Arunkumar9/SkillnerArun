@@ -1,0 +1,89 @@
+/*
+* All the status related button in Fbar.
+*/
+.fbarCls3 {
+	background: url($spritePath) -52px -205px !important;
+	background-repeat: no-repeat !important;
+	border-width: 0px !important;
+	margin: 0px;
+	top: 0px;
+	width: 26px !important;
+	height: 18px !important;
+}
+
+.fbarOverCls3 {
+	background: url($spritePath) -52px -224px !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 18px !important;
+}
+
+.fbarCls3:hover {
+	background: url($spritePath) -52px -224px !important;
+	background-repeat: no-repeat !important;
+	
+}
+
+.student .fbarCls4,
+.instructor .fbarCls5{
+	background: url($spritePath) -26px -205px !important;
+	background-repeat: no-repeat !important;
+	border-width: 0px !important;
+	margin: 0px;
+	top: 0px;
+	width: 26px !important;
+	height: 18px !important;
+}
+
+.fbarOverCls4-hover{
+	background: url($spritePath) -26px -224px !important;
+	background-repeat: no-repeat !important;
+}
+
+.student .fbarCls4:hover,
+.instructor .fbarCls5:hover{
+	background: url($spritePath) -26px -224px !important;
+	background-repeat: no-repeat !important;
+}
+
+.student .fbarCls5,
+.instructor .fbarCls4{
+	background: url($spritePath) 0px -205px !important;
+	background-repeat: no-repeat !important;
+	border-width: 0px !important;
+	margin: 0px;
+	top: 0px;
+	width: 26px !important;
+	height: 18px !important;
+}
+
+.fbarOverCls5 {
+	background: url($spritePath) 0px -224px !important;
+	background-repeat: no-repeat !important;
+}
+
+.student .fbarCls5:hover,
+.instructor .fbarCls4:hover  {
+	background: url($spritePath) 0px -224px !important;
+	background-repeat: no-repeat !important;
+}
+
+.fbarCls99 {
+	background: url($spritePath) -78px -205px !important;
+	background-repeat: no-repeat !important;
+	border-width: 0px !important;
+	margin: 0px;
+	top: 0px;
+	width: 26px !important;
+	height: 18px !important;
+}
+
+.fbarOverCls99 {
+	background: url($spritePath) -78px -224px !important;
+	background-repeat: no-repeat !important;
+}
+
+.fbarCls99:hover {
+	background: url($spritePath) -78px -224px !important;
+	background-repeat: no-repeat !important;
+}

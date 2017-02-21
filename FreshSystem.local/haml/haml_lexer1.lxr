@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lexer xmlns="http://www.aptana.com/2007/lexer/1.2" language="text/plain">
+	<token-group group="default">
+		<category-group category="WHITESPACE">
+			<one-or-more type="WHITESPACE">
+				<whitespace/>
+			</one-or-more>
+            <comment type="COMMENT" start='/'/>
+            <comment type="DOCUMENTATION">
+                <comment.start>
+                    <and>
+                        <start-of-line/>
+                        <string>\begin</string>
+                        <lookahead>
+                            <whitespace/>
+                        </lookahead>
+                    </and>
+                </comment.start>
+                <comment.end>
+                    <and>
+                        <string>\end</string>
+                        <lookahead>
+                            <or>
+                                <whitespace/>
+                                <end-of-file/>
+                            </or>
+                        </lookahead>
+                    </and>
+                </comment.end>
+            </comment>
+		</category-group>
+        <category-group category="KEYWORD">
+            <and>
+                <or>
+                    <string type="BEGIN">BEGIN</string>
+                    <string type="END">END</string>
+                    <string type="ALIAS">alias</string>
+                    <string type="AND">and</string>
+                    <string type="BEGIN">begin</string>
+                    <string type="BREAK">break</string>
+                    <string type="CASE">case</string>
+                    <string type="CLASS">class</string>
+                    <string type="DEFINED">defined</string>
+                    <string type="DEF">def</string>
+                    <string type="DO">do</string>
+                    <string type="ELSE">else</string>
+                    <string type="ELSIF">elsif</string>
+                    <string type="END">end</string>
+                    <string type="ENSURE">ensure</string>
+                    <string type="FALSE">false</string>
+                    <string type="FOR">for</string>
+                    <string type="IF">if</string>
+                    <string type="IN">in</string>
+                    <string type="MODULE">module</string>
+                    <string type="NEXT">next</string>
+                    <string type="NIL">nil</string>
+                    <string type="NOT">not</string>
+                    <string type="OR">or</string>
+                    <string type="REDO">redo</string>
+                    <string type="RESCUE">rescue</string>
+                    <string type="RETRY">retry</string>
+                    <string type="RETURN">return</string>
+                    <string type="SELF">self</string>
+                    <string type="SUPER">super</string>
+                    <string type="THEN">then</string>
+                    <string type="TRUE">true</string>
+                    <string type="UNDEF">undef</string>
+                    <string type="UNLESS">unless</string>
+                    <string type="UNTIL">until</string>
+                    <string type="WHEN">when</string>
+                    <string type="WHILE">while</string>
+                    <string type="YIELD">yield</string>
+                    <string type="FILE">__FILE__</string>
+                    <string type="LINE">__LINE__</string>
+                </or>
+                <lookahead negate="true">
+                    <or>
+                        <digit/>
+                        <letter/>
+                        <character>_</character>
+                    </or>
+                </lookahead>
+            </and>
+        </category-group>
+        <category-group category="LITERAL">
+            <and>
+                <or>
+                    <string type="DOCTYPE">!!!</string>
+                    <character type="ESCAPED">\</character>
+                </or>
+                <one-or-more>
+                    <character-class negate="true">\r\n</character-class>
+                </one-or-more>
+                <line-terminator/>
+            </and>
+            <and>
+                <or>
+                    <character type="CLASS">.</character>
+                    <character type="ID">#</character>
+                    <character type="ELEMENT">%</character>
+                </or>
+                <identifier start-characters="_-" part-characters="_-"/>
+                <lookahead negate="true">
+                    <or>
+                        <letter/>
+                        <character>_</character>
+                    </or>
+                </lookahead>
+            </and>
+            <and>
+                <or>
+                    <or type="PHP_CODE">
+                        <string>-</string>
+                        <string>=</string>
+                        <string>~</string>
+                    </or>
+                    <or  type="ERB_CODE">
+                        <string>==</string>
+                    </or>
+                </or>
+                <lookahead negate="true">
+                    <character>&gt;&lt;</character>
+                </lookahead>
+                <lookahead negate="true">
+                    <or>
+                        <letter/>
+                        <character>=_</character>
+                    </or>
+                </lookahead>
+            </and>
+            <and type="REGEX">
+                <string>%r</string>
+                <quoted-string>'"!/({[&lt;</quoted-string>
+            </and>
+            <and type="ARRAY_EXPRESSION">
+                <string case-insensitive="true">%w</string>
+                <quoted-string>'"!/({[&lt;</quoted-string>
+            </and>
+            <or type="COMMAND">
+                <quoted-string>`</quoted-string>
+                <and>
+                    <string>%x</string>
+                    <quoted-string>'"!/({[&lt;</quoted-string>
+                </and>
+            </or>
+            <or type="STRING">
+                <quoted-string>'"</quoted-string>
+                <and>
+                    <character>%</character>
+                    <optional>
+                        <or>
+                            <character>q</character>
+                            <character>Q</character>
+                        </or>
+                    </optional>
+                    <quoted-string>'"!/({[&lt;</quoted-string>
+                </and>
+                <and>
+                    <string>&amp;#</string>
+                    <one-or-more>
+                        <digit/>
+                    </one-or-more>
+                    <character>;</character>
+                </and>
+            </or>
+            <and type="BINARY_NUMBER">
+                <string case-insensitive="true">0b</string>
+                <one-or-more>
+                    <character-class>01_</character-class>
+                </one-or-more>
+            </and>
+            <and type="DECIMAL_NUMBER">
+                <string case-insensitive="true">0d</string>
+                <one-or-more>
+                    <or>
+                        <digit/>
+                        <character>_</character>
+                    </or>
+                </one-or-more>
+            </and>
+            <and type="HEX_NUMBER">
+                <string case-insensitive="true">0x</string>
+                <one-or-more>
+                    <or>
+                        <hex/>
+                        <character>_</character>
+                    </or>
+                </one-or-more>
+            </and>
+            <and type="OCTAL_NUMBER">
+                <string>0</string>
+                <or>
+                    <character-class>oO_</character-class>
+                </or>
+                <one-or-more>
+                    <or>
+                        <character-class>01234567_</character-class>
+                    </or>
+                </one-or-more>
+            </and>
+            <number type="NUMBER" match-sci-notation="true"/>
+        </category-group>
+        <category-group category="IDENTIFIER">
+            <and>
+                <or>
+                    <character type="GLOBAL_VARIABLE">$</character>
+                    <character type="SYMBOL">:</character>
+                    <string    type="CLASS_VARIABLE">@@</string>
+                    <character type="INSTANCE_VARIABLE">@</character>
+                    <uppercase-letter type="CONSTANT"/>
+                </or>
+                <identifier start-characters="_" part-characters="_"/>
+            </and>
+            <identifier type="IDENTIFIER" start-characters="_" part-characters="_?"/>
+        </category-group>
+        <category-group category-="PUNCTUATOR">
+            <string type="BITWISE_NOT">~</string>
+            <string type="COMMA">,</string>
+            <string type="PERCENT">%</string>
+            <string type="QUESTION">?</string>
+            <string type="SEMICOLON">;</string>
+
+            <string type="AMPERSAND_AMPERSAND_EQUAL">&amp;&amp;=</string>
+            <string type="AMPERSAND_AMPERSAND">&amp;&amp;</string>
+            <string type="AMPERSAND_EQUAL">&amp;=</string>
+            <string type="AMPERSAND">&amp;</string>
+
+            <string type="CARET_EQUAL">^=</string>
+            <string type="CARET">^</string>
+
+            <string type="COLON_COLON">::</string>
+            <string type="COLON">:</string>
+
+            <string type="DOT_DOT_DOT">...</string>
+            <string type="DOT_DOT">..</string>
+            <string type="DOT">.</string>
+
+            <string type="EQUAL_EQUAL_EQUAL">===</string>
+            <string type="EQUAL_EQUAL">==</string>
+            <string type="EQUAL_TILDE">=~</string>
+            <string type="EQUAL_GREATER">=></string>
+            <string type="EQUAL">=</string>
+
+            <string type="GREATER_GREATER_EQUAL">>>=</string>
+            <string type="GREATER_GREATER">>></string>
+            <string type="GREATER_EQUAL">>=</string>
+            <string type="GREATER">></string>
+
+            <string type="LESS_EQUAL_GREATER">&lt;=></string>
+            <string type="LESS_LESS_EQUAL">&lt;&lt;=</string>
+            <string type="LESS_EQUAL">&lt;=</string>
+            <string type="LESS_LESS">&lt;&lt;</string>
+            <string type="LESS">&lt;</string>
+
+            <string type="MINUS_MINUS">--</string>
+            <string type="MINUS_EQUAL">-=</string>
+            <string type="MINUS">-</string>
+
+            <string type="NOT_EQUAL">!=</string>
+            <string type="NOT_TILDE">!~</string>
+            <string type="LOGICAL_NOT">!</string>
+
+            <string type="PIPE_PIPE_EQUAL">||=</string>
+            <string type="PIPE_PIPE">||</string>
+            <string type="PIPE_EQUAL">|=</string>
+            <string type="PIPE">|</string>
+
+            <string type="PLUS_PLUS">++</string>
+            <string type="PLUS_EQUAL">+=</string>
+            <string type="PLUS">+</string>
+
+            <string type="SLASH_EQUAL">/=</string>
+            <string type="SLASH">/</string>
+
+            <string type="STAR_STAR_EQUAL">**=</string>
+            <string type="STAR_STAR">**</string>
+            <string type="STAR_EQUAL">*=</string>
+            <string type="STAR">*</string>
+
+            <string type="LBRACKET">[</string>
+            <string type="RBRACKET">]</string>
+            <string type="LPAREN">(</string>
+            <string type="RPAREN">)</string>
+            <string type="LCURLY">{</string>
+            <string type="LSCURLY">#{</string>
+            <string type="RCURLY">}</string>
+        </category-group>
+    </token-group>
+    <token-group group="error">
+        <one-or-more category="ERROR" type="ERROR" switch-to="default">
+            <character-class negate="true">\r\n</character-class>
+        </one-or-more>
+    </token-group>
+</lexer>

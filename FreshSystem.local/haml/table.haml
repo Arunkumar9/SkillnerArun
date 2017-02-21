@@ -1,0 +1,45 @@
+%table.standardForm			
+	%tr
+		%th~ Ulice
+		%td
+			$TTextBox#Street.textBox
+				:Columns 30 
+				:Text= $this->Cart->Address->Street
+			$TRequiredFieldValidator
+				:ControlToValidate Street
+				:Text *
+				:EnableClientScript false
+				:ErrorMessage~ Zadejte ulici 
+				:ValidationGroup PersonalData 
+				:Display Fixed
+$FWidgetControl#MetaData:=
+	properties:
+		-	afterlogoutpageid
+		-	loginpageid
+		-	registerpageid
+		-	accountpageid
+	fields:
+		-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Login Page]%>
+			name: <%= $this->MetaData->getFieldName('loginpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200
+		-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[After Logout Page]%>
+			name: <%= $this->MetaData->getFieldName('afterlogoutpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200
+		-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Register Page]%>
+			name: <%= $this->MetaData->getFieldName('registerpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200
+		-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Account Page]%>
+			name: <%= $this->MetaData->getFieldName('accountpageid') %>
+			editor:
+				xtype: textfield
+				allowBlank: true
+				width: 200

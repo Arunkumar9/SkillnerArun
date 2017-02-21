@@ -1,0 +1,7 @@
+EmailForm:
+    name: EmailForm
+    description: email form
+    t: content
+    data: 
+        ContentEditClass: FreshSystem.UI.Content.FEmailForm
+        iconCls: text

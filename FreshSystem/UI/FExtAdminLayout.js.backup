@@ -1,0 +1,46 @@
+if (typeof(Fresh)=='undefined')
+	var Fresh = {}
+
+Fresh.AdminLayout = function() {
+    return {
+        init : function(id) {
+            var mainLayout = new Ext.BorderLayout(id, {
+                north: { 
+                    titlebar: false, initialSize: 50 
+                }, 
+                south: { 
+                    split: true, initialSize: 50, titlebar: true, 
+                    collapsedTitle: 'Status', collapsible: true
+                }, 
+                east: { 
+                    split: true, titlebar: true, initialSize: 200 
+                },west: {
+                    split: true, initialSize: 200, titlebar: true, collapsible: true
+                },
+                center: {
+                	titlebar: true
+                }
+            });
+            mainLayout.beginUpdate();
+            mainLayout.add('north', northPanel = new Ext.ContentPanel('north-div', { 
+                fitToFrame: true, closable: false 
+            }));
+            mainLayout.add('south', southPanel = new Ext.ContentPanel('south-div', { 
+                fitToFrame: true, closable: false, title: 'Status'
+            }));
+            mainLayout.add('east', eastPanel = new Ext.ContentPanel('east-div', { 
+                fitToFrame: true, closable: false, title: 'Information'
+            }));
+            mainLayout.add('west', new Ext.ContentPanel('menu', {
+                fitToFrame: true, closable: true, title: 'Navigation'
+            }));
+            mainLayout.add('center', new Ext.ContentPanel('main', {
+                fitToFrame: true,autoScroll: true, resizeEl: 'center-iframe', 
+                 title: 'Content'
+            }));
+            
+            mainLayout.endUpdate();
+			Ext.get('center-iframe').dom.src = 'index.php';            
+        }
+    };
+}();

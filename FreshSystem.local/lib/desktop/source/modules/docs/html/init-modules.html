@@ -1,0 +1,23 @@
+<p><b>Initializing Your Module's</b></p>
+
+<p>Once you have your modules created, add them to the getModules() method of DesktopConfig.js, which
+will make them available to the desktop.</p>
+
+<div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;">Code: <font color="Gray">DesktopConfig.js</font></div>
+<pre>
+// get modules to initialize (make available to your desktop)
+getModules : function(){
+	return [
+		new Plugin.LayoutWindow(),
+		new Plugin.Docs(),
+		new MyDesktop.GridWindow(),
+		new MyDesktop.TabWindow(),
+		new MyDesktop.AccordionWindow(),
+		new MyDesktop.subMenu(),
+		new MyDesktop.BogusModule(),
+		new MyDesktop.Preferences()
+	];
+}
+</pre>
+</div>

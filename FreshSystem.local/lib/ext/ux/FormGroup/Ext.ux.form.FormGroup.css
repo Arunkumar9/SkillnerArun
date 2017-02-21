@@ -1,0 +1,42 @@
+/* add some padding so it spaces nice and relative elements dn't get clipped */
+.form-group {
+	padding-bottom:5px;
+	overflow:hidden;
+}
+ 
+/* Simple blue border */
+.form-group .form-group-header {
+	padding:0;
+	border-bottom:1px solid #c3daf9;
+}
+ 
+/* Position the text element so it appears over the border added above */
+.form-group .form-group-header-text {
+	font-size:11px;
+	font-family:tahoma,arial,sans-serif;
+	line-height:13px;
+	text-transform:uppercase;
+	position:relative;
+	left:5px;
+	top:5px;
+	padding:1px 5px 1px 20px;
+	color:#4e79b2; 
+	background:#F6F6F6 url(form-collapse-icon.gif) no-repeat 2px 0;
+}
+ 
+/* Copied from x-plain (for IE + layouts to work) */
+.form-group-body {
+    padding-top: 7px;
+	overflow:hidden;
+}
+ 
+/* Copied from x-plain (for IE + layouts to work) */
+.form-group-bwrap {
+    overflow:hidden;
+    zoom:1;
+}
+ 
+/* Change the toggle icon when collapsed */
+.x-panel-collapsed .form-group-header-text {
+	background-position: 2px -15px;
+}

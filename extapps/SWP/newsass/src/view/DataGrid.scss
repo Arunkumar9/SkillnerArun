@@ -1,0 +1,24 @@
+.coursetitle {
+	
+	text-decoration: none;
+	color : $grid-body-text !important;
+	white-space:normal;
+}
+.coursetitle a:hover{
+	color:red !important;
+}
+/**
+  * Show the separator line for the Datagrid
+  **/
+.summary-window-cls .x-window-body-default {
+	border-color: $body-content-background !important;
+	border-width: 6px !important;
+}
+
+.x-btn-default-toolbar-small{
+	background-image: none !important;
+}
+
+.summary-window-cls .x-grid-header-ct{
+	border-bottom-style: none !important;
+}

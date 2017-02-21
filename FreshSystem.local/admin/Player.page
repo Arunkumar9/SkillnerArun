@@ -1,0 +1,142 @@
+<%@  Theme="AdminBase" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<com:THead   >
+<meta http-equiv="Content-Type" content="text/html; utf-8" />
+<prop:title><%$ playerTitle %></prop:title>
+<!-- EXT -->
+<link id="theme" rel="stylesheet" type="text/css" href="" />
+<link id="theme-sprite" rel="stylesheet" type="text/css" href="" />
+
+<com:TControl  >
+    <script>
+   /*console={
+   log:function(){}
+   }*/
+       // Ext.onReady(function(){
+  			SWPtmp = {}; 
+           SWPtmp.unreadMsgCount={};
+            var r  = '<%=   json_encode($this->Page->UserDetails)%>';
+            r = eval("(" + r + ')');
+            var MsgCount = '<%=   json_encode($this->Page->UnreadMsgCount)%>';
+           SWPtmp.unreadMsgCount = eval("(" + MsgCount + ')');
+           var theme,themeSprite;
+			themeName = r['theme'];
+			if(!themeName){
+				theme = "packages/Dark/build/resources/Dark-all.css";
+				themeSprite = "packages/Dark/sass/etc/SWP_images.css";
+				designchanges = "packages/Dark/sass/etc/designchanges.css";
+			}else{
+				theme = "packages/"+themeName+"/build/resources/"+themeName+"-all.css";
+				themeSprite = "packages/"+themeName+"/sass/etc/SWP_images.css";
+				designchanges = "packages/"+themeName+"/sass/etc/designchanges.css";
+			}
+			document.getElementById('theme').href = theme;
+			document.getElementById('theme-sprite').href = themeSprite;
+       		SWPtmp.Ruser = r['username'];
+			SWPtmp.Ruid = r['uid'];
+			SWPtmp.Rroleid = r['ARoles']['uid'];
+			SWPtmp.Rrolename = r['ARoles']['name'];
+			SWPtmp.instructId = r['ARoles']['instructorId'];
+			SWPtmp.instuctName = r['ARoles']['instructorName'];
+			SWPtmp.superRoleName = 'superadmin'; 
+			SWPtmp.studentRoleName = 'student'; 
+			SWPtmp.PID=r['PID'];
+			SWPtmp.CourseName = r['courseName'];
+			SWPtmp.InstructorAvailable =  r['instructorAvailable'] ;
+			SWPtmp.instructorAvaiableForCurrentDate = r['instructorAvaiableForCurrentDate'];
+			SWPtmp.isFromAmazon = r['isFromAmazon'];
+			SWPtmp.theme = themeName;
+			SWPtmp.chapter_play_back = r['chapter_play_back'];
+			SWPtmp.caption = r['caption'];
+			SWPtmp.instructor_avaliability_date = r['instructor_avaliability_date'];
+			document.title="Video Player - "+SWPtmp.CourseName+' by ' + SWPtmp.Ruser+ " ( "+ SWPtmp.Rrolename +" ) "; 
+			
+			
+			if(SWPtmp.Rrolename == SWPtmp.instuctName){
+
+				SWPtmp.instructLogin = true;
+				SWPtmp.editorsLogin = false;
+			}else if(  SWPtmp.Rroleid == 2 ) {
+
+				SWPtmp.editorsLogin = true;
+				SWPtmp.instructLogin = false;
+
+			}else{
+					SWPtmp.editorsLogin = false;
+						SWPtmp.instructLogin = false;
+				}
+				
+        //});
+
+        
+    </script>
+</com:TControl>
+<!-- <script type="text/javascript" src="extapps/SWP/ext/ext-all-debug.js"></script> -->
+<link rel="stylesheet" type="text/css" href="extapps/SWP/app/resources/css/statusbar.css" />
+<link rel="stylesheet" type="text/css" href="extapps/SWP/app/resources/css/AwesomeUploader.css" />
+<link rel="stylesheet" type="text/css" href="extapps/SWP/app/resources/css/Ext.ux.form.FileUploadField.css" />
+<link rel="stylesheet" type="text/css" href="extapps/SWP/app/resources/css/classroom.css" />
+
+<link rel="stylesheet" type="text/css" href="extapps/chatapp/app/resources/css/badgeCls.css" />  
+<link rel="stylesheet" type="text/css" href="extapps/chatapp/app/resources/css/collaboration.css" />  
+<link rel="stylesheet" type="text/css" href="extapps/chatapp/app/config/ConfigurableValues.css" /> 
+<link rel="stylesheet" type="text/css" href="extapps/chatapp/app/resources/css/Messagedetails.css" /> 
+
+
+
+
+<!-- Main fleXcroll styles for modern browsers-->
+<link href="flexcroll/tutorsty.css" rel="stylesheet" type="text/css" />
+<link href="flexcroll/flexcrollstyles.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="flexcroll/flexcroll.js"></script>
+
+   <script type="text/javascript" src="extapps/chatapp/app/locale/trainingtools_en_US.js"></script>
+<script type="text/javascript" src="extapps/chatapp/app/config/configurations.js"></script>
+<script type="text/javascript" src="extapps/common/lib/AppConstants.js"></script>
+
+
+
+ <script type="text/javascript"  src="ext/ext-all-debug.js"></script>
+  <script type="text/javascript" src="extapps/SWP/app.js"></script>
+   <script type="text/javascript" src="/index.php?json=direct&direct=api"></script> 
+
+
+<link rel="stylesheet" href="bootstrap.css">
+
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="tinymce/tiny_mce.js"></script>
+
+<script type="text/javascript" src="flowplayer/flowplayer-3.2.12.min.js"></script>
+<!-- <script type="text/javascript" src="exttools/view/TinyMCETextArea.js"></script><script type="text/javascript" src="http://releases.flowplayer.org/js/flowplayer-3.2.12.min.js"></script>-->
+
+
+ 
+  
+    <script type="text/javascript" src="extapps/common/lib/swfupload.js"></script>
+    <script type="text/javascript" src="extapps/chatapp/app/view/examples.js"></script>
+    
+<com:TConditional Condition="$this->Page->UserDetails['theme']=='Dark'">
+    <prop:TrueTemplate>
+        <link rel="stylesheet" type="text/css" href="packages/Dark/sass/etc/designchanges.css" />    </prop:TrueTemplate>
+    <prop:FalseTemplate>
+        <link rel="stylesheet" type="text/css" href="packages/Light/sass/etc/designchanges.css" />
+    </prop:FalseTemplate>
+</com:TConditional>
+
+    
+
+</com:THead>
+
+<body scroll="no" id="player-body">
+<com:FExtForm >
+
+
+
+</com:FExtForm>
+
+</body>
+
+
+</html>

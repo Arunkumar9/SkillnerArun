@@ -1,0 +1,44 @@
+.x-form-textbox-ul {
+    border: 1px solid #B8B8C8;
+    height:auto !important;
+    margin:0pt;
+    overflow:hidden;
+    padding:4px 5px 0pt;
+	background: #ffffff;Price
+}
+.x-form-textbox-ul li {
+    float:left;
+    list-style-type:none;
+    margin:0pt 5px 4px 0pt;
+    
+}
+.x-form-textbox-ul-newitem input {
+	border: 0 !important;
+	background: none !important;
+}
+.x-form-textbox-ul-li-input {
+}
+.x-form-textbox-ul-li {
+    -moz-border-radius-bottomleft:6px;
+    -moz-border-radius-bottomright:6px;
+    -moz-border-radius-topleft:6px;
+    -moz-border-radius-topright:6px;
+    background-color:#DEE7F8;
+    border:1px solid #CAD8F3;
+    padding:1px 20px 2px 5px;
+    position:relative;
+}
+
+.x-form-textbox-ul-li-closebutton {
+    background:transparent url(../2.0/resources/images/default/tabs/tab-close.gif) no-repeat;
+    display:block;
+    height:11px;
+    width:11px;
+    position:absolute;
+    right: 5px;
+    top:3px;
+}
+
+.x-form-textbox-ul-newitem {
+    
+}

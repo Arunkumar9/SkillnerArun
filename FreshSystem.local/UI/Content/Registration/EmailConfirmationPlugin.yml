@@ -1,0 +1,14 @@
+EmailConfirmationPlugin:
+    name: EmailConfirmationPlugin
+    description: email confirmation plugin
+    t: content
+    data: 
+        ContentEditClass: Application.layout.contents.registration.EmailConfirmationPlugin
+        iconCls: link
+EmailActivateUser:
+    name: EmailActivateUser
+    description: email user activation
+    t: content
+    data:
+        ContentEditClass: Application.layout.contents.registration.EmailActivateUser
+        iconCls: link

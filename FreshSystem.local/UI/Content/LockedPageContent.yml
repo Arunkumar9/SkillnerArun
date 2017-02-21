@@ -1,0 +1,7 @@
+LockedPageContent: 
+    name: LockedPageContent
+    description: locked page
+    t: content
+    data: 
+        ContentEditClass: LockedPageContent
+        iconCls: link
