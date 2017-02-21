@@ -1,0 +1,96 @@
+#
+# Grid with quiz-results view
+#
+#
+name: quiz-results-view
+serverSide:
+    allowedGrids: quiz-results-grid
+    recordClass: QuizResultRecord
+    noBlankContext: false
+    context:
+        quizes-grid:
+            condition: "quiz_id = '%filter%'"
+        quiz-form:
+            condition: "quiz_id = '%filter%'"
+        quiz-form-store:
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: quiz_id
+            successMsg: <%[ quiz-results saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        quiz-results-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: quiz_id
+            successMsg: <%[ quiz-results saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        quiz-results-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row.]%>
+    sortInfo: 
+        field:
+          created: ASC
+          name: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    xxxgroupField: name
+    sortInfo: 
+        field:  createdAsDateTime
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: email
+        -    name: createdAsDateTime
+             type: date
+             dateFormat: Y-m-d h:s:i
+        -    name: quiz_id
+        -    name: answers
+        -    name: street
+        -    name: zip
+        -    name: city
+        -    name: points
+             type: int
+    context:
+      base:
+          cm:
+            -    header: <%[ Created ]%>
+                 sortable: true
+                 dataIndex: createdAsDateTime
+                 renderer: "^Ext.util.Format.dateRenderer('d.m.Y H:i')"
+            -    header: <%[ Name ]%>
+                 sortable: true
+                 dataIndex: name
+            -    header: <%[ Email ]%>
+                 sortable: true
+                 dataIndex: email
+            -    header: <%[Street]%>
+                 dataIndex: street
+            -    header: <%[ZIP]%>
+                 dataIndex: zip
+                 width: 60
+            -    header: <%[City]%>
+                 dataIndex: city
+            -    header: <%[ Answer ]%>
+                 sortable: true
+                 dataIndex: answers
+            -    header: <%[ P ]%>
+                 sortable: true
+                 dataIndex: points
+                 align: right
+                 width: 30
+end: true
+

@@ -1,0 +1,128 @@
+#
+# Grid with List of Products
+# name
+# deswcription
+# models/attributes
+# price and tax
+# availability
+# images
+name: variants-view 
+serverSide:
+    allowedGrids: variants-grid
+    recordClass: VariantRecord 
+    noBlankContext: true
+    context:
+        products-grid:
+            condition: product_id = '%filter%'
+        variants-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[variants saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        product-form-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[variants saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        variants-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo:
+        size_x: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: size_x
+        dir: ASC
+    fields: 
+        -    name: uid
+        -    name: product_id
+             defValue: "@function(){ return Ext.getCmp('product-form').formBaseParams.id }"
+        -    name: size_x
+             type: int
+        -    name: size_y
+             type: int
+        -    name: size_z
+             type: int
+        -    name: cover
+        -    name: enabled
+             type: bool
+             defValue: 1
+        -    name: default
+             type: bool
+             defValue: 0
+        -    name: price
+             type: float
+             defValue: 0
+        -    name: vat
+             type: int
+             defValue: 19
+    cm:
+        -    header: <%[ Size X ]%> 
+             width: 40 
+             align: right
+             dataIndex: size_x
+             editor: "@new Ext.form.NumberField({allowBlank: false})"
+        -    header: <%[ Size Y ]%> 
+             width: 40 
+             align: right
+             dataIndex: size_y
+             editor: "@new Ext.form.NumberField({allowBlank: false})"
+        -    header: <%[ Size Z ]%>
+             width: 40
+             align: right
+             dataIndex: size_z
+             editor: "@new Ext.form.NumberField({allowBlank: false})"
+        -    header: <%[ Cover ]%> 
+             width: 70 
+             dataIndex: cover
+             editor: >
+                @new Ext.form.ComboBox({
+                    displayField:'name',
+                    valueField:'name',
+                    lazyRender: true,
+                    mode: 'local',
+                    forceSelection: true,
+                    triggerAction:  'all',
+                    store: Ext.StoreMgr.lookup('covers-store')
+                })
+        -    header: <%[ Price ]%> 
+             width: 40 
+             sortable: true 
+             dataIndex: price
+             align: right
+             editor: "@new Ext.form.NumberField({allowBlank: false,decimalSeparator: ','})"
+        -    header: <%[ VAT ]%> 
+             width: 40 
+             sortable: true 
+             dataIndex: vat
+             align: right
+             editor: "@new Ext.form.NumberField({allowBlank: false})"
+        -    >
+             @new Ext.grid.CheckColumn({ 
+                header: 'E', 
+                dataIndex: 'enabled', 
+                tooltip: "<%[Enabled]%>", 
+                width: 25, 
+                align: 'center' 
+             })
+        -    >
+             @new Ext.grid.CheckColumn({
+                header: 'D',
+                dataIndex: 'default',
+                tooltip: "<%[Default]%>",
+                width: 25,
+                align: 'center'
+             })
+end: true
+

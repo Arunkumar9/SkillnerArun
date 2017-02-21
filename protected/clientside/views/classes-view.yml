@@ -1,0 +1,42 @@
+name: classes-view
+serverSide:
+    allowedGrids: classes-grid
+    recordClass: DefinitionRecord
+    noBlankContext: false
+    condition: class = "classes"
+    context:
+        search-classes-grid:
+            filterData: OR
+        classes-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[classes saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        classes-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo:
+        field:  name
+        dir: ASC
+metaData:
+    root: rows
+    id: name
+    totalProperty: totalCount
+    sortInfo:
+        field:  name
+        direction: ASC
+    fields:
+        -    name: uid
+        -    name: name
+    cm:
+        -    header: <%[Name]%>
+             sortable: true
+             width: 100
+             dataIndex: name
+end: true

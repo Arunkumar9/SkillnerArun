@@ -1,0 +1,58 @@
+#
+# Grid with Payment Types view
+#
+# INSERT INTO payment_type SELECT DISTINCT null as Uid, c.PaymentTypeText as Name FROM customers c ORDER BY c.PaymentTypeText;  
+#
+# update customers c,payment_type cs set c.`PaymentType` = cs.Uid WHERE c.PaymentTypeText like cs.Name
+#
+name: content-type-view 
+serverSide:
+    allowedGrids: content-type-grid
+    recordClass: TypeRecord 
+    noBlankContext: false
+    context:
+        type-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Comments saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        content-type-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo: 
+        field:  name
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo: 
+        field:  name
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: description
+        -    name: dataObject
+        -    name: t
+    cm: 
+        -    header: <%[Name]%>
+             sortable: true 
+             width: 100
+             dataIndex: name
+        -    header: <%[Typ]%>
+             sortable: true 
+             width: 60
+             dataIndex: t
+        -    header: <%[Description]%>
+             sortable: true 
+             width: 50
+             dataIndex: description
+end: true
+#        -    "@new Ext.grid.CheckColumn({ header: '<%[Publ]%>', dataIndex: 'publishedAsBoolean', width: 20, align: 'center' })"

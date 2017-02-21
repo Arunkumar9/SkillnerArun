@@ -1,0 +1,851 @@
+#
+#     CRM categorys layout definition
+#     listeners:
+#        beforeclose: 
+#            fn: >
+#                ^function(p) {
+#                    Ext.MessageBox.alert('Closing',p.title);
+#                    return false;
+#                }
+description:
+    name: courses-win
+    authLevels: true
+    text: <%[ Courses Management ]%>
+    iconCls: icon-courses-win
+    hideIcon: <%= ($this->User->Level<100)?1:0 %>
+    autoRun: false
+    authLevel: 
+        min: 100
+        max: 1000
+objects:
+     -  name: GridDnD
+        using:  lib/ext/ux/GridDnD.js
+     -  name: coursesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'course-store',
+                remoteSort: true
+            })
+     -  name: containersStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'containers-store'
+            })
+     -  name: containersStore2
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'all-containers-store'
+            })
+     -  name: lessonsStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'lesson-store'
+            })
+     -  name: quizesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'quizgroups-store'
+            })
+     -  name: courseContentsStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'coursecontent-store',
+                pruneModifiedRecords : true
+            })
+     -  name: courseTagsSelModel
+        evalTo: local
+        definition: >
+            new Ext.grid.CheckboxSelectionModel({
+            		header:'<div class="x-grid3-hd-tag">&#160;</div>'
+    		})
+     -  name: contentTagsSelModel
+        evalTo: local
+        definition: >
+            new Ext.grid.CheckboxSelectionModel()
+component:
+     id:              courses-win
+     title:           <%[ Courses Management ]%>
+     width:           ^this.winWidth
+     height:          ^this.winHeight
+     x:               ^this.desktop.getWinX(this.winWidth)
+     y:               ^this.desktop.getWinY(this.winHeight)
+     iconCls:         icon-courses-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader:     true
+     minimizable:          true
+     maximizable:          true
+     layout: border
+     listeners:
+           beforeclose:
+                fn: "^this.actions.askBeforeCloseHandler.createDelegate(this,['course-form'],true)"
+     items:
+       #
+       #     West panel with filter and search tabs
+       #
+       -    title: <%[ Tags ]%>
+            region: west
+            collapsible: true
+            collapsed: false
+            width: ^this.maxWidth(140,0.1)
+            split: true
+            layout: fit
+            xtype: grid
+            id: course-tags-grid
+            store: ^Fresh.global.containersStore2
+            stateful: false
+            linkedGrid: courses-grid
+            viewConfig: 
+               forceFit: true
+            sm: ^this.courseTagsSelModel
+            cm: >
+                ^new Ext.grid.ColumnModel({
+                    columns:[ this.courseTagsSelModel, { dataIndex: 'name', header: __('Name') } ]
+                })
+            plugins:
+                -    ptype: pgridlinker
+                     clickEvent: rowclick
+                     disableLinkedForm: true         
+                     fireNoSelection: true
+                     promptbeforeload:true          
+           #
+           #     end of west region
+           #
+      #
+      #     Center panel splits to east with grid and center with tabpanel
+      #
+      #-    region:          center
+      #     border:          false
+      #     layout:          border
+      #     margins:         0 0 0 0
+      #     items:
+        #
+        #     Panel with grid with categorys
+        #
+       -	region:   center
+			layout:   border
+			margins:  0 0 0 0
+            items:
+		       -    title:        <%[ List of course ]%>
+		            region:       west
+		            elements:     body
+		            split:        true
+		            collapsible:  true
+		            layout:      fit
+		            minWidth: 300 
+		            width:   ^this.maxWidth(350,0.7)
+		            stateful: true
+		            items:
+		                        -    xtype:    autogrid 
+		                             id:    courses-grid
+		                             loadMask: true
+		                             store:    course-store
+		                             sm: >
+		                                ^new Ext.grid.RowSelectionModel(%gridRowSelection%)
+		                             stripeRows: true                            
+		                             viewConfig: 
+		                                forceFit: true
+		                             anchor:   100% 100%
+		                             bbar: "^new Ext.PagingToolbar(%gridPagingDef%)"
+		                             clicksToEdit: 1
+		                             infoField: name
+		                             stateful: false
+		                             linkedForm: course-form
+		                             noStorePreload: false
+		                             listeners:
+		            					sortchange:
+		            						fn: >
+		                   						^function( comp , sortinfo ){
+		                   							if( sortinfo.direction ){
+			                   							var store = comp.getStore();
+										                store.baseParams.dir = sortinfo.direction;
+			                   							store.load(sortinfo.direction);
+		                   							}
+		                   						}
+		                             xtbar: 
+		                                 -    ^this.actions.filterNoAction
+		                                 -    xtype: tbfill
+		                                 -    xtype: tbtext
+		                                      text: "<b>Reports:&nbsp;</b>"
+		                                 -    xtype: tbspacer
+		                             plugins:
+		                                 -    pformtobuttons
+		                                 -    pformloader
+		                                 -    ptype: pgridsearch
+		                                      iconCls: icon-viewmag
+		                                      searchText: ''
+		                                      minChars: 3
+		                                      autoWidth: false
+		                                      align: right
+		                                      width: 150
+		                                      position: top
+		                                      showSelectAll: false
+		                                      disableIndexes: 
+		                                          - ImprintCount
+		                                          - Created
+		                                      mode: remote
+		                                      xxxtoolbarContainer:  kntdev-win
+		                                      autoFocus: false
+		                                      showMenu: false
+		                             buttonAlign: right
+		                             tbar: 
+								         -     text: <%[ New ]%>
+								               iconCls: icon-action
+								               handler: >
+								                    ^function(button,e) {
+								                        var gr = Ext.getCmp('courses-grid');
+								                        Fresh.global.actions.newRecordHandler(button,e,'course-form');
+								                    }
+										 -     text: <%[ Duplicate ]%>
+								               iconCls: icon-action
+								               xscale: large
+								               handler: >
+								                        ^function(button,e) {
+								                            var gr = Ext.getCmp('courses-grid');
+								                            var form  = Ext.getCmp('course-form');
+								                            var dirty = form.getForm().isDirty();
+								                            if(dirty){
+										            			 Ext.MessageBox.confirm(__('Confirm'), __('You have unsaved changes which will be lost.<br/>Continue?'), function(btn, text){
+										                             if (btn == 'yes') {
+										                                form.getForm().reset();
+										                               if (form.linkedGrid)
+										                                 form.linkedGrid.store.rejectChanges();
+										                             	Fresh.global.actions.duplicateRecordHandler(gr,button,e,'course-form');
+										                             }else{
+										                            	 return;
+										                             }
+										            			 },this);
+								            				} else {
+								            						Fresh.global.actions.duplicateRecordHandler(gr,button,e,'course-form');
+								            				}
+								                        }
+								        -     ^this.actions.deleteGridTool
+		        #
+		        # Tab panel with forms
+		        #
+		       -    title:      <%[ Course ]%>
+		            region:     center
+		            id:         course-form-east-region
+		            elements:     body
+		            margins:    0 0 0 0
+		            collapsible:  false
+		            split:      true
+		            stateful: false
+		            animCollapse: false
+		            hideMode: offsets
+		            layout:     fit
+		            width:    ^this.maxWidth(1500,0.7)
+		            frame: true
+		            items: 
+		                -  xtype:     form
+		                   id: course-form
+		                   url: ^Fresh.Config.Service.Form
+		                   trackResetOnLoad: true
+		                   autoWidth: true
+		                   hideMode: offsets
+		                   linkedGrid: coursecontent-grid
+		                   selGrid:courses-grid course-tags-grid     #using that attribute inorder to clear the selections
+		                   loadingMsg: "Loading {name}"
+		                   xxfocusOnNew: NameFirst
+		                   askBeforeLoad: true       #make the askbeforeload as true so that it can be used in onRowdblClick()
+		                   formBaseParams: 
+		                       view: course-form-view
+		                       UpdateCategories: 1
+		                       UpdateAvalton: 1
+		                   buttonAlign: right
+		                   buttons: 
+		                       -    text: <%[  Save ]%>
+		                            iconCls: icon-ok
+		                            minWidth: 75
+		                            id: course-form-save-button
+		                            handler: ^this.actions.saveFormHandler.createDelegate(this,['course-form'],true)
+		                       -    text: <%[  Finalize ]%>
+		                            iconCls: icon-lock
+		                            minWidth: 75
+		                            id: course-form-finalize-button
+		                            handler: >
+		                                      ^function(b,e) {
+		                                        var fin,f = this.findParentByType('form');
+		                                        Ext.MessageBox.confirm(__('Confirm'), __('Really want to FINALIZE? Cannot be changed later!'), function(btn, text){
+		                                            if (btn == 'yes') {
+		                                                b.form  = f;
+		                                                Ext.getCmp('course-form-save-button').setDisabled(false);
+		                                                Ext.getCmp('course-form-cancel-button').setDisabled(false);
+		                                                b.setDisabled(false);
+		                                                VideoRecordMgr.finalizeCourseContent(b.form.formBaseParams.id, function(r,t){
+		                                                    if ( r !== true ) {
+		                                                        Ext.Msg.alert('Error', r );
+		                                                        b.setDisabled(false);
+		                                                        Ext.getCmp('course-form-save-button').setDisabled(false);
+		                                                		Ext.getCmp('course-form-cancel-button').setDisabled(false);
+		                                                		Ext.getCmp('course-form-finalize-button').setDisabled(false);
+		                                                    } else {
+		                                                        var gr = Ext.getCmp('courses-grid');
+		                                                        gr.getStore().reload();
+		                                                        Fresh.Msg.SlideBox(__('Success!'), 'Course Finalized!');
+		                                                        Ext.getCmp('course-form-save-button').setDisabled(true);
+				                                                Ext.getCmp('course-form-cancel-button').setDisabled(true);
+				                                                b.setDisabled(true);
+		                                                        var coursesGrid = Ext.getCmp('courses-grid');
+		                                                        var coursesGridSelect = coursesGrid.getSelectionModel().getSelected();
+		                                                        coursesGridSelect.set('is_finished',1);
+		                                                        gr.getSelectionModel().fireEvent('selectionchange',gr,{'isFromFinalize':true});
+		                                                        Ext.getCmp('coursecontent-grid').getView().refresh();
+		                                                    }
+		                                                });
+		                                            }
+		                                        },this);                                        
+		                                      }
+		                       -    text: <%[  Cancel ]%>
+		                            iconCls: icon-cancel
+		                            minWidth: 75
+		                            id: course-form-cancel-button
+		                            handler: ^this.actions.cancelFormHandler.createDelegate(this,['course-form'],true)
+		                       -    text: <%[  Play ]%>
+		                            iconCls: icon-play
+		                            minWidth: 75
+		                            id: course-form-play-button
+		                            handler: >
+		                                      ^function(b,e) {
+		                                        var fin,f = this.findParentByType('form');
+		                                        VideoRecordMgr.getPlayerUrl( f.formBaseParams.id, null, null, null,null, function(r,t){
+						                                                if (t.status) {
+						                                                	if(r.success ){
+						                                                   		window.open(r.url,'player','width=1300,height=840'); 
+						                                                	}else{
+						                                                		alert( r.message );
+						                                                	}
+						                                                }
+						                                        });
+		                                      }
+		                   listeners:
+		                      actioncomplete:
+		                        fn: >
+		                            ^function(bf,action) {
+		                                if (action.type == 'submit' && action.result.content_id) {
+		                                    var rec,p,form=Ext.getCmp('course-form'),
+		                                        gr = Ext.getCmp('courses-grid');
+		                                    form.formBaseParams.id = action.result.content_id;
+		                                    if( this.new ){
+		                                    gr.getStore().baseParams.filter = '';
+		                                    gr.getStore().baseParams.context = '';
+											var pageSize = gr.getBottomToolbar().pageSize;
+											var startValue = 1*( action.result.pageNumber - 1) * 50;
+		                                	gr.getStore().load({
+												params: {
+						                            start: startValue,
+						                            limit: pageSize
+						                        }
+											});
+		                                    this.new = false;
+		                                    }
+		                                    Ext.getCmp('coursecontent-grid').saveData('coursecontent-grid-store',false,function(){
+		                                        var courseContentStore = Ext.getCmp('coursecontent-grid').getStore();
+		                                        if ( !Ext.isEmpty(courseContentStore) && courseContentStore.getCount() > 0 ) {
+		                                        	var courseLessonGrid 		= Ext.getCmp('course-lesson-grid');
+		                                            var lessonStore = courseLessonGrid.getStore();
+		                                            var courseQuizGroupsGrid 	= Ext.getCmp('course-quizgroups-grid');
+		                                            var quizStore = courseQuizGroupsGrid.getStore();
+		                                        	courseContentStore.on('load',function(){
+		                                        		if(courseQuizGroupsGrid.plugins.length > 0){
+					                                    	for(var i=0 ; i < courseQuizGroupsGrid.plugins.length ; i++){
+			                                        			if(courseQuizGroupsGrid.plugins[i].viewContext == 'search-quizgroups-grid'){
+			                                        				courseQuizGroupsGrid.plugins[i].onTriggerSearch();
+			                                        			}
+						                                    }
+					                                    }
+					                                    if(courseLessonGrid.plugins.length > 0){
+			                                        		for(var i=0 ; i < courseLessonGrid.plugins.length ; i++){
+			                                        			if(courseLessonGrid.plugins[i].viewContext == 'search-videos-grid'){
+			                                        				courseLessonGrid.plugins[i].onTriggerSearch();
+			                                        			}
+			                                        		}
+			                                    		}
+		                                        	});
+		                                        	courseContentStore.reload();
+		                                            var allContentsFinal = true;
+		                                            for (var i = 0; (i < courseContentStore.getCount()) && (allContentsFinal == true); i++) {
+		                                                var lessonRecIndex = lessonStore.find('content_id', courseContentStore.getAt(i).data.video_id);
+		                                                if ( lessonRecIndex >= 0 && lessonStore.getAt(lessonRecIndex).data.is_finished === 0 ) {
+		                                                    allContentsFinal = false;
+		                                                    break;
+		                                                }
+		                                                var quizRecIndex = quizStore.find('content_id', courseContentStore.getAt(i).data.video_id);
+		                                                if ( quizRecIndex >= 0 && quizStore.getAt(quizRecIndex).is_finished === 0 ) {
+		                                                    allContentsFinal = false;
+		                                                    break;
+		                                                }
+		                                            }
+		                                            if ( allContentsFinal == true ) {
+		                                                Ext.getCmp('course-form-finalize-button').setDisabled(false);
+		                                            }
+		                                            VideoRecordMgr.courseDetailsInfoUpdateToAvalton(action.result.content_id, function(r,t){
+		                                                   if ( r !== true ) {
+		                                                   		Ext.Msg.alert('Error', r );
+		                                                   } else {
+		                                                   		console.log("Course Detailse are updated to avalton");
+		                                                   }
+		                                            });
+		                                            var courseContentArray = new Array();
+									            	for(var i=0;i<courseContentStore.data.length;i++) {
+									            		var courseContentRec = courseContentStore.getAt(i);
+									            		courseContentArray.push({content_id:courseContentRec.get('video_id'),type:courseContentRec.get('type'),name:courseContentRec.get('name')});
+									            	}
+									            	var course_id = courseContentStore.data.items[0].get('product_id');
+									            	VideoRecordMgr.updateModifiedLessonSettings(courseContentArray , course_id,function(res,sta){
+									            		if( sta.status ){
+										           			 if (!Ext.isEmpty(res)) {
+										    						console.log('Update the lesson settings records is successfully comepleted');
+										           			 }else{
+										           				console.log('Update the lesson settings records is not comepleted successfully');
+										           			 }
+									            		}
+									            	});
+		                                        }
+		                                    });
+		                                }
+		                                if (action.type == 'load') {
+		                                    var form=Ext.getCmp('course-form'),
+		                                        lessons = Ext.getCmp('course-lesson-grid'),
+		                                        qgroups = Ext.getCmp('course-quizgroups-grid'),
+		                                        tags = Ext.getCmp('content-tags-grid');
+		                                    lessons.getStore().baseParams.content_id = form.formBaseParams.id;
+		                                    qgroups.getStore().baseParams.content_id = form.formBaseParams.id;
+		                                    tags.getSelectionModel().clearSelections(true);
+		                                    var gr = Ext.getCmp('courses-grid');
+		                                    gr.getStore().on('load',function(s,r){
+		                                     var form=Ext.getCmp('course-form');
+		                                      if( gr.duplicateContentId ){
+		                                   		rec = s.getById(gr.duplicateContentId);
+		                                   	  } else {
+			                                	 rec = s.getById(form.getForm().findField('content_id').value);
+		                                      }
+		                                      if(rec && gr.getStore() ){
+		                                      var seectedRecord = gr.getSelectionModel().getSelected();
+		                                      	if( !seectedRecord ||  rec.id != seectedRecord.id ){
+			                                      	gr.getSelectionModel().selectRecords([rec],false);
+			                                      	var index = gr.getStore().indexOf(rec);
+			                                      	gr.getView().focusRow( index );
+			                                        gr.fireEvent('rowclick',gr,{});
+		                                      	}
+		                                      	if( rec && rec.get('name')){
+			                                  	form.ownerCt.setTitle('Course: '+rec.get('name'));
+			                                  	}
+		                                      }
+		                                    },{scope: this, single: true});
+		                                }
+		                            }
+		                   plugins:
+		                       -   ^new Ext.ux.Plugin.FormToButtons()
+		                       -   ^new Ext.ux.Plugin.SecureFormFields()
+		                   items:
+		                       -   id: course-form-panel
+		                           autoWidth: true
+		                           anchor: 100% 100%
+		                           border: false
+		                           frame: false
+		                           xtype: tabpanel
+		                           deferredRender: false
+		                           layoutOnTabChange: false
+		                           activeTab: 0
+		                           hideMode: offsets
+		                           margins: 0 0 0 0
+		                           defaults:
+		                             autoWidth: false
+		                             autoHeight: false
+		                             hideMode: offsets
+		                             region: center
+		                             frame: true
+		                             border: false
+		                             anchor: 100% -10
+		                             layout: form
+		                             labelWidth: 120
+		                             bodyStyle:
+		                               padding: 5px 5px 5px 5px
+		                             defaults:
+		                                anchor: 100%
+		                                xtype: textfield
+		                           
+		                           items:
+		                              -  title: <%[ Data ]%>
+		                                 autoWidth: false
+		                                 autoHeight: false
+		                                 cls: windowsdatatabcls
+		                                 hideMode: offsets
+		                                 region: center
+		                                 anchor: 100% -10
+		                                 layout: form
+		                                 bodyStyle:
+		                                   padding: 5px 5px 5px 5px
+		                                 defaults:
+		                                    anchor: 100%
+		                                    xtype: textfield
+		                                 items:
+		                                    -    xtype: hidden
+		                                         name: uid
+		                                    -    xtype: hidden
+		                                         name: ContentChanged
+		                                    -    xtype: hidden
+		                                         name: content_id
+		                                    -    fieldLabel: '<%[ Name ]%>'
+		                                         name: name
+		                                         allowBlank: false
+		                                         emptyText : New Course (Change Me)
+		                                         enableKeyEvents: true
+		                                         listeners:
+		                                         		keyup: 
+											               fn: >
+											                   ^function(field){
+												                   checkString = field.getValue();
+												                   if ( checkString != "" ) {
+																	    if ( ( /[^A-Za-z. _\d]/ ).test(checkString)) {
+																	        Ext.MessageBox.alert("Error","Course Name Shouldn't Contain Special Characters",function(btn,text){
+			                                                					if( btn == "ok" ){
+				                                                					field.reset();
+																			        return false;
+																		        }
+																	        });
+																	    }
+																	}
+											                   }
+		                                    -    fieldLabel: '<%[ Description ]%>'
+		                                         name: description
+		                                         allowBlank: true
+		                                         xtype: textarea
+		                                         height: 200
+		                                         emptyText : New Course (Change Me)
+		                                    -    fieldLabel: <%[ Tags ]%>
+		                                         name: CategoriesList
+		                                         dataIndex: CategoriesList
+		                                         allowBlank: true
+		                                         xtype: csuperboxselect
+		                                         displayField: name
+		                                         valueField: uid
+		                                         store: containers-store
+		                                         width: 400
+		                                         plugins:
+		                                            -   pddsuperboxselect
+		                              -    id: course-content-tab
+		                                   xtype: panel
+		                                   layout: border
+		                                   layoutConfig:
+		                                        align: stretch
+		                                   title: <%[ Content Definition ]%>
+		                                   items:
+		                                      -    title: <%[ Tags ]%>
+		                                           collapsible: false
+		                                           collapsed: false
+		                                           split: true
+		                                           region:west
+		                                           layout: fit
+		                                           xtype: grid
+		                                           id: content-tags-grid
+		                                           store: ^Fresh.global.containersStore2
+		                                           stateful: false
+		                                           frame: true 
+		                                           viewConfig: 
+		                                              forceFit: true
+		                                           sm: ^this.contentTagsSelModel
+		                                           cm: >
+		                                               ^new Ext.grid.ColumnModel({
+		                                                   columns:[ this.contentTagsSelModel, { dataIndex: 'name', header: __('Name') } ]
+		                                               })
+		                                           # We must set activate flag to false to stop activating the linked grid.
+		                                           plugins:
+		                                             -    ptype: pgridlinker
+		                                                  clickEvent: click
+		                                                  linkedGrid: course-quizgroups-grid
+		                                                  disableLinkedForm: true
+		                                                  fireNoSelection: true
+		                                                  activate: false
+		                                             -    ptype: pgridlinker
+		                                                  clickEvent: click
+		                                                  linkedGrid: course-lesson-grid
+		                                                  disableLinkedForm: true
+		                                                  fireNoSelection: true
+		                                                  activate: false
+		                                      -    xtype: tabpanel
+		                                           flex: 1
+		                                           activeTab: 0
+		                                           border: false
+		                                           frame: false
+		                                           region:center
+		                                           id:course-lesson-quiz-tabpanel
+		                                           margin:
+		                                                right: 5
+		                                           deferredRender: false
+		                                           layoutOnTabChange: true
+		                                           hideMode: offsets
+		                                           defaults:
+		                                                viewConfig: 
+		                                                   autoFill: true
+		                                                   forceFit: true
+		                                                enableDragDrop: true
+		                                                hideMode: offsets
+		                                                border: false
+		                                                frame: true
+		                                                linkToForm: true
+		                                                stripeRows: true
+		                                                ddGroup: depGridDD
+		                                                stateful: false
+		                                                xtype: autogrid
+		                                           items:
+		                                              -     id: course-lesson-grid
+		                                                    iconCls: icon-film
+		                                                    store: lesson-store
+		                                                    bbar: "^new Ext.PagingToolbar(%gridPagingLessonDef%)"
+		                                                    sm: >
+		                                                       ^new Ext.grid.RowSelectionModel()
+		                                                    title: Lessons
+		                                                    tbar:
+		                                                       - 
+		                                                    plugins:
+		                                                	   -    ptype: pgridsearch
+							                                        iconCls: icon-viewmag
+							                                        searchText: ''
+							                                        minChars: 3
+							                                        autoWidth: false
+							                                        align: right
+							                                        width: 200
+							                                        viewContext : search-videos-grid
+							                                        position: top
+							                                        showSelectAll: false
+							                                        disableIndexes: 
+								                                          - ContentCreator
+						                                            mode: remote
+							                                        autoFocus: false
+							                                        showMenu: false
+		                                              -     id: course-quizgroups-grid
+		                                                    iconCls: icon-bulb16
+		                                                    bbar: "^new Ext.PagingToolbar(%gridPagingQuizDef%)"
+		                                                    store: quizgroups-store
+		                                                    sm: >
+		                                                       ^new Ext.grid.RowSelectionModel()
+		                                                    title: Quizzes
+		                                                    tbar:
+		                                                       - 
+		                                                    plugins:
+		                                                	   -    ptype: pgridsearch
+							                                        iconCls: icon-viewmag
+							                                        searchText: ''
+							                                        minChars: 3
+							                                        autoWidth: false
+							                                        align: right
+							                                        width: 200
+							                                        viewContext : search-quizgroups-grid
+							                                        position: top
+							                                        showSelectAll: false
+							                                        disableIndexes: 
+								                                          - ContentCreator
+						                                            mode: remote
+							                                        autoFocus: false
+							                                        showMenu: false
+		                                      -    xtype: autogrid
+		                                           flex: 1
+		                                           title: Course Content
+		                                           region:east
+		                                           iconCls: icon-film-folder
+		                                           border: false
+		                                           loadMask: true
+		                                           noAutoSave: true
+		                                           frame: true
+		                                           insertPos:END
+		                                           stripeRows: true
+		                                           enableDragDrop: true
+		                                           ddGroup: depGridDD
+		                                           stateful: false
+		                                           id: coursecontent-grid
+		                                           viewConfig: 
+		                                               forceFit: true
+		                                           sm: >
+		                                               ^new Ext.grid.RowSelectionModel()
+		                                           plugins:
+		                                                -  pgriddragdrop
+references: 
+    prefGridStore:
+          url: ../../index.php?json=view
+          root: rows
+          reader: "^new Ext.data.JsonReader()"
+          baseParams: 
+             view: grid-list-of-prefs
+          remoteSort: false
+    gridPagingDef:
+          pageSize:      50
+          store:         course-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No course to display
+          listeners:
+            beforechange: 
+               fn: >
+                   ^function( pgt , params ){
+                            var lf = pgt.ownerCt.linkedForm;
+                            if( pgt.ownerCt.linkedForm.autogridId && !pgt.ownerCt.linkedForm.disabled){
+                                var lfaugId = pgt.ownerCt.linkedForm.autogridId;
+                                var modified = Ext.getCmp( lfaugId).getStore().getModifiedRecords().length;
+                            }
+                            if( ( lf.askBeforeLoad && !lf.disabled && ( lf.getForm().isDirty() || ( lf.linkedGrid && lf.linkedGrid.store.dirty ) ) || modified > 0 )
+                             &&  !pgt.programcal ){
+                                 var activePage = Math.ceil((this.cursor + this.pageSize) / this.pageSize);
+                                 var changePage = ( params['start']/this.pageSize ) + 1;
+                                 pgt.ownerCt.beforePageChangeSelections = pgt.ownerCt.getSelectionModel().getSelections();
+                                 Ext.MessageBox.confirm(__('Confirm'), __('You have unsaved changes which will be lost.<br/>Continue?'), function(btn, text){
+                                         if (btn == 'yes') {
+                                                pgt.programcal =true;
+                                                 lf.getForm().reset();
+                                                 lf.disable(true);
+                                                  if (lf.linkedGrid){
+                                                        lf.linkedGrid.store.rejectChanges();
+                                                  }
+                                                  if( activePage < changePage )
+                                                     this.moveNext();
+                                                  else
+                                                     this.movePrevious();
+                                         }
+                                 },this);
+                                 return false;
+                            }
+                            pgt.programcal = false;
+                    }
+    gridPagingLessonDef:
+          pageSize:      20
+          store:         lesson-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No lesson to display
+    gridPagingQuizDef:
+          pageSize:      20
+          store:         quizgroups-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No quiz to display
+    filterRootDef:
+          text:         No filter
+          expanded:     true
+          children: 
+               -   text: Shared
+                   expanded: true
+                   children: 
+                         -  text: Payment not resolveds
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: To be called
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: Complaints
+                            iconCls: icon-action
+                            leaf: true
+               -   text:     My filters
+                   expanded:     true
+                   children: 
+                         -   text: All from Sydney fundraise
+                             iconCls: icon-action
+                             leaf: true
+                         -   text: All from TV fundraise
+                             iconCls: icon-action
+                             leaf: true
+    adminRootDef:
+          text: All admins
+          expanded: true
+          children:
+               -   text: Admins
+                   expanded: true
+                   children: 
+                        -   text: Bernie Segal
+                            iconCls: user
+                            leaf: true
+               -   text: SuperAdmins
+                   expanded:  true
+                   children: 
+                        -   text: Mr. Super
+                            iconCls: user
+                            leaf: true
+                        -   text: Mrs. Superee
+                            iconCls: user
+                            leaf: true
+                            
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+         autoFill: true
+    gridRowSelection:
+         singleSelect: true
+         listeners:
+            selectionchange: 
+               fn: >
+                   ^function( selectionCmp , params ){
+             			var courseQuizGrid = Ext.getCmp('course-quizgroups-grid');
+             			var courseLessonGrid = Ext.getCmp('course-lesson-grid');
+             			var courseConteGrid = Ext.getCmp('coursecontent-grid');
+                        var coursesGrid = Ext.getCmp('courses-grid');
+                        var coursesGridSelect = coursesGrid.getSelectionModel().getSelected();
+                        var nameField = Ext.getCmp('nametextfield');
+                        var descField = Ext.getCmp('descriptiontextarea');
+                        var delCourse = Ext.getCmp('delete-course-icon');
+                        var courseContentComp = Ext.getCmp("coursecontent-grid");
+                        if( !Ext.isEmpty(coursesGridSelect) && (coursesGridSelect.get('is_finished') == 1) ){
+                            if(courseLessonGrid){
+                            	courseLessonGrid.getView().dragZone.lock();
+                            }
+                            if(courseQuizGrid){
+                            	courseQuizGrid.getView().dragZone.lock();
+                            }
+                            if(courseConteGrid){
+                            	courseConteGrid.getView().dragZone.lock();
+                            }
+                            if(nameField){
+                            	nameField.setReadOnly(true);
+                            }
+                            if(descField){
+                            	descField.setReadOnly(true);
+                            }
+                            if(delCourse){
+                        		delCourse.setDisabled(true);
+                        	}
+                        	if(courseContentComp){
+                        		courseContentComp.isFinalized = true;
+                        	}
+                        	coursesGrid.getStore().commitChanges();
+                        }else{
+                        	if(courseLessonGrid){
+                        		courseLessonGrid.getView().dragZone.unlock();
+                        	}
+                        	if(courseQuizGrid){
+                        		courseQuizGrid.getView().dragZone.unlock();
+                        	}
+                        	if(courseConteGrid){
+                        		courseConteGrid.getView().dragZone.unlock();
+                        	}
+                        	if(nameField){
+                            	nameField.setReadOnly(false);
+                            }
+                            if(descField){
+                            	descField.setReadOnly(false);
+                            }
+                            if(delCourse){
+                        		delCourse.setDisabled(false);
+                        	}
+                        	if(courseContentComp){
+                        		courseContentComp.isFinalized = false;
+                        	}
+                        }
+                        if(Ext.isEmpty(params)){
+	                        var contentTagsGrid = Ext.getCmp('content-tags-grid');
+	                        if( contentTagsGrid ){
+								contentTagsGrid.getSelectionModel().deselectRange( 0, contentTagsGrid.getStore().getCount() );
+							}
+						}
+                   }
+spare: 

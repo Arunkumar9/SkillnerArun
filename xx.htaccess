@@ -1,0 +1,106 @@
+php_value newrelic.appname SWP
+php_value newrelic.transaction_tracer.top100 1
+php_value post_max_size "1000M"
+php_value upload_max_filesize "1000M"
+
+#php_flag xcache.cacher Off
+#php_flag xcache.size 0
+#php_flag xcache.stat Off
+
+
+#php_value output_buffering On
+php_value session.auto_start 0
+#php_value session.use_only_cookies 0
+
+#SetEnvIf Referer www\.mydomain\.com intra_site_referral
+
+BrowserMatch chromeframe gcf
+Header append X-UA-Compatible "chrome=1" env=gcf
+
+FileETag MTime Size
+RewriteEngine On
+#RewriteLogLevel 4
+RewriteBase /
+RewriteRule \.git -   [F]
+
+#RewriteCond %{REMOTE_ADDR}       !^84\.21\.102\.35|127\.0\.0\.1|80\.188\.72\.206|94\.127\.131\.50$
+#RewriteRule ^(.*)$ -   [F]
+
+
+RewriteCond %{HTTP_HOST} api\.
+RewriteRule ^1.0/logout$ index.php?json=login&action=logout&rid=SSID [NC,QSA,L]
+RewriteRule ^1.0/login$ index.php?json=login&rid=SSID&plain=1 [NC,QSA,L]
+RewriteRule ^1.0/view/(.+)/(.+)$ index.php?json=view&view=$1-api&context=$2 [NC,QSA,L]
+RewriteRule ^1.0/view/(.+)$ index.php?json=view&view=$1-api [NC,QSA,L]
+RewriteRule ^1.0/get/(.+)$ index.php?json=form&view=$1-api&action=load [NC,QSA,L]
+RewriteRule ^1.0/set/(.+)$ index.php?json=form&view=$1-api&action=store [NC,QSA,L]
+#RewriteRule ^(.*)$ -   [F]
+
+
+RewriteCond %{REQUEST_URI} \.dt\.css$
+RewriteRule     ^(.*\.dt\.css)$ /FreshSystem/3rdparty/dtcss/rewrite_css.php?f=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} \.xml$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule titles([0-9]+)\.xml$ index.php?feed=titles&vid=$1  [NC,L]
+
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-z]{2}/)?(.*\.jpg|.*\.png|.*\.gif)\.([0-9]+)x([0-9]+)$ http://admin.local/index.php?image=thumb&id=$2&w=$3&h=$4  [R,NC,L]
+
+
+RewriteCond %{REQUEST_URI} \.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^[a-z]{2}/(.*)$ http://admin.local/$1  [R,NC,L]
+
+RewriteCond %{HTTP_HOST} admin\. 
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$|\.js$
+RewriteRule ^cms/(.*)$ index.php/$1?_cms=1  [NC,QSA,L]
+
+RewriteCond %{HTTP_HOST} admin\.
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$|\.js$
+RewriteRule ^open/(.+)$ http://admin.local/?token=$1  [NC,QSA,L]
+
+RewriteCond %{HTTP_HOST} !admin.local
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$|\.js$
+RewriteRule ^play/(.+)$ http://admin.local/?page=admin.Player&token=$1  [NC,QSA,L]
+
+RewriteCond %{HTTP_HOST} !admin.local
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-z]{2})(|/.*)$ index.php/$2?lang=$1  [NC,QSA,L]
+
+
+RewriteCond %{HTTP_HOST} !admin.local
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)video-(.+)$ index.php/$1?vid=$2  [NC,QSA,L]
+
+RewriteCond %{HTTP_HOST} !admin.local
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1  [NC,L]
+
+#AuthType Basic
+#AuthName "Restricted Area"
+#AuthUserFile /var/www/admin.local/passwords
+#Require valid-user 

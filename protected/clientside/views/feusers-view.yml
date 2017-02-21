@@ -1,0 +1,65 @@
+#
+# Grid with Payment Types view
+#
+# INSERT INTO payment_type SELECT DISTINCT null as Uid, c.PaymentTypeText as Name FROM customers c ORDER BY c.PaymentTypeText;  
+#
+# update customers c,payment_type cs set c.`PaymentType` = cs.Uid WHERE c.PaymentTypeText like cs.Name
+#
+name: feusers-view
+serverSide:
+    allowedGrids: feusers-grid
+    recordClass: UserFERecord
+    noBlankContext: false
+    context:
+        feusers-management-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Users saved ok.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+        search-form:
+            filterData: AND
+        search-feusers-management-grid:
+            filterData: OR
+        feusers-management-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: Selected rows deleted ok!
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: Cannot delete row while any customer with this dealer.
+    sortInfo: 
+        field:  Name
+        dir: ASC
+metaData: 
+    root: rows
+    id: Uid
+    totalProperty: totalCount
+    sortInfo: 
+        field:  Name
+        direction: ASC
+    fields: 
+        -    name: Uid
+        -    name: Name
+        -    name: Username
+        -    name: Email
+    context:
+        base:
+            cm:
+                -    header: Name
+                     sortable: true
+                     dataIndex: Name
+        feusers-management-grid:
+            cm:
+                -    header: Name
+                     sortable: true
+                     dataIndex: Name
+                -    header: Username
+                     sortable: true
+                     dataIndex: Username
+                -    header: Email
+                     sortable: true
+                     dataIndex: Email
+
+

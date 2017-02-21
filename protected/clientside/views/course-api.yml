@@ -1,0 +1,114 @@
+#
+# API for Lessons (videos)
+# 
+name: course-api
+serverSide:
+    allowedGrids: course-grid
+    recordClass: CourseRecord
+    pageSize: 20
+    noBlankContext: true
+    context:
+        list:
+            filterData: AND
+        store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        activate:
+            action: callMethod
+            method: generateContentUrl
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: url generated.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+        create:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Course created ok.
+            checkExistence: content_id
+            debug: true
+            errors:
+              -  regexp: "/1062 Duplicate entry (.*) for key 'content_id'/"
+                 text: Duplicate value of 'content_id'
+        delete:
+            action: callMethod
+            method: deleteNotFinished
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any videos if this category exist.]%>
+        createcourseinstance:
+            action: callMethod
+            method: createContentDetails
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: Course Details created.
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot create course details. Course instance exists with this combination.]%>
+        updatecourseinstance:
+            action: callMethod
+            method: updateContentDetails
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: Course Details updated Successfully.
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot create course details. Course instance exists with this combination.]%>
+        activatemessaging:
+            action: callMethod
+            method: activateMessagingWindow
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: Message url.
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot enter row with duplicate value %1$s]%>
+    sortInfo:
+        field: ordering 
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: ordering
+        dir: ASC
+    fields: 
+        -    name: content_id
+        -    name: uid
+        -    name: name
+        -    name: user_id
+        -    name: description
+        -    name: cids        
+    context:
+        base:
+            cm: 
+                -    header: Uid 
+                     width: 40 
+                     sortable: true 
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Pos 
+                     width: 50 
+                     sortable: true 
+                     align: right
+                     dataIndex: ordering
+                     editor: "@new Ext.form.NumberField()"
+                -    >
+                     @new Ext.grid.CheckColumn({ 
+                        header: 'E', 
+                        dataIndex: 'is_enabled', 
+                        tooltip: "Enabled", 
+                        width: 25, 
+                        align: 'center' 
+                     })
+end: true
+

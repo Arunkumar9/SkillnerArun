@@ -1,0 +1,84 @@
+#
+#                        -     text: <%[ Save ]%>
+#                              handler: ^this.actions.saveGridHandler.createDelegate(this,['definitions-grid'],true)
+#                        -     text: <%[ Cancel ]%>
+#                              handler: ^this.actions.cancelGridHandler.createDelegate(this,['definitions-grid'],true)
+#
+description:
+    name: definitions-loader
+    text: <%[ Definitions Service ]%>
+    iconCls: icon-action
+    hideIcon: true
+    hideInStartMenu: true
+    findStores: true
+    slideOnly: false
+    autoRun: true
+    authLevel: 
+        min: 100
+        max: 1000
+objects:
+    - name: defLoaderPanel
+      using: lib/ext/ux/Fresh.definitions.Loader.js
+    - name: openFromUri
+      evalTo: global
+      definition: >
+              function() {
+                var m = Fresh.getQueryVar('module'),id = Fresh.getQueryVar('id'), a = Fresh.getQueryVar('action');
+                if (!m) return;
+                var store, wn, w,rec,grid,store,rname = m.replace(/lesson/,'video');
+                wn =rname + '-win';
+                if (w = MyDesktop.getModule(wn)) {
+                    w.createWindow();
+                } else { return; }
+                rname = rname.replace(/quizes/,'quizgroups');
+                this.queryCallCompleted = false;
+                Ext.ComponentMgr.onAvailable(rname+'-grid',function(grid) {
+                     Fresh.console.log('GRID:' +rname);
+                    var storeId = grid.store;
+                 	var gridview = storeId.split('-')[0]+'-view';
+                    Ext.Ajax.request({
+					   url: 'index.php?json=form',
+					   success: function(result, param ){
+					   	 var response = Ext.decode(result.responseText);
+					   	 if( response.pageNumber ){
+					   	 	var store = grid.getStore();
+					   	 	var pageSize = grid.getBottomToolbar().pageSize;
+					   	 	var startValue = 1*( response.pageNumber - 1) * pageSize;
+							store.load({
+								params: {
+		                            start: startValue,
+		                            limit: pageSize
+		                        },
+		                        callback : function(recs,opt){
+		                        	
+			                        rec = grid.getStore().find('content_id',id);
+			                        Fresh.console.log(rec);
+			                        if (rec > -1 ){
+			                            grid.getSelectionModel().selectRecords([grid.getStore().getAt(rec)]);
+				                        grid.getView().focusRow( rec );
+			                        }
+			                        grid.plugins[1].onRowDblClick(grid,Ext.EventObject);
+			                        Ext.getCmp(wn).maximize();
+			                    },
+			                    scope : this
+							});	
+					   	 }
+					   },
+					   params: { action: 'findpagenumber', json : 'form', uid : id, view: gridview }
+					}, this);
+                },this);                    
+              }()
+component:
+    id:              definitions-loader
+    text:             <%[ Definitions Service ]%>
+    neverShow:           true
+    noTaskButton:     true
+    hideMsgMyself: true
+    width: 200
+    height: 100
+    x:               ^this.desktop.getWinX(this.winWidth)
+    y:               ^this.desktop.getWinY(this.winHeight)
+    items:
+          xtype:          defloader
+
+#end: true

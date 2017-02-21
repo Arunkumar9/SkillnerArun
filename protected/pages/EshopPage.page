@@ -1,0 +1,26 @@
+<%@ MasterClass="Application.layout.eshopMaster" %>
+<com:TContent ID="main" >
+<div id="loadingIcon" style="display: none"></div>
+<com:TOutputCache VaryByParam="uid,catid,id" Duration="360" >
+	<com:FContentRepeater >
+	<prop:ItemTemplate>
+		  <!-- START uid: <%# $this->Data->uid.' , class: '.$this->Data->TypeData['ContentEditClass'] %> --> 
+		  <com:FShowContent ID="ContentRecord" 
+							Content="<%# $this->Data %>" 
+							IsEditable="true" 
+							ContentRecordClass="ContentRecord"
+							ContentFieldName="data"
+							cssClass="Content" />
+		  <!-- END uid: <%# $this->Data->uid %> --> 
+	</prop:ItemTemplate> 
+	</com:FContentRepeater>
+</com:TOutputCache>
+<com:XGlobalCallbackOptions>
+	<prop:ClientSide.OnLoading>
+		$('loadingIcon').show();
+	</prop:ClientSide.OnLoading>
+	<prop:ClientSide.OnComplete>
+		$('loadingIcon').hide();
+	</prop:ClientSide.OnComplete>	
+</com:XGlobalCallbackOptions>
+</com:TContent>

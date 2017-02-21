@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="72efe64f-6494-cd4c-9c83-dc7e6b8bc9de" kpf_version="5" name="swp.komodoproject">
+<preference-set idref="72efe64f-6494-cd4c-9c83-dc7e6b8bc9de">
+  <string relative="path" id="import_dirname"></string>
+  <string id="import_exclude_matches">*.*~;*.bak;*.tmp;CVS;.#*;*.pyo;*.pyc;.svn;.git;.hg;.bzr;*%*;tmp*.html;.DS_Store;*.swp;*.kpf;*.komodoproject;*.komodotools</string>
+  <string id="import_include_matches"></string>
+  <string id="mappedPaths">http://swp.freshsystems.local/##file:///Users/rosa/Work/swp/</string>
+</preference-set>
+</project>

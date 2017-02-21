@@ -1,0 +1,208 @@
+<com:TContent ID="main">
+<com:TClientScript PradoScripts="prado,effects" />
+
+<com:FAncestorsHint Name="<%= $this->Product->name %>"  />
+<com:BreadCrumbMenu Desc="Navigace: " />
+<com:TOutputCache ID="PageCache" VaryByParam="uid,catid,id,code" Duration="360" >
+
+<h4>Detail produktu</h4>
+<h1><%= $this->Product->name %></h1>
+
+
+<!-- zacatek cards container -->
+<div class="cardsContainer">
+
+    <div class="productDetailLeft">
+        <a href="/<%= $this->Product->firstImage %>" rel="highslide"><img alt="<%= $this->Product->name %>" src="/<%= $this->Product->firstImageAsThumb270x1000 %>" /></a>
+        <div class="detailIconLinksContainer">
+            <a href="/<%= $this->Product->firstImage %>" rel="highslide" class="iconLink resizeUp singleLine">zobrazit velký náhled</a>
+            <a href="#" class="iconLink print singleLine">vytisknout</a>
+            <a href="#" class="iconLink sendByEmail singleLine">poslat emailem</a>
+        </div>
+
+        <com:TRepeater ID="ImagesRepeater" EnableViewState="false" >
+                 <prop:ItemTemplate>
+                 <a href="/<%# $this->Data->uid %>" rel="highslide" class="variantsThumbnail"  alt="<%# $this->Data->text %>">
+                     <img src="/<%# $this->Data->uidAsThumb1000x105 %>"   /><br /><%# $this->Data->text %>
+                 </a>
+                 </prop:ItemTemplate>
+        </com:TRepeater>
+
+    </div>
+
+    <div class="productDetailRight">
+
+
+
+        <div class="contentBlockContainer variantsContainer">
+            <div class="contentBlockHeading">Informace o produktu</div>
+            <div class="contentBlockContent variantsContent">
+
+
+                <p>
+                    <span class="detailCode">Kód <%= $this->Product->sku %></span><br />
+
+                    <%= $this->Product->description %>
+                </p>
+
+
+				<div class="infoIconsContainer">
+                <com:TRepeater ID="IconsRepeater" EnableViewState="false" >
+                       <prop:ItemTemplate>
+                            <div class="infoIcon">
+                                <div class="infoIconLeft<%# $this->Data->Color %>"></div>
+                                <div class="infoIconMiddle<%# $this->Data->Color %>"><%# $this->Data->Name %></div>
+                                <div class="infoIconRight<%# $this->Data->Color %>"></div>
+                            </div>
+                       </prop:ItemTemplate>
+                </com:TRepeater>
+				</div>
+
+
+
+                <br />
+                <br />
+       
+				<div class="detailAvailabilityContainer"> <strong>Dostupnost: </strong>
+					<span><%= $this->Product->Availability %></span>
+				</div>
+		
+		        <br />
+</com:TOutputCache>
+		 
+                <table border="0" width="100%" class="variantsTable">
+                    <com:TRepeater ID="VariantsRepeater" OnItemDataBound="variantsDataBound" EnableViewState="true" >
+                           <prop:ItemTemplate>
+                                <tr>
+                                    <th width="50%"><%# $this->Data->getName() %></th>
+                                    <td width="50%"><com:TActiveDropDownList ID="Combo" cssClass="textBoxStd long"
+													 DataValueField="uid" DataTextField="value" PromptText="<%[ ]%>"
+													 OnCallback="Page.updateShownPrice" OnSelectedIndexChanged="Page.updateShownPrice"
+													 ClientSide.OnLoading="$('loadingIcon').show();"
+													 ClientSide.OnComplete="$('loadingIcon').hide();"
+													 /></td>
+                                <tr>
+                           </prop:ItemTemplate>
+                    </com:TRepeater>
+                </table>
+
+
+
+<com:TOutputCache ID="AttributesCache" VaryByParam="uid,catid,id,code" Duration="360" >
+			
+				<div class="attributesHeadnig"><strong>Další vlastnosti</strong></div>
+                <table border="0" width="100%" class="attributesTable">
+                    <com:TRepeater ID="AttributesRepeater" EnableViewState="false" >
+                           <prop:ItemTemplate>
+                                <tr>
+                                    <th width="20%"><%# $this->Data->getName() %></th>
+                                    <td width="80%"><%# $this->Data->Value %></td>
+                                <tr>
+                           </prop:ItemTemplate>
+                    </com:TRepeater>
+                </table>
+
+
+                <br />
+
+</com:TOutputCache>
+                <com:FActivePanelReceiver ID="pricePanel" ListenOn="OnVariantChanged" TagName="div" >
+                    <table border="0" width="100%">
+
+                        <tr>
+                            <th>Vaše cena s DPH</th>
+                            <td><span class="price"><%= $this->Product->PriceWithVAT %> Kč</span></td>
+                            <td></div></td>
+                        </tr>
+                        <tr>
+                            <th>Vaše cena bez DPH</th>
+                            <td><span class="priceSimple"><%= $this->Product->PriceWithoutVAT %> Kč<span class="priceSimple"></td>
+                            <td></td>
+                        </tr>
+
+                    </table>
+                </com:FActivePanelReceiver>
+                
+            </div>
+               <!--- <com:FActivePanelReceiver ID="basketPanel" ListenOn="OnVariantChangedX" TagName="div" cssClass="tableViewCardBasket" > --->
+               <div class="tableViewCardBasket">
+                    <table border="0" width="100%">
+                        <tr>
+                            <td><com:TTextBox ID="CountToInsert" Attributes.size="1" cssClass="textBox basketAmount" Text="1" /></td>
+                            <td>&nbsp;ks</td>
+                            <td>&nbsp;<img src="/images/arrowRightGray.gif" /></td>
+                            
+							
+							<td>&nbsp;
+<com:TActiveButton ID="buttonInsertToCart" onClick="Page.insertToCartClicked" onCallback="Page.insertToCartClicked" cssClass="buttonBasketBig" >
+	<prop:ClientSide.OnComplete>
+		$('insertedText').show();
+	</prop:ClientSide.OnComplete>
+</com:TActiveButton>
+
+                                                        </td>
+							
+							
+							
+                            <td style="width: 150px">
+								<div id="loadingIcon" class="loadingIconDetail" style="display: none"></div>
+								<div id="insertedText" style="display: none">
+									<%[ Úspěšně vloženo ]%><br>
+									<com:FCmsLink CmsLink="checkout" Text="<%[ Prohlédnout košík ]%>" />
+								</div>
+							</td>
+                        </tr>
+                    </table>
+               </div>
+               <!--- </com:FActivePanelReceiver> --->
+ 
+        </div>
+
+
+
+
+
+        <!--konec right-->
+        </div>
+
+<com:TOutputCache ID="RelatedCache" VaryByParam="lang,catid,id,code" Duration="360" >
+
+    <com:TPanel ID="RelatedContainer" cssClass="contentBlockContainer">
+        <div class="contentBlockHeading">Mohlo by vás zajímat</div>
+        <div class="contentBlockContent">
+         
+       <com:TRepeater ID="RelatedRepeater" EnableViewState="false" >
+                 <prop:ItemTemplate>
+                     <a href="<%#  $this->TemplateControl->getEshopDetailLink($this->Data) %>" class="variantsThumbnail"  alt="<%# $this->Data->name %>">
+                     <img src="/<%# $this->Data->firstImageAsThumb1000x105 %>"   /><br /><%# $this->Data->name %>
+                 </a>
+                 </prop:ItemTemplate>
+        </com:TRepeater>
+
+
+
+        </div>
+    </com:TPanel>
+</com:TOutputCache >
+        <!--konec cards-->
+        </div>
+
+
+
+<com:XGlobalCallbackOptions>
+	<prop:ClientSide.OnLoading>
+		$('loadingIcon').show();
+		$('insertedText').hide();		
+	</prop:ClientSide.OnLoading>
+	<prop:ClientSide.OnComplete>
+		//$('insertedText').show();
+		$('loadingIcon').hide();
+                jQuery.uniform.update();
+	</prop:ClientSide.OnComplete>
+</com:XGlobalCallbackOptions>
+<com:FClientEndScript>
+    jQuery(document).ready(function(){
+       jQuery("#middleContainer select, #middleContainer input:text, #middleContainer input:radio, #middleContainer textarea").uniform();
+    });
+</com:FClientEndScript>
+</com:TContent> 				

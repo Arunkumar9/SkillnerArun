@@ -1,0 +1,290 @@
+#
+#     CRM Admin layout definition
+#     listeners:
+#        beforeclose: 
+#            fn: >
+#                @function(p) {
+#                    Ext.MessageBox.alert('Closing',p.title);
+#                    return false;
+#                }
+#     -  name: Ext.ux.Plugin.PropertyEditor.js
+#        using: [ lib/ext/ux/Ext.ux.Plugin.PropertyEditor.js ]
+#                            -    @this.actions.openFilter
+#                            -    @this.actions.newNode
+#                            -    @this.actions.newFolderNode
+#                            -    @this.actions.newNode
+#                            -    @this.actions.newFolderNode
+#                            -    @this.actions.renameNode
+
+description:
+    name: container-win
+    text: <%[ Structure management ]%>
+    iconCls: icon-container-win
+    hideIcon: true
+    authLevel: 
+        min: 300
+        max: 1000
+    authRole: Admin
+objects:
+     -  name: contentTypeStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'content-type-store'
+            })
+     -  name: categoriesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'containers-store'
+            })
+     -  name: rolesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'roles-store'
+            })
+     -  name: galleryCategoriesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'galleries-categories-store'
+            })
+     -  name: filemanagerStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'filemanager-store'
+                ,baseParams: { view: 'filemanager-view',meta: true }
+                ,remoteSort: false
+                ,autoLoad: false
+            })
+     -  name: templatesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.TreeBasedStore({
+                id: 'templates-store',
+                tree: 'tree-content',
+                nodeId: 'Templates'
+            })
+component:
+     id:              container-win
+     title:           <%[ Structure management ]%>
+     width:           @this.winWidth
+     height:          @this.winHeight
+     x:               @this.desktop.getWinX(this.winWidth)
+     y:               @this.desktop.getWinY(this.winHeight)
+     iconCls:         icon-container-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader: true
+     minimizable:     true
+     maximizable:     true
+     stateful: true
+     layout:   border
+     tbar:
+          -    text: Exit 
+               iconCls: icon-exit
+               handler: @this.actions.closeWindowHandler.createDelegate(this,['customer-win'])
+          -    text: <%[Reload types]%>
+               iconCls: icon-action
+               hidden: ^(Fresh.User.Maxlevel >= 300)
+               handler: >
+                        ^function() {
+                            Ext.StoreMgr.lookup('content-type-store').reload();
+                        }
+     items:
+       #
+       #     West panel with filter and search tabs
+       #
+       -    title: <%[Pages and Content]%>
+            stateful: true
+            region: west
+            id: west-region
+            collapsible: true
+            collapsed: false
+            autoHide: false
+            cmargins: 0 0 0 0
+            width: @this.maxWidth(300,0.3)
+            split: true
+            layoutOnTabChange: true
+            hideMode: offsets
+            deferredRender: false
+            layout: border
+            items:
+                #
+                # Treepanel with filters
+                #
+                -   xtype: propertygrid
+                    region: south
+                    layout: fit 
+                    height: 130
+                    split: true
+                    disabled: true
+                    customRenderers:
+                        type: @Fresh.GridRender.giveTypeComboRenderer('content-type-store','description')
+                        template: @Fresh.GridRender.giveComboRenderer('templates-store','text','id')
+                    customEditors:
+                        type: @new Ext.grid.GridEditor(new Fresh.form.ContentTypeComboBox())
+                        template: "@new Ext.grid.GridEditor(new Fresh.form.CommonComboBox({mode: 'local', emptyText: __('choose template...'), store: 'templates-store', valueField: 'id',displayField: 'text'}))"
+                    id: tree-content-property-grid
+                -   xtype: filtertree
+                    border: true
+                    region: center
+                    id: tree-content
+                    dblClickOpensForm: true
+                    linkedForm: content-form
+                    layout: fit
+                    bodyStyle:
+                        background: white
+                    loader: >
+                        @new Ext.tree.TreeLoader({ 
+                            url: Fresh.Config.Service.Tree, 
+                            baseParams: { view: 'tree-content' },
+                            baseAttrs: {
+                                iconCls: 'file',
+                                leaf: true,
+                                text: '<%[New folder]%>'
+                            }
+                        })
+                    newNodeDefaults:
+                        leaf:
+                            iconCls: text
+                            leaf: true
+                            text: '__New content'
+                            allowChildren: false
+                            menuType: filter
+                            sortText: text
+                            sortLeaf: true
+                            typeId: text
+                        folder:
+                            iconCls: 'folder'
+                            leaf: false
+                            text: '__New folder'
+                            menuType: folder
+                            typeId: NormalPage
+                            sortText: text
+                            sortLeaf: false
+                    rootVisible: true
+                    lines: true
+                    autoScroll: true
+                    autoHeight: false
+                    enableDD: true
+                    ddAppendOnly: false
+                    orderable: true
+                    sortConfig:
+                        folderSort: true
+                    editorConfig:
+                        allowBlank: false
+                        blankText: A name is required
+                        selectOnFocus: true
+                        cancelOnEsc: true
+                    root: >
+                        @new Ext.tree.AsyncTreeNode({
+                            expanded: true,
+                            draggable: false,
+                            text: 'Root',
+                            id: 'root',
+                            iconCls: 'user-root',
+                            isTarget: false
+                        })
+                    tbar: 
+                        -    @this.actions.reloadTree
+                        -    @this.actions.expandTree
+                        -    @this.actions.collapseTree
+                    dynamicPathMenu: 
+                        -    regexp: @/root\/container-3\//
+                             menu: deleteOnly
+                        -    regexp: @/root$/
+                             menu: <%=  ($this->User->isInRole('addRootPages') || $this->User->MaxLevel>=200) ? 'rootOnly' : 'reloadOnly' %>
+                    contextMenus:
+                        any:
+                            -    @this.actions.newNode
+                            -    @this.actions.newFolderNode
+                            -    @this.actions.deleteNode
+                        folder:
+                            -    @this.actions.openFilter
+                            -    @this.actions.newNode
+                            -    @this.actions.newFolderNode
+                            -    @this.actions.deleteNode
+                            -    @this.actions.reloadNode
+                        recycleBin:
+                            -    @this.actions.emptyRecycleBin
+                            -    @this.actions.reloadNode
+                        deleteOnly:
+                            -    @this.actions.trueDeleteNode
+                            -    @this.actions.reloadNode
+                        rootOnly:
+                            -    @this.actions.newFolderNode
+                            -    @this.actions.reloadNode
+                        reloadOnly:
+                            -    @this.actions.reloadNode
+                    sortConfig:
+                        property: sortText
+                        leafAttr: sortLeaf
+                    plugins: 
+                        -    @new Ext.ux.Plugin.FormToButtons()
+                        -    "@new Ext.ux.Plugin.TreeEditor({noInlineEdit: true})"
+                        -    @new Ext.ux.Plugin.PropertyEditor()
+                   #
+                   #     end of west region
+                   #
+      #
+      #     Center panel splits to east with grid and center with tabpanel
+      #
+       -    region:          center
+            border:          true
+            layout:          fit
+            stateful:        false
+            margins:         0 0 0 0
+            xtype: metaform
+            url: index.php?json=content
+			layout: form
+            autoScroll: true
+            id: content-form
+            loadingMsg: Loading content
+            infoField: text
+            formBaseParams:
+                view: content-form-view
+            buttonAlign: left
+            buttons:
+              -  @Fresh.global.actions.save
+            plugins:
+              -  @new Ext.ux.Plugin.FormToButtons()
+            xitems:
+                #
+                # Tab panel with forms
+                #
+                -    title:      Admin tools
+                     region:     center
+                     border:     false
+                     margins:    0 0 0 0
+                     xtype:      tabpanel
+                     layoutOnTabChange: true
+                     deferredRender: false
+                     activeTab: 0
+                     items: 
+references:
+    prefGridStore:
+          url: ../../index.php?json=view
+          root: rows
+          reader: "@new Ext.data.JsonReader()"
+          baseParams: 
+             view: grid-list-of-prefs
+          remoteSort: false
+    gridPagingDef:
+          pageSize:      20
+          store:         customers-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No customers to display
+    prefGroupingViewDef:
+         startCollapsed: false
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+         autoFill: true
+spare: 
+    

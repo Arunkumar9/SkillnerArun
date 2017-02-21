@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xml:lang="en" xmlns="http://www.w3.org/2006/10/ttaf1" xmlns:tts="http://www.w3.org/2006/10/ttaf1#styling">
+	<head>
+		 <styling>
+			  <style id="1" tts:fontFamily="Arial" tts:fontSize="12" tts:color="#FFFFFF"
+			tts:textAlign="left" tts:fontStyle="Bold" />
+			  <style id="2" tts:fontSize="10" tts:color="#000000" />
+		 </styling>
+	</head>
+	<body>
+	</body>
+</tt>

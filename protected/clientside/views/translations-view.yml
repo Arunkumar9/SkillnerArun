@@ -1,0 +1,55 @@
+#
+# Grid with Translation
+#
+#
+name: translation-view 
+serverSide:
+    allowedGrids: translations-grid
+    recordClass: TranslationRecord 
+    noBlankContext: false
+    condition: cat_id = <%= FU::getCatId('%param0%') %>
+    setNames: utf8
+    context:
+        %param0%-translations-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Translations saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        %param0%-translations-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected translations deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row.]%>
+    sortInfo: 
+        source: ASC
+        target: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  source
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: source
+        -    name: target
+        -    name: translated
+        -    name: cat_id
+    cm: 
+        -    header: <%[ Source key ]%>
+             sortable: true 
+             dataIndex: source
+             editor: "@new Ext.form.TextField({allowBlank: false })"
+        -    header: <%[ Translation ]%>
+             sortable: true 
+             dataIndex: target
+             editor: "@new Ext.form.TextField({allowBlank: true})"
+        -    "@new Ext.grid.CheckColumn({ header: '<%[Translated]%>', dataIndex: 'translated', width: 20, align: 'center' })"
+
+

@@ -1,0 +1,75 @@
+#
+#
+#
+name: tree-roles
+serverSide:
+    recordClass: RoleRecord
+    child: uid
+    parent: parent_id
+    folderSign: IsFolder
+    nodeTypeSign: NodeType
+    readAll: false
+    criteria:
+        ordersBy:
+                name: ASC
+    recycleBin:
+        iconCls: @recycle-bin
+        allowDrag: false
+        draggable: false
+        text: name
+        id: uid
+        ordering: name
+        qtip: @Recycle bin
+        menuType: @recycleBin
+        sortText: @zzzzzzzzzzzzzzzzzzz
+        sortLeaf: true
+    folder:
+        iconCls: @group
+        allowDrag: true
+        expanded: true
+        draggable: true
+        text: name
+        id: uid
+        qtip: description
+        menuType: @folder
+        sortText: name
+        sortLeaf: false
+        ordering: name
+    leaf:
+        iconCls: @user
+        text: name
+        allowDrag: true
+        draggable: true
+        id: uid
+        qtip: description
+        menuType: @leaf
+        sortText: name
+        sortLeaf: true
+        ordering: name
+    depth: 3    
+    columnMapping:
+        ParentId: parent_id
+        Name:   name
+        Ordering: name
+    context:
+        tree-roles-combo:
+            readAll: true
+            criteria:
+                condition: "uid != 1"
+                ordersBy:
+                        name: ASC
+        tree-roles-update:
+            action: updateNode
+            dataRoot: data
+            successMsg: Role updated ok.
+        tree-roles-add:
+            action: updateNode
+            dataRoot: data
+            successMsg: Role inserted ok.
+        tree-roles-remove:
+            action: removeNode
+            dataRoot: data
+            successMsg: Role removed ok.
+           
+metaData: 
+    edit: 100

@@ -1,0 +1,14 @@
+
+#test-page .icon-help{
+  background:url(help.png) 0px 0px no-repeat;
+}
+
+#test-page .wizard-north{
+  padding-bottom:5px;
+}
+
+#test-page .wizard-north h1{
+  margin:10px 0 0 10px;
+  height:60px;
+  background:transparent url(update_wiz.gif) right top no-repeat;
+}

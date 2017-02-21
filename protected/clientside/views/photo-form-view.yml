@@ -1,0 +1,15 @@
+#
+# Form view
+#
+name: photo-form-view
+serverSide:
+    recordClass: ObjectRecord 
+    findBy: uid
+    properties: all
+    add-properties:
+    dataRoot: data
+    columns:
+    successMsg:	<%[ Object saved ok. ]%>.
+    context:
+        new-record:
+            sendBlank: true

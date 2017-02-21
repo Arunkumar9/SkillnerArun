@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Auto Config Grid / Grid Group View</title>
+    
+    <!-- Ext Files -->
+    <link rel="stylesheet" type="text/css" href="resources/css/ext-all.css" />
+    <link rel="stylesheet" type="text/css" href="resources/css/xtheme-aero.css" />
+    <script type="text/javascript" src="adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="ext-all.js"></script>
+    
+    <!-- Global Demo Files -->
+    <link rel="stylesheet" type="text/css" href="global.css" />
+    
+    <!-- Widget Files -->
+    <script type="text/javascript" src="Autogrid.js"></script>
+    <script type="text/javascript" src="GridGroupView.js"></script>
+    
+    <script type="text/javascript">
+        /* Example Script */
+        Ext.BLANK_IMAGE_URL = "../../ext-1.1//resources/images/default/s.gif"
+        
+        Ext.onReady(function(){
+
+            // Create the store
+            this.store = new Ext.data.Store({
+                proxy: new Ext.data.HttpProxy({
+                    url: 'query.php'
+                }),
+                reader: new Ext.data.JsonReader(),
+                remoteSort: true
+            });
+            
+            // Create the grid
+            this.grid = new Ext.ux.AutoGrid('testgrid', {
+                ds: this.store,
+                selModel: new Ext.grid.RowSelectionModel({singleSelect:true}),
+                enableColLock:false,
+                loadMask: true,
+                view: new Ext.ux.GridGroupView({ groupBy: 'group' })
+            }); 
+            
+            // add a renderer for collum with dataIndex date
+            this.grid.addRenderer("_price", function(value, cell, record){   
+                cell.css = "cell-align-right";
+                return value;
+            });
+
+            this.grid.addRenderer("_date", function(value, cell, record){   
+                cell.css = "cell-align-right";
+                return value;
+            });
+
+            // render grid
+            this.grid.render();
+            
+            this.gridFoot = this.grid.getView().getFooterPanel(true);
+            this.paging = new Ext.PagingToolbar(this.gridFoot,this.store, {
+                pageSize: 4,
+                displayInfo: true,
+                displayMsg: 'Displaying {0} - {1} of {2}',
+                emptyMsg: 'Nothing to display'
+            });
+            
+            // load + metadata
+            this.store.load({params: {meta: true, start:0, limit:4}});
+        });        
+    </script>
+
+    <style type="text/css">
+        /* Group gridview */
+        .x-grid-group {
+            font-family:arial,tahoma,helvetica,sans-serif;
+            font-size:11px;
+            font-size-adjust:none;
+            font-style:normal;
+            font-variant:normal;
+            font-weight:bold;
+            line-height:13px;
+            white-space:nowrap;
+        }
+
+        .x-grid-emptyrow {
+            font-family:arial,tahoma,helvetica,sans-serif;
+            font-size:11px;
+            font-size-adjust:none;
+            font-style:italic;
+            font-variant:normal;
+            font-weight:bold;
+            line-height:13px;
+            white-space:nowrap;
+        }
+    
+        /* Example Styles */
+        .cell-align-right .x-grid-cell-text  {
+            text-align: right;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+    
+        <div class="summary">
+            <h1>Auto Config Grid / Grid Group View</h1>
+            <dt>Current Version:</dt>
+            <dd>0.2.1 (Rev 24)</dd>
+            <dt>Published:</dt>
+            <dd>01-08-2007 (20:40)</dd>
+            <a class="link wiki" href="http://www.extjs.com/learn/Ext_Extensions">View Description (wiki)</a><br />
+        <div style="height: 5px"></div>
+            <a href="Autogrid.js" class="link source js">View Autogrid.js</a><br />
+            <a href="GridGroupView.js" class="link source js">View GridGroupView.js</a><br />
+            <a href="query.php" class="link source php">View query.php</a><br />
+        </div>
+        
+
+        <div>
+            <h1>Example Editor Grid</h1>        
+            <div id="testgrid" style="height: 300px; width: 500px; border: 1px solid #6593CF;"></div>
+
+            <input type="button" onclick="grid.dataSource.load();" value="load" />
+            <input type="button" onclick="grid.dataSource.baseParams.style = 's1'; grid.dataSource.load({params: {meta: true}});" value="load+meta" />
+            <input type="button" onclick="grid.dataSource.baseParams.style = 's2'; grid.dataSource.load({params: {meta: true}});" value="load+alt meta" />
+        </div>
+             
+    </div>
+
+</body>
+</html>

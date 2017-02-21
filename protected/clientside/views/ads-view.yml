@@ -1,0 +1,113 @@
+#
+# Grid with ads view
+#
+#
+name: ads-view
+serverSide:
+    allowedGrids: ads-grid
+    recordClass: AdZoneRecord
+    noBlankContext: false
+    context:
+        videos-grid:
+            condition: "videos_id = '%filter%'"
+        video-form:
+            condition: "videos_id = '%filter%'"
+        video-form-store:
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: videos_id
+            successMsg: <%[ ads saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        ads-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: videos_id
+            successMsg: <%[ ads saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        ads-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row.]%>
+    sortInfo: 
+        field:
+          start: ASC
+          name: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    xxxgroupField: name
+    sortInfo: 
+        field:  start
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: videos_id
+        -    name: zone
+        -    name: start
+             type: int
+        -    name: duration
+             type: int
+        -    name: is_enabled
+             type: int
+        -    name: position
+    context:
+      base:
+          cm:
+            -    header: <%[ Zone ]%>
+                 sortable: true
+                 width: 30
+                 dataIndex: zone
+                 editor:
+                    xtype: numberfield
+                    allowBlank: false
+                    allowNegative: false
+            -    header: <%[ Description ]%>
+                 sortable: true
+                 dataIndex: name
+                 editor:
+                    xtype: textfield
+            -    header: <%[ Start ]%>
+                 sortable: true
+                 dataIndex: start
+                 align: right
+                 width: 40
+                 editor:
+                    xtype: numberfield
+            -    header: <%[ Duration ]%>
+                 dataIndex: duration
+                 align: right
+                 width: 40
+                 editor:
+                    xtype: numberfield
+                    allowNegative: false
+            -    header: <%[ Position ]%>
+                 sortable: true
+                 dataIndex: position
+                 align: right
+                 width: 50
+                 editor:
+                    xtype: textfield
+                    allowBlank: false
+            -    >
+                 ^new Ext.grid.CheckColumn({
+                    header: 'E',
+                    dataIndex: 'is_enabled',
+                    tooltip: "Enabled",
+                    width: 15,
+                    value: 1,
+                    align: 'center'
+                 })
+end: true
+

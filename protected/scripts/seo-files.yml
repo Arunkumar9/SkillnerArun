@@ -1,0 +1,6 @@
+## YAML Template.
+---
+auto-read-types:
+		products:	zbozi.xml
+    sitemap: sitemap.xml
+    sitemap.products: sitemap.products.xml

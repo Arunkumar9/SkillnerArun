@@ -1,0 +1,27 @@
+#
+# Form view
+#
+name: gallery-form-view
+serverSide:
+    recordClass: GalleryRecord
+    findBy: uid
+    properties: all
+    remove-properties:
+        - description
+    add-properties:
+        - AuthorDefault
+        - CoolUrl
+        - nameLangCs
+        - nameLangEn
+        - descriptionLangCs
+        - descriptionLangEn
+        - from_dateAsDate
+    dataRoot: data
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Gallery saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

@@ -1,0 +1,226 @@
+#
+#    GALLERY MANAGEMENT MODULE
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                ^function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#     -  name: Ext.ux.Plugins.DataView.js
+#        using: [ lib/ext/ux/Ext.ux.Plugins.DataView.js ]
+#
+description:
+    name: users-win
+    text: <%[ Users Management ]%>
+    iconCls: icon-users-win
+    hideIcon: true
+    authLevel: 
+        min: 300
+        max: 1000
+objects:
+     -  name: rolesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'roles-store'
+            })
+     -  name: usersStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'users-store',
+                autoLoad: false
+            })
+component:
+    id:              users-win
+    title:           <%[ Users Management ]%>
+    width:           900
+    height:          400
+    x:               ^this.desktop.getWinX(900)
+    y:               ^this.desktop.getWinY(400)
+    iconCls:         icon-users-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    stateful: false
+    deferredRender: false
+    tbar:
+          -    text: <%[ New user ]%>
+               iconCls: icon-action
+               handler: ^this.actions.newRecordHandler.createDelegate(this,['users-form'],true)
+          -    xtype: tbfill
+    layout: border
+    items:
+        -    xtitle: <%[ Users ]%>
+             split:        true
+             region: west
+             width: ^this.maxWidth(400,0.5)
+             stateful: false
+             collapsible: true
+             stateful: false
+             xtype: autogrid
+             region: west
+             id:   users-grid
+             closable: false
+             collapsed: false
+             collapsible: false
+             clicksToEdit: 2
+             askBeforeChange: true
+             loadMask: true
+             border: true
+             deferredRender: false
+             autoWidth: true
+             autoScroll: true
+             layout: fit
+             frame: false
+             stripeRows: true
+             stateful: false
+             noStorePreload: false
+             linkedForm: users-form
+             infoField: name
+             split: true
+             loadFormFromStore: true
+             viewConfig:
+                forceFit: true
+             sm: >
+                 ^new Ext.grid.RowSelectionModel({singleSelect: true})
+             bbar: >
+                ^new Ext.PagingToolbar({
+                      pageSize:      20
+                      ,store:         'users-store'
+                      ,displayInfo:   true
+                      ,displayMsg:    '<%[Count {2}]%>'
+                      ,emptyMsg:      '<%[No users to display]%>'
+                 })
+             tbar:
+                -   ^this.actions.deleteGridTool
+                -   ^this.actions.reloadGrid
+             plugins:
+                -   ^new Ext.ux.Plugin.FormToButtons()
+                -   ^new Ext.ux.Plugin.FormLoader()
+                -    >
+                     ^new Ext.ux.grid.Search({
+                     iconCls:'icon-viewmag'
+                     ,minChars:2
+                     ,width: 200
+                     ,position: 'top'
+                     ,showSelectAll: false
+                     ,mode: 'remote'
+                     ,checkIndexes: ['name']
+                     ,xxxtoolbarContainer: 'users-win'
+                     ,autoFocus:false
+                     })
+        -    xtitle: <%[ User details ]%>
+             split:        true
+             region: center
+             stateful: false
+             collapsible: false
+             id: users-form
+             xxelements:  body
+             xxmargins:    5 5 5 5
+             frame: true
+             border: false
+             xtype: form
+             xxxlayout:
+               type: vbox
+               align: stretch
+             xxxforceLayout: true
+             url: ^Fresh.Config.Service.Form
+             trackResetOnLoad: true
+             focusOnNew: name
+             loadingMsg: "<%[ Loading user {name} ]%>"
+             formBaseParams:
+                 view: users-form-view
+                 UpdateRoles: 1
+             buttonAlign: right
+             buttons:
+                -     ^this.actions.save
+                -     ^this.actions.cancel
+             plugins:
+                -    ^new Ext.ux.Plugin.FormToButtons()
+                -    ^new Fresh.plugin.PasswordEncode()
+             anchor: 100% 100%
+             defaults:
+                    xxxlayout: vbox
+                    labelWidth: 80
+                    anchor: 95%
+                    bodyStyle: "padding: 5px"
+                    xtype: textfield
+             listeners:
+                actioncomplete:
+                  fn: >
+                      ^function(bf,action) {
+                          if (action.type == 'submit' && action.result.uid ) {
+                              var gr = Ext.getCmp('users-grid');
+                              gr.getStore().on('load',function(s,r){
+                                var rec = gr.store.getById(action.result.uid);
+                                gr.getSelectionModel().selectRecords([rec],false);
+                              },{scope: this, single: true});
+                              gr.getStore().reload();
+                          }
+                      }
+             items:
+                -    xtype: hidden
+                     name: Uid
+                     allowBlank: false
+                -    fieldLabel: <%[ Name ]%>
+                     name: Name
+                     allowBlank: false
+                -    fieldLabel: <%[ Username ]%>
+                     name: Username
+                     anchor: 95%
+                     allowBlank: false
+                     plugins:
+                        -    ^new Ext.ux.form.ServerValidator()
+                -    fieldLabel: <%[ Roles ]%>
+                     xtype: superboxselect
+                     displayField: name
+                     valueField: uid
+                     mode: local
+                     hiddenName: RolesAsList
+                     name: RolesAsList
+                     dataIndex: RolesAsList
+                     allowBlank: false
+                     flex: 1
+                     store: roles-store
+                -    fieldLabel: <%[ Password ]%>
+                     id: user-form-password-field
+                     name: PasswordUpdate
+                     blankText: '<%[ Password must be set! ]%>'
+                     minLength: 6
+                     minLengthText: <%[ Password must be at least 6 characters long! ]%>
+                     xtype: passwordupdate
+                     anchor: 95%
+                -    fieldLabel: <%[ Password again ]%>
+                     id: user-form-password-check-field
+                     validator: >
+                                ^function (val) {
+                                    var passwd = Ext.getCmp('user-form-password-field');
+                                    var pval = passwd.getValue();
+                                    if(pval != val) {
+                                        return '<%[ You must fill in both password fields with the same password. ]%>';
+                                    }
+                                    return true;
+                                }
+                     name: PasswordCheck
+                     inputType: password
+                     anchor: 95%
+                -    fieldLabel: <%[Email]%>
+                     name: Email
+                     anchor: 95%
+                     allowBlank: false
+                     vtype: email
+                     plugins:
+                        -    ^new Ext.ux.form.ServerValidator()
+                -    fieldLabel: <%[ Company id ]%>
+                     name: company_id
+                     allowBlank: true
+                -    fieldLabel: <%[ Company type ]%>
+                     name: company_level
+                     allowBlank: true
+references:
+end:
+

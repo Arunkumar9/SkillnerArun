@@ -1,0 +1,69 @@
+#
+# Grid with Currencies view
+#
+#
+name: currencies-view 
+serverSide:
+    allowedGrids: currencies-grid
+    recordClass: CurrencyAR 
+    noBlankContext: false
+    context:
+        currencies-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Currencies saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        currencies-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete language.]%>
+    sortInfo: 
+        field:  culture
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  culture
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: culture
+        -    name: currency
+        -    name: currency_local
+        -    name: conversion
+             type: float
+        -    name: precision
+             type: int
+        -    name: leftside
+    cm: 
+        -    header: <%[ Culture ]%>
+             sortable: true 
+             dataIndex: culture
+             editor: "@new Ext.form.TextField({allowBlank: false,vtype: 'alpha' })"
+        -    header: <%[ Currency ]%>
+             sortable: true 
+             dataIndex: currency
+             editor: "@new Ext.form.TextField({allowBlank: false,vtype: 'alpha' })"
+        -    header: <%[ Currency Local ]%>
+             sortable: true 
+             dataIndex: currency_local
+             editor: "@new Ext.form.TextField({allowBlank: false })"
+        -    header: <%[ Conversion ]%>
+             sortable: true 
+             dataIndex: conversion
+             editor: "@new Ext.form.NumberField({allowBlank: false,allowNegative: false, decimalPrecision: 4 })"
+        -    header: <%[ Precision ]%>
+             sortable: true 
+             dataIndex: precision
+             editor: "@new Ext.form.NumberField({allowBlank: false,allowNegative: false })"
+        -    "@new Ext.grid.CheckColumn({ header: '<%[L/R]%>', dataIndex: 'leftside', width: 20, align: 'center' })"
+
+

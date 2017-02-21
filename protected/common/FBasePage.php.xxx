@@ -1,0 +1,175 @@
+<?php
+
+class FBasePage extends TPage
+{
+
+	private $_containerRecord;
+	private $_userlevel=null;
+	private $_code=null;
+
+
+    public function onPreInit($param)
+    {
+    	$this->Session->open();
+		parent::onPreInit($param);
+	}
+ 
+	function onInit($param)
+	{
+		$this->handleDownload();
+		parent::onInit($param);
+	}
+
+	public function onLoad($param)	
+	{		
+			
+		parent::onLoad($param);		
+		$request = $this->Request;	
+	
+		if (!$this->IsPostBack )		 //&& $request->contains('code')
+		{			
+			//$this->ContentRepeater->DataSource=$this->Container->contents; 			
+			//$this->ContentRepeater->dataBind();		
+			
+		}	
+	
+	}
+	
+	public function gotoDefaultPage($sender=null,$param=null)
+	{
+		$this->gotoPage($this->Service->DefaultPage);
+	}
+	
+	
+	public function gotoPage($pagePath,$getParameters=array())
+	{
+		$this->Response->redirect($this->Service->constructUrl($pagePath,$getParameters,false,false));
+	}
+
+	
+	public function gotoError($errorCode)
+	{
+		if (!$this->IsCallBack)
+			$this->gotoPage('Error',array('id'=>$errorCode));
+	}
+
+
+	public function handleDownload()
+	{
+		if ($this->Request->contains('download'))
+		{
+			$sm = Prado::getApplication()->getSecurityManager();
+			$hashed = $this->Request->contains('hashed');
+			$basename = $this->Request['download'];
+			$basename = ($hashed) ? $sm->validateData($basename) : $basename;
+
+			$dir = dirname($this->Request->ApplicationFilePath);
+			$file = $dir . '/' . $basename;
+			if ($basename && is_file($file))
+				$this->Response->writeFile($file);
+			else
+				$this->Response->redirect($this->gotoPageError('resource_not_exists'));
+			
+			die();
+			
+		}
+		
+	}	
+	
+	public function getUserLevel()
+	{
+ 		if ($this->_userlevel === null)
+			$this->_userlevel = Prado::getApplication()->getUser()->level;
+		
+		return $this->_userlevel;
+	}
+
+
+
+
+	public function setSessionState($key,$value,$defaultValue=null,$ID=null)
+	{
+		$this->Session->open();
+		if (!$this->getID(true) && $ID === null)
+			throw new TConfigurationException('Session state for named objects only');
+
+		$k = (($ID === null)?$this->getID(true):$ID).'$'.$key;
+		if($value===$defaultValue)
+		{
+			if (is_object($this->Session[$k]))
+				$this->Session[$k]->Clear();
+		}
+		else
+		{
+			$this->Session[$k]=$value;
+			echo "set $k -> $value"."\n";
+		}
+	}
+
+
+	
+	public function getSessionState($key,$defaultValue=null,$ID=null)
+	{
+		if (!$this->getID(true) && $ID === null)
+			throw new TConfigurationException('Session state for named objects only');
+
+		$k = (($ID === null)?$this->getID(true):$ID).'$'.$key;
+		return isset($this->Session[$k])?$this->Session[$k]:$defaultValue;
+	}
+	
+
+	public function findOneControlByID($ID,$i=0)
+	{
+		$ctrls = $this->findControlsByID($ID);
+		return $ctrls[$i];
+	}
+	
+
+	public function getFormID()
+	{
+		list($form,) = $this->findControlsByType('TForm');
+		return $form->ClientID;
+	}
+	
+	public function canAccess($prop,$class='SecurityLevel')
+	{
+		return ( Prado::getApplication()->getUser()->getLevel() >= FU::Ini($class.'.'.$prop) );
+	}
+	
+	public function getCanAccessUsersPanel()
+	{
+		return $this->canAccess('UsersPanel');
+	}
+	
+	public function getCanAccessTypesPanel()
+	{
+		return $this->canAccess('TypesPanel');
+	}
+
+	/**
+	 * @return FClientScriptManager client script manager
+	 */
+	public function getClientScript()
+	{
+		if(!$this->_clientScript)
+			$this->_clientScript=new FClientScriptManager($this);
+		return $this->_clientScript;
+	}
+	
+	public function getBaseUrl()
+	{
+		if ($_SERVER['SCRIPT_URI'])
+			return dirname($_SERVER['SCRIPT_URI']).'/';
+		else
+			return trim('http://'.$_SERVER['HTTP_HOST'].dirname($_SERVER['REQUEST_URI']),'/\\').'/';
+	}
+
+    public function giveRequestedPageUrlWithLinks(array $merge)
+    {
+		$params = $this->Request->toArray();
+		$params = $merge + $params;
+		unset($params[$this->Request->ServiceID]);
+        
+        return  $this->Service->ConstructUrl($this->Service->RequestedPagePath, $params);        
+    }
+}

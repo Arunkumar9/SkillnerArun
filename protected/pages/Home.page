@@ -1,0 +1,24 @@
+<%@ MasterClass="Application.layout.master" %>
+<com:TContent ID="main">
+	<com:MBasicBox HeaderText="News" >
+							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean aliquet, lorem et porta accumsan, mauris justo congue ante, in lacinia ipsum elit ac leo. Fusce ipsum. Donec tristique convallis lorem. Maecenas vulputate tincidunt felis. Donec laoreet, eros ut rutrum mollis, justo pede tristique sapien, sit amet consequat metus dui id quam. Ut congue. Praesent augue. Nulla facilisi. Aliquam aliquam tincidunt felis. Aenean turpis ante, luctus a, lobortis blandit, semper vel, eros. Nam scelerisque euismod lectus. In magna. Donec consequat nunc ut ligula egestas faucibus.<br/>
+							<br/>Vivamus arcu odio, porttitor a, sollicitudin ac, consectetuer quis, enim. Pellentesque ut elit eu lorem tempor porta. Sed quis eros a diam pharetra lacinia. Nulla ut ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis augue. Suspendisse potenti. Mauris elementum, erat id mattis convallis, lacus arcu sagittis lacus, a rutrum mi enim ut lacus. Morbi ac elit. Donec augue. Mauris quis leo a felis aliquet venenatis. Pellentesque faucibus nunc mattis dolor. Aenean tincidunt, ante vitae vehicula fringilla, felis arcu ullamcorper massa, sit amet aliquet nunc massa vel augue. Mauris id erat. Cras at erat quis sem venenatis pulvinar.</p>
+	</com:MBasicBox>					
+	<com:MBasicBox HeaderText="Reviews"  >
+							<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean aliquet, lorem et porta accumsan, mauris justo congue ante, in lacinia ipsum elit ac leo. Fusce ipsum. Donec tristique convallis lorem. Maecenas vulputate tincidunt felis. Donec laoreet, eros ut rutrum mollis, justo pede tristique sapien, sit amet consequat metus dui id quam. Ut congue. Praesent augue. Nulla facilisi. Aliquam aliquam tincidunt felis. Aenean turpis ante, luctus a, lobortis blandit, semper vel, eros. Nam scelerisque euismod lectus. In magna. Donec consequat nunc ut ligula egestas faucibus.<br/>
+							<br/>
+							Vivamus arcu odio, porttitor a, sollicitudin ac, consectetuer quis, enim. Pellentesque ut elit eu lorem tempor porta. Sed quis eros a diam pharetra lacinia. Nulla ut ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis augue. Suspendisse potenti. Mauris elementum, erat id mattis convallis, lacus arcu sagittis lacus, a rutrum mi enim ut lacus. Morbi ac elit. Donec augue. Mauris quis leo a felis aliquet venenatis. Pellentesque faucibus nunc mattis dolor. Aenean tincidunt, ante vitae vehicula fringilla, felis arcu ullamcorper massa, sit amet aliquet nunc massa vel augue. Mauris id erat. Cras at erat quis sem venenatis pulvinar.</p>
+	</com:MBasicBox>					
+
+</com:TContent>
+<com:TContent ID="side">
+	<com:MBasicBox HeaderText="Alerts" FooterText="Baffled" >
+							<ul>
+								<li><a href="#">Lorem ipsum dolor sit amet</a></li>
+								<li><a href="#">Lorem ipsum dolor sit amet</a></li>
+								<li><a href="#">Lorem ipsum dolor sit amet</a></li>
+								<li><a href="#">Lorem ipsum dolor sit amet</a></li>
+								<li><a href="#">Lorem ipsum dolor sit amet</a></li>
+							</ul>
+    </com:MBasicBox>
+</com:TContent>

@@ -1,0 +1,1374 @@
+#
+#     CRM categorys layout definition
+#     listeners:
+#        beforeclose: 
+#            fn: >
+#                ^function(p) {
+#                    Ext.MessageBox.alert('Closing',p.title);
+#                    return false;
+#                }
+description:
+    name: quizes-win
+    authLevels: true
+    text: <%[ Evaluations Management ]%>
+    iconCls: icon-quizes-win
+    hideIcon: <%= ($this->User->Level<100)?1:0 %>
+    autoRun: false
+    authLevel: 
+        min: 60
+        max: 1000
+objects:
+	 -  name: GridDnD
+        using:  lib/ext/ux/GridDnD.js
+     -  name: quizGroupsStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'quizgroups-store'
+            })
+     -  name: quizesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'quizes-store'
+            })
+     -  name: quizImagesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'gadget-images-store'
+            })
+     -  name: quizFilesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'gadget-files-store'
+            })
+     -  name: quizAnswersStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'quiz-answers-store'
+            })
+     -  name: containersStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'containers-store'
+            })
+     -  name: videosStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'my-lesson-store'
+            })
+     -  name: containersStore2
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'all-containers-store'
+            })
+     -  name: quizTagsSelModel
+        evalTo: local
+        definition: >
+            new Ext.grid.CheckboxSelectionModel({
+            		header:'<div class="x-grid3-hd-tag">&#160;</div>',
+    		})
+     -  name: qtypeStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'qtype-store',
+                baseParams: { view: 'qtype-def-view' }
+            })
+     -  name: qatypeStore
+        evalTo: global
+        definition: >
+            new Ext.data.ArrayStore({
+                id: 'numeric-value-store',
+                fields: [
+		            'range',
+		            'single-value'
+		        ],
+		        validations: [
+                  {type: 'presence',  field: 'range'},
+                  {type: 'presence',  field: 'single-value'}
+             	],
+		        data: [['Value From Range', 'Value From Range'], ['Single Value', 'Single Value']]
+            })
+component:
+     id:              quizes-win
+     title:           <%[ Evaluations Management ]%>
+     width:           ^this.winWidth
+     height:          ^this.winHeight
+     x:               ^this.desktop.getWinX(this.winWidth)
+     y:               ^this.desktop.getWinY(this.winHeight)
+     iconCls:         icon-quizes-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader:     true
+     minimizable:          true
+     maximizable:          true
+     layout: border
+     stateful: false
+     listeners:
+        beforeclose:
+                fn: "^this.actions.askBeforeCloseHandler.createDelegate(this,['quiz-form'],true)" # before event is enabled for quiz to ask for the confimation if form has unsaved data
+     items:
+       #
+       #     West panel with filter and search tabs
+       #
+       -    title: <%[ Tags ]%>
+            region: west
+            collapsible: true
+            collapsed: false
+            width: ^this.maxWidth(140,0.1)
+            split: true
+            layout: fit
+            xtype: grid
+            id: quiz-tags-grid
+            store: ^Fresh.global.containersStore2
+            stateful: false
+            linkedGrid: quizgroups-grid
+            viewConfig: 
+               forceFit: true
+            sm: ^this.quizTagsSelModel
+            cm: >
+                ^new Ext.grid.ColumnModel({
+                    columns:[ this.quizTagsSelModel, { dataIndex: 'name', header: __('Name') }]
+                })
+            plugins:
+                -    ptype: pgridlinker
+                     clickEvent: rowclick
+                     disableLinkedForm: true
+                     fireNoSelection: true
+					 promptbeforeload:true
+           #
+           #     end of west region
+           #
+      #
+      #     Center panel splits to east with grid and center with tabpanel
+      #
+      #-    region:          center
+      #     border:          false
+      #     layout:          border
+      #     margins:         0 0 0 0
+      #     items:
+        #
+        #     Panel with grid with categorys
+        #
+       -	region:   center
+			layout:   border
+			margins:  0 0 0 0
+            items:
+		       -    title:        <%[ List of evaluations ]%>
+		            region:       west
+		            collapsible: true
+		            elements:     body
+		            split:        true
+		            layoutConfig:
+		                align: stretch
+		            layout:        vbox
+		            width:      ^this.maxWidth(350,0.7) 
+		            stateful: false
+		            items:
+		                        -    xtype:    autogrid 
+		                             id:    quizgroups-grid
+		                             loadMask: true
+		                             store:    quizgroups-store
+		                             isSelectionChanged: false
+		                             oldSelectedQuizUid: 0
+		                             sm: >
+		                                ^new Ext.grid.RowSelectionModel({
+		                                    singleSelect: true,
+		                                    listeners: {
+		                                    	beforerowselect:function( selectionModel, rowIndex, keepExisting, record ){
+		                                    		if( selectionModel.getSelected() )
+		                                    			selectionModel.grid.oldSelectedQuizUid = selectionModel.getSelected().get('uid');
+		                                    	},
+		                                        selectionchange: {
+		                                            fn: function(s) {
+		                                                var b = Ext.getCmp('new-quiz-question-button');
+		                                                var duplicateBtn = Ext.getCmp('question-duplicate-icon');
+		                                                var deleteBtn = Ext.getCmp('question-delete-icon');
+		                                                if ( Ext.isEmpty(s.getSelections()) || (s.getSelected().get('is_finished') == 1 ) ) {
+		                                                    b.disable();
+		                                                    duplicateBtn.disable();
+		                                                    deleteBtn.disable();
+		                                                } else {
+		                                                    b.enable();
+		                                                    duplicateBtn.enable();
+		                                                    deleteBtn.enable();
+		                                                }
+		                                            }
+		                                        }
+		                                    }
+		                                })
+		                             stripeRows: true
+		                             viewConfig: 
+		                                forceFit: true
+		                             anchor:   100% 100%
+		                             flex: 1 
+		                             clicksToEdit: 1
+		                             stateful: false
+		                             infoField: name
+		                             linkedGrid: quizes-grid
+		                             linkedForm: quiz-form
+		                             bbar: "^new Ext.PagingToolbar(%gridPagingDef%)" # Story 28389809
+		                             noStorePreload: false
+		                             listeners:
+		            					sortchange:
+		            						fn: >
+		                   						^function( comp , sortinfo ){
+		                   							if( sortinfo.direction ){
+			                   							var store = comp.getStore();
+										                store.baseParams.dir = sortinfo.direction;
+			                   							store.load(sortinfo.direction);
+		                   							}
+		                   						}
+		            					rowclick:
+		            						fn: >
+		                   						^function( comp ,rowIndex, e ){
+													var quizFormDirty = Fresh.global.actions.isSelectedFormDirty( comp );
+													var newSelected = comp.getSelectionModel().getSelected();
+													if( newSelected.get('uid') == comp.oldSelectedQuizUid ){
+														isSelectionChanged = false;
+													}else{
+														isSelectionChanged = true;
+													}
+													if ( !quizFormDirty && !comp.isSelectionChanged ){
+		                   						     	Ext.getCmp('quiz-form-east-region').getLayout().setActiveItem(0);
+		                   						     	comp.linkedGrid.getSelectionModel().clearSelections(true);
+		                   						     	comp.linkedGrid.getView().refresh();
+		                   						     }
+		                   						}
+		                             tbar: 
+								         -     text: <%[ New ]%>
+								               iconCls: icon-action
+								               handler: >
+								                        ^function(button,e) {
+								                            var gr = Ext.getCmp('quizgroups-grid');
+								                        	Fresh.global.actions.checkFormDirty('New quiz', gr,button,e );
+								                        }
+								         -     text: <%[ Duplicate ]%>
+								               iconCls: icon-action
+								               handler: >
+								                        ^function(button,e) {
+								                            var gr = Ext.getCmp('quizgroups-grid');
+								                        	Fresh.global.actions.checkFormDirty('Duplicate quiz', gr,button,e );
+								                        }
+		                                 -     ^this.actions.deleteGridTool
+		                             xtbar: 
+		                                 -    ^this.actions.filterNoAction
+		                                 -    xtype: tbfill
+		                                 -    xtype: tbtext
+		                                      text: "<b>Reports:&nbsp;</b>"
+		                                 -    xtype: tbspacer
+		                             plugins:
+		                                 -    pformtobuttons
+		                                 -    pformloader
+		                                 -    ptype: pgridlinker
+		                                      disableLinkedForm: false
+		                                      fireNoSelection: true
+		                                      promptbeforeload:true
+		                                 -    ptype: pgridsearch
+		                                      iconCls: icon-viewmag
+		                                      searchText: ''
+		                                      minChars: 3
+		                                      autoWidth: false
+		                                      align: right
+		                                      width: 150
+		                                      position: top
+		                                      showSelectAll: false
+		                                      viewContext : search-quizgroups-grid
+		                                      disableIndexes: 
+		                                          - Status
+		                                          - CreatorName
+		                                          - ContentCreator
+		                                      mode: remote
+		                                      xxxtoolbarContainer:  kntdev-win
+		                                      autoFocus: false
+		                                      showMenu: false
+		                        -    xtype:    autogrid
+		                             title:        <%[ Evaluation items ]%> 
+		                             id:    quizes-grid
+		                             loadMask: true
+		                             parentGrid : quizgroups-grid 
+		                             store:  quizes-store
+		                             enableDragDrop: true
+		                             ddGroup: depGridDD
+		                             stripeRows: true
+		                             insertPos:END
+		                             sm: >
+			                             ^new Ext.grid.RowSelectionModel({
+			                                    singleSelect: true,
+			                                    listeners: {
+			                                        selectionchange: {
+			                                            fn: function(s) {
+			                                            	var quizForm = Ext.getCmp('quiz-form');
+			                                            	var quizFormDirty = Fresh.global.actions.isSelectedFormDirty( quizForm );
+			                                            	if( quizForm.isVisible( ) &&  !quizFormDirty ){
+			                                            		Ext.getCmp('quiz-form-east-region').getLayout().setActiveItem(1);
+			                                            	}
+			                                            }
+			                                        }
+			                                    }
+			                                })
+		                             bbar: "^new Ext.PagingToolbar(%gridQuestionDef%)"   # Story 28389809
+		                             viewConfig: 
+		                                forceFit: true
+		                             anchor: 100% 100%
+		                             flex: 1 
+		                             stateful: false
+		                             infoField: name
+		                             linkedForm: question-form
+		                             noStorePreload: false
+		                             tbar: 
+		                                 -     text: <%[ New ]%>
+								               iconCls: icon-action
+								               id: new-quiz-question-button
+								               disabled: true
+								               handler: >
+								                        ^function(b,e) {
+								                       			var qqgr = Ext.getCmp('quizes-grid');
+									                       		Fresh.global.actions.checkFormDirty('New quiz question',qqgr,b,e);
+								                        }
+								         -    text: <%[ Duplicate ]%>
+								               iconCls: icon-action
+								               id: question-duplicate-icon
+								               disabled: true
+								               handler: >
+								                        ^function(button,e) {
+								                            var gr = Ext.getCmp('quizes-grid');
+								                        	Fresh.global.actions.checkFormDirty('Duplicate question', gr,button,e );
+								                        }  
+								         -    text: <%[ Delete ]%>
+								               iconCls: icon-delete
+								               id: question-delete-icon
+								               disabled: true
+								               handler: >
+								                        ^function(b,e) {
+								                         		var qqgr = Ext.getCmp('quizes-grid');
+								                       			Fresh.global.actions.deleteGridToolRecord(b,e);
+								                        }
+		                             listeners:
+				                    	viewready:
+				                    		fn:>
+				                    			^function(gr){
+				                    				Ext.override(Ext.grid.RowNumberer, {
+				                    					renderer: function(v, p, record, rowIndex) {
+						                    				var grid = Ext.getCmp('quizes-grid');
+						                    				if( grid ){
+													        	var rowspan = this.rowspan;
+														        if ( rowspan ){
+														            metaData.tdAttr = 'rowspan="' + rowspan + '"';
+														        }
+														        var start = grid.startValue;
+														        if( start ){
+															        return start+rowIndex+1;
+														        }else{
+														        	return rowIndex+1;
+														        }
+													        }
+												    	}
+				                    				});
+												 }
+		                             plugins:
+		                                 -    pformtobuttons
+		                                 -    pformloader
+		                                 -    pgriddragdrop
+		                                 -    ptype: pgridsearch
+		                                      iconCls: icon-viewmag
+		                                      searchText: ''
+		                                      minChars: 3
+		                                      autoWidth: false
+		                                      align: right
+		                                      width: 150
+		                                      position: top
+		                                      showSelectAll: false
+		                                      mode: remote
+		                                      viewContext : search-questions-grid
+		                                      autoFocus: false
+		                                      showMenu: false
+		        #
+		        # Tab panel with forms
+		        #
+		       -    title:      <%[ Evaluation ]%>
+		            region:     center
+		            id:         quiz-form-east-region
+		            elements:     body
+		            margins:    0 0 0 0
+		            split:      true
+		            stateful: false
+		            layout:     card
+		            layoutConfig:
+		                layoutOnCardChange: true
+		                deferredRender: false
+		            activeItem: 0
+		            width:    ^this.maxWidth(900,0.6)            
+		            frame: true
+		            items: 
+		                -  xtype:     form
+		                   id: quiz-form
+		                   xtitle: Quiz
+		                   url: ^Fresh.Config.Service.Form
+		                   trackResetOnLoad: true
+		                   xxmonitorValie: true
+		                   autogridId: quiz-answers-grid
+		                   xlinkedGrid: quiz-answers-grid
+		                   selGrid: quizgroups-grid quiz-tags-grid  	#using that attribute inorder to clear the selections
+		                   autoWidth: true
+		                   loadingMsg: "Loading quiz {name}"
+		                   focusOnNew: name
+		                   askBeforeLoad: true
+		                   formBaseParams: 
+		                       view: quiz-form-view
+		                       UpdateCategories: 1
+		                       UpdateAvalton: 1
+		                   buttonAlign: right
+		                   buttons: 
+		                       -    text: <%[  Save ]%>
+		                            iconCls: icon-ok
+		                            minWidth: 75
+		                            id: quiz-form-save-button
+		                            handler: ^this.actions.saveFormHandler.createDelegate(this,['quiz-form'],true)
+		                       -    text: <%[  Finalize ]%>
+		                            iconCls: icon-lock
+		                            minWidth: 75
+		                            id: quiz-form-finalize-button
+		                            handler: >
+		                                      ^function(b,e) {
+		                                        var fin,f = this.findParentByType('form');
+		                                        Ext.MessageBox.confirm(__('Confirm'), __('Really want to FINALIZE? Cannot be changed later!'), function(btn, text){
+		                                            if (btn == 'yes') {
+		                                                b.form  = f;
+		                                                if (fin = f.getForm().findField('Finalized'))
+		                                                    fin.setValue(1);
+		                                                Ext.getCmp('quiz-form-save-button').setDisabled(true);
+		                                                b.setDisabled(true);
+		                                                MyDesktop.actions.saveFormHandler(b,e,'quiz-form');
+		                                            }
+		                                        },this);                                        
+		                                      }
+		                       -    text: <%[  Cancel ]%>
+		                            iconCls: icon-cancel
+		                            minWidth: 75
+		                            id: quiz-form-cancel-button
+		                            handler: ^this.actions.cancelFormHandler.createDelegate(this,['quiz-form'],true)
+		                   listeners:
+		                      clientvalidation:
+		                        fn: >
+		                            ^function(form,valid) {
+		                                var form1=Ext.getCmp('question-form').getForm();
+		                                if (form.getForm().isDirty()) {
+		                                    if (form1.disabled) form1.enable();
+		                                    form1.findField('Dirt').setValue(1);    
+		                                } else {
+		                                    form1.findField('Dirt').setValue(0);
+		                                }
+		                                return valid;
+		                            }
+		                      actioncomplete:
+		                        fn: >
+		                            ^function(bf,action) {
+		                                if (action.type == 'submit' && action.result.content_id ) {
+		                                    var gr,gr1,rec1,rec,p,form=Ext.getCmp('quiz-form');
+		                                    gr1 = Ext.getCmp('quizgroups-grid');
+		                                    gr = Ext.getCmp('quizes-grid');
+		                                    p = gr.getStore().baseParams.filter;
+		                                    form.formBaseParams.id = action.result.content_id;
+		                                    if( this.new ){
+			                                    gr1.getStore().baseParams.filter = '';
+			                                    gr1.getStore().baseParams.context = '';
+												var pageSize = gr1.getBottomToolbar().pageSize;
+			                                    var startValue = 1*( action.result.pageNumber - 1) * 50;
+												gr1.getStore().load({
+													params: {
+							                            start: startValue,
+							                            limit: pageSize
+							                        }
+												});
+			                                    this.new = false;
+		                                    }
+											else {
+		                                    	var pageSize = gr1.getBottomToolbar().pageSize;
+		                                    	var startValue = 1*( action.result.pageNumber - 1) * 50;
+												gr1.getStore().load({
+													params: {
+							                            start: startValue,
+							                            limit: pageSize
+							                        }
+												});
+		                                    }
+		                                    gr.getStore().baseParams.filter = action.result.content_id;
+		                                    gr.getStore().baseParams.context = 'quizgroups-grid';
+		                                    gr.getStore().reload();
+		                                }
+		                                if (action.type == 'load') {
+		                                    var top = Ext.getCmp('quiz-form-east-region');
+		                                	var gr1 = Ext.getCmp('quizgroups-grid');
+		                                    gr1.getStore().on('load',function(s,r){
+			                                      var form=Ext.getCmp('quiz-form');
+			                                      if( gr1.duplicateContentId ){
+			                                   			rec1 = s.getById(gr1.duplicateContentId);
+			                                   	  } else {
+				                                        rec1 = s.getById(form.getForm().findField('content_id').value);
+			                                   	  }
+			                                      if( rec1 && gr1.getStore() ){
+					                                  var seectedRecord = gr1.getSelectionModel().getSelected();
+				                                      if( !seectedRecord ||  rec1.id != seectedRecord.id ){
+					                                      gr1.getSelectionModel().selectRecords([rec1],false);
+					                                      var index = gr1.getStore().indexOf(rec1);
+					                                      gr1.getView().focusRow( index );
+					                                      gr1.fireEvent('rowclick',gr1,{});
+				                                      }
+				                                      if( rec1 && rec1.get('name')){
+					                                  	form.ownerCt.setTitle('Evaluation: '+rec1.get('name'));
+					                                  }
+			                                      }
+			                                      if( !gr1.isSelectionChanged ){
+			                                      	top.getLayout().setActiveItem(0);
+			                                      }
+		                                    },{scope: this, single: true});
+		                                    var gr,gr1,rec1,rec,p,form=Ext.getCmp('quiz-form');
+		                                    gr1 = Ext.getCmp('quizgroups-grid');
+		                                    gr = Ext.getCmp('quizes-grid');
+		                                    p = form.formBaseParams.id;
+		                                    if (gr.getStore().baseParams.filter != p) {
+		                                        gr.getStore().baseParams.filter = p;
+		                                        gr.getStore().baseParams.context = 'quizgroups-grid';
+		                                        gr.getStore().reload();
+		                                    }
+		                                    if( gr.getSelectionModel().getSelected() ){
+		                   						gr.getSelectionModel().clearSelections(true);
+		                   						gr.getView().refresh();
+											}
+		                                    top.getLayout().setActiveItem(0);
+		                                }
+		                             }
+		                   plugins:
+		                       -   pformtobuttons
+		                       -   ^new Ext.ux.Plugin.SecureFormFields()
+		                   items:
+		                       -   id: quiz-form-panel
+		                           autoWidth: true
+		                           anchor: 100% 100%
+		                           border: true
+		                           frame: true
+		                           xtype: tabpanel
+		                           deferredRender: false
+		                           layoutOnTabChange: true
+		                           activeTab: 0
+		                           margins: 0 0 0 0
+		                           defaults:
+		                             autoWidth: false
+		                             autoHeight: false
+		                             hideMode: offsets
+		                             region: center
+		                             frame: true
+		                             anchor: 100% -10
+		                             layout: form
+		                             labelWidth: 120
+		                             bodyStyle:
+		                               padding: 5px 5px 5px 5px
+		                             defaults:
+		                                anchor: 100%
+		                                xtype: textfield                           
+		                           items:
+		                              -  title: <%[ Evaluation ]%>
+		                                 autoWidth: false
+		                                 autoHeight: false
+		                                 hideMode: offsets
+		                                 region: center
+		                                 frame: true
+		                                 anchor: 100% -10
+		                                 layout: tableform
+		                                 layoutConfig:
+		                                    columns: 2
+		                                 bodyStyle:
+		                                   padding: 5px 5px 5px 5px
+		                                 defaults:
+		                                    anchor: 100%
+		                                    xtype: textfield
+		                                    colspan:  2
+		                                 items:
+		                                    -    xtype: hidden
+		                                         name: Dirt
+		                                    -    xtype: hidden
+		                                         name: Finalized
+		                                    -    xtype: hidden
+		                                         name: content_id
+		                                    -    fieldLabel: '<%[ Name ]%>'
+		                                         name: name
+		                                         emptyText : New evaluation (Change Me)
+		                                         allowBlank: false
+		                                         loadMask: true
+		                                         enableKeyEvents: true
+		                                         listeners:
+		                                         		keyup: 
+											               fn: >
+											                   ^function(field){
+												                   checkString = field.getValue();
+												                   if ( checkString != "" ) {
+																	    if ( ( /[^A-Za-z. _\d]/ ).test(checkString)) {
+																	        Ext.MessageBox.alert("Error","Quiz Name Shouldn't Contain Special Characters",function(btn,text){
+			                                                					if( btn == "ok" ){
+				                                                					field.reset();
+																			        return false;
+																		        }
+																	        });
+																	    }
+																	}
+											                   }
+		                                    -    fieldLabel: '<%[ Description ]%>'
+		                                         name: description
+		                                         emptyText : New evaluation (Change Me)
+		                                         allowBlank: true
+		                                         xtype: textarea
+		                                         height: 70
+		                                    -    fieldLabel: <%[ Tags ]%>
+		                                         name: CategoriesList
+		                                         dataIndex: CategoriesList
+		                                         allowBlank: true
+		                                         ddGroup: tree-containers
+		                                         xtype: csuperboxselect
+		                                         displayField: name
+		                                         valueField: uid
+		                                         store: ^this.containersStore
+		                                         xanchor: 100% 75%
+		                                         plugins:
+		                                              -   ptype: pddsuperboxselect
+		                                                  ddGroup: tree-containers
+									-	title: <%[ Instructions ]%>
+										id: quiz-instructions-tab
+		                                xtype:  htmleditor
+		                                name: instructions 
+		                                autoScroll: true
+		                                allowBlank: true
+		                                anchor: 100% 100%
+		                -  xtype:     form
+		                   id: question-form
+		                   xtitle: Evaluation item
+		                   url: ^Fresh.Config.Service.Form
+		                   trackResetOnLoad: true
+		                   autogridId: quiz-answers-grid
+		                   monitorValid: true
+		                   autoWidth: true
+		                   loadingMsg: "Loading question {name}"
+		                   focusOnNew: name
+		                   askBeforeLoad: true
+		                   formBaseParams: 
+		                       view: question-form-view
+		                   buttonAlign: right
+		                   buttons: 
+		                       -    text: <%[  Save question ]%>
+		                            iconCls: icon-ok
+		                            minWidth: 75
+		                            id: question-form-save-button
+		                            disabled: true
+		                            handler: ^this.actions.saveFormHandler.createDelegate(this,['question-form'],true)
+		                       -    text: <%[  Cancel ]%>
+		                            iconCls: icon-cancel
+		                            minWidth: 75
+		                            id: question-form-cancel-button
+		                            handler: ^this.actions.cancelFormHandler.createDelegate(this,['question-form'],true)
+		                   listeners:
+		                      clientvalidation:
+		                        fn: >
+		                            ^function(form,valid) {
+		                                var form1=Ext.getCmp('quiz-form').getForm(),
+		                                	qsaveBtn = Ext.getCmp('question-form-save-button'),
+		                                	qcancelBtn = Ext.getCmp('question-form-cancel-button'),
+		                                	qanswersGrid = Ext.getCmp('quiz-answers-grid').getStore().getModifiedRecords(),
+		                                	qimgPanel = Ext.getCmp('gadget-images-view').getStore().getModifiedRecords(),
+		                                	qfilesPanel = Ext.getCmp('gadget-files-view').getStore().getModifiedRecords(),
+		                                	quizgroupsgrid = Ext.getCmp('quizgroups-grid'),
+	                                    	quizgroupSelectedRec = quizgroupsgrid.getSelectionModel().getSelected(),
+		                                	ddviewimages = Ext.getCmp('gadget-images-view');
+		                                if (form.getForm().isDirty()) {
+		                                    if (form1.disabled) form1.enable();
+		                                    form1.findField('Dirt').setValue(1);    
+		                                } else {
+		                                    form1.findField('Dirt').setValue(0);
+		                                }
+		                                if( (form.getForm().isDirty() || 
+		                                		(qanswersGrid.length > 0 ) || 
+		                                				(qimgPanel.length > 0 ) || 
+		                                						(qfilesPanel.length > 0 )) && 
+		                                							( quizgroupSelectedRec && quizgroupSelectedRec.get('is_finished') != 1) ){
+		                                	qsaveBtn.setDisabled(false);
+		                                	qcancelBtn.setDisabled(false);
+		                                    ddviewimages.isDirtyFlag=true;
+		                                }else{
+		                                	qsaveBtn.setDisabled(true);
+		                                	qcancelBtn.setDisabled(true);
+		                                	ddviewimages.isDirtyFlag=false;
+		                                }
+		                                return valid;
+		                            }
+		                      actioncomplete:
+		                        fn: >
+		                            ^function(bf,action) {
+		                                if (action.type == 'submit' && action.result.uid ) {
+		                                    var gr,rec,p,
+		                                        form=Ext.getCmp('question-form'),
+		                                        gr = Ext.getCmp('quizes-grid');
+		                                    p = gr.getStore().baseParams.filter;
+		                                    gr.getStore().on('load',function(s,r){
+		                                      rec = s.getById(action.result.uid);
+		                                      if( rec ){
+		                                      gr.getSelectionModel().selectRecords([rec],false);
+		                                       action.result.uid = '';
+		                                      }
+		                                      if( rec && rec.get('name')){
+			                                  	form.ownerCt.setTitle('Evaluation item: '+rec.get('name'));
+			                                  }
+		                                    },{scope: this, single: true});
+		                                    gr.getStore().reload();
+		                                    var ddview = Ext.getCmp('gadget-files-view');
+		                                    ddview.isDirtyFlag=false;
+		                                    var ddviewimages = Ext.getCmp('gadget-images-view');
+		                                    ddviewimages.isDirtyFlag=false;
+		                                    var gridData = Ext.getCmp( 'quiz-answers-grid' );
+		                                    gridData.getStore().reload();
+		                                }
+		                                if (action.type == 'load') {
+		                                    var ms = Ext.StoreMgr.lookup('quiz-answers-store'),
+		                                        ls = Ext.StoreMgr.lookup('my-lesson-store');
+		                                    ms.baseParams.filter = action.result.data.uid;
+		                                    ms.baseParams.context = 'quizes-grid';
+		                                    ms.load();
+		                                    ls.reload();
+		                                    var top = Ext.getCmp('quiz-form-east-region');
+		                                    top.getLayout().setActiveItem(1);
+		                                    var questionsGrid = Ext.getCmp('quizes-grid');
+											questionsGrid.getStore().on('load',function(s,r){
+												var questionForm = Ext.getCmp('question-form'),rec1;
+												if(questionsGrid.newQuestionId){
+													rec1 = s.getById(questionsGrid.newQuestionId);
+													questionsGrid.newQuestionId ='';
+												}else if( questionsGrid.duplicateContentId ){
+													rec1 = s.getById(questionsGrid.duplicateContentId);
+													questionsGrid.duplicateContentId = '';
+												} 
+												var quizgroups = Ext.getCmp('quizgroups-grid');
+												var seectedRecord = questionsGrid.getSelectionModel().getSelected();
+												if( rec1 && questionsGrid.getStore()){
+													if( !seectedRecord ||  rec1.id != seectedRecord.id ){
+														questionsGrid.getSelectionModel().selectRecords([rec1],false);
+														var index = questionsGrid.getStore().indexOf(rec1);
+														questionsGrid.getView().focusRow( index );
+														questionsGrid.fireEvent('rowclick',questionsGrid,{});
+													}
+												}
+											},{scope: this, single: true});
+		                                }
+		                             }
+		                   plugins:
+		                       -   pformtobuttons
+		                       -   ^new Ext.ux.Plugin.SecureFormFields()
+		                   items:
+		                       -   id: question-form-panel
+		                           autoWidth: true
+		                           anchor: 100% 100%
+		                           border: true
+		                           title: Question
+		                           frame: true
+		                           xtype: tabpanel
+		                           deferredRender: false
+		                           layoutOnTabChange: true
+		                           activeTab: 0
+		                           margins: 0 0 0 0
+		                           defaults:
+		                             autoWidth: false
+		                             autoHeight: false
+		                             hideMode: offsets
+		                             region: center
+		                             frame: true
+		                             anchor: 100% -10
+		                             layout: form
+		                             labelWidth: 120
+		                             bodyStyle:
+		                               padding: 5px 5px 5px 5px
+		                             defaults:
+		                                anchor: 100%
+		                                xtype: textfield                           
+		                           items:
+		                              -  title: <%[ Data ]%>
+		                                 autoWidth: false
+		                                 autoHeight: false
+		                                 hideMode: offsets
+		                                 region: center
+		                                 frame: true
+		                                 anchor: 100% -10
+		                                 layout: tableform
+		                                 layoutConfig:
+		                                    columns: 2
+		                                 bodyStyle:
+		                                   padding: 5px 5px 5px 5px
+		                                 defaults:
+		                                    anchor: 100%
+		                                    xtype: textfield
+		                                    colspan:  2
+		                                 items:
+		                                    -    xtype: hidden
+		                                         name: uid
+		                                    -    xtype: hidden
+		                                         name: parent_id
+		                                    -    xtype: hidden
+		                                         name: Dirt
+		                                    -	 xtype: hidden
+		                                    	 name: ContentChanged
+		                                    -    fieldLabel: '<%[ Name ]%>'
+		                                         name: name
+		                                         allowBlank: false
+		                                         enableKeyEvents: true
+		                                         listeners:
+		                                         		keyup: 
+											               fn: >
+											                   ^function(field){
+												                   checkString = field.getValue();
+												                   if ( checkString != "" ) {
+																	    if ( ( /[^A-Za-z\(\). _\d]/ ).test(checkString)) {
+																	        Ext.MessageBox.alert("Error","Question Name Shouldn't Contain Special Characters",function(btn,text){
+			                                                					if( btn == "ok" ){
+				                                                					field.reset();
+																			        return false;
+																		        }
+																	        });
+																	    }
+																	}
+											                   }
+		                                    -    fieldLabel: '<%[ Text ]%>'
+		                                         name: short_description
+		                                         allowBlank: true
+		                                         xtype: textarea
+		                                         height: 70
+		                                    -    fieldLabel: <%[ Reference content ]%>
+		                                         name: category_id
+		                                         store: my-lesson-store
+		                                         xtype: ccombo
+		                                         displayField: name
+		                                         valueField: uid
+		                                         allowBlank: true
+		                                         colspan: 1
+		                                    -    fieldLabel: <%[ Type ]%>
+		                                         name: qtype
+		                                         id: quiz-qtype-value
+		                                         store: qtype-store
+		                                         xtype: ccombo
+		                                         editable : false
+		                                         displayField: Name
+		                                         valueField: Name
+		                                         allowBlank: false
+		                                         colspan: 1
+		                                         listeners:
+		                                         	select :
+		                                         		fn: >
+							                           	 	^function( combo,record,index ) {
+							                                	var gridData = Ext.getCmp( 'quiz-answers-grid' ),
+							                                	    questionSaveBtn = Ext.getCmp('question-form-save-button'),
+							                                		fields = gridData.getColumnModel().config;
+								                                	var qtypeValue = Ext.get('quiz-qtype-value').getValue();
+								                                	if( qtypeValue == 'Task' ){
+								                                		gridData.setVisible( false );
+								                                		Ext.getCmp( 'taskNote' ).setVisible(true);
+								                                		questionSaveBtn.setText('Save task');
+								                                	}else {
+								                                		gridData.setVisible( true );
+								                                		Ext.getCmp( 'taskNote' ).setVisible(false);
+								                                		questionSaveBtn.setText('Save question');
+								                                	}
+							                                	for ( var i=0; i < fields.length; i++ ) {
+									                                	if( qtypeValue == 'numeric question' && ( fields[i].dataIndex == 'good' || fields[i].dataIndex == 'name') ){
+									                                		gridData.getColumnModel().config[i].disabled = true;
+									                                		gridData.getColumnModel().setHidden( i,true );
+								                                		}
+								                                		else if( qtypeValue == 'numeric question' && (fields[i].dataIndex == 'numeric_type' || fields[i].dataIndex == 'first_value' || fields[i].dataIndex == 'second_value' )){
+								                                			gridData.getColumnModel().config[i].disabled = false;
+									                                		gridData.getColumnModel().setHidden( i,false );
+									                                    	gridData.getStore().each( function( rec ){
+									                                    	    var fields = gridData.getColumnModel().config,
+																					rowIndex = gridData.getStore().indexOf(rec),
+																					numericType = rec.get('numeric_type');
+																				for( var i=0; i < fields.length; i++ ){
+																					if( fields[i].dataIndex === "second_value" && ( Ext.isEmpty(numericType) || numericType === "Single Value") ){
+																						var cell = gridData.getView().getCell( rowIndex, i);
+																						if( cell ){
+																							Ext.fly(cell).removeClass('enableCell');
+																							Ext.fly(cell).addClass('disableCell');
+																						}
+																					}
+																				}
+									                                    	},this);
+								                                		}
+									                                	else if( qtypeValue != 'numeric question' && ( fields[i].dataIndex == 'good' || fields[i].dataIndex == 'name')){
+									                                		gridData.getColumnModel().config[i].disabled = false;
+									                                		gridData.getColumnModel().setHidden( i,false );
+								                                    	}
+								                                    	else if( qtypeValue != 'numeric question' && (fields[i].dataIndex == 'numeric_type' || fields[i].dataIndex == 'first_value' || fields[i].dataIndex == 'second_value' )){
+								                                			gridData.getColumnModel().config[i].disabled = true;
+									                                		gridData.getColumnModel().setHidden( i,true );
+								                                		}							                                	
+						                                    	}
+						                                     }
+		                                    -    fieldLabel: <%[ Reference time ]%>
+		                                         name: from_dateFormated
+		                                         colspan: 1
+		                                    -    fieldLabel: <%[ To ]%>
+		                                         name: to_dateFormated
+		                                         colspan: 1
+												 hidden: true
+		                                         labelAlign: right
+		                                    -    xtype:    container
+		                                         id: taskNote
+		                                         html:'<p style="font-size: small;">Note: The task evaluation item will not be considered correct unless the task is set to "Completed" by instructor.</p>'
+		                                         hidden:true
+		                                    -    fieldLabel: '<%[ Predefined Task ]%>'
+		                                         name: PredefinedTask
+		                                         dataIndex: PredefinedTask  
+		                                         allowBlank: true
+		                                         xtype: checkbox
+		                                         hidden: true
+		                                    -    title: '<%[ Answers ]%>'
+		                                         id: quiz-answers-grid
+		                                         xtype: autogrid
+		                                         clicksToEdit:1
+		                                         stateful: false
+		                                         linkToForm: true
+		                                         insertPos:END
+		                                         frame: true
+		                                         stripeRows: true
+		                                         enableDragDrop: true
+		                                         ddGroup: depGridDD
+		                                         loadMask: true
+		                                         viewConfig:
+		                                           forceFit: true
+		                                         anchor: 100%
+		                                         height: 200
+		                                         sm: >
+		                                               ^new Ext.grid.RowSelectionModel()
+		                                         plugins:
+		                                             -  pgriddragdrop
+		                                             -  pformtobuttons
+		                                         tbarCfg:
+		                                             id: answers-grid-toolbar
+		                                         tbar:
+		                                            -   ^this.actions.cancelGridTool
+		                                            -   ^this.actions.addGridTool
+		                                            -   ^this.actions.deleteGridTool
+		                                            -   ^this.actions.reloadGrid
+		                                         listeners:
+		                                            render:
+							                          fn: >
+							                              ^function( gr,action ) {
+							                                Ext.apply(Ext.form.VTypes, {
+															    answerfromval: function(val, field) {
+															    	if(val != "" && !Ext.isEmpty(val)){
+															    		var number = val.split('.');
+															    		if(number.length > 2){
+																			return false;
+															    		}
+															    		var number2 = val.split('-');
+															    		if(number2.length > 2){
+																			return false;
+															    		}
+															    	}
+															    	var gridData = Ext.getCmp( 'quiz-answers-grid' );
+																    var selectedRecord = gridData.getSelectionModel().getSelections()[0];
+																    var type = selectedRecord.data.numeric_type;
+																    if( (type == "Value From Range" || type == "Single Value") && val == "" ){
+																    	return false;
+																    }
+																    if(type == "Value From Range" ){
+																        if(selectedRecord.data.second_value != 0){
+																        	var secondVal = selectedRecord.data.second_value;
+																		    if((secondVal).indexOf('-') > -1 && val.indexOf('-') > -1){
+																		    	if( parseFloat((secondVal).substr(1,secondVal.length)) >= parseFloat(val.substr(1,val.length)) ){
+																			    	this.answerfromvalText = 'Value From should be less than Value To';
+																			    	return false;
+																			    }
+																		    } else{
+																			    if( parseFloat(secondVal) <= parseFloat(val) ){
+																			    	this.answerfromvalText = 'Value From should be less than Value To';
+																			    	return false;
+																			    }
+																		    }
+																	    }
+																    }
+																    return true;
+															    },
+															    answerfromvalText: 'Not a valid number',
+															    answerfromvalMask: /[\d.-]/i
+															});	
+															var errorText = "Not a valid number"	
+															Ext.apply(Ext.form.VTypes, {
+															    answertoval: function(val, field) {
+															    	if(val != "" && !Ext.isEmpty(val)){
+															    		var number = val.split('.');
+															    		if(number.length > 2){
+																			return false;
+															    		}
+															    		var number2 = val.split('-');
+															    		if(number2.length > 2){
+																			return false;
+															    		}
+															    	}
+															    	var gridData = Ext.getCmp( 'quiz-answers-grid' );
+																    var selectedRecord = gridData.getSelectionModel().getSelections()[0];
+																    var type = selectedRecord.data.numeric_type;
+																    if( type == "Value From Range" && val == "" ){
+																    	return false;
+																    }
+																    var firstVal = selectedRecord.data.first_value;
+																    if((firstVal).indexOf('-') > -1 && val.indexOf('-') > -1){
+																    	if( parseFloat((firstVal).substr(1,firstVal.length)) <= parseFloat(val.substr(1,val.length)) ){
+																	    	this.answertovalText = 'Value From should be less than Value To';
+																	    	return false;
+																	    }
+																    } else{
+																	    if( parseFloat(firstVal) >= parseFloat(val) ){
+																	    	this.answertovalText = 'Value From should be less than Value To';
+																	    	return false;
+																	    }
+																    }
+																    return true;
+															    },
+															    answertovalText: errorText,
+															    answertovalMask: /[\d.-]/i
+															},this);			   
+							                              	var gridData = Ext.getCmp( 'quiz-answers-grid' );
+							                                gridData.store.on( 'load',function(s,r){
+							                                  var questionSaveBtn = Ext.getCmp('question-form-save-button');
+					                                	      var qtypeValue = Ext.get( 'quiz-qtype-value' ).getValue();
+						                                	  if( qtypeValue == 'Task' && !gridData.hidden ){
+								                                	gridData.setVisible( false );
+				                                					Ext.getCmp( 'taskNote' ).setVisible(true);
+				                                					questionSaveBtn.setText('Save task');
+									                          }else if( qtypeValue != 'Task' ) {
+							                                		gridData.setVisible( true );
+				                                					Ext.getCmp( 'taskNote' ).setVisible(false);
+				                                					questionSaveBtn.setText('Save question');
+							                                  }
+							                                  gridData.on('beforeedit',function( thisItem ){
+																	  var selectedRecord = gridData.getSelectionModel().getSelections()[0],
+																	  	  rowIndex = gridData.store.indexOf(selectedRecord),
+																	 	  fields = gridData.getColumnModel().config,
+																	  	  combo = Ext.getCmp( 'numeric-type-combo' ),
+																	  	  numericType = thisItem.record.data.numeric_type;
+									 								  for( var i=0; i < fields.length; i++ ){
+																		  if( (fields[i].dataIndex === "second_value" ) && 
+																		  				(Ext.isEmpty(numericType) || numericType === "Single Value") ){
+																			if( rowIndex === thisItem.row && thisItem.column === i ){
+																			  return false;
+																			}
+																		  }
+																	  }
+									                                  var quizgroupsgrid = Ext.getCmp('quizgroups-grid');
+					                                                  var quizzesGridSelect = quizgroupsgrid.getSelectionModel().getSelected();
+					                                                  if( !Ext.isEmpty(quizzesGridSelect) && (quizzesGridSelect.get('is_finished') == 1) ){
+						                                            	return false;
+						                                              }else{
+						                                              	return true;
+						                                              }
+					                                            },this);
+					                                          var fields=null;
+					                                          if( gridData.getColumnModel() )
+							                                  	 fields = gridData.getColumnModel().config;
+							                                  if( fields ){
+									                                    for ( var i=0; i< fields.length; i++ ) {
+								                                    	  if( qtypeValue == 'numeric question' && (fields[i].dataIndex == 'good' || fields[i].dataIndex == 'name' )){
+										                                		gridData.getColumnModel().config[i].disabled = true;
+										                                		gridData.getColumnModel().setHidden( i,true );
+										                                		gridData.getStore().each( function( rec ){
+									                                    	    	if(rec.get('good') == false){
+									                                    	    		rec.set( 'good',true );
+									                                    	    		rec.commit( );
+									                                    	    	}
+								                                    	    	},this );
+									                                		}
+									                                		else if( qtypeValue == 'numeric question' && 
+									                                				(fields[i].dataIndex == 'numeric_type' || 
+									                                				fields[i].dataIndex == 'first_value' || 
+									                                				fields[i].dataIndex == 'second_value') ){
+									                                			gridData.getColumnModel().config[i].disabled = false;
+										                                		gridData.getColumnModel().setHidden( i,false );
+									                                		}
+										                                	else if( qtypeValue != 'numeric question' && (fields[i].dataIndex == 'good' || fields[i].dataIndex == 'name' )){
+										                                		gridData.getColumnModel().config[i].disabled = false;
+										                                		gridData.getColumnModel().setHidden( i,false );
+									                                    	}
+									                                    	else if( qtypeValue != 'numeric question' && 
+									                                    			(fields[i].dataIndex == 'numeric_type' || 	
+									                                    			fields[i].dataIndex == 'first_value' || 
+									                                    			fields[i].dataIndex == 'second_value' )){
+									                                			gridData.getColumnModel().config[i].disabled = true;
+										                                		gridData.getColumnModel().setHidden( i,true );
+									                                		}
+								                                    	}
+								                                    	gridData.getStore().each( function( rec ){
+								                                    		if(Ext.get('quiz-qtype-value').getValue() == "multiple choice question"){
+																				if (rec.get('good') == true) {
+																					rec.set('good', true);
+																					rec.commit();
+																				} else{
+																					rec.set('good', false);
+																					rec.commit();
+																				}
+																			}
+																			var fields = gridData.getColumnModel().config;
+																			var rowIndex = gridData.getStore().indexOf(rec);
+																			var selectedRecord = gridData.getSelectionModel().getSelections()[0];
+																		    for( var i=0; i < fields.length; i++ ){
+																		    	if( fields[i].dataIndex === "second_value" && ( Ext.isEmpty( rec.data.numeric_type ) || rec.data.numeric_type === "Single Value") ){
+																		    		var cell = gridData.getView().getCell( rowIndex, i);
+																		    		if( cell ){
+																		    			Ext.fly(cell).addClass('disableCell');
+																		    		}
+																		    	}
+																		    }
+																			},this );
+							                                      }
+						                                     fields = undefined;
+						                                    },this);
+							                               }
+		                              -    id: quiz-images-tab
+		                                   layout: border
+		                                   xtype: panel
+		                                   title: <%[ Images ]%>
+		                                   defaults:
+		                                      anchor: 100%
+		                                      xtype: panel
+		                                   items:
+		                                          -  xtype: filetreepanel
+		                                             title: Images
+		                                             region: center
+		                                             url: index.php?json=fileProvider
+		                                             baseParams:
+		                                                panel: images
+		                                             rootText: <%[ Files Repository ]%>
+		                                             ddGroup: gadget-images-view
+		                                             enableProgress: false
+		                                             enableOpen: false
+		                                             autoScroll: true
+		                                             listeners:
+		                                             	dblclick:
+		                                             		fn:>
+		                                             			^function( node ){
+		                                             				var name = node.text.toLowerCase();
+		                                             				if( name ) {
+		                                             					window.open(node.attributes.record.uid,'Image','width=300,height=300,location=no');
+		                                             				}
+		                                             			}
+		                                          -  title: <%[ Quiz Images ]%>
+		                                             autoScroll: false
+		                                             region: east
+		                                             width: 400
+		                                             autoHeight: false
+		                                             split: false
+		                                             frame: true
+		                                             autoScroll: true
+		                                             layout: fit
+		                                             margins: 0 0 0 5px
+		                                             bodyStyle:
+		                                                  padding:0 0 0 0
+		                                             items:
+		                                                  -     xtype: ddautoview
+		                                                        store: gadget-images-store
+		                                                        id:gadget-images-view
+		                                                        name: ImagesNN
+		                                                        xframe: true
+		                                                        xlayout: fit
+		                                                        hiddenName: ImagesNN
+		                                                        dropGroup: gadget-images-view
+		                                                        dragGroup: gadget-images-view
+		                                                        deletable: true
+		                                                        itemSelector: div.thumb-wrap
+		                                                        noStorePreload: true
+		                                                        contextMenuItems:
+		                                                            -   id: delete
+		                                                                iconCls: icon-delete
+		                                                                text: <%[ Delete image ]%>
+		                                                        plugins:
+		                                                            -   "^new Ext.DataView.LabelEditor({dataIndex: 'text'})"
+		                                                        listeners:
+		                                                        	dblclick:
+		                                                        		fn:>
+		                                                        			^function(pnl,index,item,evt){
+			    																		var name = item.src || item.id ;
+			    																		var title = name.substr( name.lastIndexOf("/")+1 );
+			    																		name = name.toLowerCase();
+			    																		console.log(item);
+			    																		if(name){
+		    																			  window.open(item.src || item.id,'Image','width=300,height=300,location=no');
+		    																			}
+		    																}
+		                              -    id: quiz-trainingfiles-tab # new tab to add the training files to the quiz question
+		                                   layout: border
+		                                   xtype: panel
+		                                   title: <%[ Training Files ]%>
+		                                   defaults:
+		                                      anchor: 100%
+		                                      xtype: panel
+		                                   items:
+		                                          -  xtype: filetreepanel
+		                                             title: <%[ Work Files ]%>
+		                                             region: center
+		                                             url: index.php?json=fileProvider
+		                                             baseParams:
+		                                                panel: workingfiles
+		                                             rootText: <%[ Files Repository ]%>
+		                                             ddGroup: gadget-files-view
+		                                             enableProgress: false
+		                                             enableOpen: false
+		                                             autoScroll: true
+		                                             listeners:
+		                                             	dblclick:
+		                                             		fn:>
+		                                             			^function( node ){
+		                                             				var name = node.text.toLowerCase();
+		                                             				if( name ){
+		                                             					window.open(node.attributes.record.imagePath,'Image','width=300,height=300,location=no');
+		                                             				}
+		                                             			}
+		                                          -  title: <%[ Quiz Question Training Files ]%>
+		                                             autoScroll: false
+		                                             region: east
+		                                             width: 400
+		                                             autoHeight: false
+		                                             split: false
+		                                             frame: true
+		                                             autoScroll: true
+		                                             layout: fit
+		                                             margins: 0 0 0 5px
+		                                             bodyStyle:
+		                                                  padding:0 0 0 0
+		                                             items:
+		                                                  -     xtype: ddautoview
+		                                                        id:gadget-files-view
+		                                                        store: gadget-files-store
+		                                                        name: FilesNN
+		                                                        xframe: true
+		                                                        xlayout: fit
+		                                                        hiddenName: FilesNN
+		                                                        dropGroup: gadget-files-view
+		                                                        dragGroup: gadget-files-view
+		                                                        deletable: true
+		                                                        itemSelector: div.thumb-wrap
+		                                                        noStorePreload: true
+		                                                        contextMenuItems:
+		                                                            -   id: delete
+		                                                                iconCls: icon-delete
+		                                                                text: <%[ Delete image ]%>
+		                                                        plugins:
+		                                                            -   "^new Ext.DataView.LabelEditor({dataIndex: 'text'})"    
+		                                                        listeners:
+		                                                        	dblclick:
+		                                                        		fn:>
+		                                                        			^function(pnl,index,item,evt){
+			    																		var name = pnl.store.data.items[index].data.imagePath;
+			    																		var title = name.substr( name.lastIndexOf("/")+1 );
+			    																		if(name){
+				    																		window.open(name,'Image','width=300,height=300,location=no');
+				    																	}
+			    															 }                            
+		                                                            
+		                              
+references:
+    prefGridStore:
+          url: ../../index.php?json=view
+          root: rows
+          reader: "^new Ext.data.JsonReader()"
+          baseParams: 
+             view: grid-list-of-prefs
+          remoteSort: false
+    # Story 28389809
+    gridPagingDef:
+          pageSize:      50
+          store:         quizgroups-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No evaluations to display
+          listeners:
+            beforechange: 
+               fn: >
+                   ^function( pgt , params ){
+                            var lf = pgt.ownerCt.linkedForm;
+                            if( pgt.ownerCt.linkedForm.autogridId && !pgt.ownerCt.linkedForm.disabled){
+                                var lfaugId = pgt.ownerCt.linkedForm.autogridId;
+                                var modified = Ext.getCmp( lfaugId).getStore().getModifiedRecords().length;
+                            }
+                            if( ( lf.askBeforeLoad && !lf.disabled && ( lf.getForm().isDirty() || ( lf.linkedGrid && 						lf.linkedGrid.store.dirty ) ) || modified > 0 )
+                             &&  !pgt.programcal ){
+                                 var activePage = Math.ceil((this.cursor + this.pageSize) / this.pageSize);
+                                 var changePage = ( params['start']/this.pageSize ) + 1;
+                                 pgt.ownerCt.beforePageChangeSelections = pgt.ownerCt.getSelectionModel().getSelections();
+                                 Ext.MessageBox.confirm(__('Confirm'), __('You have unsaved changes which will be lost.<br/>Continue?'), function(btn, text){
+                                         if (btn == 'yes') {
+                                                pgt.programcal =true;
+                                                 lf.getForm().reset();
+                                                 lf.disable(true);
+                                                  if (lf.linkedGrid){
+                                                        lf.linkedGrid.store.rejectChanges();
+                                                  }
+                                                  if( activePage < changePage )
+                                                     this.moveNext();
+                                                  else
+                                                     this.movePrevious();
+                                         }
+                                 },this);
+                                 return false;
+                            }
+                            pgt.programcal = false;
+                    }
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+         autoFill: true
+    # Story 28389809
+    gridQuestionDef:
+          pageSize:      50
+          store:         quizes-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No evaluation items to display
+          listeners:
+            beforechange: 
+               fn: >
+                   ^function( pgt , params ){
+                            var lf = pgt.ownerCt.linkedForm;
+                            pgt.ownerCt.startValue = params.start;
+                            if( pgt.ownerCt.linkedForm.autogridId && !pgt.ownerCt.linkedForm.disabled){
+                                var lfaugId = pgt.ownerCt.linkedForm.autogridId;
+                                var modified = Ext.getCmp( lfaugId).getStore().getModifiedRecords().length;
+                            }
+                            if( ( lf.askBeforeLoad && !lf.disabled && ( lf.getForm().isDirty() || ( lf.linkedGrid && lf.linkedGrid.store.dirty ) ) || modified > 0 )
+                             &&  !pgt.programcal ){
+                                 var activePage = Math.ceil((this.cursor + this.pageSize) / this.pageSize);
+                                 var changePage = ( params['start']/this.pageSize ) + 1;
+                                 pgt.ownerCt.beforePageChangeSelections = pgt.ownerCt.getSelectionModel().getSelections();
+                                 Ext.MessageBox.confirm(__('Confirm'), __('You have unsaved changes which will be lost.<br/>Continue?'), function(btn, text){
+                                         if (btn == 'yes') {
+                                                pgt.programcal =true;
+                                                 lf.getForm().reset();
+                                                 lf.disable(true);
+                                                  if (lf.linkedGrid){
+                                                        lf.linkedGrid.store.rejectChanges();
+                                                  }
+                                                  if( activePage < changePage )
+                                                     this.moveNext();
+                                                  else
+                                                     this.movePrevious();
+                                         }
+                                 },this);
+                                 return false;
+                            }
+                            pgt.programcal = false;
+                    }
+spare: 
+    

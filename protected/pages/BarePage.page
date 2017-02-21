@@ -1,0 +1,8 @@
+<%@ MasterClass="Application.layout.EmptyTemplate" %>
+<com:TContent ID="main" >
+    <com:FOutputCacheLang VaryByParam="uid,catid,id,category,code" Duration="360" >
+            <com:FContentReader />
+    </com:FOutputCacheLang>
+</com:TContent >
+
+

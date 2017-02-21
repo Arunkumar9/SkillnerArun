@@ -1,0 +1,8 @@
+CustomerList:
+    name: CustomerList
+    description: customer list
+    t: content
+    data:
+        ContentEditClass: CustomerList
+        iconCls: table
+

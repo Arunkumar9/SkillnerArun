@@ -1,0 +1,33 @@
+#
+# Form view
+#
+name: video-form-view
+serverSide:
+    recordClass: VideoRecord
+    findBy: uid
+    properties: all
+    remove-properties:
+        - images
+        - files
+    add-properties:
+        - CategoriesList
+        - RelatedVideosAsList
+        - IconsAsList
+        - UpdateCategories
+        -	CoolUrlName
+        - ImagesNN
+        - FilesNN
+    dataRoot: data
+    secured: true
+    columns:
+        images:
+            default: "[]"
+        files:
+           default:"[]"
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Lesson saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

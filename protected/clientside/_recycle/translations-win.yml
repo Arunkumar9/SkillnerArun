@@ -1,0 +1,101 @@
+#
+#     CRM Setup layout definition
+# CustomerTown, CustomerPostcode, CoverageArea, Delivery Run, Customer Type, Customer Status, Money Locations, Payment Type, Customer Heard, Fundraiser, Complaints, Actions
+#
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                @function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#
+#
+description:
+    name: translations-win
+    text: <%[ Translations ]%>
+    iconCls: icon-translations-win
+    authLevel: 
+        min: 100
+        max: 1000
+    authRole: SuperAdmin
+objects:
+     -  name: csTranslationsStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'cs-translations-store'
+            })
+     -  name: deTranslationsStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'de-translations-store'
+            })
+component:
+    id:              translations-win
+    title:           <%[ Translations ]%>
+    width:           600
+    height:          400
+    x:               @this.desktop.getWinX(700)
+    y:               @this.desktop.getWinY(400)
+    iconCls:         icon-translations-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    layout: fit
+    items:
+        -   xtype: tabpanel
+            stateful: false
+            autoScroll: true
+            resizeTabs: false
+            enableTabScroll: true
+            layoutOnTabChange: true
+            deferredRender: false
+            activeTab: 0
+            defaults:
+                closable: false
+                collapsed: false
+                clicksToEdit: 2
+                stateful: false
+                askBeforeChange: true
+                loadMask: true
+                border: true
+                autoWidth: true
+                autoScroll: true
+                layout: fit
+                frame: false
+                stripeRows: true
+                stateful: false
+                viewConfig:
+                    forceFit: true
+                tbar: 
+                    -   @this.actions.saveGridTool
+                    -   @this.actions.cancelGridTool
+                    -   @this.actions.addGridTool
+                    -   @this.actions.deleteGridTool
+                    -   @this.actions.reloadGrid
+                plugins:
+                    -   @new Ext.ux.Plugin.FormToButtons()
+            items:
+                -   title: <%[ Czech ]%>
+                    xtype: autogrid
+                    id:    cs-translations-grid
+                    clicksToEdit: 1
+                    listeners:
+                        afteredit: >
+                            @function(e) {
+                                e.record.set('cat_id',<%= FU::getCatId('cs') %>);
+                            }
+                -   title: <%[ German ]%>
+                    xtype: autogrid
+                    id:    de-translations-grid
+                    listeners:
+                        afteredit: >
+                            @function(e) {
+                                e.record.set('cat_id',<%= FU::getCatId('de') %>);
+                            }
+                    clicksToEdit: 1
+end: true

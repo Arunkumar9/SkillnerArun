@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+input.text,
+input.email, 
+input.password,
+textarea.uniform {
+	background-color: white; 	
+}
+
+div.button span {
+	letter-spacing: normal;
+	text-transform: none;
+	
+	height: 21px;
+
+	
+
+
+}
+
+#middleContainer .buttonEmptyCart {
+ margin-top: 15px;
+}
+
+
+.errorNote {
+	color: #BF0005 !important;	
+
+	margin-top: 3px;
+}
+
+input.text.errorField,
+input.password.errorField, 
+input.email.errorField,
+textarea.uniform.errorField
+{
+	background-color: #FFF0F0;	
+	background-image: url(images/bg-input-err.png);
+	background-repeat: repeat-x;
+}
+
+
+input.text:focus,
+input.email:focus,
+input.password:focus,
+textarea.uniform:focus {
+	background-color: white;
+}
+
+#rightContainer .enquiryBoxQuestion input.text, input.email {
+	border-color:  #F90 #FC9 #FC9 #F90;
+	-moz-border-radius: 4px;
+	height: 11px;
+	font-size: 11px;
+}
+
+
+
+
+
+
+
+div.selector span {
+	width: 35px;	
+}
+
+div.selector select {
+	width: 80px;	
+}
+
+div.selector {
+	width: 70px;	
+}
+
+/*div.button {
+	margin-top: 10px;	
+}
+*/
+
+
+td.lifeStyleSelect div.selector span {
+	width: 395px;	
+}
+
+td.lifeStyleSelect div.selector select {
+	width: 430px;	
+}
+
+td.lifeStyleSelect div.selector {
+	width: 420px;	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+div.button span {
+
+}
+
+
+
+.TDatePicker_default {
+	z-index: 1000;	
+}
+
+
+
+
+

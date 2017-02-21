@@ -1,0 +1,130 @@
+#
+# Form view
+#
+name: clients-form-view
+serverSide:
+    recordClass: ClientRecord
+    findBy: Uid
+    properties: all
+    add-properties:
+        -    Vek
+        -    FirstnameC
+        -    SurnameC
+        -    KNTSession_Hmotnost
+        -    KNTSession_Vyska
+        -    KNTSession_ProcentoVody
+        -    KNTSession_ProcentoTuku
+        -    KNTSession_Pohlavi
+        -    KNTSession_ZivotniStyl
+        -    KNTSession_HmotnostKosti
+        -    KNTSession_FyzickaKondice
+        -    KNTSession_VisceralniTuk
+        -    KNTSession_ObvodPasu
+        -    KNTSession_ObvodBoku
+        -    KNTSession_Traveni
+        -    KNTSession_Zaha
+        -    KNTSession_Nespavost
+        -    KNTSession_KrevniTlak
+        -    KNTSession_KrevniSkupina
+        -    KNTSession_Infekce
+        -    KNTSession_Alergie
+        -    KNTSession_Unava
+        -    KNTSession_Opary
+        -    KNTSession_TepKlidovy
+        -    KNTSession_Zazivani
+        -    KNTSession_Prudusky
+        -    KNTSession_Zacpa
+        -    KNTSession_VahuPribiram
+        -    KNTSession_PhCiselne
+        -    KNTSession_Oblicej
+        -    KNTSession_Postava
+        -    KNTSession_TypPostavyTvar
+        -    KNTSession_Pas
+        -    KNTSession_Svaly
+        -    KNTSession_Kostra
+        -    KNTSession_RuceLytka
+        -    KNTSession_HlavaVelikost
+        -    KNTSession_VMladiKrehka
+        -    KNTSession_Chuze
+        -    KNTSession_StudeneNohyRuce
+        -    KNTSession_KuzeMekka
+        -    KNTSession_KuzeSucha
+        -    KNTSession_VlasyPles
+        -    KNTSession_VlasyHuste
+        -    KNTSession_Podsaditost
+        -    KNTSession_Povaha
+        -    KNTSession_Podrazdenost
+        -    KNTSession_Nalada
+        -    KNTSession_Uminenost
+        -    KNTSession_Perfekcionismus
+        -    KNTSession_Laskavost
+        -    KNTSession_Uzkostnost
+        -    KNTSession_Kriticnost
+        -    KNTSession_Vzrusivost
+        -    KNTSession_Roztekanost
+        -    KNTSession_EnergieMnozstvi
+        -    KNTSession_EnergieNavaly
+        -    KNTSession_Cviceni
+        -    KNTSession_CinnostiRychlost
+        -    KNTSession_NepravidelnyRezim
+        -    KNTSession_Usinani
+        -    KNTSession_PotrebaSpanku
+        -    KNTSession_Zaspavani
+        -    KNTSession_StudenePocasi
+        -    KNTSession_HorkePocasi
+        -    KNTSession_Zapominani
+        -    KNTSession_Uceni
+        -    KNTSession_NarocneVykony
+        -    KNTSession_Rozhodovani
+        -    KNTSession_ChutJidlo
+        -    KNTSession_Chute
+        -    KNTSession_HodneJi
+        -    KNTSession_CastoJi
+        -    KNTSession_StudenaJidla
+        -    KNTSession_PalivaJidla
+        -    KNTSession_SacharidyUspokoji
+        -    KNTSession_CerveneMaso
+        -    KNTSession_JidloMysli
+        -    KNTSession_VydatnostSnidane
+        -    KNTSession_VydatnostObeda
+        -    KNTSession_VydatnostVecere
+        -    KNTSession_TucneSpani
+        -    KNTSession_EnergieZelenina
+        -    KNTSession_RadKysele
+        -    KNTSession_BarvaKrutihoMasa
+        -    KNTSession_MasoJi
+        -    KNTSession_PomaluTravim
+        -    UpdateStamp
+    dataRoot: data
+    secured: true
+    columns:
+        Uid:
+            type: integer
+            range: [0,1000000]
+        Created:
+            default: ^time()
+        Vek:
+            default: ' '
+        Updated:
+            default: ^time()
+        DateOfBirth:
+            default: ^strtotime('01.01.1975')
+        branch_id:
+            default: <%= Prado::getApplication()->getUser()->getUserRecord()->branch_id %>
+        be_user_id:
+            default: <%= Prado::getApplication()->getUser()->Uid %>
+        KNTSession_Kondice:
+            type: integer
+    successMsg:	User saved ok.
+    context:
+      clients-form-Name:
+        validationMethod: validateUnique
+        messages:
+          -  <%[Name is ok]%>
+          -  <%[Name is already used]%>
+      clients-form-Email:
+        validationMethod: validateUnique
+        messages:
+          -  <%[Email is ok]%>
+          -  <%[Email is already used]%>
+        

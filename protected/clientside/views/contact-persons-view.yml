@@ -1,0 +1,126 @@
+name: contact-persons-view
+serverSide:
+    allowedGrids: contact-persons-grid
+    recordClass: ContactPersonRecord
+    noBlankContext: false
+    condition: (1=0)
+    context:
+        client-users-grid:
+            condition: user_id IN(%filter%)
+        search-contact-persons-grid:
+            filterData: OR
+        contact-persons-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[contact_person saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        contact-persons-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo:
+        field: surname
+        dir: ASC
+metaData:
+    root: rows
+    formBinding: user_id
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field:  surname
+        direction: ASC
+    fields:
+        -    name: uid
+        -    name: name_prefix
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Title ]%>
+        -    name: first_name
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ First name ]%>
+        -    name: surname
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Surname ]%>
+        -    name: name_suffix
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Title 2 ]%>
+        -    name: note
+             formEditor:
+                    xtype: textarea
+                    height: 80
+                    fieldLabel: <%[ Note ]%>
+        -    name: user_id
+        -    name: user_address_id
+             formEditor:
+                    xtype: ccombo
+                    displayField: company
+                    store: user-addresses-store
+                    fieldLabel: <%[ Address ]%>
+        -    name: contacts
+             formEditor:
+                    xtype: optionsgrid
+                    allowBlank: true
+                    autoScroll: false
+                    headerRowName: <%[ Type ]%>
+                    headerRowValue: <%[ Value ]%>
+                    height: 150
+                    fieldLabel: <%[ Contacts ]%>
+    cm:
+        -    header: <%[Contact Person]%>
+             sortable: true
+             width: 100
+             dataIndex: surname
+             renderer: >
+                       ^function(v, p, rec) {
+                          var suffix = (rec.get('name_suffix')) ? ', '+rec.get('name_suffix') : '';
+                          var n = rec.get('name_prefix')+' '+rec.get('first_name')+' '+rec.get('surname') + suffix;
+                          return n.trim();
+                       }
+        -    >
+             ^new Ext.ux.grid.RowAction({
+                header: 'X',
+                align: 'center',
+                iconCls:'icon-cross',
+                qtip: __('Delete Record'),
+                width: 30,
+                listeners: {
+                      action: {
+                        fn: function(grid,rec,row,col) {
+                            var suffix = (rec.get('name_suffix')) ? ', '+rec.get('name_suffix') : '';
+                            var n = rec.get('name_prefix')+' '+rec.get('first_name')+' '+rec.get('surname') + suffix;
+                            grid.deleteRecord(rec,n.trim());
+                        }
+                      }
+                }
+             })
+    comment:
+        -    header: <%[First]%>
+             sortable: true
+             width: 100
+             dataIndex: first_name
+        -    header: <%[Last]%>
+             sortable: true
+             width: 100
+             dataIndex: surname
+        -    header: <%[Title]%>
+             sortable: true
+             width: 100
+             dataIndex: name_suffix
+        -    header: <%[Note]%>
+             sortable: true
+             width: 100
+             dataIndex: note
+        -    header: <%[Address]%>
+             sortable: true
+             hidden: true
+             width: 100
+             dataIndex: user_address_id
+end: true

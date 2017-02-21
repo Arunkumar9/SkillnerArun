@@ -1,0 +1,88 @@
+#
+# Grid with List of Preferences
+#  select cb.Uid from customer_preferences_backup2 as cb GROUP BY cb.CustNo,cb.preferences_Uid HAVING count(cb.preferences_Uid)>1
+#
+name: grid-list-of-prefs 
+serverSide:
+    allowedGrids: preference-grid
+    recordClass: PreferenceViewRecord 
+    noBlankContext: true
+    security:
+        read:   (DealerNo = %UserId% OR ReadLevel < %UserLevel%)
+        write:  (DealerNo = %UserId% OR WriteLevel < %UserLevel%)
+    context:
+        customer-form: 
+            condition: CustNo in(%filter%)
+            emptyResultSql: INSERT IGNORE customer_preferences SELECT NULL as Uid, Uid as preferences_Uid, :filter as CustNo, NULL as Qty, NULL as Want, NULL as Type, NULL as Notes  FROM preferences
+        customer-grid: 
+            condition: CustNo in(%filter%)
+            emptyResultSql: INSERT IGNORE customer_preferences SELECT NULL as Uid, Uid as preferences_Uid, :filter as CustNo, NULL as Qty, NULL as Want, NULL as Type, NULL as Notes  FROM preferences
+        customer-form-store:
+            recordClass: CustomerPreferenceRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Customer preferences saved ok.
+    sortInfo: 
+        field:  Preference
+        dir: ASC
+metaData: 
+    root: rows
+    id: Uid
+    totalProperty: totalCount
+    groupField: GroupName
+    sortInfo: 
+        field:  Preference
+        direction: ASC
+    fields: 
+        -    name: Uid
+        -    name: GroupName
+        -    name: Preference
+        -    name: Want
+        -    name: Qty
+        -    name: Notes
+        -    name: Type
+        -    name: CustNo
+        -    name: Uid
+        -    name: Points
+             type: int
+        -    name: Price
+             type: float
+    cm: 
+        -    header: Category 
+             width: 40
+             sortable: true 
+             hidden: true
+             dataIndex: GroupName
+        -    header: Name 
+             sortable: true 
+             width: 70
+             dataIndex: Preference
+        -    "@new Ext.grid.TriCheckColumn({ header: 'Want', relatedDataIndex: 'Qty', dataIndex: 'Want', width: 30 })"
+        -    header: Qty 
+             width: 30
+             sortable: false 
+             align: right
+             editor: >
+                @new Ext.ux.form.Spinner({
+                        strategy: new Ext.ux.form.Spinner.NumberStrategy({minValue:0, maxValue:1000}),
+                        allowBlank: true, 
+                        maskRe: /[0-9\.]/
+                })
+             dataIndex: Qty
+        -    header: Notes
+             sortable: true 
+             editor: "@new Ext.form.TextField({allowBlank: true})"
+             dataIndex: Notes
+        -    header: Points
+             align: right
+             width: 30
+             sortable: true
+             dataIndex: Points
+        -    header: Price
+             sortable: true
+             width: 30
+             align: right
+             dataIndex: Price
+             renderer: usMoney
+
+

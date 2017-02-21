@@ -1,0 +1,14 @@
+GalleryDetail:
+    name: GalleryDetail
+    description: gallery detail
+    t: content
+    data:
+        ContentEditClass: GalleryDetail
+        iconCls: image
+GalleriesList:
+    name: GalleriesList
+    description: galleries list
+    t: content
+    data: 
+        ContentEditClass: GalleriesList
+        iconCls: image

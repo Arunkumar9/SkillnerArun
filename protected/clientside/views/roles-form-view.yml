@@ -1,0 +1,20 @@
+#
+# Form view
+#
+name: roles-form-view
+serverSide:
+    recordClass: RoleRecord
+    findBy: uid
+    properties: all
+    remove-properties:
+    add-properties:
+       -   UsersList
+    dataRoot: data
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ resource saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

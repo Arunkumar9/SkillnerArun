@@ -1,0 +1,55 @@
+#
+# Grid with attribute-types view
+#
+#
+name: attribute-types-view 
+serverSide:
+    allowedGrids: attribute-types-grid
+    recordClass: AttributeTypeRecord 
+    noBlankContext: false
+    context:
+        attribute-types-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[ Attribute Types saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        attribute-types-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any news in this category exist.]%>
+    sortInfo: 
+        field:  name
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  name
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: editor
+        -    name: renderer
+        -    name: i18n
+    cm: 
+        -    header: <%[ Attribute Type ]%>
+             sortable: true 
+             dataIndex: name
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+        -    header: <%[ Editor ]%>
+             dataIndex: editor
+             editor: "@new Ext.form.TextField({allowBlank: true})"
+        -    header: <%[ Renderer ]%>
+             dataIndex: renderer
+             editor: "@new Ext.form.TextField({allowBlank: true})"
+        -    "@new Ext.grid.CheckColumn({ header: '<%[ Translate ]%>', dataIndex: 'i18n', width: 20, align: 'center' })"
+
+

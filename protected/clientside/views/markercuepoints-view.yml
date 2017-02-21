@@ -1,0 +1,258 @@
+#
+# Grid with markercuepoints view
+#filterData: AND
+# conditionsOp: AND
+#cls:textfield-noborder
+#
+name: markercuepoints-view
+serverSide:
+    allowedGrids: markercuepoints-grid
+    recordClass: MarkerCuepointRecord
+    noBlankContext: false
+    context:
+        store:
+            recordClass: MarkerCuepointRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        videos-grid:
+            condition: "videos_id = '%filter%' AND ishidden=1"
+        video-form:
+            condition: "videos_id = '%filter%' AND ishidden=1"
+        video-form-store:
+            action: updateRecordsFB
+            dataRoot: rows
+            mapRequest:
+                filter: videos_id
+            successMsg: <%[ Markers saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        markercuepoints-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: videos_id
+            successMsg: <%[ Markers saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        markercuepoints-grid-delete:
+            action: callMethod
+            method: deleteRecords
+            recordClass: MarkerCuepointRecord
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row.]%>
+    sortInfo:
+        field:
+          start: ASC
+          name: ASC
+metaData:
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    xxxgroupField: name
+    sortInfo:
+        field:  startFormated
+        direction: ASC
+    fields:
+        -    name: uid
+        -    name: name
+        	 defValue:'H'
+        -    name: description
+        	 defValue:'Marker'
+        -    name: transcript
+        -    name: videos_id
+        -    name: startFormated
+        	 defValue:'00:00:00'
+        -    name: stopFormated
+        -    name: is_enabled
+             type: int
+        -    name: skippable
+        	 type: int
+        -    name: ishidden
+        	 type: int
+        	 defValue:
+        -    name: buttonposition
+             defValue:'Right bottom'
+        -    name: isActive
+    context:
+      base:
+          sm: ^new Ext.grid.CheckboxSelectionModel()
+          cm:
+            -    >
+            	 ^new Ext.grid.CheckboxSelectionModel({
+            	 	header: '<div class="x-grid3-hd-tag">&#160;</div>',
+                    checkOnly:true,
+                    listeners: {
+						rowselect: function( comp, rowIndex, record) {
+							if(record.data.isActive == 1){
+								comp.grid.getSelectionModel().deselectRow(rowIndex);
+								record.data.isActive = 0;
+								var header = '<div class="x-grid3-hd-tag">&#160;</div>';
+   	   				    		comp.grid.getColumnModel().setColumnHeader(0,header);
+							} else {
+								record.data.isActive = 1;
+								comp.grid.getSelectionModel().selectRow(rowIndex,true);
+							}
+							if(comp.grid.getSelectionModel().selections.length == comp.grid.store.data.length){
+								var header = '<div class="x-grid3-row-checker" style="background-position: -23px 1px;">&#160;</div>';
+   	   				    		comp.grid.getColumnModel().setColumnHeader(0,header);
+   	   				    	}
+						},
+						rowdeselect: function( comp, rowIndex, record ){
+							if(record.data.isActive != 1){
+								comp.grid.getSelectionModel().selectRow(rowIndex,true);
+								record.data.isActive = 1;
+								if(comp.grid.getSelectionModel().selections.length == comp.grid.store.data.length){
+									var header = '<div class="x-grid3-row-checker" style="background-position: -23px 1px;">&#160;</div>';
+   	   				    			comp.grid.getColumnModel().setColumnHeader(0,header);
+   	   				    			return;
+   	   				    		}
+							} else {
+								record.data.isActive = 0;
+								comp.grid.getSelectionModel().deselectRow(rowIndex);
+							}
+							var header = '<div class="x-grid3-hd-tag">&#160;</div>';
+   	   				    	comp.grid.getColumnModel().setColumnHeader(0,header);
+						}
+				    }
+            	 })
+            -    header: <%[ Pause time ]%>
+            	 width: 100
+                 sortable: false
+                 dataIndex: startFormated
+                 align: center
+                 editor:
+                    xtype: textfield
+                    allowBlank: false
+                    vtype:'time'
+                    listeners:
+           				change:
+    						fn: >
+           						^function( comp ){
+           							   var timeTest = /^([0-9][0-9]|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])$/i;
+           							   var result = timeTest.test(comp.getValue());
+           							   var grid = Ext.getCmp('markercuepoints-grid');
+           							   if(!grid.enterEventClicked){
+	           							   var columnIndex = grid.mColumnIndex;
+	       							   	   var rowIndex    = grid.mRowIndex;
+	           							   var desiredCell = grid.getView().getCell(rowIndex,columnIndex);
+	           							   var str = Ext.StoreMgr.lookup( "markercuepoints-store" );
+	    								   if(result){
+								               var actualVal = comp.getValue();
+								               if(actualVal){
+								               		var actualValArray = actualVal.split(':');
+								               		var finalVal = '';
+													var temp = 0;
+								               		if(actualValArray[0].length < 2){
+								               			finalVal = ((temp.toString()).concat(actualValArray[0])).concat(':');
+								               		}else {
+								               			finalVal = actualValArray[0].concat(':');
+								               		}
+												    if(actualValArray[1].length < 2){
+								               			finalVal = finalVal.concat(((temp.toString()).concat(actualValArray[1])).concat(':'));
+								               		}else {
+								               			finalVal = finalVal.concat(actualValArray[1]).concat(':');
+								               		}
+								               		if(actualValArray[2].length < 2){
+								               			finalVal = finalVal.concat(((temp.toString()).concat(actualValArray[2])));
+								               		}else {
+								               			finalVal = finalVal.concat(actualValArray[2]);
+								               		}
+		           							   		str.data.items[rowIndex].set('startFormated', finalVal);
+		           							   		str.sort("startFormated","ASC");
+		           							   		grid.fireEvent('identifyErrorCell',grid); 
+		           							   		desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+		           							   }
+	           							   }else{
+	           							   		desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+	           							   		desiredCell.className += " cell-incorrect-data";
+	           							   		Ext.getCmp('video-form-save-button').setDisabled(true);
+	 											Ext.getCmp('video-form-finalize-button').setDisabled(true);
+	           							   		str.data.items[rowIndex].set('startFormated', comp.getValue());
+	           							   		grid.getView().refresh();
+	           							   		grid.fireEvent('identifyErrorCell',grid);
+			           					   }
+		           					   }
+		           					   grid.enterEventClicked = false;
+           						}
+						specialkey:
+						        fn: >
+						            ^function(comp,e){
+						            	if (e.getKey() == e.ENTER) {
+		           							   var timeTest = /^([0-9][0-9]|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])$/i;
+		           							   var result = timeTest.test(comp.getValue());
+		           							   var grid = Ext.getCmp('markercuepoints-grid');
+		           							   grid.enterEventClicked = true;
+		           							   var columnIndex = grid.mColumnIndex;
+		       							   	   var rowIndex    = grid.mRowIndex;
+		           							   var desiredCell = grid.getView().getCell(rowIndex,columnIndex);
+		           							   var str = Ext.StoreMgr.lookup( "markercuepoints-store" );
+		           							   var finalVal = '';
+		    								   if(result){
+									               var selection= grid.getSelectionModel().selections; 
+									               var actualVal = comp.getValue();
+									               if(actualVal){
+									               		var actualValArray = actualVal.split(':');
+														var temp = 0;
+									               		if(actualValArray[0].length < 2){
+									               			finalVal = ((temp.toString()).concat(actualValArray[0])).concat(':');
+									               		}else {
+									               			finalVal = actualValArray[0].concat(':');
+									               		}
+													    if(actualValArray[1].length < 2){
+									               			finalVal = finalVal.concat(((temp.toString()).concat(actualValArray[1])).concat(':'));
+									               		}else {
+									               			finalVal = finalVal.concat(actualValArray[1]).concat(':');
+									               		}
+									               		if(actualValArray[2].length < 2){
+									               			finalVal = finalVal.concat(((temp.toString()).concat(actualValArray[2])));
+									               		}else {
+									               			finalVal = finalVal.concat(actualValArray[2]);
+									               		}
+			           							   		str.data.items[rowIndex].set('startFormated', finalVal);
+			           							   		str.sort("startFormated","ASC");
+			           							   		grid.fireEvent('identifyErrorCell',grid); 
+			           							   }
+		           							   }else{
+		           							   		finalVal = comp.getValue();
+		           							   		str.data.items[rowIndex].set('startFormated', finalVal);
+		           							   		grid.fireEvent('identifyErrorCell',grid);
+				           					   }
+				           					   var selection= grid.getSelectionModel().selections; 
+								               if(selection.length == 0){
+								               		comp.gridEditor.record.set('startFormated',finalVal );
+								                	selection.items.push(comp.gridEditor.record);
+								               }
+   						 				 }
+						            }
+            -    header: <%[ Button position ]%>
+                 width: 150
+                 dataIndex: buttonposition
+                 editor:
+                    xtype: combo
+                    typeAhead: true
+				    triggerAction: 'all'
+				    lazyRender:true
+				    mode: 'local'
+                    valueField: 'displayText'
+    				displayField: 'displayText'
+    				editable : false
+    				store:bPossition-store
+    				listeners:
+						change:
+						  	fn: >
+       						  	^function( comp ){
+       								 var polltask = new Ext.util.DelayedTask();
+								     polltask.delay(100, function() {
+								     	var grid = Ext.getCmp('markercuepoints-grid');
+								     	grid.fireEvent('identifyErrorCell',grid); 
+								     }, comp);
+       						  	}
+end: true
+

@@ -1,0 +1,102 @@
+#
+#
+#
+name: tree-content
+serverSide:
+    recordClass: ContainerContentRecord
+    child: uid
+    parent: parent_id
+    returnId: Uuid
+    folderSign: IsFolder
+    nodeTypeSign: NodeType
+    readAll: false
+    postSqlCondition: IsReadAllowed
+    RecycleBin:
+        iconCls: @recycle-bin
+        allowDrag: false
+        draggable: false
+        text: @<%[Recycle bin]%>
+        id: Uuid
+        qtip: @<%[Recycle bin]%>
+        ordering: ordering
+        menuType: @recycleBin
+        typeId: type_id
+        sortText: @zzzzzzzzzzzzzzzzzzz
+        sortLeaf: true
+        writeLevel: writeLevel
+    folder:
+        iconCls: iconCls
+        allowDrag: IsWriteAllowed
+        draggable: IsWriteAllowed
+        text: name
+        id: Uuid
+        qtip: Qtip
+        t: t
+        ordering: ordering
+        menuType: @folder
+        xxxhref: Href
+        typeId: type_id
+        sortText: name
+        sortLeaf: false
+        writeLevel: writeLevel
+    leaf:
+        iconCls: iconCls
+        text: name
+        allowDrag: IsWriteAllowed
+        draggable: IsWriteAllowed
+        id: Uuid
+        qtip: Qtip
+        typeId: type_id
+        t: t
+        menuType: @leaf
+        sortText: name
+        ordering: ordering
+        sortLeaf: true
+        writeLevel: writeLevel
+    depth: 2
+    criteria:
+        OrdersBy: 
+           ordering: ASC
+    context:
+        tree-content-update:
+            recordClass:
+                container: ContainerRecord
+                content: ContentRecord
+            action: updateNodeDual
+            columnMapping:
+                ParentId: parent_id
+                Name:   name
+                Ordering: ordering
+            dataRoot: data
+            folderSign: t
+            flushCache: true
+            successMsg: Node updated ok.
+            postSqlCondition: IsWriteAllowed
+        tree-content-add:
+            recordClass:
+                container: ContainerRecord
+                content: ContentRecord
+                folder: ContainerRecord
+                leaf: ContentRecord
+            columnMapping:
+                ParentId: parent_id
+                Name:   name
+                Ordering: ordering
+            folderSign: IsFolder
+            action: updateNodeDual
+            dataRoot: data
+            flushCache: true
+            successMsg: Node inserted ok.
+            postSqlCondition: IsNewAllowed
+        tree-content-remove:
+            recordClass:
+                container: ContainerRecord
+                content: ContentRecord
+            action: removeNodeDual
+            dataRoot: data
+            folderSign: t
+            postSqlCondition: IsWriteAllowed
+            successMsg: Node deleted ok.
+           
+metaData: 
+    edit: 100

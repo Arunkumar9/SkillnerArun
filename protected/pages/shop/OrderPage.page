@@ -1,0 +1,87 @@
+<com:TContent ID="main">
+    
+    <!--- <com:FAncestorsHint Name="<%[ Nákupní košík ]%>"  /> --->
+    <com:FActivePanelReceiver ID="ActiveReceiver" TagName="div" ListenOn="OnCartChanged,OnBack,OnLogin,OnInsertToCart,OnSubmitCart,OnPersonalData,OnFinalizeOrder" >
+        <com:TMultiView ID="View" ActiveViewIndex="0" >
+
+            <com:TView ID="CartView"  >
+                <div class="orderGuideContainer">
+                    <div class="guideStep activeStep"><div class="guideStepNumber">1</div><div class="guideStepText">košík</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">2</div><div class="guideStepText">dodací údaje</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">3</div><div class="guideStepText">přehled objednávky</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">4</div><div class="guideStepText">odeslání objednávky</div></div>
+                </div>
+                <h1><%[ Obsah košíku ]%></h1>
+                <br/>
+                <com:ShoppingCart ID="Cart" />
+            </com:TView>
+
+            <com:TView ID="PersonalDataView"  >
+                <div class="orderGuideContainer">
+                    <div class="guideStep"><div class="guideStepNumber">1</div><div class="guideStepText">košík</div></div>
+                    <div class="guideStep activeStep"><div class="guideStepNumber">2</div><div class="guideStepText">dodací údaje</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">3</div><div class="guideStepText">přehled objednávky</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">4</div><div class="guideStepText">odeslání objednávky</div></div>
+                </div>
+                <h1><%[ Dodací údaje ]%></h1>
+                <com:PersonalDataForm ID="PersonalData" cssClass="standardForm"/>
+            </com:TView>
+
+            <com:TView ID="SummaryView"  >
+                <div class="orderGuideContainer">
+                    <div class="guideStep"><div class="guideStepNumber">1</div><div class="guideStepText">košík</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">2</div><div class="guideStepText">dodací údaje</div></div>
+                    <div class="guideStep activeStep"><div class="guideStepNumber">3</div><div class="guideStepText">přehled objednávky</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">4</div><div class="guideStepText">odeslání objednávky</div></div>
+                </div>
+                <h1><%[ Přehled objednávky ]%></h1>
+                <com:OrderSummary ID="OrderSummary" />
+            </com:TView>
+
+            <com:TView ID="FinalView"  >
+                <div class="orderGuideContainer">
+                    <div class="guideStep"><div class="guideStepNumber">1</div><div class="guideStepText">košík</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">2</div><div class="guideStepText">dodací údaje</div></div>
+                    <div class="guideStep"><div class="guideStepNumber">3</div><div class="guideStepText">přehled objednávky</div></div>
+                    <div class="guideStep activeStep"><div class="guideStepNumber">4</div><div class="guideStepText">odeslání objednávky</div></div>
+                </div>
+                <h1><%[ Dodací údaje ]%></h1>
+                <h1><%[ Objednávka zboží ]%></h1>
+                <h2>Vaše objednávka byla úspěšně přijata</h2>
+                <strong>Děkujeme za vaši objednávku!</strong><br />
+                <br />
+                <com:FinalNotice ID="FinalNotice" cssClass="tabSouhrnObjednavky" />
+            </com:TView>
+
+        </com:TMultiView>
+    </com:FActivePanelReceiver >
+	
+<div id="loadingIcon" class="loadingIcon toRight" style="display: none"></div>
+	
+	
+    <!---
+    <com:TClientScript >
+    function deleteValidatorManager(formID) {
+	if (Prado.Validation.managers[formID])
+		delete Prado.Validation.managers[formID];
+    }
+    </com:TClientScript>
+    --->
+    <com:XGlobalCallbackOptions>
+        <prop:ClientSide.OnLoading>
+		$('loadingIcon').show();
+        </prop:ClientSide.OnLoading>
+        <prop:ClientSide.OnComplete>
+       jQuery("#middleContainer select, #middleContainer input:text, #middleContainer input:radio, #middleContainer textarea, .buttonsTable input:button, .buttonsTable input:submit").uniform();
+		$('loadingIcon').hide();
+        </prop:ClientSide.OnComplete>
+    </com:XGlobalCallbackOptions>
+
+
+<com:FClientEndScript>
+    jQuery(document).ready(function(){
+      jQuery("#middleContainer select, #middleContainer input:text, #middleContainer input:radio, #middleContainer textarea, .buttonsTable input:button, .buttonsTable input:submit").uniform();
+    });
+</com:FClientEndScript>
+
+</com:TContent >

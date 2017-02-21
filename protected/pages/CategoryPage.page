@@ -1,0 +1,15 @@
+
+<com:TContent ID="main">
+
+    <!---
+    <com:FAncestorsHint Name="<%= $this->EshopProductList->CategoryName %>" ParentId="<%= $this->Request['parent'] %>" />	
+    <com:Application.layout.content.EshopProductList ID="EshopProductList" ShowCategoryName="false" CategoryVar="catid" PageSize="6" />
+</com:FOutputCacheLang>
+    --->
+    <com:FOutputCacheLang ID="PageCache" VaryByParam="uid,catid,id,category,code" VaryBySession="true"  Duration="0" >
+
+      <com:FContentReader ContainerUid="local:@type_id=CategoriesRoot/category-content" />
+    </com:FOutputCacheLang>
+</com:TContent>
+
+

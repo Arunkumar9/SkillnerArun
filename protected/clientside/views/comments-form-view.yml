@@ -1,0 +1,28 @@
+#
+# Form view
+#
+name: comments-form-view
+serverSide:
+    recordClass: CommentRecord 
+    findBy: uid
+    properties: all
+    properties: all
+    remove-properties:
+    add-properties:
+        - input_dateAsDate
+    dataRoot: data
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+        input_date:
+            type: integer
+            default: <%= time() %>
+        contact:
+            default: <%= Prado::getApplication()->User->Name %>
+        fe_user_id:
+            default: <%= Prado::getApplication()->Request['filter'] %>
+    successMsg:	<%[ New comment saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

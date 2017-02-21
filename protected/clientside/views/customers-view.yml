@@ -1,0 +1,127 @@
+#
+# Grid with customers view
+#
+#
+name: customers-view
+serverSide:
+    allowedGrids: customers-grid
+    recordClass: CustomerRecord
+    noBlankContext: false
+    context:
+        videos-grid:
+            condition: "videos_id = '%filter%'"
+        video-form:
+            condition: "videos_id = '%filter%'"
+        video-form-store:
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: videos_id
+            successMsg: <%[ customers saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        customers-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: videos_id
+            successMsg: <%[ customers saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+    sortInfo: 
+        field:
+          pos: ASC
+          name: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    xxxgroupField: name
+    sortInfo: 
+        field:  pos
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: description
+        -    name: url
+        -    name: videos_id
+        -    name: be_users_id
+        -    name: startAsDate
+             type: date
+        -    name: stopAsDate
+             type: date
+        -    name: is_enabled
+             type: int
+        -    name: pos
+             type: int
+    context:
+      base:
+          cm:
+            -    header: <%[ Customer ]%>
+                 sortable: true
+                 width: 50
+                 dataIndex: be_users_id
+                 renderer: "^Fresh.GridRender.giveComboRenderer('users-store')"
+                 editor:
+                    xtype: ccombo
+                    store: users-store
+            -    header: <%[ Name ]%>
+                 sortable: true
+                 width: 30
+                 dataIndex: name
+                 editor:
+                    xtype: textfield
+            -    header: <%[ Description ]%>
+                 sortable: true
+                 dataIndex: description
+                 editor:
+                    xtype: textarea
+            -    header: <%[ Url ]%>
+                 sortable: true
+                 width: 50
+                 dataIndex: url
+                 editor:
+                    xtype: textfield
+                    vtype: url
+            -    header: <%[ Start ]%>
+                 sortable: true
+                 dataIndex: startAsDate
+                 align: right
+                 width: 40
+                 renderer: "^Ext.util.Format.dateRenderer('d.m.y')"
+                 editor:
+                    xtype: xdatefield
+                    allowBlank: false
+            -    header: <%[ Stop ]%>
+                 sortable: true
+                 dataIndex: stopAsDate
+                 align: right
+                 width: 40
+                 renderer: "^Ext.util.Format.dateRenderer('d.m.y')"
+                 editor:
+                    xtype: xdatefield
+                    pickerStartDate: 2099-01-01
+                    allowBlank: false
+            -    header: <%[ Pos ]%>
+                 sortable: true
+                 dataIndex: pos
+                 align: right
+                 width: 10
+                 editor:
+                    xtype: numberfield
+                    allowNegative: false
+            -    >
+                 ^new Ext.grid.CheckColumn({
+                    header: 'E',
+                    dataIndex: 'is_enabled',
+                    tooltip: "Enabled",
+                    width: 15,
+                    value: 1,
+                    align: 'center'
+                 })
+end: true
+

@@ -1,0 +1,33 @@
+#
+# Form view
+#
+name: quiz-form-view
+serverSide:
+    recordClass: QuizRecord
+    findBy: uid
+    returnAllDiff: true
+     condition: (1=0)
+    sortInfo:
+        field: ordering
+        dir: ASC
+    properties: all
+    remove-properties:
+        - images
+        - files
+    add-properties:
+        - Dirt
+        - ImagesNN      
+        - FilesNN
+        - from_dateFormated
+        - to_dateFormated
+        - PredefinedTask
+    dataRoot: data
+    secured: true
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Question saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

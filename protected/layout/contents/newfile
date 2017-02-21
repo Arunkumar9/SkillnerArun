@@ -1,0 +1,25 @@
+-- phpMyAdmin SQL Dump
+-- version 3.2.3
+-- http://www.phpmyadmin.net
+--
+-- Počítač: localhost
+-- Vygenerováno: Úterý 01. března 2011, 12:42
+-- Verze MySQL: 5.0.22
+-- Verze PHP: 5.2.0
+
+SET FOREIGN_KEY_CHECKS=0;
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT=0;
+START TRANSACTION;
+
+--
+DELETE FROM `freshsystems_clio`.`be_users` WHERE `be_users`.`Uid` = 45 LIMIT 1;
+DELETE FROM `freshsystems_clio`.`be_users` WHERE `be_users`.`Uid` = 46 LIMIT 1;
+DELETE FROM `freshsystems_clio`.`be_users` WHERE `be_users`.`Uid` = 47 LIMIT 1;
+DELETE FROM `freshsystems_clio`.`be_users` WHERE `be_users`.`Uid` = 48 LIMIT 1;
+DELETE FROM `freshsystems_clio`.`be_users` WHERE `be_users`.`Uid` = 49 LIMIT 1;
+DELETE FROM `freshsystems_clio`.`be_users` WHERE `be_users`.`Uid` = 50 LIMIT 1;
+DELETE FROM `freshsystems_clio`.`be_users` WHERE `be_users`.`Uid` = 51 LIMIT 1;
+
+SET FOREIGN_KEY_CHECKS=1;
+COMMIT;

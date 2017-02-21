@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<application id="knt" mode="Debug">
+ 
+  <!-- Paths definitions -->
+  <paths >
+    <using namespace="FreshSystem.*" />
+    <using namespace="FreshSystem.FCmsUrlMapping.*" />
+    <using namespace="FreshSystem.services.json.*" />
+    <using namespace="FreshSystem.UI.*" />
+    <using namespace="FreshSystem.UI.Content.*" />
+    <using namespace="FreshSystem.UI.Components.*" />
+    <using namespace="FreshSystem.UI.FListMenu" />
+    <using namespace="FreshSystem.UI.FWidgetGateway" />
+    <using namespace="Application.scripts.*" />
+    <using namespace="Application.services.json.*" />
+    <using namespace="Application.model.*" />
+    <using namespace="Application.model.cms.*" />
+    <using namespace="Application.config.FIni" />
+    <using namespace="System.Data.ActiveRecord.*" />
+    <using namespace="System.Data.ActiveRecord.Relations.*" />
+    <using namespace="Application.scripts.*" />
+    <using namespace="Application.common.*" />
+    <using namespace="Application.pages.*" />
+    <using namespace="Application.layout.*" />
+    <using namespace="Application.layout.contents.*" />
+    <using namespace="FreshSystem.model.cms.*" />
+    <using namespace="FreshSystem.model.cms.ContentText" />
+    <using namespace="FreshSystem.model.cms.ContentRecord" />
+    <using namespace="FreshSystem.model.cms.ContainerContentRecord" />
+    <using namespace="System.common.*" />
+    <using namespace="System.Util.*" />
+    <using namespace="System.I18N.*" />
+    <using namespace="System.I18N.core.*" />
+    <using namespace="System.Web.UI.ActiveControls.*" />
+    <using namespace="ZF.*" />
+  </paths>
+
+  <!-- configurations for modules -->
+  <modules>
+      <!-- Database -->
+     <module id="db1" class="System.Data.TDataSourceConfig" >
+        <database ConnectionString="mysql:host=localhost;dbname=swpgit"
+                  Username="root" Password="" Charset='UTF8' />
+      </module>
+      <module class="System.Data.ActiveRecord.TActiveRecordConfig" ConnectionID="db1" EnableCache="true"  />
+
+      <!-- Remove this comment mark to enable caching   
+      <module id="cache" class="FreshSystem.caching.FXCache" RefKey="knt" />-->
+
+      <module id="response" class="THttpResponse" BufferOutput="false" />
+
+      <!-- Remove this comment mark to enable logging    
+      <module id="log" class="System.Util.TLogRouter">
+                   <!-- <route class="TFirePhpLogRoute" Categories='Json,View,YamlConfig'/> 
+                    <route class="TFileLogRoute"  />
+                         <route class="TDbLogRoute"  ConnectionID="db1" />
+ </module>-->
+
+      <!-- CMS managing modules -->
+      <module id='cart'  class="FreshSystem.FShoppingCartModule" />
+      <module id="mail"  class="FreshSystem.mail.FMailModule" />
+      <module id="cms"   class="FreshSystem.FCmsModule" ControlRequest="true" />
+      <module id="image" class="FreshSystem.FImageModule"
+                         CachePath="Root.assets.cache.*"
+                         MaskPath="Root.resources.MaskLogo"
+                         MaskSizeAbove="10000"
+                         RepositoryPath="Root.*" />
+      
+      <!-- Parameters -->
+      <module class="System.Util.TParameterModule" ParameterFile="Application.settings" />
+  <module id="request" class="THttpRequest" UrlManager="ExtDirectUrl" />
+    <module id="ExtDirectUrl" class="FreshSystem.FExtDirectUrlManager" />
+    
+<!--    <module id="request" class="THttpRequest" UrlManager="coolUrl" />
+  <module id="coolUrl" class="FreshSystem.FCmsUrlMapping" EnableCustomUrl="true" UrlPrefix="/" ConstructPaths="true" >
+  	<url ServiceParameter="NormalPage" pattern="{lang}/{stheme}/{code}/" parameters.stheme=".+" parameters.code=".+" parameters.lang="[a-z]{2}"/>
+
+  	<url ServiceParameter="ColumnPage" pattern="{code}/" parameters.code=".+" />
+  	<url ServiceParameter="NormalPage" pattern="{stheme}/{code}/" parameters.stheme=".+" parameters.code=".+" />
+  	<url ServiceParameter="shop.CategoryProductDetail" pattern="{lang}/obchod/kategorie/{catid}" parameters.catid="\d{2,3}.*" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="shop.CategoryProductDetail" pattern="obchod/kategorie/{catid}" parameters.catid="\d{2,3}.*" />
+  	<url ServiceParameter="shop.ProductDetail" pattern="{lang}/obchod/{catid}" parameters.catid="\d{2,3}.*" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="shop.ProductDetail" pattern="obchod/{catid}" parameters.catid="\d{2,3}.*" /> 
+  	<url ServiceParameter="GalleryDetail" pattern="{lang}/galerie/{catid}/p{parent}" parameters.parent="\d{1,3}" parameters.catid="\d{2,3}.*" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="GalleryDetail" pattern="{lang}/galerie/{catid}/" parameters.catid="\d{2,3}.*" parameters.lang="[a-z]{2}"/>
+	<url ServiceParameter="NormalPage" pattern="{uid}/{catid}" parameters.uid=".+" parameters.catid="\d{2,3}.*" />
+	<url ServiceParameter="NormalPage" pattern="{code}/{catid}" parameters.code=".+" parameters.catid="\d{2,3}.*" />
+  	<url ServiceParameter="NormalPage" pattern="{lang}/{code}" parameters.code=".*" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="NormalPage" pattern="{lang}" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="NormalPage" pattern="{uid}/" parameters.uid=".+" /> 
+   	<url ServiceParameter="shop.ProductDetail" pattern="knt.freshsystems.cz/{code}/{catid}/{variants}" parameters.variants="[0-9,]+" parameters.code=".+" parameters.catid="[0-9]{3}-.+"/>
+   	<url ServiceParameter="shop.ProductDetail" pattern="knt.freshsystems.cz/{code}/{catid}" parameters.code=".+" parameters.catid="[0-9]{3}-.+"/>
+   	<url ServiceParameter="shop.OrderPage" pattern="knt.freshsystems.cz/{code}" parameters.code=".+" /> 
+   	<url ServiceParameter="NormalPage" pattern="{code}/video-{vid}" parameters.code="play" parameters.vid=".+"/>
+  	<url ServiceParameter="NormalPage" pattern="{code}/{tld}/{dm}/{email}" parameters.code="contacts" parameters.tld="[a-zA-Z]{2,4}" parameters.dmn="[A-Za-z0-9._%-]+" parameters.email="[A-Za-z0-9._%-]+" />
+   	<url ServiceParameter="NormalPage" pattern="{code}/{newsid}" parameters.code=".+" parameters.newsid="[0-9]{1,3}-.+"/>
+ 	<url ServiceParameter="NormalPage" pattern="{code}" parameters.code=".+" />
+ 	<url ServiceParameter="CategoryPage" pattern="{code}" parameters.code=".+" /> 
+  </module>-->
+
+      
+
+      <!-- Translations -->
+      <module id="globalization" class="Application.common.FAutoGlobalization" Charset='UTF-8' DefaultCulture="en">
+
+            <translation
+                type="Database"
+                autosave="true"
+                cache="false"
+                source="db1" /> 
+
+      </module>
+
+      <!-- Authorization modules -->
+      <module id="auth"  class="FreshSystem.security.FTokenAuthManager" UserManager="users" AllowAutoLogin="true" />
+      <module id="users" class="System.Security.TDbUserManager"         UserClass="FreshSystem.security.FUser" />
+      <!-- YAML managing modules -->
+      <module id="jsonViewConfig"
+          class="FYamlConfig" Cache="false"
+          Path="Application.clientside.views"
+          OnPreYamlLoad="self.parseNameParamsAndExpressionTags"
+          OnYamlLoad="self.authModify"
+      />
+      <module id="jsonCmpConfig"
+          class="FYamlConfig"
+          Path="Application.clientside.components"
+          OnPreYamlLoad="self.parseNameParamsAndExpressionTags"
+          OnYamlLoad="self.authModifyattachStores"
+      />
+	  
+  </modules>
+
+  <!-- Cool URL pattern definitions 
+  <include file="Application.urls" /> -->
+
+  <!-- configuration for available services -->
+  <services>
+    <service id="page" class="TPageService" DefaultPage="NormalPage" >
+          <pages MasterClass="Application.layouts.Master" Theme="Base" StatePersisterClass="System.Web.UI.TSessionPageStatePersister" />
+	 <modules>
+		  <module class="FreshSystem.haml.FHamlTemplateManager" />
+	  </modules>
+    </service>
+    <service id="json" class="FJsonService">
+        <json id="view" class="FJsonViewProvider" Path="Application.clientside.views" YamlConfig="jsonViewConfig" AuthLevel="60" />
+        <json id="login" class="FJsonLoginProvider" Path="Application.clientside.views" YamlConfig="jsonViewConfig" />
+        <json id="localize" class="FJsonLocalizationProvider" Path="Application.clientside.other" YamlConfig="jsonCmpConfig"/>
+        <json id="direct" class="FJsonDirectProvider" Path="Application.clientside.direct" YamlConfig="jsonViewConfig" />
+	<modules>
+		  <module class="FreshSystem.haml.FHamlTemplateManager" />
+	</modules>
+    </service>
+    <service id="image" class="FreshSystem.services.image.FImageService">
+        <image id="thumb" class="FreshSystem.services.image.FThumbnailProvider" />
+    </service>
+    <service id="feed" class="System.Web.Services.TFeedService" >
+        <feed id="titles" class="Application.services.titles.FVideoTitlesXml" />
+        <!-- <feed id="products" class="FreshSystem.services.xml.FProductXml" FormatType="zbozi.cz" />
+        <feed id="sitemap" class="FreshSystem.services.xml.FProductXml" FormatType="sitemap.xml" />
+        <feed id="sitemap.products" class="FreshSystem.services.xml.FProductXml" FormatType="sitemap.products.xml" /> -->
+    </service>
+   </services>
+
+
+  
+</application>

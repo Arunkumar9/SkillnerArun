@@ -1,0 +1,58 @@
+#
+# Grid with attributes-definitions view
+#
+#
+name: attributes-definitions-view 
+serverSide:
+    allowedGrids: attributes-definitions-grid
+    recordClass: AttributeDefinitionRecord 
+    noBlankContext: false
+    context:
+        attributes-definitions-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Attributes saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        attributes-definitions-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any news in this attribute exist.]%>
+    sortInfo: 
+        field:  name
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  name
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: primary
+        -    name: type
+    cm: 
+        -    header: <%[ Attribute ]%>
+             sortable: true 
+             dataIndex: name
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+        -    header: <%[ Type ]%>
+             sortable: true 
+             width: 60
+             dataIndex: type
+             editor: >
+                @new Fresh.form.CommonComboBox({
+                    displayField:'name',
+                    valueField: 'uid',
+                    store: Ext.StoreMgr.lookup('attribute-types-store')
+                })
+             renderer: "@Fresh.GridRender.giveComboRenderer('attribute-types-store','name')"
+
+

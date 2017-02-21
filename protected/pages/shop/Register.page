@@ -1,0 +1,162 @@
+<%@ MasterClass="Application.layout.eshopMaster" %>
+<com:TContent ID="main">
+	<h1>Registrace nového uživatele</h1>
+
+<h3>Zadejte, prosím, všechny povinné údaje.</h3>
+<br />
+<br />
+
+<h3>Osobní údaje uživatele</h3>
+
+<table class="standardForm">
+	<tr>
+    	<th>Jméno a příjmení:</th><td><input type="text" class="textBox"/></td>
+    </tr>
+    <tr>
+    	<th>Ulice:</th><td><input type="text" class="textBox"/></td>
+    </tr>
+    <tr>
+    	<th>Číslo popisné:</th><td><input type="text" class="textBox"/></td>
+    </tr>
+    <tr>
+    	<th>Obec:</th><td><input type="text" class="textBox"/></td>        
+    </tr>
+    <tr>
+    	<th>PSČ:</th><td><input type="text" class="textBox"/></td>        
+    </tr>   
+    	<td>&nbsp;</th><td></td>        
+    </tr>        
+	<tr>
+    <tr>
+    	<th>Telefon:</th><td><input type="text" class="textBox"/></td>        
+    </tr>
+    <tr>
+    	<th>E-mail:</th><td><input type="text" class="textBox"/></td>        
+    </tr>        
+        <tr>
+    	<th>&nbsp;</th><td>&nbsp;</td>        
+    </tr>        
+
+</table>
+<br />
+
+<br />
+
+<h3>Dodací a fakturační údaje (pouze pokud se liší od osobních údajů)</h3>
+
+<table class="standardForm">
+	<tr>
+    	<th>Jméno a příjmení:</th><td><input type="text" class="textBox"/></td>
+    </tr>
+
+	<tr>
+    	<th>Firma:</th><td><input type="text" class="textBox"/></td>
+    </tr>    
+
+
+	<tr>
+    	<th>IČ:</th><td><input type="text" class="textBox"/></td>
+    </tr>    
+    
+   	<tr>
+    	<th>DIČ:</th><td><input type="text" class="textBox"/></td>
+    </tr>    
+    
+    <tr>
+    	<th>Ulice:</th><td><input type="text" class="textBox"/></td>
+    </tr>
+    <tr>
+    	<th>Číslo popisné:</th><td><input type="text" class="textBox"/></td>
+    </tr>
+    <tr>
+    	<th>Obec:</th><td><input type="text" class="textBox"/></td>        
+    </tr>
+    <tr>
+    	<th>PSČ:</th><td><input type="text" class="textBox"/></td>        
+    </tr>   
+    	<td>&nbsp;</th><td></td>        
+    </tr>        
+	<tr>
+    <tr>
+    	<th>Telefon:</th><td><input type="text" class="textBox"/></td>        
+    </tr>
+    <tr>
+    	<th>E-mail:</th><td><input type="text" class="textBox"/></td>        
+    </tr>        
+        <tr>
+    	<th>&nbsp;</th><td>&nbsp;</td>        
+    </tr>        
+
+</table>
+<br />
+<br />
+
+
+
+
+<h3>Údaje o dětech</h3>
+Údaje o dětech <em>nejsou povinné</em>, slouží pouze k rychlejší orientaci v produktech se zaměřením na věk dítěte. 
+<table class="standardForm centered">
+	<tr>
+    	<td></td><th>Jméno:</th><th>Datum narození (21.5.2008):</th>
+    </tr>
+    
+   	<tr>
+    	<td>1.</td><td><input type="text" class="textBox"/></td><td><input type="text" class="textBox"/></td>
+    </tr>
+    
+   	<tr>
+    	<td>2.</td><td><input type="text" class="textBox"/></td><td><input type="text" class="textBox"/></td>
+    </tr>
+
+   	<tr>
+    	<td>3.</td><td><input type="text" class="textBox"/></td><td><input type="text" class="textBox"/></td>
+    </tr>
+
+
+   	<tr>
+    	<td>4.</td><td><input type="text" class="textBox"/></td><td><input type="text" class="textBox"/></td>
+    </tr>
+    
+    
+ 	<tr>
+    	<td>5.</td><td><input type="text" class="textBox"/></td><td><input type="text" class="textBox"/></td>
+    </tr>
+
+    
+</table>
+
+
+
+<br />
+<br />
+
+
+
+
+
+<h3>Přihlašovací údaje</h3>
+Zvolte své přihlašovací jméno a heslo.
+<table class="standardForm centered">
+
+	<tr>
+    	<th>Přihlašovací jméno (login):</th><td><input type="text" class="textBox"/></td>
+    </tr>
+
+	<tr>
+    	<th>Heslo:</th><td><input type="text" class="textBox"/></td>
+    </tr>    
+
+
+	<tr>
+    	<th>Zopakovat heslo:</th><td><input type="text" class="textBox"/></td>
+    </tr>        
+</table>
+
+
+<br />
+<br />
+
+<input type="button" value="Zkontrolovat zadané údaje" class="buttObjednat"/>
+
+</com:TContent ID="main">

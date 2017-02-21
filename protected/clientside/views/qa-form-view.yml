@@ -1,0 +1,20 @@
+#
+# Form view
+#
+name: qa-form-view
+serverSide:
+    recordClass: QARecord 
+    findBy: uid
+    properties: all
+    add-properties:
+        - input_dateAsDate
+        - publish_dateAsDate
+    dataRoot: data
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Question saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

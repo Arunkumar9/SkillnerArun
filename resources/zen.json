@@ -1,0 +1,18 @@
+{
+  "api_key": "93h630j1dsyshjef620qlkavnmzui3",
+  "input": "s3://bucket-name/file-name.avi",
+  "outputs": [
+    {
+      "label": "iPhone",
+      "url": "s3://output-bucket/output-file-1-name.mp4",
+      "width": "480",
+      "height": "320"
+    },
+    {
+      "label": "WebHD",
+      "url": "s3://output-bucket/output-file-2-name.mp4",
+      "width": "1280",
+      "height": "720"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+#
+# Grid with Categories view
+#
+#
+name: categories-view 
+serverSide:
+    allowedGrids: news-categories-grid
+    recordClass: NewsCategoryRecord 
+    noBlankContext: false
+    condition: uid > 1
+    context:
+        news-categories-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Categories saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        news-categories-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any news in this category exist.]%>
+    sortInfo: 
+        field:  name
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  <%= FU::LangVariant('name') %>
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: nameLangCs
+        -    name: nameLangDe
+        -    name: nameLangEn
+        -    name: nameLangSk
+        -    name: nameLangRu
+    cm: 
+        -    header: <%[ Category CZ ]%>
+             sortable: true 
+             dataIndex: nameLangCs
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+
+

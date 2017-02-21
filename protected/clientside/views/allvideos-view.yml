@@ -1,0 +1,50 @@
+#
+# Grid with List of Products
+# name
+# deswcription
+# models/attributes
+# price and tax
+# availability
+# images
+name: videos-view 
+serverSide:
+    allowedGrids: videos-grid
+    recordClass: VideoRecord
+    condition: (is_enabled>0)
+    sortInfo:
+        field: name
+        dir: ASC
+    groupBy: uid
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: ordering
+        dir: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: is_enabled
+        -    name: ordering
+             type: int
+    context:
+        base:
+            cm: 
+                -    header: Uid 
+                     width: 40 
+                     sortable: true 
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Pos 
+                     width: 50 
+                     sortable: true 
+                     align: right
+                     dataIndex: ordering
+                     editor: "@new Ext.form.NumberField()"
+end: true
+

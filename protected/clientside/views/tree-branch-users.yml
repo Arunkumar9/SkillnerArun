@@ -1,0 +1,51 @@
+#
+#
+#
+name: tree-users
+serverSide:
+    recordClass: BranchUserRecord
+    readAll: true
+    child: uid
+    parent: parent_id
+    folderSign: IsFolder
+    nodeTypeSign: NodeType
+    folder:
+        iconCls: t
+        text: name
+        id: uid
+        qtip: t
+        context: t
+    leaf:
+        iconCls: t
+        text: name
+        id: uid
+        qtip: uid
+        context: t
+    depth: 1
+    CacheAnswer: true
+    criteria:
+        rootCondition: (parent_id is NULL OR parent_id = 0) AND (branch_id = <%= (int) $this->User->UserRecord->branch_id %> OR <%= $this->User->MaxLevel %> >= 300)
+        OrdersBy:
+           name: ASC
+    context:
+        tree-users-update:
+            action: updateNode
+            dataRoot: data
+            successMsg: User updated ok.
+            CacheFlush: true
+            CacheAnswer: false
+        tree-users-add:
+            action: updateNode
+            dataRoot: data
+            successMsg: User inserted ok.
+            CacheFlush: true
+            CacheAnswer: false
+        tree-users-remove:
+            action: removeNode
+            dataRoot: data
+            successMsg: User removed ok.
+            CacheFlush: true
+            CacheAnswer: false
+metaData:
+    edit: 100
+    enableDD: 100

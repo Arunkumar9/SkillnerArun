@@ -1,0 +1,25 @@
+#
+# Mail
+#
+name: feuser-mail
+serverSide:
+    recordClass: UserFERecord
+    findBy: uid
+    addresses:
+        recordClass: UserFERecord
+        emailField: Email
+        condition: 1 = 1
+    sendInterval: 15
+    sendAtOnce: 20
+    template: credentials
+    successMsg: 
+    xxsuccessMsg: <%[Student mailing submited ok!]%>
+    errors:
+      -  regexp: "/Curently sending/"
+         text: <%[Curently sending.]%>
+      -  text: <%[Error submiting mailing.]%>
+    context:
+        single-mail:
+            successMsg:
+            action: singleMail
+        

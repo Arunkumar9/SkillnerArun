@@ -1,0 +1,32 @@
+#
+# Emails report
+#
+#
+name: email 
+serverSide:
+    recordClass: StatisticRecord
+    noBlankContext: false
+    condition: ((branch_id = <%= $this->User->UserRecord->branch_id %>) OR (<%= $this->User->MaxLevel %> >= 300)) AND (branch_id = %filter% OR be_user_id in(%filter%/1000,0))
+    reportClass: SimpleCsvReport
+    noBlankContext: false
+    sortInfo: 
+        Branch: ASC
+        Updated: DESC
+    serviceProperties:
+        Writer: Excel5
+        Filename: ClientStats
+    columns:
+        -    header: <%[Typ]%>
+             dataIndex: Typ
+        -    header: <%[Name]%>
+             dataIndex: Name
+        -    header: <%[Created]%>
+             dataIndex: CreatedAsDateF
+        -    header: <%[Updated]%>
+             dataIndex: UpdatedAsDateTimeF
+        -    header: <%[Consultant]%>
+             dataIndex: Consultant
+        -    header: <%[Branch]%>
+             dataIndex: Branch
+end: true
+

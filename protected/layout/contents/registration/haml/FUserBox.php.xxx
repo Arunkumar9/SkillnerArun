@@ -1,0 +1,134 @@
+<?php
+//Prado::using('FreshSystem.UI.Content.Registration.FUserLoginForm');
+class FUserBox extends FStyledTemplateControl {
+	
+	private $_LoginPageId='login';
+	private $_RegisterPageId='registrace';
+	private $_AccountPageId;
+	private $_AfterLogoutPageId;
+	
+	public function OnPreRender($param)
+	{
+		parent::onPreRender($param);
+		 //$this->LoginLink->NavigateUrl =$this->Page->getContainer($this->LoginPageId)->Href;
+		 $this->RegisterLink->NavigateUrl = $this->Page->getContainer($this->RegisterPageId)->Href;
+		 $this->AccountLink->Visible = false;
+		// $this->AccountLink->NavigateUrl = $this->Page->getContainer($this->AccountPageId)->Href;
+		 if ($this->Application->User->IsGuest)
+		 {
+		 	$this->LogoutLink->Visible = false;
+		 	$this->LoginLink->Visible = true;
+			$this->RegisterLink->Visible = true;	 	
+			$this->AccountLink->Visible = false;	 	
+		 }
+		 else
+		 {
+		 	$this->LogoutLink->Visible = true;
+		 	$this->LoginLink->Visible = false;
+			$this->RegisterLink->Visible = false;	 	
+			$this->AccountLink->Visible = true;	 	
+		 }
+		
+	}
+
+	/**
+	 *
+	 * Ověří uživatele
+	 * This method responds to the TCustomValidator's OnServerValidate event.
+	 * @param mixed event sender
+	 * @param mixed event parameter
+	 */
+	public function validateUser($sender=null,$param=null)
+	{
+		$authManager=$this->Application->getModule('auth');
+		if(!$authManager->login($this->Username->Text,$this->Password->Text)) {
+			if ($param) $param->IsValid=false;
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * OVěří přihlášení uživatele a buď přejde na stránku
+	 * Tato metoda je handlerem události OnClick a OnCallback tlačítka Submit.
+	 * @param mixed event sender
+	 * @param mixed event parameter
+	 */
+	public function loginButtonClicked($sender,$param)
+	{
+		if ($this->Page->IsCallback && !($param instanceof TCallbackEventParameter))
+			return;
+
+		if ($this->validateUser() && $this->Page->IsValid)  // all validations succeed
+		{
+			// obtain the URL of the privileged page that the user wanted to visit originally
+			$url=$this->Application->getModule('auth')->ReturnUrl;
+			//if(empty($url))  // the user accesses the login page directly
+			//	$url=$this->Service->DefaultPageUrl;
+			//if (!$this->Page->IsCallback)
+				//$this->Response->redirect($url);
+
+			//if ($this->Page->IsCallback)
+			$this->broadcastEvent('OnLogin',$sender,$param);
+		}
+	}
+	/**
+	 * Logs out user
+	 * 
+	 * @param mixed event sender (odesílací objekt)
+	 * @param mixed event parameter
+	 */
+	public function logoutButtonClicked($sender,$param)
+	{
+		$this->Application->getModule('auth')->logout();
+    	if ($this->AfterLogoutPageId)
+		{	
+			$url=$this->Page->getContainer($this->AfterLogoutPageId)->Href;
+			$this->Response->redirect($url);
+		}
+	}
+	
+	public function getAfterLogoutPageId()
+	{
+		return $this->_AfterLogoutPageId;
+	}
+
+	public function setAfterLogoutPageId($value)
+	{
+		$this->_AfterLogoutPageId = $value;
+	}
+
+	public function getAccountPageId()
+	{
+		return $this->_AccountPageId;
+	}
+
+	public function setAccountPageId($value)
+	{
+		$this->_AccountPageId = $value;
+	}
+	
+	public function getRegisterPageId()
+	{
+		return $this->_RegisterPageId;
+	}
+
+	public function setRegisterPageId($value)
+	{
+		if (!$value)
+			$this->_RegisterPageId = $value;
+	}
+	
+	public function getLoginPageId()
+	{
+		return $this->_LoginPageId;
+	}
+
+	public function setLoginPageId($value)
+	{
+		if (!$value)
+			$this->_LoginPageId = $value;
+	}
+
+
+}

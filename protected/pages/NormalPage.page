@@ -1,0 +1,34 @@
+<%@  %>
+<com:TContent ID="main" >
+        <com:FContentReader />
+        <com:FContentReader ContainerUID="this:members" Visible="<%= !$this->User->IsGuest %>"/>
+</com:TContent>
+<!---
+<com:XGlobalCallbackOptions>
+        <prop:ClientSide.OnLoading>
+		$('loadingIcon').show();
+        </prop:ClientSide.OnLoading>
+        <prop:ClientSide.OnComplete>
+            jQuery(".regForms input:text, input:password").uniform();
+		$('loadingIcon').hide();
+        </prop:ClientSide.OnComplete>
+</com:XGlobalCallbackOptions>
+<com:TContent ID="left" >
+<com:FOutputCacheLang VaryByParam="uid,catid,id,category,code" Duration="360" >
+        <com:FContentReader ContentColumn="left"/>
+</com:FOutputCacheLang>
+</com:TContent>
+
+    <com:FContentRepeater >
+	<prop:ItemTemplate>
+		   START uid: <%# $this->Data->uid.', name: '.$this->Data->name.', class: '.$this->Data->TypeData['ContentEditClass'] %>
+		  <com:FShowContent ID="ContentRecord"
+							Content="<%# $this->Data %>"
+							IsEditable="true"
+							ContentRecordClass="ContentRecord"
+							ContentFieldName="data"
+							cssClass="Content" />
+		   END uid: <%# $this->Data->uid %> 
+	</prop:ItemTemplate>
+	</com:FContentRepeater>
+--->

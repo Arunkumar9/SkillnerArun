@@ -1,0 +1,131 @@
+#
+# API for courses (videos)
+# 
+name: video-captions-view
+serverSide:
+    recordClass: VideoCaptionsRecord
+    pageSize: 20
+    condition: (1=0)
+    noBlankContext: false
+    context:
+        videos-grid:
+            condition: "video_id = '%filter%'"
+        video-form:
+            condition: "video_id = '%filter%'"
+        video-captions-grid-store:
+            recordClass: VideoCaptionsRecord
+            action: updateRecordsFB
+            dataRoot: rows
+            successMsg: <%[Captions changes saved ok!]%>
+        video-captions-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any videos in this category exist.]%>
+    sortInfo:
+        field: uid
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: uid
+        dir: ASC
+    fields: 
+        -    name: uid
+        -    name: video_id
+        -    name: language_id
+        -    name: captions
+        -    name: name
+        -    name: description
+    context:
+        base:
+            cm: 
+                -    width: 16
+                     xtype: templatecolumn
+                     dataIndex: uid
+                     hidden:true
+                     tpl: >
+                          <div class='icon-size icon-film'></div>
+                -    header: Subrip File Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Description
+                     sortable: false
+                     width: 100
+                     dataIndex: description
+                     editor:
+                       xtype: textfield
+                -    header: Language 
+                     hidden:false
+                     sortable: true 
+                     dataIndex: language_id
+                     editable: true
+                     width: 130
+                     editor:
+                       xtype:ccombo
+                       valueField: name
+                       displayField: name
+                       allowBlank:false
+                        editable: false
+                       store: "@Ext.StoreMgr.lookup('languages-store')"
+                       listeners:
+                          select :
+                                fn: >
+                                     ^function( combo,rec,index){
+                                     var grid = Ext.getCmp('video-captions-grid');
+                                           var store = grid.getStore();
+                                            var selModel = grid.getSelectionModel();
+                                            var selectedRow ;
+                                            for( var h=0;h< store.data.length;h++){
+                                             if ( selModel.isSelected(h) ){
+                                                selectedRow =h;
+                                                break;
+                                             }
+                                            }
+                                            for( var j=0;j< store.data.length;j++){
+                                                var r = store.getAt(j);
+                                                if( selectedRow != j && r.get('language_id') == rec.get('name') ){
+                                                    Ext.Msg.alert('Error',' Sub rip file for this language already exists',function(){
+                                                    Ext.getCmp('video-captions-grid').getSelectionModel().selectRow(selectedRow);
+                                                    Ext.getCmp('video-captions-grid').startEditing(selectedRow,3);
+                                                    combo.clearValue();
+                                                    combo.markInvalid();
+                                                    });
+                                                }
+                                             }
+                                  }
+                -    xtype: actioncolumn
+                     width: 25
+                     align: center
+                     items:
+                        -   iconCls: icon-cross
+                            handler: >
+                                     ^function(grid, rowIndex, colIndex) {
+                                         var rec = grid.store.getAt(rowIndex);
+                                         var videosgrid = Ext.getCmp('videos-grid');
+	                                     var videoSelectedRec = videosgrid.getSelectionModel().getSelected();
+										 if(videoSelectedRec.get('is_finished') == 0)
+	                                     {
+	                                         if( !rec.get('uid') ){
+	                                            grid.store.remove(rec);
+	                                            return;
+	                                         }
+	                                        VideoRecordMgr.deleteVideoCaptionRecord(rec.get('uid'),function(r,t){
+	                                            if (r) grid.store.remove(rec);
+	                                        });
+	                                     }
+                                     }
+                            getClass: >
+                                     ^function( v,metaData,record,rowIndex,colIndex,store ){
+                                        var videosgrid = Ext.getCmp('videos-grid');
+	                                    var videoSelectedRec = videosgrid.getSelectionModel().getSelected();
+                                        if(videoSelectedRec.get('is_finished') == 1){
+                                            metaData.css = "icon-cross-disabled";
+                                        }
+                                    }
+end: true

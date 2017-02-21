@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+<!--  <paths>
+    <alias id="AliasID" path="AliasPath" />
+    <using namespace="Namespace" />
+  </paths> -->
+  <modules>
+
+
+  </modules>
+  <parameters>
+    <parameter id="Components" value="Application.clientside.components" />
+  </parameters>
+  <authorization>
+    <allow pages="PageID1,PageID2" users="User1,User2" roles="Role1,Role2" verb="get" />
+    <deny pages="PageID1,PageID2" users="User1,User2" roles="Role1,Role2" verb="post" />
+  </authorization>
+  <pages MasterClass="">
+  </pages>
+</configuration>

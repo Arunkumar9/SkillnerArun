@@ -1,0 +1,20 @@
+#
+# Form view
+#
+name: gadget-form-view
+serverSide:
+    recordClass: GadgetRecord
+    findBy: uid
+    properties: all
+    add-properties:
+        - CategoriesList
+        - UpdateCategories
+    dataRoot: data
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ gadget saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

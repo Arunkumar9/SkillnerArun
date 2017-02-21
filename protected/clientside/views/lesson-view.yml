@@ -1,0 +1,98 @@
+#
+# API for Lessons (videos)
+# 
+name: lessons-view
+serverSide:
+    allowedGrids: videos-grid
+    recordClass: LessonRecord
+    pageSize: 50
+    condition: <%= LessonRecord::getNoContextSql() %>
+    noBlankContext: false
+    context:
+        store:
+            recordClass: LessonRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        lesson-tags-grid:
+            condition: <%= LessonRecord::getTagsGridContextSql() %>
+        search-videos-grid:
+        	condition: <%= LessonRecord::getCourseLessonSearchContextSql() %>
+        courses-grid:
+            condition: <%= LessonRecord::getCourseGridContextSql() %>
+        courses-form:
+            condition: <%= LessonRecord::getCourseGridContextSql() %>
+        content-tags-grid:
+            condition: (<%= LessonRecord::getTagsGridContextSql() %>)
+        quizes-form:
+            condition: <%= LessonRecord::getNoContextSql() %>
+        videos-grid-delete:
+            action: callMethod
+            method: deleteNotFinished
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row ]%>
+        videos-grid-duplicate:
+            action: callMethod
+            method: duplicateLessonRecord
+            dataRoot: rows
+            successMsg: <%[Selected rows duplicated ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot duplicate the row ]%>  
+    sortInfo:
+        field: name
+        dir: ASC
+metaData: 
+    root: rows
+    id: content_id
+    totalProperty: totalCount
+    sortInfo:
+        field: name
+        dir: ASC
+    fields: 
+        -    name: content_id
+        -    name: uid
+        -    name: name
+        -    name: user_id
+        -    name: CreatorName
+        -    name: ContentCreator
+        -    name: type
+        -    name: description
+        -    name: is_finished
+             type: int
+        -    name: zoneids
+        -    name: LoginUser
+    context:
+        base:
+            cm: 
+                -    header: ID
+                     width: 40 
+                     hidden: true
+                     sortable: true 
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Creator 
+                     sortable: true 
+                     dataIndex: CreatorName
+                     hidden: true
+                     width: 40
+                -    header: Creator 
+                     sortable: true 
+                     dataIndex: ContentCreator
+                     width: 40
+                -    width: 24
+                     header: Status
+                     qtip: Status
+                     xtype: templatecolumn
+                     dataIndex: is_finished
+                     align: center
+                     tpl: >
+                          <div ext:qtip="<tpl if="is_finished==1">finished</tpl><tpl if="is_finished==0">not finished</tpl>" class='icon-size-fit <tpl if="is_finished==1">icon-lock</tpl><tpl if="is_finished==0">icon-unlock</tpl>'></div>
+end: true
+

@@ -1,0 +1,414 @@
+#
+#    GALLERY MANAGEMENT MODULE
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                @function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#     -  name: Ext.ux.Plugins.DataView.js
+#        using: [ lib/ext/ux/Ext.ux.Plugins.DataView.js ]
+#
+description:
+    name: gallery-win
+    text: <%[ Gallery Management ]%>
+    iconCls: icon-gallery-win
+    hideIcon: false
+    authLevel: 
+        min: 1000
+        max: 1000
+objects:
+     -  name: categoriesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'galleries-categories-store'
+            })
+     -  name: galleryAttachmentsStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'gallery-attachments-store'
+            })
+     -  name: galleryStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'gallery-store',
+                autoLoad: false
+            })
+component:
+    id:              gallery-win
+    title:           <%[ Gallery Management ]%>
+    width:           1000
+    height:          600
+    x:               @this.desktop.getWinX(1100)
+    y:               @this.desktop.getWinY(700)
+    iconCls:         icon-gallery-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    tbar:
+          -    text: <%[ New Gallery ]%>
+               iconCls: icon-action
+               handler: @this.actions.newRecordHandler.createDelegate(this,['gallery-form'],true)
+    layout: border
+    items:
+        -    title: <%[ Lists ]%>
+             elements:     body
+             split:        true
+             layout:      fit
+             region: west
+             width: @this.maxWidth(300,0.3)
+             stateful: true
+             collapsible: true
+             items:
+                -    xtype: tabpanel
+                     region: west
+                     defaults:
+                        hideMode: offsets
+                     activeTab: 0
+                     collapsible: false
+                     deferredRender: false
+                     layoutOnTabChange: true
+                     items:
+                        -    title: <%[ Galleries ]%>
+                             xtype: autogrid
+                             region: west
+                             id:   gallery-grid
+                             closable: false
+                             collapsed: false
+                             collapsible: false
+                             clicksToEdit: 2
+                             askBeforeChange: true
+                             loadMask: true
+                             border: true
+                             autoWidth: true
+                             autoScroll: true
+                             layout: fit
+                             frame: false
+                             stripeRows: true
+                             stateful: false
+                             noStorePreload: false
+                             linkedForm: gallery-form
+                             infoField: name
+                             split: true
+                             loadFormFromStore: true
+                             viewConfig:
+                                forceFit: true
+                             sm: >
+                                 @new Ext.grid.RowSelectionModel({singleSelect: true})
+                             bbar: >
+                                @new Ext.PagingToolbar({
+                                      pageSize:      20
+                                      ,store:         'gallery-store'
+                                      ,displayInfo:   true
+                                      ,displayMsg:    '<%[Count {2}]%>'
+                                      ,emptyMsg:      '<%[No galleries to display]%>'
+                                 })
+                             tbar: 
+                                -   @this.actions.saveGridTool
+                                -   @this.actions.cancelGridTool
+                                -   @this.actions.deleteGridTool
+                                -   @this.actions.reloadGrid
+                             plugins:
+                                -   @new Ext.ux.Plugin.FormToButtons()
+                                -   @new Ext.ux.Plugin.FormLoader()
+                             listeners:
+                                xxxafterlayout:
+                                    fn: >
+                                        @function(ct,layout) {
+                                            ct.getView().refresh();
+                                        }
+                        -    title: <%[Search]%>
+                             xtype: form
+                             id: search-form
+                             autoHeight: false
+                             border: false
+                             autoWidth: true
+                             linkedGrid: contacts-grid
+                             buttonAlign: right
+                             keys:
+                                -    key: @Ext.EventObject.ENTER
+                                     fn: @Fresh.global.actions.search.execute
+                             buttons:
+                                -    @this.actions.search
+                             plugins:
+                                -    @new Ext.ux.Plugin.FormToButtons()
+                             items:
+                                -    xtype: panel
+                                     frame: true
+                                     layout: anchor
+                                     anchor: "100% 100%"
+                                     autoWidth: true
+                                     bodyStyle:
+                                         padding: 5px 5px 0
+                                     defaults:
+                                          autoHeight: true
+                                          border: false
+                                     autoScroll: true
+                                     items:
+                                      -    layout: form
+                                           defaultType: textfield
+                                           anchor: 100%
+                                           items:
+                                            -    fieldLabel: <%[Email]%>
+                                                 name: email
+                                                 anchor: 95%
+        -    title: <%[ Gallery details ]%>
+             elements:     body
+             split:        true
+             layout:      fit
+             region: center
+             stateful: true
+             collapsible: false
+             items:
+								-    id: gallery-form
+										 elements:  body
+										 margins:    0 0 0 0
+										 layout: fit
+										 frame: false
+										 border: false
+										 xtype: form
+										 url: @Fresh.Config.Service.Form
+										 trackResetOnLoad: true
+										 focusOnNew: name
+										 loadingMsg: "<%[ Loading gallery {name} ]%>"
+										 formBaseParams:
+												 view: gallery-form-view
+										 buttonAlign: right
+										 buttons:
+												-     @this.actions.save
+												-     @this.actions.cancel
+										 plugins:
+												-    @new Ext.ux.Plugin.FormToButtons()
+										 items:
+												-    xtype: tabpanel
+														 region: west
+														 defaults:
+																hideMode: offsets
+														 activeTab: 0
+														 collapsible: false
+														 deferredRender: false
+														 layoutOnTabChange: true
+														 items:
+																		-    title: "<%[ Data CS ]%>"
+																				 xtype:     panel
+																				 id: gallery-form-panel-datacs
+																				 autoWidth: true
+																				 nnlinkedGrid: gallery-images-view
+																				 anchor: 100% 100%
+																				 layout: border
+																				 frame: true
+																				 border: true
+																				 margins: 0 0 0 0
+																				 items:
+																									-  autoWidth: false
+																										 autoHeight: true
+																										 hideMode: offsets
+																										 region: center
+																										 border: false
+																										 frame: false
+																										 layout: fit
+																										 anchor: 100% 100%
+																										 items:
+																												-    layout: form
+																														 anchor: 100% 100%
+																														 defaults:
+																																anchor: 100%
+																																xtype: textfield
+																														 items:
+																																-    xtype: hidden
+																																		 name: uid
+																																-    fieldLabel: '<%[ Name CS ]%>'
+																																		 name: nameLangCs
+																																		 allowBlank: false
+																																-    fieldLabel: '<%[ Cool Url ]%>'
+																																		 name: CoolUrl
+																																		 allowBlank: true
+																																-    xtype: fieldset
+																																		 frame: false
+																																		 border: false
+																																		 autoHeight: true
+																																		 margins: 0 0 0 0
+																																		 layout: column
+																																		 hideBorders: true
+																																		 style:
+																																					 padding: 0px
+																																		 defaults:
+																																				layout: form
+																																		 items:
+																																				-   columnWidth: 0.5
+																																						style:
+																																								padding-right: 5px
+																																						defaults:
+																																								anchor: 100%
+																																								layout: form
+																																						items:
+																																								-    fieldLabel: '<%[ Date ]%>'
+																																										 name: from_dateAsDate
+																																										 xtype: xdatefield
+																																				-   columnWidth: 0.5
+																																						style:
+																																								padding-left: 5px
+																																						defaults:
+																																								anchor: 100%
+																																								layout: form
+																																						items:
+																																								-    fieldLabel: '<%[ Author ]%>'
+																																										 name: AuthorDefault
+																																										 xtype: textfield
+																																-    fieldLabel: <%[ Category ]%>
+																																		 xtype: ccombo
+																																		 displayField: name
+																																		 valueField: uid
+																																		 hiddenName: category_id
+																																		 store: "@Ext.StoreMgr.lookup('galleries-categories-store')"
+																																-    fieldLabel: <%[ Description CS ]%>
+																																		 name: descriptionLangCs
+																																		 allowBlank: true
+																																		 xtype: ctinymce
+																																		 height: 250
+																																		 hideLabel: true
+																																		 autoHeight: false
+																																		 autoWidth: false
+																																		 anchor: 100% 80%
+																		-    title: <%[ Data EN ]%>
+																				 xtype:     panel
+																				 id: gallery-form-panel-dataen
+																				 autoWidth: true
+																				 anchor: 100% 100%
+																				 layout: border
+																				 frame: true
+																				 border: true
+																				 margins: 0 0 0 0
+																				 items:
+																									-  autoWidth: false
+																										 autoHeight: true
+																										 hideMode: offsets
+																										 region: center
+																										 border: false
+																										 frame: false
+																										 layout: fit
+																										 anchor: 100% 100%
+																										 items:
+																												-    layout: form
+																														 anchor: 100% 100%
+																														 defaults:
+																																anchor: 100%
+																																xtype: textfield
+																														 items:
+																																-    fieldLabel: '<%[ Name EN ]%>'
+																																		 name: nameLangEn
+																																		 allowBlank: true
+																																-    fieldLabel: '<%[ Description EN ]%>'
+																																		 name: descriptionLangEn
+																																		 allowBlank: true
+																																		 xtype: ctinymce
+																																		 height: 250
+																																		 hideLabel: true
+																																		 autoHeight: false
+																																		 autoWidth: false
+																																		 anchor: 100% 80%
+																		-    title: <%[ SEO ]%>
+																				 xtype:  panel
+																				 id: gallery-form-panel-seo
+																				 autoWidth: true
+																				 anchor: 100% 100%
+																				 layout: fit
+																				 frame: true
+																				 border: true
+																				 margins: 0 0 0 0
+																				 items:
+																									-  autoWidth: false
+																										 autoHeight: false
+																										 hideMode: offsets
+																										 region: center
+																										 border: false
+																										 frame: false
+																										 layout: fit
+																										 items:
+																												-    layout: form
+																														 anchor: 100% 100%
+																														 defaults:
+																																xtype: textarea
+																																allowBlank: true
+																																anchor: 100% 48%
+																														 items:
+																																-    fieldLabel: '<%[ Keywords ]%>'
+																																		 name: seo_keywords
+																																-    fieldLabel: '<%[ Description ]%>'
+																																		 name: seo_description
+																		-    id: gallery-attachments-tab
+																				 layout: border
+																				 xtype: panel
+																				 title: '<%[ Images ]%>'
+																				 xtype: panel
+																				 items:
+																								-  xtype: filetreepanel
+																									 title: <%[ Files ]%>
+																									 id: filetree-panel
+																									 region: center
+																									 url: index.php?json=fileProvider
+																									 baseParams:
+																											panel: galleries
+																									 ddGroup: gallery-attachments-view
+																									 enableProgress: false
+																									 autoScroll: true
+																								-  title: <%[ Gallery images ]%>
+																									 autoScroll: false
+																									 region: east
+																									 width: 400
+																									 autoHeight: false
+																									 split: true
+																									 autoScroll: true
+																									 frame: true
+																									 xxxxlayout: carouselvertical
+																									 layout: fit
+																									 margins: 0 0 0 5px
+																									 bodyStyle:
+																												padding: 0 0 0 0
+																									 items:
+																												-     xtype: ddautoview
+																															id: gallery-attachments-view
+																															name: images
+																															xframe: true
+																															xlayout: fit
+																															hiddenName: images
+																															dropGroup: gallery-attachments-view
+																															dragGroup: gallery-attachments-view
+																															deletable: true
+																															itemSelector: div.thumb-wrap
+																															noStorePreload: true
+																															contextMenuItems:
+																																	-   id: delete
+																																			iconCls: icon-delete
+																																			text: <%[ Delete attachment ]%>
+																															plugins:
+																																	-   "@new Ext.DataView.LabelEditor({dataIndex: 'text'})"
+ references:
+    gridPagingDef:
+         pageSize:      20
+         store:         @this.store
+         displayInfo:   true
+         displayMsg:    "Count {2}"
+         autoShow:      true
+         emptyMsg:      No customers to display
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+            tbar: 
+                -   @this.actions.saveGridTool
+                -   @this.actions.cancelGridTool
+                -   @this.actions.addGridTool
+                -   @this.actions.deleteGridTool
+                -   @this.actions.reloadGrid
+end:
+-   "@new Ext.DataView.DragSelector({dragSafe: true})"
+

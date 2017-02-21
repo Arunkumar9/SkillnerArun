@@ -1,0 +1,287 @@
+#
+#                        -     text: <%[ Save ]%>
+#                              handler: ^this.actions.saveGridHandler.createDelegate(this,['definitions-grid'],true)
+#                        -     text: <%[ Cancel ]%>
+#                              handler: ^this.actions.cancelGridHandler.createDelegate(this,['definitions-grid'],true)
+#
+description:
+    name: definitions-win
+    text: <%[ Definitions Management ]%>
+    iconCls: icon-definitions-win
+    hideIcon: true
+    findStores: true
+    authLevel: 
+        min: 300
+        max: 1000
+objects:
+     -  name: definitionsStore
+        evalTo: local
+        definition: >
+            new Ext.data.GroupingStore({
+                id: 'definitions-store',
+                url: Fresh.Config.Service.View,
+                root : 'rows',
+                baseParams: { view: 'definitions-view' },
+                reader: new Ext.data.JsonReader(),
+                remoteSort: false,
+                autoLoad: false,
+                xxgroupField: 'class',
+                listeners: {
+                            xxbeforeload: function(store,options) {
+                                  var store = Ext.StoreMgr.lookup('relateddefs-store');
+                                  if (store.recordType)
+                                    store.reload();
+                               },
+                            exception: function(proxy, type, action, options, response, e) {
+                                Fresh.console.log(e);
+                               }
+                   }
+            })
+     -  name: definitionsClassesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'classes-store',
+                autoLoad: false
+            })
+component:
+    id:              definitions-win
+    title:           <%[ Definitions Management ]%>
+    width:           1000
+    height:          500
+    x:               ^this.desktop.getWinX(1000)
+    y:               ^this.desktop.getWinY(500)
+    iconCls:         icon-definitions-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    maximized:       true
+    stateful: false
+    deferredRender: false
+    tbar:
+          -    text: <%[ New Definition ]%>
+               iconCls: icon-action
+               handler: ^this.actions.newRecordHandler.createDelegate(this,['definitions-form'],true)
+          -    xtype: tbfill
+    layout: border
+    items:
+        -    xtitle: <%[ Classes ]%>
+             split:        true
+             region: west
+             width: ^this.maxWidth(200,0.5)
+             stateful: false
+             collapsible: true
+             stateful: false
+             xtype: autogrid
+             region: west
+             id:   classes-grid
+             closable: false
+             collapsed: false
+             collapsible: false
+             clicksToEdit: 2
+             askBeforeChange: true
+             loadMask: true
+             border: true
+             deferredRender: false
+             autoWidth: true
+             autoScroll: true
+             layout: fit
+             frame: false
+             stripeRows: true
+             stateful: false
+             noStorePreload: false
+             linkedGrid: definitions-grid
+             infoField: name
+             split: true
+             loadFormFromStore: true
+             viewConfig:
+                forceFit: true
+             sm: >
+                 ^new Ext.grid.RowSelectionModel({singleSelect: true})
+             bbar: >
+                ^new Ext.PagingToolbar({
+                      pageSize:      20
+                      ,store:         'classes-store'
+                      ,displayInfo:   true
+                      ,displayMsg:    '<%[Count {2}]%>'
+                      ,emptyMsg:      '<%[No classes to display]%>'
+                 })
+             tbar:
+                -   ^this.actions.reloadGrid
+             plugins:
+                -   ^new Ext.ux.Plugin.FormToButtons()
+                -   >
+                    ^new Ext.ux.Plugin.GridLinker({
+                      clickEvent: 'rowclick',
+                      disableLinkedForm: true
+                    })
+        -    xtitle: <%[ Definitions ]%>
+             split:        true
+             region: center
+             layout: border
+             items:
+                -    split:        true
+                     region: west
+                     width: ^this.maxWidth(250,0.5)
+                     stateful: false
+                     collapsible: true
+                     stateful: false
+                     xtype: autogrid
+                     region: west
+                     id:   definitions-grid
+                     closable: false
+                     collapsed: false
+                     collapsible: false
+                     clicksToEdit: 2
+                     askBeforeChange: true
+                     loadMask: true
+                     border: true
+                     deferredRender: false
+                     autoWidth: true
+                     autoScroll: true
+                     layout: fit
+                     frame: false
+                     stripeRows: true
+                     stateful: false
+                     noStorePreload: false
+                     linkedForm: definitions-form
+                     infoField: name
+                     split: true
+                     loadFormFromStore: true
+                     view: >
+                        ^new Ext.grid.GroupingView({
+                            hideGroupedColumn: true,
+                            forceFit: true,
+                            autoFill: true,
+                            groupBy: 'class',
+                            groupTextTpl: '{text} ({[values.rs.length]})'                            
+                        })
+                     sm: >
+                         ^new Ext.grid.RowSelectionModel({singleSelect: true})
+                     bbar:
+                        -   xtype: tbfill
+                     tbar:
+                        -   ^this.actions.reloadGrid
+                        -   ^this.actions.deleteGridTool
+                     plugins:
+                        -    ^new Ext.ux.Plugin.FormLoader()
+                        -    ^new Ext.ux.Plugin.FormToButtons()
+                        -    >
+                             @new Ext.ux.grid.Search({
+                             iconCls:'icon-viewmag'
+                             ,minChars:2
+                             ,width: 200
+                             ,position: 'bottom'
+                             ,showSelectAll: false
+                             ,mode: 'remote'
+                             ,checkIndexes: ['name']
+                             ,autoFocus:false
+                             })
+                -    xtitle: <%[ Definition details ]%>
+                     split:        true
+                     region: center
+                     stateful: false
+                     collapsible: false
+                     id: definitions-form
+                     xxelements:  body
+                     xxmargins:    5 5 5 5
+                     frame: true
+                     border: false
+                     xtype: form
+                     url: ^Fresh.Config.Service.Form
+                     trackResetOnLoad: true
+                     focusOnNew: name
+                     loadingMsg: "<%[ Loading definitions {name} ]%>"
+                     formBaseParams:
+                         view: definitions-form-view
+                         UpdateRoles: 1
+                         UpdateOrderStates: 1
+                         UpdateRelatedDefs: 1
+                     buttonAlign: right
+                     buttons:
+                        -     ^this.actions.save
+                        -     ^this.actions.cancel
+                     plugins:
+                        -   ^new Ext.ux.Plugin.FormToButtons()
+                     anchor: 100% 100%
+                     listeners:
+                        actioncomplete:
+                          fn: >
+                              ^function(bf,action) {
+                                  if (action.type == 'submit' && action.result.uid ) {
+                                      var gr = Ext.getCmp('definitions-grid');
+                                      gr.getStore().on('load',function(s,r){
+                                        var rec = gr.store.getById(action.result.uid);
+                                        gr.getSelectionModel().selectRecords([rec],false);
+                                      },{scope: this, single: true});
+                                      gr.getStore().reload();
+                                  }
+                              }
+                        enable:
+                          fn: >
+                              ^function(form) {
+                                  var f_class = form.find('name','class')[0];
+                                  var f_name = form.find('name','name')[0];
+                                  if (f_class && f_name && form.formBaseParams.id=='new' && !f_class.getValue() && (rec = Ext.getCmp('classes-grid').getSelectionModel().getSelected() ) ) {
+                                    f_class.setValue(rec.get('name'));
+                                    f_name.focus();
+                                  }
+                              }
+                     defaults:
+                            xxxlayout: vbox
+                            labelWidth: 80
+                            anchor: 95%
+                            bodyStyle: "padding: 5px"
+                            xtype: textfield
+                            bindingNotAllowed: true
+                     items:
+                        -    xtype: hidden
+                             name: uid
+                        -    fieldLabel: <%[ Class ]%>
+                             xtype: ccombo
+                             displayField: name
+                             valueField: name
+                             hiddenName: class
+                             name: class
+                             ref: field_class
+                             store: classes-store
+                        -    fieldLabel: <%[ Name ]%>
+                             name: name
+                             xtype: textfield
+                             ref: field_name
+                        -    fieldLabel: <%[ Roles ]%>
+                             xtype: csuperboxselect
+                             height: 200
+                             displayField: RolePath
+                             noStoreClone: true
+                             name: RolesAsList
+                             anyMatch: true
+                             store: global-roles-store
+                        -    fieldLabel: <%[ Value ]%>
+                             name: value
+                             xtype: textarea
+                             hideLabel: false
+                             anchor: 95% -60
+references:
+end:
+                        -    fieldLabel: <%[ Roles ]%>
+                             xtype: csuperboxselect
+                             flex: 2
+                             displayField: RolePath
+                             name: RolesAsList
+                             anyMatch: true
+                             store: global-roles-store
+                        -    fieldLabel: <%[ Weight ]%>
+                             name: weight
+                             xtype: numberfield
+                             allowNegative: false
+                        -    fieldLabel: <%[ Related ]%>
+                             xtype: csuperboxselect
+                             flex: 2
+                             displayField: ClassName
+                             name: RelatedDefsAsList
+                             anyMatch: true
+                             store: relateddefs-store
+

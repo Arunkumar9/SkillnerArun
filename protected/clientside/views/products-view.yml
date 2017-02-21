@@ -1,0 +1,80 @@
+#
+# Grid with List of Products
+# name
+# deswcription
+# models/attributes
+# price and tax
+# availability
+# images
+name: products-view 
+serverSide:
+    allowedGrids: products-grid
+    recordClass: ProductRecord 
+    pageSize: 20
+    context:
+        tree-categories: 
+            condition: uid IN (SELECT product_id FROM products_categories WHERE category_id in(%filter%,0)) AND is_enabled>0
+        tree-containers:
+            condition: uid IN (SELECT product_id FROM products_containers WHERE container_id in(%filter%,0)) AND is_enabled>0
+        all-products:
+            condition: (is_enabled>0)
+        search-form:
+            filterData: AND
+        products-grid-store:
+            recordClass: ProductRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        products-grid-delete:
+            recordClass: ProductRecord
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any products in this category exist.]%>
+    sortInfo:
+        field: ordering
+        dir: ASC
+    groupBy: uid
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: ordering
+        dir: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: is_enabled
+        -    name: ordering
+             type: int
+    context:
+        base:
+            cm: 
+                -    header: Uid 
+                     width: 40 
+                     sortable: true 
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Pos 
+                     width: 50 
+                     sortable: true 
+                     align: right
+                     dataIndex: ordering
+                     editor: "@new Ext.form.NumberField()"
+                -    >
+                     @new Ext.grid.CheckColumn({ 
+                        header: 'E', 
+                        dataIndex: 'is_enabled', 
+                        tooltip: "Enabled", 
+                        width: 25, 
+                        align: 'center' 
+                     })
+end: true
+

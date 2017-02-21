@@ -1,0 +1,7 @@
+FFlowPlayer:
+    name: FFlowPlayer
+    description: flowplayer
+    t: content
+    data: 
+        ContentEditClass: FFlowPlayer
+        iconCls: image

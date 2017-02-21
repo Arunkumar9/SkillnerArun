@@ -1,0 +1,46 @@
+#
+# Grid with Categories view
+#
+#
+name: categories-view 
+serverSide:
+    allowedGrids: categories-grid
+    recordClass: SimpleCategoryRecord
+    noBlankContext: false
+    condition: uid > 0
+    context:
+        galleries-categories-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Categories saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        galleries-categories-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any news in this category exist.]%>
+    sortInfo: 
+        field:  name
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  name
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+    cm: 
+        -    header: <%[ Category ]%>
+             sortable: true 
+             dataIndex: name
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+
+

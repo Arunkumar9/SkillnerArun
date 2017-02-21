@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+
+#login-logo {
+/*	background-image: url(images/logoCustomer.jpg);*/
+	background-position: top left;
+	background-repeat: no-repeat;
+	
+}
+
+#login-form .x-plain-body {
+	background: none !important;
+/*	background-color: white;	*/ 
+}
+
+
+
+#login-win .x-window-body {
+	background-image: url(images/bckgLogin.jpg) !important;
+	background-repeat: no-repeat !important;
+	background-position: top right !important;
+	background-color: #cad8ea !important;	
+}
+
+#login-win .x-window-mc  {	
+
+/*	border-bottom: 1px solid #e5ecf5 !important;
+	border-top: 1px solid #aac2e0 !important;	
+	border-right: 1px solid #e5ecf5 !important;
+	border-left: 1px solid #aac2e0 !important;		
+*/	border: none !important;
+
+}
+	
+#login-win .x-panel-btns.x-panel-btns-right {
+/*	background-image:url(images/logoFA.jpg) !important;	*/
+	background-repeat: no-repeat;
+}
+

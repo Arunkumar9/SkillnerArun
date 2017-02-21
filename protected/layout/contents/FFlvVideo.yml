@@ -1,0 +1,14 @@
+FlvVideo:
+    name: FlvVideo
+    description: flash videomovie
+    t: content
+    data: 
+        ContentEditClass: FFlvVideo
+        iconCls: image
+OpenXBanner:
+    name: OpenXBanner
+    description: OpenX Banner
+    t: content
+    data:
+        ContentEditClass: FOpenXBanner
+        iconCls: image

@@ -1,0 +1,7 @@
+SeznamMap: 
+    name: SeznamMap
+    description: seznam map
+    t: content
+    data: 
+        ContentEditClass: Application.layout.contents.FSeznamMap
+        iconCls: image

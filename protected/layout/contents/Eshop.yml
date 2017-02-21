@@ -1,0 +1,24 @@
+EshopProductlist:
+    name: EshopProductList
+    description: product list
+    t: content
+    data:
+        ContentEditClass: EshopProductList
+        iconCls: cart
+EshopProductSidelist:
+    name: EshopProductSideList
+    description: product list side
+    t: content
+    data:
+        ContentEditClass: EshopProductSideList
+        iconCls: cart
+EshopDetailPage:
+    uid: 10
+    name: EshopDetailPage
+    description: e-shop detail page
+    t: container
+    data:
+        ContentEditClass: ContainerName
+        pagePath: shop.EshopProductDetail
+        iconCls: cart
+

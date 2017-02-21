@@ -1,0 +1,40 @@
+#
+# Grid with List of Preferences
+#  select cb.Uid from customer_preferences_backup2 as cb GROUP BY cb.CustNo,cb.preferences_Uid HAVING count(cb.preferences_Uid)>1
+#
+name: news-images-view 
+serverSide:
+    recordClass: NewsImagesRecord 
+    noBlankContext: false
+    context:
+        news-form: 
+            condition: news_uid in(%filter%)
+        news-grid: 
+            condition: news_uid in(%filter%)
+        news-form-store:
+            recordClass: NewsImagesRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[ Images saved ok. ]%>
+    sortInfo: 
+        field:  order
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    fields: 
+        -    name: uid
+        -    name: news_uid
+        -    name: objects_uid
+        -    name: objects_uidAsThumb100x100
+        -    name: text
+    tpl: >
+       <tpl for=".">
+        <div class="thumb-wrap" id="{uid}">
+        <div class="thumb"><img src="{uid}" title="{text}" style="width: 120px" /></div>
+        <span class="x-editable">{text}</span></div>
+       </tpl>
+        <div class="x-clear"></div>
+end: true
+

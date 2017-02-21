@@ -1,0 +1,240 @@
+#
+#     CRM Setup layout definition
+# CustomerTown, CustomerPostcode, CoverageArea, Delivery Run, Customer Type, Customer Status, Money Locations, Payment Type, Customer Heard, Fundraiser, Complaints, Actions
+#
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                ^function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#     -  name: Ext.ux.Plugins.DataView.js
+#        using: [ lib/ext/ux/Ext.ux.Plugins.DataView.js ]
+#
+description:
+    name: news-win
+    text: <%[ News Management ]%>
+    iconCls: icon-news-win
+    hideIcon: true
+    authLevel: 
+        min: 300
+        max: 1000
+objects:
+     -  name: languagesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'languages-store'
+            })
+     -  name: newsStore
+        evalTo: global
+        definition: >
+            new Ext.data.GroupingStore({
+                id: 'news-store',
+                url: Fresh.Config.Service.View,
+                root : 'rows',
+                baseParams: { view: 'news-view' },
+                reader: new Ext.data.JsonReader(),
+                remoteSort: true,
+                autoLoad: false
+            })
+component:
+    id:              news-win
+    title:           <%[ News Management ]%>
+    width:           1000
+    height:          700
+    x:               ^this.desktop.getWinX(1000)
+    y:               ^this.desktop.getWinY(700)
+    iconCls:         icon-news-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    maximized: true
+    layout: border
+    tbar: 
+          -    text: <%[ New News ]%>
+               iconCls: icon-action
+               handler: ^this.actions.newRecordHandler.createDelegate(this,['news-form'],true)
+          -    text: <%[ Delete news ]%>
+               iconCls: icon-delete
+               handler: ^this.actions.deleteFromGridHandler.createDelegate(this,['news-grid'],true)
+    items:
+        -    title: <%[ News List ]%>
+             xtype: autogrid
+             region: west
+             collapsible: true
+             id:   news-grid
+             collapsed: false
+             collapsible: true
+             clicksToEdit: 1
+             askBeforeChange: true
+             loadMask: true
+             border: true
+             autoWidth: true
+             autoScroll: true
+             layout: fit
+             frame: false
+             stripeRows: true
+             stateful: false
+             xheight: ^this.maxHeight(200,0.4)
+             width: ^this.maxWidth(300,0.4)
+             linkedForm: news-form
+             split: true
+             loadFormFromStore: true
+             view: >
+                ^new Ext.grid.GroupingView({
+                    hideGroupedColumn: true,
+                    forceFit: true,
+                    groupTextTpl: '{text} ({[values.rs.length]})'
+                })
+             viewConfig:
+                forceFit: true
+             sm: >
+                 ^new Ext.grid.RowSelectionModel({singleSelect: true})
+             bbar: >
+                ^new Ext.PagingToolbar({
+                      pageSize:      20
+                      ,store:         'news-store'
+                      ,displayInfo:   true
+                      ,displayMsg:    __('Count {2}')
+                      ,emptyMsg:      __('No news to display')
+                 })
+             plugins:
+                -   ^new Ext.ux.Plugin.FormLoader()
+                -   ^new Ext.ux.Plugin.FormToButtons()
+             listeners:
+                afterlayout:
+                    fn: >
+                        ^function(ct,layout) {
+                            ct.getView().refresh();
+                        }
+        -    xtitle: <%[ Edit News ]%>
+             id: news-form
+             region: center
+             elements:  body
+             margins:    0 0 0 0
+             layout: fit
+             frame: false
+             border: false
+             xtype: form
+             url: ^Fresh.Config.Service.Form
+             trackResetOnLoad: true
+             focusOnNew: name
+             loadingMsg: "<%[ Loading news {name} ]%>"
+             formBaseParams: 
+                 view: news-form-view
+             buttonAlign: right
+             buttons: 
+                -     ^this.actions.save
+                -     ^this.actions.cancel
+             plugins:
+                -    ^new Ext.ux.Plugin.FormToButtons()
+             items:
+                -  autoWidth: false
+                   autoHeight: false
+                   hideMode: offsets
+                   region: center
+                   deferredRender: false
+                   forceLayout: true
+                   layoutOnTabChange: true
+                   border: false
+                   frame: false
+                   xtype: tabpanel
+                   activeTab: 0
+                   items:
+                              -    title: <%[ Detail ]%>
+                                   layout: form
+                                   style:
+                                      padding: 5 5 5 5
+                                   defaults:
+                                      anchor: 100%
+                                      xtype: textfield
+                                   items:
+                                    -    xtype: hidden
+                                         name: uid
+                                    -    fieldLabel: '<%[ News Name ]%>'
+                                         name: name
+                                         allowBlank: false
+                                    -    xtype: fieldset
+                                         frame: false
+                                         border: false
+                                         autoHeight: true
+                                         margins: 0 0 0 0
+                                         layout: column
+                                         hideBorders: true
+                                         style:
+                                               padding: 0px
+                                         defaults:
+                                            layout: form
+                                         items:
+                                            -   columnWidth: 0.5
+                                                style:
+                                                    padding-right: 5px
+                                                defaults:
+                                                    anchor: 100%
+                                                    layout: form
+                                                items:
+                                                    -    fieldLabel: <%[ From ]%>
+                                                         name: fromDateAsDate
+                                                         xtype: xdatefield
+                                                    -    fieldLabel: <%[ To ]%>
+                                                         name: toDateAsDate
+                                                         xtype: xdatefield
+                                            -   columnWidth: 0.5
+                                                style:
+                                                    padding-left: 5px
+                                                defaults:
+                                                    anchor: 100%
+                                                    layout: form
+                                                items:
+                                                    -    fieldLabel: <%[ Language ]%>
+                                                         valueField: lang
+                                                         displayField: name
+                                                         xtype: ccombo
+                                                         hiddenName: lang
+                                                         store: languages-store
+                                                    -    fieldLabel: <%[ Category ]%>
+                                                         xtype: ccombo
+                                                         displayField: nameLangAct
+                                                         valueField: uid
+                                                         hiddenName: category
+                                                         store: newscategories-def-store
+                              -    title: <%[ Text ]%>
+                                   layout: anchor
+                                   anchor: 100% 100%
+                                   items:
+                                    -    fieldLabel: <%[ News Text ]%>
+                                         name: text
+                                         allowBlank: true
+                                         xtype: ctinymce
+                                         hideLabel: true
+                                         height: ^(this.desktop.getWinHeight()-130)
+                                         autoHeight: true
+                                         id: editor-description
+                                         anchor: 100% 100%
+ references:
+    gridPagingDef:
+         pageSize:      20
+         store:         ^this.store
+         displayInfo:   true
+         displayMsg:    "Count {2}"
+         autoShow:      true
+         emptyMsg:      No customers to display
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+            tbar: 
+                -   ^this.actions.saveGridTool
+                -   ^this.actions.cancelGridTool
+                -   ^this.actions.addGridTool
+                -   ^this.actions.deleteGridTool
+                -   ^this.actions.reloadGrid
+end:
+-   "^new Ext.DataView.DragSelector({dragSafe: true})"
+

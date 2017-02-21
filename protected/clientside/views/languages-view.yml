@@ -1,0 +1,50 @@
+#
+# Grid with Languages view
+#
+#
+name: languages-view 
+serverSide:
+    allowedGrids: languages-grid
+    recordClass: LanguageAR 
+    noBlankContext: false
+    context:
+        languages-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Languages saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        languages-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete language.]%>
+    sortInfo: 
+        field:  name
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  name
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: lang
+        -    name: name
+    cm: 
+        -    header: <%[ Language Code ]%>
+             sortable: true 
+             dataIndex: lang
+             editor: "@new Ext.form.TextField({allowBlank: false,vtype: 'alpha' })"
+        -    header: <%[ Language Name ]%>
+             sortable: true 
+             dataIndex: name
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+
+

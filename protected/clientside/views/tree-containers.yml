@@ -1,0 +1,71 @@
+#
+#
+#
+name: tree-containers
+serverSide:
+    recordClass: ContainerTagRecord
+    child: uid
+    parent: parent_id
+    folderSign: IsFolder
+    nodeTypeSign: NodeType
+    readAll: false
+    criteria:
+        rootCondition: "type_id IN('CategoriesRoot')"
+        childCondition: "type_id like 'CategoryPage'"
+        ordersBy:
+                name: ASC
+    recycleBin:
+        iconCls: ^recycle-bin
+        allowDrag: false
+        draggable: false
+        text: name
+        id: uid
+        ordering: ordering
+        qtip: ^Recycle bin
+        menuType: ^recycleBin
+        sortText: ^zzzzzzzzzzzzzzzzzzz
+        sortLeaf: true
+    folder:
+        iconCls: ^tag-red
+        allowDrag: false
+        draggable: false
+        text: name
+        id: uid
+        qtip: description
+        menuType: ^folder
+        expanded: IsFolder
+        sortText: name
+        sortLeaf: false
+        ordering: ordering
+    leaf:
+        iconCls: ^tag-green
+        text: name
+        allowDrag: true
+        allowDrop: false
+        id: uid
+        qtip: description
+        menuType: ^leaf
+        sortText: name
+        sortLeaf: true
+        ordering: ordering
+    depth: 3    
+    columnMapping:
+        ParentId: parent_id
+        Name:   name
+        Ordering: ordering
+    context:
+        tree-containers-update:
+            action: updateNodeDual
+            dataRoot: data
+            successMsg: Node updated ok.
+        tree-containers-add:
+            action: updateNodeDual
+            dataRoot: data
+            successMsg: Node inserted ok.
+        tree-containers-remove:
+            action: removeNode
+            dataRoot: data
+            successMsg: Node deleted ok.
+           
+metaData: 
+    edit: 100

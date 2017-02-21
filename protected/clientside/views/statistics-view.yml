@@ -1,0 +1,86 @@
+#
+# Grid with Payment Types view
+#
+# INSERT INTO payment_type SELECT DISTINCT null as Uid, c.PaymentTypeText as Name FROM customers c ORDER BY c.PaymentTypeText;  
+#
+# update customers c,payment_type cs set c.`PaymentType` = cs.Uid WHERE c.PaymentTypeText like cs.Name
+#
+name: clients-view
+serverSide:
+    allowedGrids: clients-grid
+    recordClass: ClientRecord
+    noBlankContext: false
+    condition: (branch_id = <%= $this->User->UserRecord->branch_id %>) OR (<%= $this->User->MaxLevel %> >= 300)
+    context:
+        tree-branch-users-user:
+            condition: be_user_id in(%filter%/1000,0)
+        tree-branch-users-branch:
+            condition: branch_id in(%filter%,0)
+        clients-management-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Users saved ok.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+        search-form:
+            filterData: AND
+        search-clients-grid:
+            filterData: OR
+        clients-management-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: Selected rows deleted ok!
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: Cannot delete row while any customer with this dealer.
+    sortInfo: 
+        field:  Name
+        dir: ASC
+metaData: 
+    root: rows
+    id: Uid
+    totalProperty: totalCount
+    sortInfo: 
+        field:  Name
+        direction: ASC
+    fields: 
+        -    name: Uid
+        -    name: Name
+        -    name: Email
+        -    name: Phone
+        -    name: Created
+             type: date
+             dateFormat: U
+        -    name: Updated
+             type: date
+             dateFormat: U
+        -    name: branch_id
+        -    name: be_user_id
+    context:
+        base:
+            cm:
+                -    header: <%[Name]%>
+                     sortable: true
+                     dataIndex: Name
+                -    header: <%[Phone]%>
+                     sortable: true
+                     dataIndex: Phone
+                -    header: <%[Date]%>
+                     sortable: true
+                     dataIndex: Created
+                     renderer: "^Ext.util.Format.dateRenderer('d.m.Y')"
+        clients-management-grid:
+            cm:
+                -    header: <%[Name]%>
+                     sortable: true
+                     dataIndex: Name
+                -    header: <%[Phone]%>
+                     sortable: true
+                     dataIndex: Phone
+                -    header: <%[Date]%>
+                     sortable: true
+                     dataIndex: Created
+                     renderer: "^Ext.util.Format.dateRenderer('d.m.Y')"
+
+

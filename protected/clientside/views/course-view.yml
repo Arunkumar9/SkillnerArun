@@ -1,0 +1,78 @@
+#
+# API for courses (videos)
+# 
+name: courses-view
+serverSide:
+    allowedGrids: videos-grid
+    recordClass: CourseRecord
+    pageSize: 50
+    condition: <%= CourseRecord::getNoContextSql() %>
+    noBlankContext: false
+    context:
+        store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        tree-containers-course:
+            condition: <%= CourseRecord::getContextSql() %>
+        course-tags-grid:
+            condition: <%= CourseRecord::getContextSql() %>
+        search-courses-grid:
+        	condition: <%= CourseRecord::getCourseSearchContextSql() %>
+        courses-grid-delete:
+            action: callMethod
+            method: deleteNotFinished
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any videos if this category exist.]%>
+		courses-grid-duplicate:
+            action: callMethod
+            method: duplicateCourseRecord
+            dataRoot: rows
+            successMsg: <%[Selected rows duplicated ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot duplicate the row ]%>
+    sortInfo:
+        field: name
+        dir: ASC
+metaData: 
+    root: rows
+    id: content_id
+    totalProperty: totalCount
+    sortInfo:
+        field: name
+        dir: ASC
+    fields: 
+        -    name: content_id
+        -    name: uid
+        -    name: name
+        -    name: is_finished
+             type: int
+        -    name: user_id
+        -    name: description
+    context:
+        base:
+            cm: 
+                -    header: ID 
+                     width: 40 
+                     hidden: true
+                     sortable: true 
+                     dataIndex: content_id
+                     align: right
+                -    header: Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    width: 24
+                     header: Status
+                     qtip: Status
+                     xtype: templatecolumn
+                     dataIndex: is_finished
+                     align: center
+                     tpl: >
+                          <div ext:qtip="<tpl if="is_finished==1">finished</tpl><tpl if="is_finished==0">not finished</tpl>" class='icon-size-fit <tpl if="is_finished==1">icon-lock</tpl><tpl if="is_finished==0">icon-unlock</tpl>'></div>
+end: true
+

@@ -1,0 +1,60 @@
+#
+# Grid with Currencies view
+#
+#
+name: hdcloudjobs-view
+serverSide:
+    allowedGrids: dcloudjobs-grid
+    recordClass: HDCloudJobRecord
+    noBlankContext: false
+    context:
+        hdcloudjobs-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete language.]%>
+    sortInfo: 
+        field:  id
+        dir: DESC
+metaData: 
+    root: rows
+    id: id
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  id
+        direction: DESC
+    fields: 
+        -    name: id
+        -    name: current_progress
+        -    name: current_status
+        -    name: current_step
+        -    name: encoded_filename
+        -    name: remote_id
+        -    name: encoding_profile_id
+        -    name: bitrate
+        -    name: resolution
+    cm: 
+        -    header: <%[ ID ]%>
+             sortable: true 
+             dataIndex: id
+        -    header: <%[ Progres ]%>
+             sortable: true 
+             dataIndex: current_progress
+        -    header: <%[ Status ]%>
+             sortable: true 
+             dataIndex: current_status
+        -    header: <%[ File ]%>
+             sortable: true 
+             dataIndex: encoded_filename
+        -    header: <%[ Encoding ]%>
+             sortable: true 
+             dataIndex: encoding_profile_id
+        -    header: <%[ Bitrate ]%>
+             dataIndex: bitrate
+        -    header: <%[ Resolution ]%>
+             dataIndex: resolution
+
+

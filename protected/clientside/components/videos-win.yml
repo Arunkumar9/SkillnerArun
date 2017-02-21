@@ -1,0 +1,1346 @@
+#
+#     CRM categorys layout definition
+#     listeners:
+#        beforeclose: 
+#            fn: >
+#                ^function(p) {
+#                    Ext.MessageBox.alert('Closing',p.title);
+#                    return false;
+#                }
+description:
+    name: videos-win
+    authLevels: true
+    text: <%[ Lessons Management ]%>
+    iconCls: icon-videos-win
+    hideIcon: <%= ($this->User->Level<100)?1:0 %>
+    autoRun: false
+    authLevel: 
+        min: 60
+        max: 1000
+objects:
+     -  name: FileTreeGridDnD
+        using:  lib/ext/ux/FileTreeGridDnD.js
+     -  name: ImportWindowSWP
+        using:  resources/ImportTitlesWindowSWP.js
+     -  name: lessonStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'lesson-store',
+            })
+     -  name: bPossitionStore
+        evalTo: global
+        definition: >
+            new Ext.data.ArrayStore({
+                id: 'bPossition-store',
+                fields: [
+		            'myId',
+		            'displayText'
+		        ],
+		        data: [['CM', 'Center middle'], ['RB', 'Right bottom']]
+            })
+     -  name: cuepointsStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'cuepoints-store',
+                autoLoad: false,
+                listeners: {
+                            loadexception: function(proxy, store, response, e) {
+                                Fresh.console.log(e);
+                            }
+                   }
+            })
+     -  name: markercuepointsStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'markercuepoints-store',
+                autoLoad: false,
+                listeners: {
+                            loadexception: function(proxy, store, response, e) {
+                                Fresh.console.log(e);
+                               }
+                   }
+            })
+     -  name: adssStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'ads-store',
+                autoLoad: false,
+                listeners: {
+                            loadexception: function(proxy, store, response, e) {
+                                Fresh.console.log(e);
+                               }
+                   }
+            })
+     -  name: videoImagesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'video-images-store'
+            })
+     -  name: languagesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'languages-store'
+            })
+     -  name: videocaptionsstore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'video-captions-store',
+                pruneModifiedRecords: true
+            })
+     -  name: videoFilesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'video-files-store'
+            })
+     -  name: containersStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'containers-store'
+            })
+     -  name: containersStore2
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'all-containers-store'
+            })
+     -  name: chaptersRowExpander
+        evalTo: global
+        definition: >
+            new Ext.grid.RowExpander({
+                enableCaching: false,
+                tpl : new Ext.Template(
+                '<p style = "padding-left: 50px;">{transcript}</p>'
+                )
+            })
+     -  name: lessonTagsSelModel
+        evalTo: local
+        definition: >
+            new Ext.grid.CheckboxSelectionModel({
+            		header:'<div class="x-grid3-hd-tag">&#160;</div>'
+			})
+component:
+     id:              videos-win
+     title:           <%[ Lessons Management ]%>
+     width:           ^this.winWidth
+     height:          ^this.winHeight
+     x:               ^this.desktop.getWinX(this.winWidth)
+     y:               ^this.desktop.getWinY(this.winHeight)
+     iconCls:         icon-videos-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader:     true
+     minimizable:          true
+     stateful: false
+     maximizable:          true
+     layout: border
+     listeners:
+        beforeclose:
+                fn: "^this.actions.askBeforeCloseHandler.createDelegate(this,['video-form'],true)"
+     items:
+       #
+       #     West panel with filter and search tabs
+       #
+       -    title: <%[ Tags ]%>
+            region: west
+            collapsible: true
+            collapsed: false
+            width: ^this.maxWidth(140,0.1)
+            split: true
+            layout: fit
+            xtype: grid
+            id: lesson-tags-grid
+            store: ^Fresh.global.containersStore2
+            stateful: false
+            linkedGrid: videos-grid
+            viewConfig: 
+               forceFit: true
+            sm: ^this.lessonTagsSelModel
+            cm: >
+                ^new Ext.grid.ColumnModel({
+                    columns:[ this.lessonTagsSelModel, { dataIndex: 'name', header: __('Name') }]
+                })
+            plugins:
+                -    ptype: pgridlinker
+                     clickEvent: rowclick
+                     disableLinkedForm: true
+                     fireNoSelection: true
+                     promptbeforeload:true
+           #
+           #     end of westregion
+           #
+      #
+      #     Center panel splits to east with grid and center with tabpanel
+      #
+      #-    region:          center
+      #     border:          false
+      #     layout:          border
+      #     margins:         0 0 0 0
+      #     items:
+        #
+        #     Panel with grid with categorys
+        #
+       -	region:   center
+			layout:   border
+			margins:  0 0 0 0
+			items:
+		       -    title:        <%[ List of lessons ]%>
+		            region:       west
+		            elements:     body
+		            split:        true
+		            layout:      fit
+		            collapsible: true
+		            width:      ^this.maxWidth(350,0.7)
+		            stateful: true
+		            items:
+		                        -    xtype:    autogrid 
+		                             id:    videos-grid
+		                             loadMask: true
+		                             store:    lesson-store
+		                             sm: >
+		                                ^new Ext.grid.RowSelectionModel({singleSelect: true})
+		                             stripeRows: true
+		                             viewConfig: 
+		                                forceFit: true
+		                             anchor:   100% 100%
+		                             stateful: false 
+		                             bbar: "^new Ext.PagingToolbar(%gridPagingDef%)"
+		                             clicksToEdit: 1
+		                             infoField: name
+		                             linkedForm: video-form
+		                             noStorePreload: false
+		                             listeners:
+		            					sortchange:
+		            						fn: >
+		                   						^function( comp , sortinfo ){
+		                   							if( sortinfo.direction ){
+			                   							var store = comp.getStore();
+										                store.baseParams.dir = sortinfo.direction;
+			                   							store.load(sortinfo.direction);
+		                   							}
+		                   						}
+		                             tbar: 
+		                                 -     text: <%[ New ]%>
+								               iconCls: icon-action
+								               xscale: large
+								               handler: >
+								                        ^function(button,e) {
+								                            var gr = Ext.getCmp('videos-grid');
+								                            Fresh.global.actions.newRecordHandler(button,e,'video-form');
+								                        }
+										 -     text: <%[ Duplicate ]%>
+								               iconCls: icon-action
+								               xscale: large
+								               handler: >
+								                        ^function(button,e) {
+								                            var gr = Ext.getCmp('videos-grid');
+								                            var form  = Ext.getCmp('video-form');
+								                            Fresh.global.actions.duplicateRecordHandler(gr,button,e,'video-form'); 
+								                         }
+								         -     ^this.actions.deleteGridTool
+		                             plugins:
+		                                 -    pformtobuttons
+		                                 -    pformloader
+		                                 -    ptype: pgridsearch
+		                                      iconCls: icon-viewmag
+		                                      searchText: ''
+		                                      minChars: 3
+		                                      autoWidth: false
+		                                      align: right
+		                                      width: 150
+		                                      position: top
+		                                      showSelectAll: false
+		                                      viewContext : search-videos-grid
+		                                      disableIndexes: 
+		                                          - ImprintCount
+		                                          - Created
+		                                          - CreatorName
+		                                          - ContentCreator
+		                                          - is_finished
+		                                      mode: remote
+		                                      autoFocus: false
+		                                      showMenu: false
+		        #
+		        # Tab panel with forms
+		        #
+		       -    title:      <%[ Lesson ]%>
+		            region:     center
+		            id:         video-form-east-region
+		            elements:     body
+		            margins:    0 0 0 0
+		            split:      true
+		            hideMode: offsets
+		            layout:     fit
+		            width:    ^this.maxWidth(900,0.6)
+		            frame: true
+		            items: 
+		                -  xtype:     form
+		                   id: video-form
+		                   url: ^Fresh.Config.Service.Form
+		                   trackResetOnLoad: true
+		                   autoWidth: true
+		                   hideMode: offsets
+		                   xlinkedGrid: cuepoints-grid
+		                   autogridId: cuepoints-grid
+		                   selGrid:videos-grid lesson-tags-grid     #using that attribute inorder to clear the selections
+		                   loadingMsg: "Loading {name}"
+		                   xxfocusOnNew: NameFirst
+		                   askBeforeLoad: true
+		                   formBaseParams: 
+		                       view: lesson-form-view
+		                       UpdateCategories: 1
+		                       UpdateAvalton: 1
+		                   buttonAlign: right
+		                   buttons: 
+		                       -    text: <%[  Save ]%>
+		                            iconCls: icon-ok
+		                            minWidth: 75
+		                            id: video-form-save-button
+		                            handler: >
+		                                     ^function(b,e){
+		                                        var store = Ext.getCmp('video-captions-grid').getStore();
+		                                        var canNotSave = false,index =0;
+		                                        var langsentries ={};
+		                                        store.each(function(r){
+		                                            if( Ext.isEmpty(r.get('language_id') ) ){
+		                                                canNotSave = 'cannot save video captions with out language , please select the language for <br> <b>' + r.get('name');
+		                                                return false;
+		                                            }
+		                                            index++;
+		                                        });
+		                                        if( !canNotSave ){
+		                                            MyDesktop.actions.saveFormHandler(b,e,'video-form');
+		                                        }else{
+		                                            Ext.Msg.alert('Cannot Save',canNotSave ,function(){
+		                                                var tab = Ext.getCmp('video-captions-tab');
+		                                                var tabPanel = Ext.getCmp('video-form-panel');
+		                                                tabPanel.setActiveTab( tab );
+		                                                try{
+		                                                Ext.getCmp('video-captions-grid').getSelectionModel().selectRow(index);
+		                                                Ext.getCmp('video-captions-grid').startEditing(index,3);
+		                                                }catch(e){
+		                                                Ext.getCmp('video-captions-grid').getSelectionModel().selectRow(index);
+		                                                }
+		                                            } );
+		                                        }
+		                                        var markerGrid = Ext.getCmp('markercuepoints-grid');
+		                                        var smo = markerGrid.getSelectionModel();
+		                                        smo.clearSelections();
+		                                        if(markerGrid.store.data.length > 0){
+		                                        	for(var i=0 ; i< markerGrid.store.data.length ; i++){
+		                                        		markerGrid.store.data.items[i].data.isActive = 0;
+		                                        	}
+		                                        	var header = '<div class="x-grid3-hd-tag">&#160;</div>';
+		                							markerGrid.getColumnModel().setColumnHeader(0,header);
+		                                        }
+		                                        var polltask = new Ext.util.DelayedTask();
+										        polltask.delay(1500, function() {
+										           var grid = Ext.getCmp('markercuepoints-grid');
+										           grid.getStore().reload();
+										        }, markerGrid);
+		                                        var cuepointGrid = Ext.getCmp('cuepoints-grid');
+		                                        cuepointGrid.getStore().load();
+		                                     }
+		                       -    text: <%[  Finalize ]%>
+		                            iconCls: icon-lock
+		                            minWidth: 75
+		                            id: video-form-finalize-button
+		                            handler: >
+		                                      ^function(b,e) {
+		                                        var fin,f = this.findParentByType('form');
+		                                        Ext.MessageBox.confirm(__('Confirm'), __('Really want to FINALIZE? Cannot be changed later!'), function(btn, text){
+		                                            if (btn == 'yes') {
+		                                                b.form  = f;
+		                                                if (fin = f.getForm().findField('Finalized'))
+		                                                    fin.setValue(1);
+		                                                Ext.getCmp('video-form-save-button').setDisabled(true);
+		                                                b.setDisabled(true);
+		                                                MyDesktop.actions.saveFormHandler(b,e,'video-form');
+		                                            }
+		                                        },this);                                        
+		                                      }
+		                       -    text: <%[  Cancel ]%>
+		                            iconCls: icon-cancel
+		                            minWidth: 75
+		                            id: video-form-cancel-button
+		                            handler: ^this.actions.cancelFormHandler.createDelegate(this,['video-form'],true)
+		                   listeners:
+		                      actioncomplete:
+		                        fn: >
+		                            ^function(bf,action) {
+		                                if (action.type == 'submit' && action.result.content_id ) {
+		                                    var rec,p,form=Ext.getCmp('video-form'),
+		                                        gr = Ext.getCmp('videos-grid');
+		                                    form.formBaseParams.id = action.result.content_id;
+		                                    if( this.new ){
+		                                        gr.getStore().baseParams.filter = '';
+		                                        gr.getStore().baseParams.context = '';
+		                                        var pageSize = gr.getBottomToolbar().pageSize;
+		                                        var startValue = 1*( action.result.pageNumber - 1) * pageSize;
+												gr.getStore().load({
+													params: {
+							                            start: startValue,
+							                            limit: pageSize
+							                        }
+												});
+		                                        this.new = false;
+		                                    }
+		                                    else{
+		                                    	var pageSize = gr.getBottomToolbar().pageSize;
+		                                    	var startValue = 1*( action.result.pageNumber - 1) * pageSize;
+		                                    	gr.getStore().load({
+													params: {
+							                            start: startValue,
+							                            limit: pageSize
+							                        }
+												});
+		                                    }
+		                                    var cuepointstore = Ext.getCmp('cuepoints-grid').getStore();
+		                                    cuepointstore.baseParams.context = 'videos-grid';
+		                                    cuepointstore.baseParams.filter = action.result.content_id;
+		                                    cuepointstore.reload();
+		                                    var ddview = Ext.getCmp('video-tfiles-view');
+		                                    ddview.isDirtyFlag=false;
+		                                    var markercuepointstore = Ext.getCmp('markercuepoints-grid').getStore();
+		                                    markercuepointstore.baseParams.context = 'videos-grid';
+		                                    markercuepointstore.baseParams.filter = action.result.content_id;
+		                                    markercuepointstore.reload();
+		                                }
+		                                if (action.type == 'load' ){
+		                                if( action.result.data.content_id == null){
+		                                  }else{
+		                                       var captionsGrid = Ext.getCmp('video-captions-grid');
+		                                       var form=Ext.getCmp('video-form');
+		                                       captionsGrid.getStore().baseParams.filter =form.formBaseParams.id;
+		                                       captionsGrid.getStore().baseParams.context=form.id;
+		                                  }
+		                                  }
+		                                 var  gr = Ext.getCmp('videos-grid');
+		                                   gr.getStore().on('load',function(s,r){
+		                                   		var form=Ext.getCmp('video-form');
+		                                   		if( gr.duplicateContentId ){
+		                                   			rec = s.getById(gr.duplicateContentId);
+		                                   		} else {
+			                                        rec = s.getById(form.getForm().findField('content_id').value);
+		                                   		}
+		                                      if(rec && gr.getStore() ){
+		                                      var seectedRecord = gr.getSelectionModel().getSelected();
+		                                      if( !seectedRecord ||  rec.id != seectedRecord.id ){
+			                                      gr.getSelectionModel().selectRecords([rec],false);
+			                                      var index = gr.getStore().indexOf(rec);
+			                                      gr.getView().focusRow( index );
+			                                      gr.fireEvent('rowclick',gr,{});
+			                                  }
+			                                  if( rec && rec.get('name')){
+			                                  	form.ownerCt.setTitle('Lesson: '+rec.get('name'));
+			                                  }
+		                                      }
+		                                    },{scope: this, single: true});
+		                            }
+		                   plugins:
+		                       -   ^new Ext.ux.Plugin.FormToButtons()
+		                       -   ^new Ext.ux.Plugin.SecureFormFields()
+		                   items:
+		                       -   id: video-form-panel
+		                           autoWidth: true
+		                           anchor: 100% 100%
+		                           border: true
+		                           frame: true
+		                           xtype: tabpanel
+		                           deferredRender: false
+		                           layoutOnTabChange: false
+		                           activeTab: 0
+		                           hideMode: offsets
+		                           margins: 0 0 0 0
+		                           listeners:
+		                            	tabchange:
+		                            	       fn: >
+		                            	           ^function( comp, tab ){
+		                            	           		if(tab){
+		                            	           			var grid = null;
+		                            	           			if(tab.id == 'video-markercuepoints-tab'){
+		                            	           				grid = Ext.getCmp('markercuepoints-grid');
+		                            	           			} else if(tab.id == 'video-cuepoints-tab'){
+		                            	           				grid = Ext.getCmp('cuepoints-grid');
+		                            	           			}
+			                        	           			if(grid != null){
+												                var map = new Ext.KeyMap(Ext.getBody(), [{
+																	key: "v",
+																	ctrl:true,
+																	fn: function(eventKey,eventObj) {
+																		var titleWin = Ext.getCmp('import-titles-win');
+																		if(!titleWin && ( comp.getActiveTab().id == 'video-markercuepoints-tab' || comp.getActiveTab().id == 'video-cuepoints-tab')	)	{
+																			var ta = document.createElement('textarea');
+																			ta.id = 'cliparea';
+																			ta.style.position = 'absolute';
+																			ta.style.left = '-1000px';
+																			ta.style.top = '-1000px';
+																			ta.value = '';
+																			document.body.appendChild(ta);
+																			document.designMode = 'off';
+																			setTimeout(function(){
+																				if(tab.id == 'video-markercuepoints-tab'){
+							                            	           				MyDesktop.actions.getRecsFromCsvForMarkers(grid, ta);
+							                            	           			} else if(tab.id == 'video-cuepoints-tab'){
+							                            	           				MyDesktop.actions.getRecFromCsvForCuepoints(grid, ta);
+							                            	           			}
+																			}, 100);
+																			ta.focus();
+																			ta.select();
+																		}
+																	},scope:grid
+																}]);
+															} else {
+																var map = new Ext.KeyMap(Ext.getBody(), [{
+																    key: "v",
+																	ctrl:true,
+																	fn: function(eventKey,eventObj) {
+																		console.log('When came to the other tabs of the window');
+																	}
+																}]);
+															}
+														}
+		                            	           }
+		                           defaults:
+		                             autoWidth: false
+		                             autoHeight: false
+		                             hideMode: offsets
+		                             region: center
+		                             frame: true
+		                             anchor: 100% -10
+		                             layout: form
+		                             labelWidth: 120
+		                             bodyStyle:
+		                               padding: 5px 5px 5px 5px
+		                             defaults:
+		                                anchor: 100%
+		                                xtype: textfield
+		                           
+		                           items:
+		                              -  title: <%[ Data ]%>
+		                                 autoWidth: false
+		                                 autoHeight: false
+		                                 cls: windowsdatatabcls
+		                                 hideMode: offsets
+		                                 region: center
+		                                 frame: true
+		                                 anchor: 100% -10
+		                                 layout: form
+		                                 bodyStyle:
+		                                   padding: 5px 5px 5px 5px
+		                                 defaults:
+		                                    anchor: 100%
+		                                    xtype: textfield
+		                                 items:
+		                                    -    xtype: hidden
+		                                         name: uid
+		                                    -    xtype: hidden
+		                                         name: Finalized
+		                                    -    xtype: hidden
+		                                         name: content_id
+		                                    -    fieldLabel: '<%[ Name ]%>'
+		                                         name: name
+		                                         emptyText : New Lesson (Change Me)
+		                                         allowBlank: false
+		                                         enableKeyEvents: true
+		                                         listeners:
+		                                         		keyup: 
+											               fn: >
+											                   ^function(field){
+												                   checkString = field.getValue();
+												                   if ( checkString != "" ) {
+																	    if ( ( /[^A-Za-z. _\d]/ ).test(checkString)) {
+																	        Ext.MessageBox.alert("Error","Lesson Name Shouldn't Contain Special Characters",function(btn,text){
+			                                                					if( btn == "ok" ){
+				                                                					field.reset();
+																			        return false;
+																		        }
+																	        });
+																	    }
+																	}
+											                   }
+		                                    -    fieldLabel: '<%[ Description ]%>'
+		                                         name: description
+		                                         emptyText : New Lesson (Change Me)
+		                                         allowBlank: true
+		                                         xtype: textarea
+		                                         height: 100
+		                                    -    fieldLabel: <%[ Tags ]%>
+		                                         name: CategoriesList
+		                                         dataIndex: CategoriesList
+		                                         allowBlank: true
+		                                         xtype: csuperboxselect
+		                                         displayField: name
+		                                         valueField: uid
+		                                         store: containers-store
+		                                         width: 400
+		                                         plugins:
+		                                            -   pddsuperboxselect
+		                                    -    fieldLabel: '<%[ Predefined Task ]%>'
+		                                         name: PredefinedTask
+		                                         dataIndex: PredefinedTask  
+		                                         allowBlank: true
+		                                         xtype: checkbox
+		                                    -    fieldLabel: '<%[ Automatic playback pause after each chapter ]%>'
+		                                         name: chapterplaybackpause
+		                                         hidden:true
+		                                         dataIndex: chapterplaybackpause
+		                                         allowBlank: true
+		                                         width: 400
+		                                         xtype: checkbox
+		                              -    id: video-cuepoints-tab
+		                                   xtype: panel
+		                                   title: <%[ Chapters and Scripts ]%>
+		                                   tbar:
+		                                    -    xtype:    container
+		                                         id: cuepointerrorcontent
+		                                         html:'<p style="color:red;font-size: medium;">Some cells have incorrect data.Please correct the data.</p>'
+		                                         hidden:true
+		                                         cls:'marker-error-cell'
+		                                    -    text: <%[  menu.ImportTitles ]%>
+		                                         iconCls: icon-gear32
+		                                         id: lesson-import-chapters
+		                                         scale: large
+		                                         width: 150
+		                                         hidden:true
+		                                         handler: >
+		                                                  ^function(b,e) {
+		                                                      var rv = new DTV.ImportTitlesWindow;
+		                                                      rv.init( b );
+		                                                  }
+		                                    -	 '->'
+		                                    -    text: <%[  Import script ]%>
+		                                         iconCls: icon-gear32
+		                                         id: lesson-import-script-button
+		                                         scale: large
+		                                         width: 150
+		                                         handler: >
+		                                                  ^function(b,e) {
+		                                                      var rv = new DTV.ImportTitlesWindow;
+		                                                      rv.init( b );
+		                                                  }
+		                                   defaults:
+		                                      anchor: 100%
+		                                      xtype: panel
+		                                   items:
+		                                      -    xtype:    autogrid
+		                                           id:       cuepoints-grid
+		                                           loadMask: true
+		                                           width:    100%
+		                                           clicksToEdit: 1
+		                                           border:   false
+		                                           stateful: false
+		                                           ref: ../../linkedGrid
+		                                           anchor:   100% 90%
+		                                           stripeRows: true
+		                                           noStorePreload: false
+		                                           saveFullRecord:true
+		                                           viewConfig:
+		                                              forceFit: true
+		                                           sm: >
+		                                               ^new Ext.grid.CheckboxSelectionModel({moveEditorOnEnter:false})
+	                                               cm: >
+										               ^new Ext.grid.ColumnModel({
+										               })
+		                                           tbarCfg:
+		                                                id: chapters-grid-toolbar
+		                                           tbar:
+		                                              -   ^this.actions.addGridTool
+		                                              -   ^this.actions.deleteGridTool
+		                                              -   ^this.actions.cancelGridTool
+		                                              -   ^this.actions.reloadGrid
+		                                              -   '->'
+		                                              -   ^this.actions.cuepointsHelpWin
+		                                           plugins:
+		                                              -   pformtobuttons
+		                                              -   ^Fresh.global.chaptersRowExpander
+		                                           listeners:
+		                                                  rowclick:
+						                     	   	   	        fn: >
+						                     	   	   	            ^function( comp, rowIndex, e ){
+				                     	   	   	            		     var grid = Ext.getCmp('cuepoints-grid'),
+				                     	   	   	            		     rowSelectionMoodel = grid.getSelectionModel();
+				                     	   	   	            		     grid.gRow = rowIndex;
+																	     grid.gCol = 0;
+																	     if(e.target.className != 'x-grid3-row-checker'){
+							                     	   	   	          		var totalRows = comp.getStore().data.items.length;
+								                     	   	   	          	for(var i=0 ; i< totalRows ; i++){
+								                     	   	   	          	    if(comp.getStore().data.items[i].id == comp.getStore().data.items[rowIndex].id){
+								                     	   	   	          			comp.getStore().data.items[i].data.isActive = 1;
+								                     	   	   	          		} else {
+								                     	   	   	          			comp.getStore().data.items[i].data.isActive = 0;
+								                     	   	   	          		}
+								                     	   	   	          	}
+								                     	   	   	          	var header = '<div class="x-grid3-hd-tag">&#160;</div>';
+								                     	   	   	          	comp.getColumnModel().setColumnHeader(0,header);
+						                     	   	   	          		 }
+						                     	   	   	               }
+														  viewready:
+														  		 fn: >
+														  		 	 ^function( grid ){
+														  		 	 	grid.getStore().on('load', function(store,record){
+														  		 	 		var selection = Ext.getCmp('videos-grid').getSelectionModel().getSelections()[0];
+														  		 	 		if( selection ){
+															  		 	 		 var isFinished = selection.get('is_finished'),
+																  		 	 		importScript = Ext.getCmp('lesson-import-script-button');
+						                   										importScript.setDisabled( (store.getCount() > 0 && !isFinished ) ? false : true );
+														  		 	 		}
+														  		 	 	},this);
+														  		 	 	Ext.apply(Ext.form.VTypes, {
+																		    cuepointtime: function(val, field) {
+																		        if(val != "" && !Ext.isEmpty(val)){
+																			    	var timeTest = /^([0-9][0-9]|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])$/i;
+																			    	var result = timeTest.test(val);
+																			    	var isHaveErrorData = false;
+																			    	var grid = Ext.getCmp('cuepoints-grid');
+																		    		var columnIndex = grid.mcColumnIndex;
+												       							   	var rowIndex    = grid.mcRowIndex;
+												           							var desiredCell = grid.getView().getCell(rowIndex,columnIndex);
+												           							if(!grid.isVisitedGridChange && !grid.enterEventClicked){
+																				    	if(!result){
+																				    	    desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+														           							desiredCell.className += " cell-incorrect-data";
+																				    		isHaveErrorData = true;
+																				    	} else {
+																				    		desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+																				    	}
+																				    	if(isHaveErrorData){
+																							Ext.getCmp('video-form-save-button').setDisabled(true);
+											 												Ext.getCmp('video-form-finalize-button').setDisabled(true);
+											 											}else{
+											 												var store = grid.getStore();
+											 												var isfoundError = false;
+											 												for(var cue=0 ; cue < store.data.items.length ; cue++){
+																								var cueRecord = store.getAt(cue);
+																								var startTime = cueRecord.get('startFormated');
+																								var cueResult = timeTest.test(startTime);
+																								if(cueResult){
+																									isfoundError = false;	
+																								}else{
+																									isfoundError = true;
+																									break;	
+																								}
+																							}
+																							if(!isfoundError){
+												 												var coursegrid = Ext.getCmp('videos-grid');
+														                                        var courseSelectedRec = coursegrid.getSelectionModel().getSelections()[0];
+														                                        if(courseSelectedRec.get('is_finished') == 0){
+												 													Ext.getCmp('video-form-save-button').setDisabled(false);
+												 													Ext.getCmp('video-form-finalize-button').setDisabled(false);
+												 												}
+											 												}
+											 											}
+																			    		return result;
+										 											}else{
+										 												grid.isVisitedGridChange =false;
+										 											}
+										 											return true;
+																		    	}else{
+																		    		return true;
+																		    	}
+																		    },
+																		    cuepointtimeText: 'Not a valid time',
+																		    cuepointtimeMask: /[\d:]/i
+																		});
+														  		 	 }
+														headerclick:
+				                             					 fn: >
+						                     	   	   				 ^function(comp, columnIndex, e){
+						                     	   	   				    if(columnIndex == 0){
+						                     	   	   				    	var header = '<div class="x-grid3-hd-tag">&#160;</div>';
+						                     	   	   				    	if(comp.getColumnModel().lookup.checker.header == '<div class="x-grid3-hd-tag">&#160;</div>'){
+						                     	   	   				    		header = '<div class="x-grid3-row-checker" style="background-position: -23px 1px;">&#160;</div>';
+						                     	   	   				    		comp.getSelectionModel().selectRange( 0, comp.store.data.length, true );
+						                     	   	   				    		var storeItems = comp.store.data.items;
+						                     	   	   				    		for(var i=0;i<storeItems.length ; i++){
+						                     	   	   				    			storeItems[i].data.isActive = 1;
+						                     	   	   				    		}
+						                     	   	   				    	} else {
+						                     	   	   				    		header = '<div class="x-grid3-hd-tag">&#160;</div>';
+						                     	   	   				    		comp.getSelectionModel().deselectRange( 0, comp.store.data.length );
+						                     	   	   				    		var storeItems = comp.store.data.items;
+						                     	   	   				    		for(var i=0;i<storeItems.length ; i++){
+						                     	   	   				    			storeItems[i].data.isActive = 0;
+						                     	   	   				    		}
+						                     	   	   				    	}
+						                     	   	   				    	comp.getColumnModel().setColumnHeader(0,header);
+						                     	   	   				    }
+						                     	   	   				 }
+														cellclick:
+															   fn: >
+															       ^function( comp, rowIndex, columnIndex, e ){
+															       		comp.mcRowIndex = rowIndex;
+															       		comp.mcColumnIndex = 3;
+															       }
+													identifyErrorCell:
+															       fn: >
+															           ^function( comp ){
+																       		var grid = comp;
+																     		var store = grid.getStore();
+																			var timeTest = /^([0-9][0-9]|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])$/i;
+																     		var errorCmp = Ext.getCmp('cuepointerrorcontent');
+																     		for(var cue=0 ; cue < store.data.items.length ; cue++){
+																				var cueRecord = store.getAt(cue);
+																				var startTime = cueRecord.get('startFormated');
+																				var result = timeTest.test(startTime);
+																				var desiredCell = grid.getView().getCell(cue,3);
+																				if(result){
+																               		desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+																				}else{
+																					desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+																					desiredCell.className += " cell-incorrect-data";
+																				}
+																			}
+																			var isfoundError = false;
+																			for(var cueVal=0 ; cueVal < store.data.items.length ; cueVal++){
+																				var cueRec = store.getAt(cueVal);
+																				var puseTime = cueRec.get('startFormated');
+																				var result = timeTest.test(puseTime);
+																				if(result){
+																					isfoundError = false;	
+																				}else{
+																					isfoundError = true;
+																					break;	
+																				}
+																			}
+																			if(isfoundError){
+																				errorCmp.setVisible(true);
+																				grid.isfoundError = true;
+																				Ext.getCmp('video-form-save-button').setDisabled(true);
+								 												Ext.getCmp('video-form-finalize-button').setDisabled(true);
+								 											}else{
+								 												errorCmp.setVisible(false);
+								 												grid.isfoundError = false;
+								 												var markerGrid = Ext.getCmp('markercuepoints-grid');
+								 												if(!markerGrid.isfoundError){
+								 													var coursegrid = Ext.getCmp('videos-grid');
+											                                        var courseSelectedRec = coursegrid.getSelectionModel().getSelections()[0];
+											                                        if(courseSelectedRec.get('is_finished') == 0){
+									 													var coursegrid = Ext.getCmp('videos-grid');
+												                                        var courseSelectedRec = coursegrid.getSelectionModel().getSelections()[0];
+												                                        if(courseSelectedRec.get('is_finished') == 0){
+										 													Ext.getCmp('video-form-save-button').setDisabled(false);
+										 													Ext.getCmp('video-form-finalize-button').setDisabled(false);
+										 												}
+									 												}
+								 												}
+								 											}
+															           }
+		                              -    id: video-markercuepoints-tab
+		                                   xtype: panel
+		                                   title: <%[ Markers ]%>
+		                                   defaults:
+		                                      anchor: 100%
+		                                      xtype: panel
+		                                   items:
+		                                      -    xtype:    container
+		                                           id: makererrorcontent
+		                                           html:'<p style="color:red; font: caption;font-size: medium;">Some cells have incorrect data.Please correct the data.</p>'
+		                                           hidden:true
+		                                           cls:'marker-error-cell'
+		                                      -    xtype:    autogrid
+		                                           id:       markercuepoints-grid
+		                                           loadMask: true
+		                                           width:    100%
+		                                           cls:cuepointsgrid-prop
+		                                           clicksToEdit: 1
+		                                           border:   false
+		                                           stateful: false
+		                                           noAutoSave: false
+		                                           linkToForm:true
+		                                           trackMouseOver: true
+		                                           anchor:   100% 90%
+		                                           stripeRows: true
+		                                           saveFullRecord:true
+		                                           noStorePreload: true
+		                                           viewConfig: 
+		               									forceFit: false
+		                                           tbarCfg:
+		                                                id: markercuepoints-grid-toolbar
+		                                           tbar:
+		                                              -   ^this.actions.addGridTool
+		                                              -   ^this.actions.deleteGridTool
+		                                              -   ^this.actions.cancelGridTool
+		                                              -   ^this.actions.reloadGrid
+		                                              -   '->'
+		                                              -   ^this.actions.cuepointsHelpWin
+		                                           sm: ^new Ext.grid.CheckboxSelectionModel({moveEditorOnEnter:false})
+		                                           cm: >
+										               ^new Ext.grid.ColumnModel({
+										               })
+		                                           plugins:
+		                                              -   pformtobuttons
+		                                           listeners:
+		                                           	    rowclick:
+						                     	   	   	      fn: >
+						                     	   	   	         ^function( comp, rowIndex, e ){
+						                     	   	   	               var grid = Ext.getCmp('markercuepoints-grid');
+						                     	   	   	            	grid.gmRow = rowIndex;
+																		grid.gmCol = 0;
+						                     	   	   	          	if(e.target.className != 'x-grid3-row-checker'){
+						                     	   	   	          		var totalRows = comp.getStore().data.items.length;
+							                     	   	   	          	for(var i=0 ; i< totalRows ; i++){
+							                     	   	   	          	    if(comp.getStore().data.items[i].id == comp.getStore().data.items[rowIndex].id){
+							                     	   	   	          			comp.getStore().data.items[i].data.isActive = 1;
+							                     	   	   	          		} else {
+							                     	   	   	          			comp.getStore().data.items[i].data.isActive = 0;
+							                     	   	   	          		}
+							                     	   	   	          	}
+							                     	   	   	          	var header = '<div class="x-grid3-hd-tag">&#160;</div>';
+							                     	   	   	          	comp.getColumnModel().setColumnHeader(0,header);
+						                     	   	   	          	}
+						                     	   	   	          }
+				                             			headerclick:
+				                             					 fn: >
+						                     	   	   				 ^function(comp, columnIndex, e){
+						                     	   	   				    if(columnIndex == 0){
+						                     	   	   				    	var header = '<div class="x-grid3-hd-tag">&#160;</div>';
+						                     	   	   				    	if(comp.getColumnModel().lookup.checker.header == '<div class="x-grid3-hd-tag">&#160;</div>'){
+						                     	   	   				    		header = '<div class="x-grid3-row-checker" style="background-position: -23px 1px;">&#160;</div>';
+						                     	   	   				    		comp.getSelectionModel().selectRange( 0, comp.store.data.length, true );
+						                     	   	   				    		var storeItems = comp.store.data.items;
+						                     	   	   				    		for(var i=0;i<storeItems.length ; i++){
+						                     	   	   				    			storeItems[i].data.isActive = 1;
+						                     	   	   				    		}
+						                     	   	   				    	} else {
+						                     	   	   				    		header = '<div class="x-grid3-hd-tag">&#160;</div>';
+						                     	   	   				    		comp.getSelectionModel().deselectRange( 0, comp.store.data.length );
+						                     	   	   				    		var storeItems = comp.store.data.items;
+						                     	   	   				    		for(var i=0;i<storeItems.length ; i++){
+						                     	   	   				    			storeItems[i].data.isActive = 0;
+						                     	   	   				    		}
+						                     	   	   				    	}
+						                     	   	   				    	comp.getColumnModel().setColumnHeader(0,header);
+						                     	   	   				    }
+						                     	   	   				 }
+														viewready:
+														  	   fn: >
+														  		   ^function( grid ){
+																		Ext.apply(Ext.form.VTypes, {
+																		    time: function(val, field) {
+																		        if(val != "" && !Ext.isEmpty(val)){
+																			    	var timeTest = /^([0-9][0-9]|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])$/i;
+																			    	var result = timeTest.test(val);
+																			    	var isHaveErrorData = false;
+																			    	var grid = Ext.getCmp('markercuepoints-grid');
+																		    		var columnIndex = grid.mColumnIndex;
+												       							   	var rowIndex    = grid.mRowIndex;
+												           							var desiredCell = grid.getView().getCell(rowIndex,columnIndex);
+												           							if(!grid.enterEventClicked){
+																				    	if(!result){
+																				    	    desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+														           							desiredCell.className += " cell-incorrect-data";
+																				    		isHaveErrorData = true;
+																				    	} else {
+																				    		desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+																				    	}
+																				    	if(isHaveErrorData){
+																							Ext.getCmp('video-form-save-button').setDisabled(true);
+											 												Ext.getCmp('video-form-finalize-button').setDisabled(true);
+											 											}else{
+											 												var store = grid.getStore();
+											 												var isfoundError = false;
+											 												for(var cue=0 ; cue < store.data.items.length ; cue++){
+																								var cueRecord = store.getAt(cue);
+																								var startTime = cueRecord.get('startFormated');
+																								var markResult = timeTest.test(startTime);
+																								if(markResult){
+																									isfoundError = false;	
+																								}else{
+																									isfoundError = true;
+																									break;	
+																								}
+																							}
+																							if(!isfoundError){
+												 												var coursegrid = Ext.getCmp('videos-grid');
+														                                        var courseSelectedRec = coursegrid.getSelectionModel().getSelections()[0];
+														                                        if(courseSelectedRec.get('is_finished') == 0){
+												 													Ext.getCmp('video-form-save-button').setDisabled(false);
+												 													Ext.getCmp('video-form-finalize-button').setDisabled(false);
+												 												}
+											 												}
+											 											}
+																			    		return result;
+										 											}
+										 											return true;
+																		    	}else{
+																		    		return true;
+																		    	}
+																		    },
+																		    timeText: 'Not a valid time',
+																		    timeMask: /[\d:]/i
+																		});
+														  		 	}
+														cellclick:
+															   fn: >
+															       ^function( comp, rowIndex, columnIndex, e ){
+															       		comp.mRowIndex = rowIndex;
+															       		comp.mColumnIndex = 1;
+															       }
+													identifyErrorCell:
+															       fn: >
+															           ^function( comp ){
+																       		var grid = comp;
+																     		var store = grid.getStore();
+																     		var errorCmp = Ext.getCmp('makererrorcontent');
+																     		for(var cue=0 ; cue < store.data.items.length ; cue++){
+																				var cueRecord = store.getAt(cue);
+																				var startTime = cueRecord.get('startFormated');
+																				var timeTest = /^([0-9][0-9]|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])$/i;
+																				var result = timeTest.test(startTime);
+																				var desiredCell = grid.getView().getCell(cue,1);
+																				if(result){
+																               		desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+																				}else{
+																					desiredCell.className = desiredCell.className.replace( /(?:^|\s)cell-incorrect-data(?!\S)/g , '' );
+																					desiredCell.className += " cell-incorrect-data";
+																				}
+																			}
+																			var isfoundError = false;
+																			for(var cueVal=0 ; cueVal < store.data.items.length ; cueVal++){
+																				var cueRec = store.getAt(cueVal);
+																				var puseTime = cueRec.get('startFormated');
+																				var timeTest = /^([0-9][0-9]|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])$/i;
+																				var result = timeTest.test(puseTime);
+																				if(result){
+																					isfoundError = false;	
+																				}else{
+																					isfoundError = true;
+																					break;	
+																				}
+																			}
+																			if(isfoundError){
+																				errorCmp.setVisible(true);
+																				grid.isfoundError = true;
+																				Ext.getCmp('video-form-save-button').setDisabled(true);
+								 												Ext.getCmp('video-form-finalize-button').setDisabled(true);
+								 											}else{
+								 												errorCmp.setVisible(false);
+								 												grid.isfoundError = false;
+								 												var chapterGrid = Ext.getCmp('cuepoints-grid');
+								 												if(!chapterGrid.isfoundError){
+									 												var coursegrid = Ext.getCmp('videos-grid');
+											                                        var courseSelectedRec = coursegrid.getSelectionModel().getSelections()[0];
+											                                        if(courseSelectedRec.get('is_finished') == 0){
+									 													Ext.getCmp('video-form-save-button').setDisabled(false);
+									 													Ext.getCmp('video-form-finalize-button').setDisabled(false);
+									 												}
+								 												}
+								 											}
+															           }
+		                              -    id: video-images-tab
+		                                   layout: border
+		                                   xtype: panel
+		                                   title: <%[ Video Files ]%>
+		                                   defaults:
+		                                      anchor: 100%
+		                                      xtype: panel
+		                                   items:
+		                                      -  xtype: filetreepanel
+		                                         title: <%[ Files ]%>
+		                                         id: filetree-panel
+		                                         rootText: <%[ Files Repository ]%>
+		                                         region: center
+		                                         url: index.php?json=fileProvider
+		                                         baseParams:
+		                                            panel: movies
+		                                         ddGroup: video-images-view
+		                                         enableProgress: false
+		                                         enableRename: true
+		                                         enableOpen: false
+		                                         autoScroll: true
+		                                      -  title: <%[ Videos ]%>
+		                                         autoScroll: false
+		                                         region: east
+		                                         width: 400
+		                                         autoHeight: false
+		                                         split: true
+		                                         autoScroll: true
+		                                         frame: true
+		                                         layout: fit
+		                                         margins: 0 0 0 5px
+		                                         bodyStyle:
+		                                              padding: 0 0 0 0
+		                                         items:
+		                                              -     xtype: ddautoview
+		                                                    id: video-images-view
+		                                                    name: ImagesNN
+		                                                    xframe: true
+		                                                    xlayout: fit
+		                                                    hiddenName: ImagesNN
+		                                                    dropGroup: video-images-view
+		                                                    dragGroup: video-images-view
+		                                                    deletable: true
+		                                                    itemSelector: div.thumb-wrap
+		                                                    noStorePreload: true
+		                                                    contextMenuItems:
+		                                                        -   id: delete
+		                                                            iconCls: icon-delete
+		                                                            text: <%[ Delete image ]%>
+		                                                    plugins:
+		                                                        -   "^new Ext.DataView.LabelEditor({dataIndex: 'text'})"
+		                              -    id: video-trainingfiles-tab
+		                                   layout: border
+		                                   xtype: panel
+		                                   title: <%[ Training Files ]%>
+		                                   defaults:
+		                                      anchor: 100%
+		                                      xtype: panel
+		                               #
+		                               # new tab to attach the training files to the lessons
+		                               #
+		                                   items:
+		                                          -  xtype: filetreepanel
+		                                             title: Files
+		                                             region: center
+		                                             url: index.php?json=fileProvider
+		                                             baseParams:
+		                                                panel: workingfiles
+		                                             rootText: <%[ Files Repository ]%>
+		                                             ddGroup: video-tfiles-view
+		                                             enableProgress: false
+		                                             enableOpen: false
+		                                             autoScroll: true
+		                                             listeners:
+		                                             	dblclick:
+		                                             		fn:>
+		                                             			^function( node ){
+		                                             				var name = node.text.toLowerCase();
+		                                             				if( name ) {
+		                                             					window.open(node.attributes.record.imagePath,'Image','width=300,height=300,location=no');
+		                                             				}
+		                                             			}
+		                                          -  title: <%[ Lesson Training Files ]%>
+		                                             autoScroll: false
+		                                             region: east
+		                                             width: 400
+		                                             autoHeight: false
+		                                             split: false
+		                                             frame: true
+		                                             autoScroll: true
+		                                             layout: fit
+		                                             margins: 0 0 0 5px
+		                                             bodyStyle:
+		                                                  padding:0 0 0 0
+		                                             items:
+		                                                  -     xtype: ddautoview
+		                                                        store: video-files-store
+		                                                        id: video-tfiles-view
+		                                                        name: FilesNN
+		                                                        xframe: true
+		                                                        xlayout: fit
+		                                                        hiddenName: FilesNN
+		                                                        dropGroup: video-tfiles-view
+		                                                        dragGroup: video-tfiles-view
+		                                                        deletable: true
+		                                                        itemSelector: div.thumb-wrap
+		                                                        noStorePreload: true
+		                                                        contextMenuItems:
+		                                                            -   id: delete
+		                                                                iconCls: icon-delete
+		                                                                text: <%[ Delete image ]%>
+		                                                        plugins:
+		                                                            -   "^new Ext.DataView.LabelEditor({dataIndex: 'text'})"
+		                                                        listeners:
+		                                                        	dblclick:
+		                                                        		fn:>
+		                                                        			^function(pnl,index,item,evt){
+			    																		var name = pnl.store.data.items[index].data.imagePath;
+			    																		var title = name.substr( name.lastIndexOf("/")+1 );
+			    																		if(name){
+				    																		window.open(name,'Image','width=300,height=300,location=no');
+				    																	}
+			    															 }     
+		                              -    id: video-captions-tab
+		                                   layout: border
+		                                   xtype: panel
+		                                   title: <%[ Video Captions ]%>
+		                                   defaults:
+		                                      anchor: 100%
+		                                      xtype: panel
+		                               #
+		                               # new tab to attach the caption files to the lessons
+		                               #
+		                                   items:
+		                                          -  xtype: filetreepanel
+		                                             title: Files
+		                                             region: center
+		                                             url: index.php?json=fileProvider
+		                                             baseParams:
+		                                                panel: captionfiles
+		                                             rootText: <%[ Files Repository ]%>
+		                                             ddGroup: captionFileDD
+		                                             enableDragDrop: true
+		                                             enableProgress: false
+		                                             enableOpen: false
+		                                             autoScroll: true
+		                                             listeners:
+		                                             	dblclick:
+		                                             		fn:>
+		                                             			^function( node ){
+		                                             				var name = node.text.toLowerCase();
+		                                             				if( name ) {
+		                                             					window.open(node.attributes.record.imagePath,'Image','width=300,height=300,location=no');
+		                                             				}
+		                                             			}
+		                                          -  title: <%[ Video Captions Files ]%>
+		                                             autoScroll: false
+		                                             region: east
+		                                             width: 400
+		                                             autoHeight: false
+		                                             split: false
+		                                             frame: true
+		                                             autoScroll: true
+		                                             layout: fit
+		                                             margins: 0 0 0 5px
+		                                             bodyStyle:
+		                                               padding:0 0 0 0
+		                                             items:
+		                                                -     xtype: autogrid
+		                                                      flex: 1
+		                                                      iconCls: icon-film-folder
+		                                                      border: false
+		                                                      ref: ../../linkedGrid
+		                                                      noAutoSave: false
+		                                                      linkToForm:true
+		                                                      clicksToEdit:1
+		                                                      loadMask:true
+		                                                      frame: true
+		                                                      stripeRows: true
+		                                                      noStorePreload: false
+		                                                      enableDragDrop: true
+		                                                      ddGroup: captionFileDD
+		                                                      id:video-captions-grid
+		                                                      stateful: false
+		                                                      viewConfig: 
+		                                                          forceFit: true
+		                                                      bodyCssClass : grid-body-cls
+		                                                      sm: >
+		                                                          ^new Ext.grid.RowSelectionModel()
+		                                                      plugins:
+		                                                          -  pfiletreegriddragdrop
+									-	id: video-instructions-tab
+		                                layout: border
+		                                autoScroll: true
+		                                xtype:  htmleditor
+		                                title: <%[ Instructions ]%>
+		                                name: instructions
+		                                allowBlank: true
+references:
+    prefGridStore:
+          url: ../../index.php?json=view
+          root: rows
+          reader: "^new Ext.data.JsonReader()"
+          baseParams: 
+             view: grid-list-of-prefs
+          remoteSort: true
+    gridPagingDef:
+          pageSize:      50
+          store:         lesson-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No videos to display
+          listeners:
+            beforechange: 
+               fn: >
+                   ^function( pgt , params ){
+                            var lf = pgt.ownerCt.linkedForm;
+                            if( pgt.ownerCt.linkedForm && !pgt.ownerCt.linkedForm.disabled){
+                                var lfaug = pgt.ownerCt.linkedForm.findByType('autogrid');
+                                var modified = 0;
+                                for( var k =0;k<lfaug.length;k++){
+                                  if( lfaug[k].getStore().getModifiedRecords().length > 0 ){
+                                  modified =  lfaug[k].getStore().getModifiedRecords().length;
+                                  }
+                                }
+                            }
+                            if( ( lf.askBeforeLoad && !lf.disabled && ( lf.getForm().isDirty() || ( lf.linkedGrid && lf.linkedGrid.store.dirty ) ) || modified > 0 )
+                             &&  !pgt.programcal ){
+                                 var activePage = Math.ceil((this.cursor + this.pageSize) / this.pageSize);
+                                 var changePage = ( params['start']/this.pageSize ) + 1;
+                                 pgt.ownerCt.beforePageChangeSelections = pgt.ownerCt.getSelectionModel().getSelections();
+                                 Ext.MessageBox.confirm(__('Confirm'), __('You have unsaved changes which will be lost.<br/>Continue?'), function(btn, text){
+                                         if (btn == 'yes') {
+                                                pgt.programcal =true;
+                                                 lf.getForm().reset();
+                                                 var lfaug = pgt.ownerCt.linkedForm.findByType('autogrid');
+                                                 for( var k =0;k<lfaug.length;k++){
+                                                    lfaug[k].getStore().rejectChanges();
+                                                 }
+                                                 lf.disable(true);
+                                                  if (lf.linkedGrid){
+                                                        lf.linkedGrid.store.rejectChanges();
+                                                  }
+                                                  if( activePage < changePage )
+                                                     this.moveNext();
+                                                  else
+                                                     this.movePrevious();
+                                         }
+                                 },this);
+                                 return false;
+                            }
+                            pgt.programcal = false;
+                    }
+    filterRootDef:
+          text:         No filter
+          expanded:     true
+          children: 
+               -   text: Shared
+                   expanded: true
+                   children: 
+                         -  text: Payment not resolveds
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: To be called
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: Complaints
+                            iconCls: icon-action
+                            leaf: true
+               -   text:     My filters
+                   expanded:     true
+                   children: 
+                         -   text: All from Sydney fundraise
+                             iconCls: icon-action
+                             leaf: true
+                         -   text: All from TV fundraise
+                             iconCls: icon-action
+                             leaf: true
+    adminRootDef:
+          text: All admins
+          expanded: true
+          children:
+               -   text: Admins
+                   expanded: true
+                   children: 
+                        -   text: Bernie Segal
+                            iconCls: user
+                            leaf: true
+               -   text: SuperAdmins
+                   expanded:  true
+                   children: 
+                        -   text: Mr. Super
+                            iconCls: user
+                            leaf: true
+                        -   text: Mrs. Superee
+                            iconCls: user
+                            leaf: true
+                            
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+         autoFill: true
+
+spare:

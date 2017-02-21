@@ -1,0 +1,65 @@
+#
+# Stats PivotGrid
+#
+name: stats-view
+serverSide:
+    allowedGrids: stats-pivotgrid
+    recordClass: StatisticRecord
+    noBlankContext: false
+    condition: (branch_id = <%= $this->User->UserRecord->branch_id %>) OR (<%= $this->User->MaxLevel %> >= 300)
+    context:
+        tree-branch-users-user:
+            condition: be_user_id in(%filter%/1000,0)
+        tree-branch-users-branch:
+            condition: branch_id in(%filter%,0)
+    sortInfo:
+        field: Mnth
+        direction: DESC
+metaData: 
+    root: rows
+    id: Updated
+    totalProperty: totalCount
+    xxsortInfo:
+        field: Mnth
+        direction: DESC
+    fields: 
+        -    name: Name
+        -    name: Created
+             type: date
+             dateFormat: U
+        -    name: Updated
+             type: date
+             dateFormat: U
+        -    name: branch_id
+        -    name: be_user_id
+        -    name: Branch
+        -    name: Consultant
+        -    name: Mnth
+        -    name: Typ
+    context:
+        base:
+            cm:
+                -    ^new Ext.grid.RowNumberer()
+                -    header: <%[Type]%>
+                     sortable: true
+                     dataIndex: Typ
+                     xtype: templatecolumn
+                     tpl: >
+                          <tpl if="Typ=='basic'"><%[stats.client.basic]%></tpl><tpl if="Typ=='full'"><%[stats.client.full]%></tpl>
+                -    header: <%[Name]%>
+                     sortable: true
+                     dataIndex: Name
+                -    header: <%[Created]%>
+                     sortable: true
+                     dataIndex: Created
+                     renderer: "^Ext.util.Format.dateRenderer('d.m.Y')"
+                -    header: <%[Updated]%>
+                     sortable: true
+                     dataIndex: Updated
+                     renderer: "^Ext.util.Format.dateRenderer('d.m.Y h:m')"
+                -    header: <%[Consultant]%>
+                     sortable: true
+                     dataIndex: Consultant
+                -    header: <%[Branch]%>
+                     sortable: true
+                     dataIndex: Branch

@@ -1,0 +1,22 @@
+#
+# Form view
+#
+name: content-form-view
+serverSide:
+    recordClass: ContentRecord 
+    findBy: uid
+    properties: all
+    add-properties:
+        - fromDateAsDate
+        - toDateAsDate
+        - images
+    editField: data
+    dataRoot: data
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Course saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

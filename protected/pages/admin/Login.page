@@ -1,0 +1,10 @@
+<%@ StylesheetTheme="Admin" Theme="AdminBase" %>
+<com:THead />
+<com:FExtForm >
+
+<com:TControl Visible="<%= Prado::getApplication()->User->IsGuest %>" >
+        <div id='loginDialogId'></div> 
+    
+</com:TControl>
+
+</com:FExtForm>

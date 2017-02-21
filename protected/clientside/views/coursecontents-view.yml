@@ -1,0 +1,80 @@
+#
+# API for courses (videos)
+# 
+name: courses-view
+serverSide:
+    allowedGrids: coursecontents-grid
+    recordClass: CourseContentRecord
+    pageSize: 20
+    condition: (1=0)
+    noBlankContext: false
+    context:
+        coursecontents-grid:
+            condition: product_id = '%filter%'
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        create:
+            recordClass: CourseContentRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Course created ok.
+            debug: true
+            errors:
+              -  regexp: "/1062 Duplicate entry (.*) for key 'content_id'/"
+                 text: Duplicate value of 'content_id'
+        delete:
+            recordClass: CourseContentRecord
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any videos in this category exist.]%>
+    sortInfo:
+        field: name
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: name
+        dir: ASC
+    fields: 
+        -    name: content_id
+        -    name: uid
+        -    name: name
+        -    name: user_id
+        -    name: description
+    context:
+        base:
+            cm: 
+                -    header: Uid 
+                     width: 40 
+                     hidden: true
+                     sortable: true 
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Pos 
+                     hidden: true
+                     width: 50 
+                     sortable: true 
+                     align: right
+                     dataIndex: ordering
+                     editor: "@new Ext.form.NumberField()"
+                -    >
+                     @new Ext.grid.CheckColumn({ 
+                        header: 'E', 
+                        dataIndex: 'is_enabled', 
+                        hidden: true,
+                        tooltip: "Enabled", 
+                        width: 25, 
+                        align: 'center' 
+                     })
+end: true
+

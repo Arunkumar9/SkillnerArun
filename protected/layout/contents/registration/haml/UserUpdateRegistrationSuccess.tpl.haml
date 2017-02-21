@@ -1,0 +1,10 @@
+%div{ class=`regForms` }
+	%h1~ Registrace  
+	%h2~ Vaše změny byly uloženy. Děkujeme
+	%br
+	%p
+		%span~ Pokračovat můžete
+		$THyperLink
+			:Text~ zde
+			:NavigateUrl= $this->Page->getContainer('Home')->HRef
+	%br 

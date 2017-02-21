@@ -1,0 +1,185 @@
+#
+# Grid with attributes view
+#
+#
+name: attributes-view 
+serverSide:
+    allowedGrids: attributes-grid
+    recordClass: AttributeRecord
+    noBlankContext: false
+    context:
+        products-grid:
+            recordClass: AttributeRecord 
+            condition: "product_id = '%filter%' AND discr = '%param0%'"
+        product-form:
+            recordClass: AttributeRecord
+            condition: "product_id = '%filter%' AND discr = '%param0%'"
+        product-form-store:
+            recordClass: AttributeRecord 
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: product_id
+            successMsg: <%[ Attributes saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        %param0%-attributes-grid-store:
+            recordClass: AttributeRecord
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: product_id
+            successMsg: <%[ Attributes saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        %param0%-attributes-grid-delete:
+            recordClass: AttributeRecord 
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[ Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[ Cannot delete row while any news in this category exist.]%>
+    sortInfo: 
+        field:
+          ordering: ASC
+          name: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    xxxgroupField: name
+    sortInfo: 
+        field:  ordering
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+             convert: >
+                      ^function(v,rec) {
+                        var df = rec['definition_uid'];
+                        var ds = Ext.StoreMgr.lookup('attributes-definitions-store');
+                        var dfrec = ds.getById(df);
+                        if (dfrec)
+                          return dfrec.get('name');
+                        return v;
+                      }
+        -    name: value
+        -    name: definition_uid
+        -    name: product_id
+        -    name: price_add
+             type: float
+             defValue: 0.0
+        -    name: price_coef
+             type: float
+             defValue: 1
+        -    name: price
+             type: float
+             defValue: 0.0
+        -    name: is_enabled
+             type: bool
+             defValue: true
+        -    name: is_default
+             type: bool
+        -    name: discr
+             defValue: %param0%
+        -    name: ordering
+             type: int
+        -    name: type
+             type: int
+             convert: >
+                      ^function(v,rec) {
+                        var df = rec['definition_uid'];
+                        var ds = Ext.StoreMgr.lookup('attributes-definitions-store');
+                        var dfrec = ds.getById(df);
+                        if (dfrec)
+                          return dfrec.get('type');
+                        return 0;
+                      }
+    context:
+      variant-attributes-grid:
+          cm:
+            -    header: <%[ Name ]%>
+                 sortable: true
+                 width: 150
+                 dataIndex: definition_uid
+                 renderer: "^Fresh.GridRender.giveComboRenderer('attributes-definitions-store','name')"
+                 editor: >
+                    ^new Fresh.form.CommonComboBox({
+                        store: 'attributes-definitions-store',
+                        displayField: 'name',
+                        valueField: 'uid'
+                    })
+            -    "^new Ext.ux.grid.TypedEditorColumn( { header: __('Value'), width: 150, store: 'attribute-types-store', sortable: true, dataIndex: 'value', typeField: 'type' })"
+            -    header: <%[ Price + ]%>
+                 sortable: true
+                 dataIndex: price_add
+                 align: right
+                 editor: "^new Ext.form.NumberField({allowNegative: true})"
+            -    header: <%[ Price * ]%>
+                 sortable: true
+                 dataIndex: price_coef
+                 align: right
+                 editor: "^new Ext.form.NumberField({allowNegative: false})"
+            -    header: <%[ Price fix ]%>
+                 sortable: true
+                 dataIndex: price
+                 align: right
+                 editor: "^new Ext.form.NumberField({allowNegative: false})"
+            -    header: <%[ Ord ]%>
+                 sortable: true
+                 dataIndex: ordering
+                 align: right
+                 width: 40
+                 editor: "^new Ext.form.NumberField({allowNegative: false})"
+            -    >
+                 ^new Ext.grid.CheckColumn({
+                    header: 'E',
+                    dataIndex: 'is_enabled',
+                    tooltip: "Enabled",
+                    width: 25,
+                    value: 1,
+                    align: 'center'
+                 })
+            -    >
+                 ^new Ext.grid.CheckColumn({
+                    header: 'D',
+                    dataIndex: 'is_default',
+                    tooltip: "Default",
+                    width: 25,
+                    align: 'center'
+                 })
+      attribute-attributes-grid:
+          cm:
+            -    header: <%[ Name ]%>
+                 sortable: true
+                 width: 150
+                 dataIndex: definition_uid
+                 renderer: "^Fresh.GridRender.giveComboRenderer('attributes-definitions-store','name')"
+                 editor: >
+                    ^new Fresh.form.CommonComboBox({
+                        store: 'attributes-definitions-store',
+                        displayField: 'name',
+                        valueField: 'uid'
+                    })
+            -    "^new Ext.ux.grid.TypedEditorColumn( { header: __('Value'), width: 150, store: 'attribute-types-store', sortable: true, dataIndex: 'value', typeField: 'type' })"
+            -    header: <%[ Ord ]%>
+                 sortable: true
+                 dataIndex: ordering
+                 align: right
+                 width: 40
+                 editor: "^new Ext.form.NumberField({allowNegative: false})"
+            -    >
+                 ^new Ext.grid.CheckColumn({
+                    header: 'E',
+                    dataIndex: 'is_enabled',
+                    tooltip: "Enabled",
+                    width: 25,
+                    value: 1,
+                    align: 'center'
+                 })
+end: true
+

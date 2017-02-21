@@ -1,0 +1,60 @@
+description:
+    name: tagmanagement-win
+    authLevels: true
+    text: <%[ Tag Management ]%>
+    iconCls: icon-tagmanagement-win
+    hideIcon: false
+    autoRun: false
+    authLevel: 
+        min: 100
+        max: 1000
+objects:
+     -  name: tagmanagementStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'tagmanagement-store',
+                autoLoad: false,
+                listeners: {
+                            loadexception: function(proxy, store, response, e) {
+                               }
+                   }
+            })
+component:
+     id:              tagmanagement-win
+     title:           <%[ Tag Management ]%>
+     width:           ^this.winWidth
+     height:          ^this.winHeight
+     x:               ^this.desktop.getWinX(this.winWidth)
+     y:               ^this.desktop.getWinY(this.winHeight)
+     iconCls:         icon-tagmanagement-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader:     true
+     minimizable:          true
+     maximizable:          true
+     layout: fit
+     items: 
+        -  xtype:    autogrid
+      	   id:       tagmanagement-grid
+           loadMask: true
+           clicksToEdit: 1
+           border:   false
+           stateful: false
+           noStorePreload: false
+           viewConfig:
+             forceFit: true
+           tbarCfg:
+             id: chapters-grid-toolbar
+           tbar:
+             -   ^this.actions.addGridTool
+             -   ^this.actions.deleteGridTool
+             -   ^this.actions.cancelGridTool
+             -   ^this.actions.reloadGrid
+             -   ^this.actions.saveGridTool 
+           plugins:
+             -   pformtobuttons  
+          
+
+spare: 
+    

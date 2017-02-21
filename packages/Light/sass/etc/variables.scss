@@ -1,0 +1,315 @@
+/**
+ *	Content background
+ **/
+
+$content-bgr: #e1e1e1;
+
+/**
+ *	Container background
+ **/
+ 
+$container-bgr: #cdcdcd ;
+
+/**
+ *	Sub container background
+ **/
+ 
+$sub-container-bgr: #d8d8d8;
+
+/**
+ *	Even Row of the grid
+ **/
+
+$grid-even-row: #cbcbcb ;
+
+/**
+ *	Odd Row of the grid
+ **/
+
+$grid-odd-row : #e1e1e1;
+
+/**
+ *	Font color of the text)
+ **/
+
+$text-font-color : #595959;
+
+/**
+ *	Main menu active item background
+ **/
+
+$main-menu-active-item-bgr : #cdcdcd ;
+
+
+/**
+ *	Main menu active item dot
+ **/
+
+$main-menu-active-item-dot : #82FF38 ;
+
+/**
+ *	Quiz tab separator line
+ **/
+ 
+$quiz-tab-separator-line: #0f0f0f ;
+
+
+/**
+ *	Segment separator line
+ **/
+ 
+$segment-separator-line: #b2b1b2;
+
+/**
+ *	Inactive quiz tab background
+ **/
+
+$inactive-quiz-tab-bgr : #c8c8c8;
+
+/**
+ *	Active quiz tab background
+ **/
+
+$active-quiz-tab-bgr : #e1e1e1;
+
+/**
+ *	Mouse-over inactive quiz tab background
+ **/
+
+$mouse-over-inactive-quiz-tab-bgr : #e1e1e1;
+
+/**
+ *	Main menu chapter separator line
+ **/
+
+$main-menu-chapter-separator-line: #cdcdcd ;
+
+/**
+ *	Main menu lesson/quiz separator line cell top
+ **/
+
+$main-menu-lesson-or-quiz-separator-line-cell-top : #efefef ;
+
+/**
+ *	Main menu lesson/quiz separator line_cell bottom
+ **/
+
+$main-menu-lesson-or-quiz-separator-line-cell-bottom : #bbbbbb ;
+
+/**
+ *	Search field text 
+ **/
+
+$search-field-text : #4a4a4a;
+$search-text-size : 11px;
+
+/**
+ *	Search field background
+ **/
+
+$search-field-bgr : #f3f3f3 ;
+
+/**
+ *	Tooltip text (font size = 10)
+ **/
+
+$tooltip-text : #f8f8f8 ; 
+$tooltip-text-size : 10px ; 
+/**
+ *	Tooltip background 
+ **/
+
+$tooltip-bgr : #444444 ; 
+
+
+/**
+ *	Icon background
+ **/
+
+$icon-background : #f8f8f8 ; 
+
+/**
+ *	Scrolling bar
+ **/
+ 
+$scrolling-bar : #eaeaea ; 
+
+/**
+ *	Scroll bar background
+ **/
+
+$scrolling-bar-bgr : #c0c0c0 ; 
+
+/**
+ *	Font color for viewed chapters and lessons
+ **/
+
+$font-color-viewed-chapters-and-lessons : #868686 ;
+
+/**
+  * Tab bottom line hight is setting 
+  **/
+  
+$tab-line-height : 15px;
+
+
+$column-header-gradient-top : #F9F9F9 ;
+
+$column-header-gradient-bottom : #E3E4E6 ;
+
+$settings-group-icon-over : #cdcdcd ;
+
+$seen-font-text : #868686 ;
+
+$nonseen-font-text : #595959 ;
+
+/**==================== Comman color codes for all themes =================== **/
+
+
+$body-content-background : #d6d6d6 ; 
+
+$grid-body-color : #d6d6d6 ; 
+
+$grid-cell-special-background : #D6D6D6 ;
+
+$post-header-background : #d6d6d6 ;
+
+$author-content-background : #d6d6d6  ;
+
+$post-panel-body-background : #d6d6d6 ;
+
+$datalist-odd-row : #c6c6c6 ; 
+
+$datalist-even-row : #cbcbcb ;
+
+$grid-row-over : #d8d8d8 ;
+
+$grid-body-text : #595959 ; 
+
+$datalist-form-text : #595959 ;
+
+$datagrid-cell-subject-read-text : #595959 ;
+
+$author-content-text : #595959 ;
+
+$post-header-subject-text : #595959 ;
+
+$post-body-text : #595959 ;
+
+$tab-text : #595959 ;
+
+$grid-header-border-top : #c1c1c1 ; 
+
+$datalist-toolbar-background : #e1e1e1 ;
+
+$datalist-toolbar-button-background : #e1e1e1 ;
+
+$grid-cell-special-vertical-separator-line : #c6c6c6 ; 
+
+$authorname-text : #666666 ;
+
+$datagrid-cell-subject-unread-text : #355491 ; 
+
+$total-attachment-text : #555555 ;
+
+$download-attachments-background : #EEF4F9 ;
+
+$form-search-trigger-over-border : #B5B8C8 ;
+
+$datalist-icon-over-background : #F8F8F8 ;
+
+$post-body-content-background : #EEF4F9 ;
+
+$author-container-border : #eaeaea ;
+
+$post-header-gradiant-top : #eaeaea ;
+
+$post-header-gradiant-bottom : #d5d5d5 ;
+
+$post-header-subject-background : #eaeaea ;
+
+$post-actual-body-background : #e1e1e1 ; 
+
+$post-body-authorarea-background : #E0EAF3 ; 
+
+$quoted-text-area-background : #e1e1e1  ;
+
+$matching-free-text-highlighted : #f9ff62 ;
+
+$mce-content-body-text : #000000 ; 
+
+$swf-progress-cell-background :  #E0E8F3 ;
+
+$swf-progress-cell-background-low :    #11aa11 ;
+
+$swf-progress-cell-background-medium :  #f1fa1a ;
+
+$swf-progress-cell-background-high :  #ee1111 ;
+
+$swf-progress-cell-foreground : #9CBFEE ;
+
+$swf-text-color : #000000 ;
+
+$newtopic-body-border :  #D0D0D0 ;
+
+$selected-tab-horizontalline-background : #e2e2e2 ;
+
+$unselected-tab-background : #939393 ;
+
+$selected-tab-background : #e2e2e2 ;
+
+$passed-score-background : #9bdc31 ;
+
+$failed-score-background : #824344 ;
+
+$failed-score-text : #d9d8d9 ;
+
+$quiz-reset-background : #3d3d3d;
+
+$row-seen-background : #ccd8e7 ;
+
+$icon-over-border : #000000 ;
+
+$film-icon-border : #ffffff ;
+
+$feed-list-text : #15428B ;
+
+$feed-list-background : #DFE8F6 ;
+
+$feed-list-border : #A3BAE9 ;
+
+$feed-list-over-background : #eeeeee ;
+
+$notification-msg-background : #F6F6F6  ;
+
+$notification-msg-border : #cccccc  ;
+
+$notification-msg-text : #555555  ;
+
+$not-yet-seen-text : #C2C2C2 ;
+
+
+/**==================== Images paths =================== **/
+
+$spritePath : './images/swp_sprite.png';
+
+$author-noimage : './images/noimage.jpg';
+
+$attach-image : './images/attach.png';
+
+$accept-image : './images/accept.png';
+
+$cross-image : './images/cross.png';
+
+$upload-image : './images/upload-icon.png';
+
+$film-start-image : './images/control_play_blue.png';
+
+$film-open-image : './images/folder-open-film.png';
+
+$film-image : './images/film.png';
+
+$bulb-image : './images/bulb16.png';
+
+$ajax-loader-image : './images/ajax-loader.gif';
+

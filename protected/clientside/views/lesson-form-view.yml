@@ -1,0 +1,42 @@
+#
+# Form view
+#
+name: lesson-form-view
+serverSide:
+    recordClass: LessonRecord
+    findBy: content_id
+    returnAllDiff: true
+    condition: <%= LessonRecord::getNoContextSql() %>
+    sortInfo:
+        field: name
+        dir: ASC
+    properties: all
+    remove-properties:
+        - images
+    add-properties:
+        - CategoriesList
+        - UpdateAvalton
+        - Finalized
+        - UpdateCategories
+        -	CoolUrlName
+        - ImagesNN
+        - FilesNN
+        - FileSize
+        - PredefinedTask
+    dataRoot: data
+    secured: true
+    columns:
+        images:
+            default: "[]"
+        UpdateAvalton:
+            default:true
+        name:
+            default:'..New Lesson'
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Lesson saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: false
+            newRecordReal:true

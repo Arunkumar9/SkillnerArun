@@ -1,0 +1,269 @@
+#
+#     CRM Setup layout definition
+# CustomerTown, CustomerPostcode, CoverageArea, Delivery Run, Customer Type, Customer Status, Money Locations, Payment Type, Customer Heard, Fundraiser, Complaints, Actions
+#
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                @function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#
+#
+description:
+    name: photo-win
+    text: <%[ Photo Management ]%>
+    iconCls: icon-photo-win
+    authLevel: 
+        min: 100
+        max: 1000
+    authRole: SuperAdmin
+objects:
+     -  name: categoriesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'categories-store'
+            })
+     -  name: languagesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'languages-store'
+            })
+     -  name: attributeTypesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'attribute-types-store'
+            })
+     -  name: attributesDefinitionsStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'attributes-definitions-store'
+            })
+     -  name: primaryAttributesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: '1-attributes-store',
+                baseParams: {
+                    context: 'photo-objects-tree',
+                    filter: 99999,
+                    view: '1-attributes-view'
+                },
+                autoLoad: false
+            })
+     -  name: secondaryAttributesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: '0-attributes-store',
+                autoLoad: false,
+                baseParams: {
+                    context: 'photo-objects-tree',
+                    filter: 99999,
+                    view: '0-attributes-view'
+                },
+                listeners: {
+                    'beforeload': function(s,o) {
+                        var store = Ext.StoreMgr.lookup('1-attributes-store');
+                        Fresh.console.log('store 1');
+                        Fresh.console.log(o);
+                        store.baseParams.filter = s.baseParams.filter;
+                        if (store.baseParams.filter != 99999)
+                            store.load();
+                    }
+                }
+            })
+     -  name: Ext.ux.Plugins.DataView.js
+        using: [ lib/ext/ux/Ext.ux.Plugins.DataView.js ]
+component:
+    id:              news-win
+    title:           <%[ Photo Management ]%>
+    width:           1000
+    height:          500
+    x:               @this.desktop.getWinX(1000)
+    y:               @this.desktop.getWinY(500)
+    iconCls:         icon-news-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    layout: border
+    tbar:
+          -    text: <%[ Exit ]%>
+               iconCls: icon-exit
+               handler: @this.actions.closeWindowHandler.createDelegate(this,['photo-win'])
+    items:
+        -    xtype: filtertree
+             title: <%[ Photo Archive ]%>
+             id: photo-objects-tree
+             layout: fit
+             loader: >
+                @new Ext.tree.TreeLoader({ 
+                    dataUrl: Fresh.Config.Service.Tree, 
+                    baseParams: { view: 'tree-objects-drag' } 
+                })
+             width: @this.maxWidth(300,0.3)
+             rootVisible: false
+             region: west
+             split: true
+             enableDrag: false
+             enableDrop: false
+             collapsible: true
+             lines: true
+             autoScroll: true
+             autoHeight: false
+             linkedGrid: 0-attributes-grid
+             linkedForm: photo-form
+             dblClickOpensForm: true
+             dynamicPathMenu: 
+                -    regexp: @/root\/1\//
+                     menu: deleteOnly
+             contextMenus:
+                any:
+                    -    @this.actions.newNode
+                    -    @this.actions.deleteNode
+                folder:
+                    -    @this.actions.reloadNode
+                recycleBin:
+                    -    @this.actions.emptyRecycleBin
+                    -    @this.actions.reloadNode
+                deleteOnly:
+                    -    @this.actions.reloadNode
+             root: >
+                @new Ext.tree.AsyncTreeNode({
+                    expanded: true,
+                    text: '<%[ Root Object ]%>',
+                    id: 'root'
+                })
+             tbar: 
+                -    @this.actions.reloadTree
+                -    @this.actions.expandTree
+                -    @this.actions.collapseTree
+             plugins: 
+                -    @new Ext.ux.Plugin.TreeSorter()
+                -    @new Ext.ux.Plugin.FormToButtons()
+             plugins:
+                -   @new Ext.ux.Plugin.FormLoader()
+        -    title: <%[ Edit Photo ]%>
+             id: photo-form
+             elements:  body
+             margins:    0 0 0 0
+             xxlayout: fit
+             frame: false
+             border: false
+             xtype: form
+             url: @Fresh.Config.Service.Form
+             trackResetOnLoad: true
+             linkedGrid: 0-attributes-grid
+             focusOnNew: name
+             loadingMsg: "<%[ Loading photo {uid} ]%>"
+             formBaseParams: 
+                 view: photo-form-view
+             buttonAlign: right
+             buttons: 
+                -     @this.actions.save
+                -     @this.actions.cancel
+             plugins:
+                -    @new Ext.ux.Plugin.FormToButtons()
+             region: center
+             items:
+                -    layout: border
+                     xtype: panel
+                     autoWidth: true
+                     anchor: 100% 100%
+                     layout: border
+                     frame: false
+                     border: false
+                     margins: 0 0 0 0
+                     items:
+                        -    elements:  body
+                             margins:    0 0 0 0
+                             height: 50
+                             region: north
+                             frame: true
+                             bodyStyle:
+                                padding: 5px
+                             layout: form
+                             items:
+                                -   xtype: textfield
+                                    fieldLabel: ID
+                                    name: uid
+                                    anchor: 100%
+                                    readOnly: true
+                        -    xtype:     tabpanel
+                             id: photo-form-panel
+                             autoWidth: true
+                             region: center
+                             xxxlinkedGrid: photo-images-view
+                             layoutOnTabChange: true
+                             deferredRender: false
+                             anchor: 100% 100%
+                             activeTab: 0
+                             frame: true
+                             border: true
+                             margins: 0 0 0 0
+                             defaults:
+                                 hideMode: offsets
+                                 stateful: false
+                                 frame: false
+                                 layout: fit
+                                 clicksToEdit: 2
+                                 askBeforeChange: true
+                                 noStorePreload: false
+                                 viewConfig:
+                                    forceFit: true
+                                 loadMask: true
+                                 border: true
+                                 tbar: 
+                                    -   @this.actions.addGridTool
+                                    -   @this.actions.deleteGridTool
+                                    -   @this.actions.reloadGrid
+                                 plugins:
+                                    -   @new Ext.ux.Plugin.FormToButtons()
+                             items:
+                                      -  title: <%[ Primary Attributes ]%>
+                                         xtype: autogrid
+                                         id:    1-attributes-grid
+                                         listeners:
+                                            xxxafteredit: >
+                                                @function(e) {
+                                                    Fresh.console.log('afteredit ');
+                                                    if (e.field == 'definition_uid' && originalValue != value) {
+                                                        var astore = Ext.StoreMgr.lookup('attributes-definitions-store');
+                                                        var type = astore.getById(value);
+                                                        Fresh.console.log('type '+type);
+                                                        record.set('type',type);
+                                                    }
+                                                }
+                                      -  title: <%[ Secondary Attributes ]%>
+                                         id:    0-attributes-grid
+                                         xtype: autogrid
+references:
+    gridPagingDef:
+         pageSize:      20
+         store:         @this.store
+         displayInfo:   true
+         displayMsg:    "Count {2}"
+         autoShow:      true
+         emptyMsg:      No customers to display
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+            tbar: 
+                -   @this.actions.saveGridTool
+                -   @this.actions.cancelGridTool
+                -   @this.actions.addGridTool
+                -   @this.actions.deleteGridTool
+                -   @this.actions.reloadGrid
+end:
+-   "@new Ext.DataView.DragSelector({dragSafe: true})"
+

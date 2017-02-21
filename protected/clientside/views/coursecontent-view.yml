@@ -1,0 +1,160 @@
+#
+# API for courses (videos)
+# 
+name: coursecontent-view
+serverSide:
+    allowedGrids: videos-grid
+    recordClass: CourseContentRecord
+    pageSize: 20
+    condition: (1=0)
+    noBlankContext: false
+    context:
+        courses-grid:
+            recordClass: CourseContentRecord
+            condition: "product_id = '%filter%'"
+        coursecontent-grid:
+            condition: "product_id = '%filter%'"
+        course-form-store:
+            action: updateRecordsFB
+            dataRoot: rows
+            successMsg: Content changes saved ok.
+        coursecontent-grid-store:
+            action: updateRecordsFB
+            dataRoot: rows
+            successMsg: Content changes saved ok.
+        coursecontent-quiz-settings:
+            action: updateQuizSettings
+            dataRoot: rows
+            successMsg: Course quiz settings updated.
+        delete-quiz-settings:
+            action: deleteQuizSettings
+            dataRoot: rows
+            successMsg: Course quiz settings is adjusted.
+    sortInfo:
+        field: ordering
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: ordering
+        dir: ASC
+    fields: 
+        -    name: uid
+        -    name: product_id
+        -    name: video_id
+        -    name: name
+        -    name: CreatorName
+        -    name: RequiredComplete
+        -    name: UnviewedLessons
+        -    name: RequiredSubsequent
+        -    name: PostEvaluationOption
+        -    name: PassedRequired
+        -    name: PassingScore
+        -    name: SettingsExist
+        -    name: RandomizeQuestions
+        -    name: RequiredCompleteCourse
+        -    name: LessonViewBforeQuiz
+        -    name: type
+             type: int
+        -    name: ordering
+             type: int
+    context:
+        base:
+            cm: 
+                -    ^new Ext.grid.RowNumberer()
+                -    width: 16
+                     xtype: templatecolumn
+                     dataIndex: Type
+                     tpl: >
+                          <div class='icon-size <tpl if="type==0">icon-film</tpl><tpl if="type==1">icon-bulb16</tpl>'></div>
+                -    header: Name 
+                     width: 120 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Creator 
+                     sortable: true 
+                     dataIndex: CreatorName
+                     width: 80
+                -    header: Pos 
+                     hidden: true
+                     width: 50 
+                     sortable: true 
+                     align: right
+                     dataIndex: ordering
+                     editor: "@new Ext.form.NumberField()"
+				-    xtype: actioncolumn
+                     width: 40
+                     align: center
+                     items:
+						-	iconCls: icon-wrench-config
+							handler: >
+									 ^function( grid,rowIndex,colIndex ) {
+                                         var coursegrid = Ext.getCmp('courses-grid');
+                                            var courseSelectedRec = coursegrid.getSelectionModel().getSelections()[0];
+                                        if( courseSelectedRec && (courseSelectedRec.get('is_finished') == 0) ){
+                                        	var contentType = grid.getStore().getAt(rowIndex).data.type;
+                                        	if(contentType == 1){
+												Fresh.global.actions.showQuizSettings( grid,rowIndex,colIndex );
+											} else if(contentType == 0){
+											    Fresh.global.actions.showLessonSettings( grid,rowIndex,colIndex );
+											}
+                                        }
+									 }
+							getClass: >
+									  ^function( v,metaData,record,rowIndex,colIndex,store ){
+										  	var selectedCourse = Ext.getCmp('courses-grid').getSelectionModel().getSelected();
+	                                        if( selectedCourse && (selectedCourse.get('is_finished') == 1) ){
+                                                metaData.css = metaData.css + "  icon-wrench-disabled";
+                                            }
+										}
+                -    xtype: actioncolumn
+                     width: 40
+                     align: center
+                     items:
+                        -   iconCls: icon-cross
+                            handler: >
+                                     ^function( grid, rowIndex, colIndex ) {
+									 var coursegrid = Ext.getCmp('courses-grid');
+                                     var courseSelectedRec = coursegrid.getSelectionModel().getSelections()[0];
+									 if(courseSelectedRec && (courseSelectedRec.get('is_finished') == 0) )
+                                     {
+                                         var rec = grid.store.getAt(rowIndex);
+                                         if ( !rec.get('uid') )
+                                          {
+                                          	grid.store.remove(rec);
+                                          	var modified = grid.getStore().getModifiedRecords();
+                                          	if (modified.length == 0)
+                                          	grid.findParentByType('form').getForm().findField('ContentChanged').setValue(0);
+                                          	return;
+                                          }
+										if( rec.get('AssociatedQuiz') || rec.get('PassingScore') || ( grid.savedQuizSettingsId && grid.savedQuizSettingsId.indexOf( rec.get('video_id') ) != -1 ) ) {
+											Ext.MessageBox.confirm(__('Confirm'), __('Saved quiz settings will be lost.<br/>Continue?'), function(btn, text){
+												 if (btn == 'yes') {	VideoRecordMgr.deleteCourseContentRecord([rec.get('video_id'),rec.get('product_id')],function(r,t){
+														if (r) grid.store.remove(rec);
+													});								
+												 }
+											});
+										}else {
+											VideoRecordMgr.deleteCourseContentRecord([rec.get('video_id'),rec.get('product_id')],function(r,t){
+														if (r) grid.store.remove(rec);
+													});
+										}
+                                     }
+									 }
+                            getClass: >
+                                     ^function( v,metaData,record,rowIndex,colIndex,store ){
+                                     	var selectedCourse = Ext.getCmp('courses-grid').getSelectionModel().getSelected();
+                                        if( selectedCourse && (selectedCourse.get('is_finished') == 1) ){
+                                            metaData.css = "icon-cross-disabled";
+                                        }
+                                    }
+					renderer: >
+							  ^function(value, metaData, record, rowIndex, colIndex, store){
+								if( value == 1 ) {
+									rowValue = true;
+								}
+							  }
+end: true
+

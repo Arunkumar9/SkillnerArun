@@ -1,0 +1,8 @@
+CommentsList:
+    uid: 107
+    name: CommentsList
+    description: students comments list
+    t: content
+    data:
+        ContentEditClass: CommentsList
+        iconCls: news

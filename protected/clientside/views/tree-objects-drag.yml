@@ -1,0 +1,44 @@
+#
+#
+#
+name: tree-objects
+serverSide:
+    recordClass: ObjectRecord
+    child: uid
+    parent: object_uid
+    folderSign: IsFolder
+    nodeTypeSign: NodeType
+    readAll: false
+    folder:
+        iconCls: @folder
+        allowDrag: false
+        allowDrop: false
+        draggable: false
+        text: Description
+        id: uid
+        qtip: Thumbnail
+        menuType: @folder
+        sortText: uid
+        sortLeaf: false
+    leaf:
+        iconCls: @leaf
+        text: Description
+        allowDrag: true
+        allowDrop: false
+        draggable: true
+        id: uid
+        qtip: Thumbnail
+        menuType: @leaf
+        sortText: uid
+        sortLeaf: true
+        record:
+            objects_uid: uid
+            objects_uidAsThumb100x100: uidAsThumb100x100
+            text: Description
+            uid: uid
+    depth: 1    
+    criteria:
+        OrdersBy: 
+           uid: ASC
+metaData: 
+    edit: 100

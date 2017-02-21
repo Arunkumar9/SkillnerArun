@@ -1,0 +1,27 @@
+#
+# Form view
+#
+name: feuser-form-view
+serverSide:
+    recordClass: UserFERecord
+    findBy: Uid
+    properties: 
+        -   Uid
+        -   Username
+        -   Name
+        -   Email
+        -   DateOfBirthAsDate
+        -   Phone
+        -   PhoneOther
+        -   Address
+    dataRoot: data
+    columns:
+        Uid:
+            type: integer
+            range: [0,1000000]
+        Created:
+            default: date()
+        Updated:
+            default: date()
+    successMsg:	User saved ok.
+        

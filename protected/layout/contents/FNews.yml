@@ -1,0 +1,21 @@
+NewsList:
+    name: NewsList
+    description: news list
+    t: content
+    data:
+        ContentEditClass: FNewsList
+        iconCls: table
+NewsListAll:
+    name: NewsListAll
+    description: news list all
+    t: content
+    data:
+        ContentEditClass: FNewsListAll
+        iconCls: table
+NewsDetail:
+    name: NewsDetail
+    description: news detail
+    t: content
+    data:
+        ContentEditClass: FNewsDetail
+        iconCls: table

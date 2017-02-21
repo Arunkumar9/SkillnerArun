@@ -1,0 +1,67 @@
+#
+#
+name: gallery-view
+serverSide:
+    allowedGrids: gallery-grid
+    recordClass: GalleryRecord
+    noBlankContext: false
+    context:
+        gallery-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Comments saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        gallery-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo: 
+        field:  ordering
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo: 
+        field:  ordering
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: CoolUrl
+        -    name: fromDate
+             type: date
+             dateFormat: U
+        -    name: ordering
+        -    name: category_id
+             type: int
+        -    name: is_enabledAsBoolean
+    cm: 
+        -    header: <%[Name]%>
+             sortable: true 
+             width: 100
+             dataIndex: name
+        -    header: <%[Category]%>
+             sortable: true
+             width: 100
+             dataIndex: category_id
+             renderer: "@Fresh.GridRender.giveComboRenderer('galleries-categories-store','name')"
+        -    header: <%[Ord]%>
+             width: 50
+             sortable: true
+             dataIndex: ordering
+             editor: "@new Ext.form.NumberField()"
+        -    >
+             @new Ext.grid.CheckColumn({
+                header: 'E',
+                dataIndex: 'is_enabledAsBoolean',
+                tooltip: "Enabled",
+                width: 25,
+                align: 'center'
+             })
+end: true

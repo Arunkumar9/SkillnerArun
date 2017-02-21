@@ -1,0 +1,33 @@
+  <parameters>
+   <parameter id="siteTitle" value="Content management" />
+   <parameter id="version" value="" />
+   <parameter id="DoNotRenderExtOnReady" value="true" />
+
+   <parameter id="localTypesPath" value="Application.layout.contents.localTypes" />
+   <parameter id="translatable" value="0" />
+   <parameter id="defaultLanguage" value="en" />
+   <parameter id="ACL" value="allow" />
+
+   <!-- Image Manipulation Defaults -->
+   <parameter id="importDir" value="Application.catalog.import.*" />
+   <parameter id="defaultThumbHeight" value="100" />
+   <parameter id="defaultThumbWidth" value="100"  />
+   <parameter id="defaultNoImage" value="images/noimage.jpg"  />     
+   <parameter id="errorImage" value="error.gif"  />  
+
+   <parameter id="Components" value="Application.clientside.components" />
+   
+   <parameter id="fileupload" value="s3" />
+
+   <parameter id="emailAdmin" value="kabrle@grafiro.cz" />
+   <parameter id="limitCartSumCs" value="20000" />
+
+   <parameter id="baseDomain" value="sdl.freshsystems.cz" />
+   
+   <parameter id="noAvalton" value="true" />
+
+   <parameter id="clientParameters" >
+       <parameter id="defaultImageSize" value="300x300" />
+   </parameter>
+
+  </parameters>

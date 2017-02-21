@@ -1,0 +1,82 @@
+#
+# Grid with List of Products
+# name
+# deswcription
+# models/attributes
+# price and tax
+# availability
+# images
+name: videos-view
+serverSide:
+    allowedGrids: videos-grid
+    recordClass: VideoRecord
+    pageSize: 50
+    context:
+        tree-categories: 
+            condition: uid IN (SELECT video_id FROM videos_categories WHERE category_id in(%filter%,0)) AND is_enabled>0
+        tree-containers:
+            condition: uid IN (SELECT video_id FROM videos_containers WHERE container_id in(%filter%,0)) AND is_enabled>0
+        all-videos:
+            condition: (is_enabled>0)
+        search-form:
+            filterData: AND
+        videos-grid-store:
+            recordClass: ProductRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        videos-grid-delete:
+            recordClass: ProductRecord
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any videos in this category exist.]%>
+    sortInfo:
+        field: content_id
+        dir: DESC
+    groupBy: uid
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: content_id
+        dir: DESC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: content_id
+        -    name: user_id
+        -    name: is_enabled
+        -    name: ordering
+             type: int
+    context:
+        base:
+            cm: 
+                -    header: Uid 
+                     width: 40 
+                     sortable: true 
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Pos 
+                     width: 50 
+                     sortable: true 
+                     align: right
+                     dataIndex: ordering
+                     editor: "@new Ext.form.NumberField()"
+                -    >
+                     @new Ext.grid.CheckColumn({ 
+                        header: 'E', 
+                        dataIndex: 'is_enabled', 
+                        tooltip: "Enabled", 
+                        width: 25, 
+                        align: 'center' 
+                     })
+end: true
+

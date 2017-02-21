@@ -1,0 +1,37 @@
+#
+# Form view
+#
+name: user-form-view
+serverSide:
+    recordClass: UserRecord 
+    findBy: Uid
+    properties: all
+    add-properties:
+        -   RolesAsList
+        -   UpdateRoles
+        -   PasswordUpdate
+        -   PasswordCheck
+    dataRoot: data
+    columns:
+        Uid:
+            type: integer
+            range: [0,1000000]
+        Created:
+            default: ^date()
+        Updated:
+            default: ^date()
+        branch_id:
+            default: <%= Prado::getApplication()->getUser()->getUserRecord()->branch_id %>
+    successMsg:	User saved ok.
+    context:
+      users-form-Username:
+        validationMethod: validateUnique
+        messages:
+          -  <%[Username is ok]%>
+          -  <%[Username is already used]%>
+      users-form-Email:
+        validationMethod: validateUnique
+        messages:
+          -  <%[Email is ok]%>
+          -  <%[Email is already used]%>
+        

@@ -1,0 +1,109 @@
+/* 
+    Document   : admin
+    Created on : Dec 10, 2009, 3:05:02 AM
+    Author     : rosa
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+td.client-basic {
+	background-color:#E1F9FF;			
+}
+
+td.client-full {
+	background-color:#DAFFC4;
+}
+
+.x-tree-node-leaf img.quizIcon,
+.x-combo-list-inner .quizIcon,
+.x-form-field-wrap .quizIcon {
+   background-image: url("/lib/desktop/resources/images/LinspireClear/16x16/apps/desktop_enhancements.png") !important;
+}
+
+
+.icon-courses-win {
+    background-image:url("/images/folder-my-video-icon16.png") !important;
+}
+
+.courses-win, #courses-win-shortcut img {
+    background-image:url("/images/folder-my-video-icon48.png") !important;
+}
+.icon-tagmanagement-win{
+	 background-image:url("/images/t-start.png") !important;
+}
+#tagmanagement-win-shortcut img {
+    background-image:url("/images/T-tag.png") !important;
+    background-repeat: no-repeat;
+    background-position:center;
+}
+.icon-videos-win {
+    background-image:url("/images/film.png") !important;
+}
+
+.videos-win, #videos-win-shortcut img {
+    background-image:url("/images/video64.png") !important;
+    background-position: right top !important;
+
+}
+
+.icon-quizes-win {
+    background-image:url("/images/bulb16.png") !important;
+}
+
+.quizes-win, #quizes-win-shortcut img {
+    background-image:url("/images/bulb48.png") !important;
+}
+
+.icon-film {
+    background-image:url("/images/film.png") !important;
+}
+
+.icon-play {
+    background-image:url("/images/control.png") !important;
+}
+
+.icon-film-folder {
+    background-image:url("/images/folder-my-video-icon16.png") !important;
+}
+
+.icon-bulb16 {
+    background-image:url("/images/bulb16.png") !important;
+}
+
+.icon-lock {
+    background-image:url("/images/lock.png") !important;
+}
+.icon-unlock {
+    background-image:url("/images/lock-unlock.png") !important;
+}
+
+.icon-size {
+    height: 16px;
+    width: 16px;
+    background-position: center center;
+}
+.icon-size-fit {
+    height: 16px;
+    width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.x-tree-node-leaf img.addThis,
+.x-combo-list-inner .addThis,
+.x-form-field-wrap .addThis {
+   background-image: url("/lib/desktop/resources/images/fam/bricks.png") !important;
+}
+.x-grid3-body,.x-grid3-row {
+	
+	width : 100% !important;
+}

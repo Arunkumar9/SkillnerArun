@@ -1,0 +1,37 @@
+#
+# Form view
+#
+name: quiz-form-view
+serverSide:
+    recordClass: QuizGroupRecord
+    findBy: content_id
+    returnAllDiff: true
+    condition: <%= QuizGroupRecord::getNoContextSql() %>
+    sortInfo:
+        field: name
+        dir: ASC
+    properties: all
+    remove-properties:
+        - images
+        - files
+    add-properties:
+        - Dirt
+        - CategoriesList
+        - UpdateCategories
+        - UpdateAvalton
+        - Finalized
+    dataRoot: data
+    secured: true
+    columns:
+        UpdateAvalton:
+            default:true
+        name:
+            default:'..New evaluation'
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Quiz saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: false
+            newRecordReal:true

@@ -1,0 +1,90 @@
+#
+# Grid with Payment Types view
+#
+# INSERT INTO payment_type SELECT DISTINCT null as Uid, c.PaymentTypeText as Name FROM customers c ORDER BY c.PaymentTypeText;  
+#
+# update customers c,payment_type cs set c.`PaymentType` = cs.Uid WHERE c.PaymentTypeText like cs.Name
+#
+name: users-view 
+serverSide:
+    allowedGrids: users-grid
+    recordClass: UserRecord 
+    noBlankContext: true
+    condition: (branch_id = <%= (int) $this->User->UserRecord->branch_id %> OR <%= $this->User->MaxLevel %> >= 300)
+    context:
+        update:
+            action: callMethod
+            method: updateUserZoneIds
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: user updated.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+        activate:
+            action: callMethod
+            method: generateUserUrl
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: url generated.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+        createuser:
+            action: callMethod
+            method: createUser
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: user created.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+        updateuser:
+            action: callMethod
+            method: udpateUserDetails
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: user created.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+         deleteuser:
+            action: callMethod
+            method: deleteUser
+            recordClass: ActiveUrlRecord
+            dataRoot: rows
+            successMsg: user created.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+    sortInfo: 
+        field:  Name
+        dir: ASC
+        substitute:
+            NameUid: 
+               - Name
+metaData: 
+    root: rows
+    id: Uid
+    totalProperty: totalCount
+    sortInfo: 
+        field:  Name
+        direction: ASC
+    fields: 
+        -    name: Uid
+        -    name: Name
+        -    name: Username
+        -    name: branch_id
+             convert: "^Fresh.GridRender.giveComboRenderer('pobocka-def-store','name','uid')"
+    cm: 
+        -    header: <%[Name]%>
+             sortable: true 
+             dataIndex: Name
+        -    header: <%[Username]%>
+             sortable: true
+             dataIndex: Username
+        -    header: <%[Branch]%>
+             sortable: true
+             dataIndex: branch_id
+
+

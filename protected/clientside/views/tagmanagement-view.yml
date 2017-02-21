@@ -1,0 +1,82 @@
+#
+# Grid with Categories view
+#
+#
+name: tagmanagement-view
+serverSide:
+    allowedGrids: tagmanagement-grid
+    recordClass: ContainerCategoryRecord
+    noBlankContext: false
+    condition: <%= CourseRecord::getTagNoContextSql() %>
+    context:
+        tagmanagement-grid-store:
+            action: updateRecordsFB
+            dataRoot: rows
+            successMsg: <%[Categories saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        tagmanagement-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any news in this category exist.]%>
+    sortInfo: 
+        field:  name
+        dir: ASC
+    columns:
+        parent_id:
+            default: 20
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  ordering
+        direction: ASC
+    fields:
+    	-    name: uid
+    		 type: int	
+        -    name: code
+        -    name: name
+        -    name: description
+        -    name: ordering
+        	 type: int
+        -    name: parent_id
+             type: int
+             defValue:20
+    context:
+      base:
+          cm:
+            -    header: <%[ code ]%>
+                 sortable: true
+                 width: 50
+                 dataIndex: code
+                 editor:
+                    xtype: textfield
+            -    header: <%[ Name ]%>
+                 sortable: true
+                 width: 50
+                 dataIndex: name
+                 requires:true
+                 editor:
+                    xtype: textfield
+                    allowBlank: false
+            -    header: <%[ Description ]%>
+                 sortable: true
+                 dataIndex: description
+                 editor:
+                    xtype: textarea
+            -    header: <%[ Ordering ]%>
+                 sortable: true
+                 width: 50
+                 dataIndex: ordering
+                 editor:
+                    xtype: textfield
+            -   header: Parent
+                hidden:true
+                dataIndex:parent_id
+end: true

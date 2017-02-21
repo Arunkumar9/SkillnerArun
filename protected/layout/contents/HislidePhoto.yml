@@ -1,0 +1,16 @@
+HislidePhoto:
+    name: HislidePhoto
+    description: hislide photos
+    t: content
+    data: 
+        ContentEditClass: HislidePhoto
+        iconCls: image
+HislidePage:
+    name: HislidePage
+    description: hislide page
+    t: container
+    data:
+        ContentEditClass: ContainerName
+        pagePath: BarePage
+        notInMenu: 1
+        iconCls: folderconnect

@@ -1,0 +1,12 @@
+{
+	metaData: {
+			root: 'person',
+			id: 'id',
+			fields: [{name: 'firstName'},{name: 'lastName'},{name: 'address'}]
+	},
+	person: 
+ [
+   {id: 1, firstName: 'John', lastName: 'Smith', address: [{number: '123', street: 'Main St'},{number: '456', street: 'Elm St'}]},
+   {id: 2, firstName: 'Jill', lastName: 'Stein', address: [{number: '789', street: 'Park St'},{number: '012', street: 'Birch St'}]}
+ ]
+}

@@ -1,0 +1,67 @@
+#
+# Grid with postages view
+#
+#
+name: postages-view 
+serverSide:
+    allowedGrids: postages-grid
+    recordClass: PostageRecord 
+    noBlankContext: false
+    context:
+        postages-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[postages saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        postages-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete.]%>
+    sortInfo: 
+        field:  uid
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  uid
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: lang
+        -    name: name
+        -    name: price
+        -    name: codlv
+        -    name: advance
+    cm: 
+        -    header: <%[ Language ]%>
+             sortable: true 
+             dataIndex: lang
+             width: 20
+             editor: "@new Ext.form.TextField({allowBlank: false,vtype: 'alpha' })"
+        -    header: <%[ Name ]%>
+             sortable: true 
+             dataIndex: name
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+        -    header: <%[ Price/pc ]%>
+             sortable: true 
+             dataIndex: price
+             width: 20
+             align: right
+             editor: "@new Ext.form.NumberField({allowBlank: false})"
+        -    header: <%[ Dobirka ]%>
+             sortable: true
+             dataIndex: codlv
+             width: 20
+             align: right
+             editor: "@new Ext.form.NumberField({allowBlank: false})"
+        -    "@new Ext.grid.CheckColumn({ header: '<%[Adv]%>', dataIndex: 'advance', width: 20, align: 'center' })"
+
+

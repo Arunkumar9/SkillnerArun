@@ -1,0 +1,60 @@
+#
+# Grid with Payment Types view
+#
+# INSERT INTO payment_type SELECT DISTINCT null as Uid, c.PaymentTypeText as Name FROM customers c ORDER BY c.PaymentTypeText;  
+#
+# update customers c,payment_type cs set c.`PaymentType` = cs.Uid WHERE c.PaymentTypeText like cs.Name
+#
+name: comments-view
+serverSide:
+    allowedGrids: comments-grid
+    recordClass: CommentRecord
+    noBlankContext: false
+    context:
+        feusers-grid:
+            condition: fe_user_id in(%filter%)
+        search-form:
+            filterData: AND
+        comments-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Questions saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        comments-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo: 
+        field:  input_date
+        dir: DESC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo: 
+        field:  input_date
+        direction: DESC
+    fields: 
+        -    name: uid
+        -    name: input_date
+             type: date
+             dateFormat: U
+        -    name: CommentPerex
+        -    name: lang
+        -    name: contact
+    cm: 
+        -    header: <%[Comment]%>
+             sortable: true 
+             width: 100
+             dataIndex: CommentPerex
+        -    header: <%[Input]%>
+             sortable: true 
+             width: 60
+             dataIndex: input_date
+             renderer: "@Ext.util.Format.dateRenderer()"
+end: true

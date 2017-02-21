@@ -1,0 +1,44 @@
+#
+# Grid with List of Preferences
+#  select cb.Uid from customer_preferences_backup2 as cb GROUP BY cb.CustNo,cb.preferences_Uid HAVING count(cb.preferences_Uid)>1
+#
+name: news-images-view 
+serverSide:
+    recordClass: NewsImagesRecord 
+    noBlankContext: false
+    context:
+        news-form: 
+            condition: news_uid in(%filter%)
+        news-grid: 
+            condition: news_uid in(%filter%)
+        news-form-store:
+            recordClass: NewsImagesRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[ Images saved ok. ]%>
+    sortInfo: 
+        field:  order
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    fields: 
+        -    name: uid
+        -    name: news_uid
+        -    name: objects_uid
+        -    name: objects_uidAsThumb100x100
+        -    name: text
+    tpl: >
+        <tpl for=".">
+        <div class="thumb-wrap" id="{uid}">
+        <div class="thumb">
+        <tpl if="uid.match(/png|gif|jpg$/im)" ><img src="{uid}.120x240" title="{name}" style="width: 120px" /></tpl>
+        <tpl if="!uid.match(/mp4|mpeg|mpg|png|gif|jpg$/im)" ><img src="lib/desktop/resources/images/LinspireClear/48x48/mimetypes/{[values.uid.substr(-3)]}.png" title="{name}" style="width: 48px" /></tpl>
+        <tpl if="uid.match(/mp4|mpeg|mpg$/im)" ><img src="images/film-dive48.png" title="{name}" style="width: 48px" /></tpl>
+        </div>
+        <span class="x-editable">{text}</span></div>
+        </tpl>
+        <div class="x-clear"></div>
+end: true
+

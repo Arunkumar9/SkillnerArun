@@ -1,0 +1,5 @@
+<com:TContent ID="main">
+<com:FAncestorsHint Name="<%= $this->EshopProductList->CategoryName %>" ParentId="<%= $this->Request['parent'] %>" />	
+<com:Application.layout.content.EshopProductList ID="EshopProductList" ShowCategoryName="false" CategoryVar="catid" PageSize="6" />
+</com:TContent>
+

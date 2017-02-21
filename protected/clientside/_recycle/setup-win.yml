@@ -1,0 +1,119 @@
+#
+#     CRM Setup layout definition
+# CustomerTown, CustomerPostcode, CoverageArea, Delivery Run, Customer Type, Customer Status, Money Locations, Payment Type, Customer Heard, Fundraiser, Complaints, Actions
+#
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                @function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#
+#
+#     -  name: TypedEditorColumn
+#        using: [ lib/ext/ux/TypedEditorColumn/TypedEditorColumn.js ]
+description:
+    name: setup-win
+    text: Setup
+    iconCls: icon-setup-win
+    authLevel: 
+        min: 400
+        max: 1000
+    authRole: SuperAdmin
+objects:
+     -  name: categoriesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'categories-store'
+            })
+     -  name: languagesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'languages-store'
+            })
+     -  name: attributeTypesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'attribute-types-store'
+            })
+     -  name: attributesDefinitionsStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'attributes-definitions-store'
+            })
+     -  name: locationsStore
+        evalTo: local
+        definition: >
+            new Ext.data.SimpleStore({
+                storeId: 'locations-store',
+                id: 0,
+                fields: ['Uid','Name'],
+                data: [ [ 1, 'CB'], [2, 'Praha'] ]
+                
+            })
+component:
+    id:              setup-win
+    title:           Setup
+    width:           600
+    height:          400
+    x:               @this.desktop.getWinX(700)
+    y:               @this.desktop.getWinY(400)
+    iconCls:         icon-setup-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    layout: fit
+    items:
+        -   xtype: tabpanel
+            stateful: false
+            autoScroll: true
+            resizeTabs: false
+            enableTabScroll: true
+            layoutOnTabChange: true
+            deferredRender: false
+            activeTab: 0
+            defaults:
+                closable: false
+                collapsed: false
+                clicksToEdit: 2
+                stateful: false
+                askBeforeChange: true
+                loadMask: true
+                border: true
+                autoWidth: true
+                autoScroll: true
+                layout: fit
+                frame: false
+                stripeRows: true
+                stateful: false
+                viewConfig:
+                    forceFit: true
+                tbar: 
+                    -   @this.actions.saveGridTool
+                    -   @this.actions.cancelGridTool
+                    -   @this.actions.addGridTool
+                    -   @this.actions.deleteGridTool
+                    -   @this.actions.reloadGrid
+                plugins:
+                    -   @new Ext.ux.Plugin.FormToButtons()
+            items:
+                -   title: <%[ News Categories ]%>
+                    xtype: autogrid
+                    id:    categories-grid
+                -   title: <%[ Languages ]%>
+                    xtype: autogrid
+                    id:    languages-grid
+                -   title: <%[ Attributes Definitions ]%>
+                    xtype: autogrid
+                    id:    attributes-definitions-grid
+                -   title: <%[ Attribute Types ]%>
+                    xtype: autogrid
+                    id:    attribute-types-grid
+end: true

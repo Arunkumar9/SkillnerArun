@@ -1,0 +1,187 @@
+#
+# Grid with answers view
+#
+#
+name: answers-view
+serverSide:
+    allowedGrids: answers-grid
+    recordClass: QuizAnswerRecord
+    noBlankContext: false
+    condition: (1=0)
+    context:
+        quizes-grid:
+            condition: "quiz_id = '%filter%'"
+        quiz-form:
+            condition: "quiz_id = '%filter%'"
+        question-form:
+            condition: "quiz_id = '%filter%'"
+        question-form-store:
+            action: updateRecords
+            dataRoot: rows
+            mapRequest:
+                filter: quiz_id
+            successMsg: <%[ Answers saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        quiz-answers-grid-store:
+            action: updateRecordsFB
+            dataRoot: rows
+            mapRequest:
+                filter: quiz_id
+            successMsg: <%[ Answers saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[ Cannot enter row with duplicate value %1$s.]%>
+        quiz-answers-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row.]%>
+    sortInfo: 
+        field:
+          ordering: ASC
+          name: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    remoteSort: false
+    xxxgroupField: name
+    sortInfo: 
+        field:  ordering
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: quiz_id
+        -    name: points
+             type: int
+	    -    name: good
+	         type: int
+        -    name: ordering
+             type: int
+        -    name: is_enabled
+             type: int
+        -    name: numeric_type
+        -	 name: first_value
+             type: string
+        -    name: second_value
+        	 type: string
+        -    name: range_limit
+        	 type: int
+    context:
+      base:
+          cm:
+          	-    ^new Ext.grid.RowNumberer()
+            -    header: <%[ Answer ]%>
+                 sortable: true
+                 dataIndex: name
+                 editor:
+                    xtype: textfield
+                    allowBlank: false
+            -    header: <%[ Value Type ]%>
+                 sortable: true
+                 dataIndex: numeric_type
+                 hidden: true 
+				 renderer :
+					 fn: >
+						 ^function( val, meta, record ) {
+						 	if(val) return val;
+						    return 'Single Value';
+						}
+				 editor:
+		            xtype: combo
+		            typeAhead: true
+		            triggerAction: 'all'
+		            mode: 'local'
+		            id:numeric-type-combo
+		            lazyRender: true
+				    valueField: 'range'
+				    displayField: 'single-value'
+				    editable : false
+		            store: numeric-value-store
+		            listeners:
+						select :
+							fn: >
+								^function( combo, record, index ) {
+									var gridData = Ext.getCmp( 'quiz-answers-grid' );
+								    var selectedRecord = gridData.getSelectionModel().getSelections()[0];
+								    var rowIndex = gridData.store.indexOf(selectedRecord);
+								    var fields = gridData.getColumnModel().config;
+								    for( var i=0; i < fields.length; i++ ){
+							    		var cell = gridData.getView().getCell( rowIndex, i);
+							    		if( cell ){
+									    	if( (Ext.isEmpty(combo.getValue()) || combo.getValue() === "Single Value") ){
+									    		Ext.fly(cell).setVisible(false);
+									    	}
+									    	else if( combo.getValue() === "Value From Range"  ){
+									    		Ext.fly(cell).setVisible( true );
+									    	}
+									    	if( fields[i].dataIndex === "second_value" && (Ext.isEmpty(combo.getValue()) || combo.getValue() === "Single Value") ){
+									    		Ext.fly(cell).removeClass('enableCell');
+								    			Ext.fly(cell).addClass('disableCell');
+								    			selectedRecord.set('second_value', 0);
+									    	}
+									    	else if( fields[i].dataIndex === "second_value" && combo.getValue() === "Value From Range"  ){
+									    		Ext.fly(cell).removeClass('disableCell');
+									    		Ext.fly(cell).addClass('enableCell');
+									    		selectedRecord.set('second_value', 0);
+									    	}
+									    }
+								    }
+								}
+			-    header: <%[ Value From ]%>
+                 sortable: true
+                 dataIndex: first_value
+                 hidden: true
+                 editor:
+                    xtype: textfield
+                    vtype:'answerfromval'
+                    allowBlank: false
+            -    header: <%[ Value To ]%>
+                 sortable: true
+                 dataIndex: second_value
+                 disableCls:disableCell
+                 hidden: true
+                 editor:
+                    xtype: textfield
+                    allowBlank: false
+                    vtype:'answertoval'
+				 renderer :
+					fn: >
+						^function( value, metaData, record, rowIndex, colIndex, store ) {
+							if( Ext.isEmpty(record.data.numeric_type) || (record.data.numeric_type == 'Single Value') ){
+								metaData.css = 'disableCell';
+							}else{
+								metaData.css = 'enableCell';
+							}
+							return value;
+						}
+            -    header: <%[ Points ]%>
+                 sortable: true
+                 dataIndex: points
+                 align: right
+                 width: 40
+                 hidden: true
+                 editor:
+                    xtype: numberfield
+                    allowBlank: true
+                    allowNegative: false
+            -    header: <%[ Position ]%>
+                 sortable: true
+                 hidden: true
+                 dataIndex: ordering
+                 align: right
+                 value: 1
+                 width: 50
+            -    xtype: checkcolumn
+                 header: <%[ Correct answers ]%>
+                 dataIndex: good
+                 width: 20
+                 value: 1
+                 align: center
+end: true
+

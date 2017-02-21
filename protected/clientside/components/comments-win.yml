@@ -1,0 +1,334 @@
+#
+#     CRM Setup layout definition
+# CustomerTown, CustomerPostcode, CoverageArea, Delivery Run, Customer Type, Customer Status, Money Locations, Payment Type, Customer Heard, Fundraiser, Complaints, Actions
+#
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                @function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#     -  name: Ext.ux.Plugins.DataView.js
+#        using: [ lib/ext/ux/Ext.ux.Plugins.DataView.js ]
+#
+description:
+    name: comments-win
+    text: <%[ Comments Management ]%>
+    iconCls: icon-comments-win
+    hideIcon: false
+    authLevel: 
+        min: 500
+        max: 1000
+objects:
+     -  name: languagesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'languages-store'
+            })
+     -  name: feUsersStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'feusers-store'
+            })
+     -  name: commentsStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'comments-store',
+                autoLoad: false
+            })
+component:
+    id:              comments-win
+    title:           <%[ Comments Management ]%>
+    width:           1000
+    height:          600
+    x:               @this.desktop.getWinX(1000)
+    y:               @this.desktop.getWinY(600)
+    iconCls:         icon-comments-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    layout: border
+    tbar:
+        -    text: <%[ New Comment ]%>
+             iconCls: icon-action
+             handler: @this.actions.newRecordHandler.createDelegate(this,['comment-form'],true)
+        -    text: <%[ Delete Comment ]%>
+             iconCls: icon-delete
+             handler: @this.actions.deleteFromGridHandler.createDelegate(this,['comments-grid'],true)
+    items:
+        -    title: <%[ Students ]%>
+             elements: body
+             id: feusers-west-panel
+             collapsible: true
+             collapsed: false
+             cmargins: 0 0 0 0
+             margins: 0 0 0 0
+             width: @this.maxWidth(200,0.2)
+             split: true
+             layout: fit
+             xtype: panel
+             region: west
+             items:
+                  - xtype: tabpanel
+                    layoutOnTabChange: true
+                    defaults:
+                        hideMode: offsets
+                    deferredRender: false
+                    layoutOnTabChange: true
+                    activeTab: 0
+                    items:
+                         -     title: <%[ List ]%>
+                               xtype: autogrid
+                               xregion: west
+                               id:   feusers-grid
+                               closable: false
+                               collapsed: false
+                               collapsible: false
+                               clicksToEdit: 2
+                               askBeforeChange: true
+                               loadMask: true
+                               border: true
+                               width: 150
+                               autoScroll: true
+                               layout: fit
+                               frame: false
+                               stripeRows: true
+                               stateful: false
+                               linkedGrid: comments-grid
+                               split: true
+                               viewConfig:
+                                  forceFit: true
+                               sm: >
+                                   @new Ext.grid.RowSelectionModel({singleSelect: true})
+                               bbar: >
+                                  @new Ext.PagingToolbar({
+                                        pageSize:      20
+                                        ,store:         'feusers-store'
+                                        ,displayInfo:   false
+                                        ,displayMsg:    '{2}'
+                                        ,emptyMsg:      '<%[No students]%>'
+                                   })
+                               plugins:
+                                  -   @new Ext.ux.Plugin.GridLinker()
+                                  -   @new Ext.ux.Plugin.FormToButtons()
+                               listeners:
+                                  xxafterlayout:
+                                      fn: >
+                                          @function(ct,layout) {
+                                              ct.getView().refresh();
+                                          }
+                         #
+                         # Search panel
+                         #
+                         -     title: <%[ Search ]%>
+                               xtype: form
+                               id: search-form
+                               autoHeight: false
+                               border: false
+                               autoWidth: true
+                               linkedGrid: comments-grid
+                               buttonAlign: right
+                               buttons:
+                                  -    @this.actions.search
+                               plugins:
+                                  -    @new Ext.ux.Plugin.FormToButtons()
+                               items:
+                                  -    xtype: panel
+                                       frame: true
+                                       layout: anchor
+                                       anchor: "100% 100%"
+                                       autoWidth: true
+                                       bodyStyle:
+                                           padding: 5px 5px 0
+                                       defaults:
+                                            autoHeight: true
+                                            border: false
+                                       autoScroll: true
+                                       items:
+                                        -    layout: form
+                                             defaultType: textfield
+                                             anchor: 100%
+                                             items:
+                                              -    fieldLabel: <%[ Teacher ]%>
+                                                   name: contact
+                                                   anchor: 95%
+                                              -    fieldLabel: <%[ Comment ]%>
+                                                   name: comment
+                                                   anchor: 95%
+        -    xtype: panel
+             layout: border
+             region: center
+             items:
+                -    title: <%[ Comments List ]%>
+                     xtype: autogrid
+                     region: west
+                     id:   comments-grid
+                     closable: true
+                     collapsed: false
+                     collapsible: false
+                     clicksToEdit: 2
+                     askBeforeChange: true
+                     loadMask: true
+                     border: true
+                     autoScroll: true
+                     layout: fit
+                     frame: false
+                     stripeRows: true
+                     stateful: false
+                     width: @this.maxWidth(200,0.2)
+                     linkedForm: comment-form
+                     split: true
+                     loadFormFromStore: true
+                     viewConfig:
+                        forceFit: true
+                     sm: >
+                         @new Ext.grid.RowSelectionModel({singleSelect: true})
+                     bbar: >
+                        @new Ext.PagingToolbar({
+                              pageSize:      20
+                              ,store:         'comments-store'
+                              ,displayInfo:   false
+                              ,displayMsg:    '{2}'
+                              ,emptyMsg:      '<%[No comments]%>'
+                         })
+                     plugins:
+                        -   @new Ext.ux.Plugin.FormLoader()
+                        -   @new Ext.ux.Plugin.FormToButtons()
+                     listeners:
+                        xxxafterlayout:
+                            fn: >
+                                @function(ct,layout) {
+                                    ct.getView().refresh();
+                                }
+                -    title: <%[ Edit Comment ]%>
+                     id: comment-form
+                     region: center
+                     elements:  body
+                     margins:    0 0 0 0
+                     xxlayout: fit
+                     frame: false
+                     border: false
+                     xtype: form
+                     url: @Fresh.Config.Service.Form
+                     trackResetOnLoad: true
+                     focusOnNew: input_dateAsDate
+                     loadingMsg: "<%[ Loading question '{CommentPerex}' ]%>"
+                     formBaseParams:
+                         view: comments-form-view
+                     buttonAlign: right
+                     buttons:
+                        -     @this.actions.save
+                        -     @this.actions.cancel
+                     plugins:
+                        -    @new Ext.ux.Plugin.FormToButtons()
+                     items:
+                        -    xtype:     panel
+                             id: comments-form-panel
+                             autoWidth: true
+                             nnlinkedGrid: qa-images-view
+                             anchor: 100% 100%
+                             layout: border
+                             frame: true
+                             border: true
+                             margins: 0 0 0 0
+                             items:
+                                            -    layout: form
+                                                 anchor: 100% 100%
+                                                 region: center
+                                                 items:
+                                                    -    xtype: hidden
+                                                         name: uid
+                                                    -    xtype: fieldset
+                                                         frame: false
+                                                         border: false
+                                                         autoHeight: true
+                                                         margins: 0 0 0 0
+                                                         layout: column
+                                                         hideBorders: true
+                                                         style:
+                                                               padding: 0px
+                                                         defaults:
+                                                            layout: form
+                                                         items:
+                                                            -   columnWidth: 0.5
+                                                                style:
+                                                                    padding-right: 5px
+                                                                defaults:
+                                                                    anchor: 100%
+                                                                    layout: form
+                                                                items:
+                                                                    -    fieldLabel: <%[ Date ]%>
+                                                                         name: input_dateAsDate
+                                                                         xtype: xdatefield
+                                                                    -    fieldLabel: <%[ Student ]%>
+                                                                         xtype: ccombo
+                                                                         hiddenName: fe_user_id
+                                                                         store: "@Ext.StoreMgr.lookup('feusers-store')"
+                                                            -   columnWidth: 0.5
+                                                                style:
+                                                                    padding-left: 5px
+                                                                defaults:
+                                                                    anchor: 100%
+                                                                    layout: form
+                                                                items:
+                                                                    -    fieldLabel: <%[ Language ]%>
+                                                                         valueField: lang
+                                                                         displayField: name
+                                                                         xtype: ccombo
+                                                                         hiddenName: lang
+                                                                         store: "@Ext.StoreMgr.lookup('languages-store')"
+                                                                    -    fieldLabel: <%[ Teacher ]%>
+                                                                         name: contact
+                                                                         xtype: textfield
+                                                    -    fieldLabel: <%[ Comment Text ]%>
+                                                         name: comment
+                                                         allowBlank: false
+                                                         xtype: uxhtmleditor
+                                                         enableFont: false
+                                                         hideLabel: true
+                                                         autoHeight: false
+                                                         autoWidth: false
+                                                         anchor: 100% 75%
+                                                         styles: lib/ext/ux/HtmlEditor/htmleditor.css
+                                                         plugins:
+                                                             -   @new Ext.ux.HTMLEditorImage()
+
+ references:
+    htmleditor:
+         xtype: uxhtmleditor
+         enableFont: false
+         hideLabel: true
+         autoHeight: false
+         autoWidth: false
+         anchor: 100% 75%
+         styles: lib/ext/ux/HtmlEditor/htmleditor.css
+         plugins:
+             -   @new Ext.ux.HTMLEditorImage()
+    gridPagingDef:
+         pageSize:      20
+         store:         @this.store
+         displayInfo:   true
+         displayMsg:    "Count {2}"
+         autoShow:      true
+         emptyMsg:      No customers to display
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+            tbar: 
+                -   @this.actions.saveGridTool
+                -   @this.actions.cancelGridTool
+                -   @this.actions.addGridTool
+                -   @this.actions.deleteGridTool
+                -   @this.actions.reloadGrid
+end:
+-   "@new Ext.DataView.DragSelector({dragSafe: true})"
+

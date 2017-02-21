@@ -1,0 +1,51 @@
+name: definitions-view
+serverSide:
+    allowedGrids: definitions-grid
+    recordClass: DefinitionRecord
+    noBlankContext: false
+    useSecurity: true
+    condition: class = "%param0%" 
+    context:
+        %param0%-def-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row.]%>
+        %param0%-def-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        branch-combo:
+            condition: class = "%param0%" AND uid in (%filter%)
+    sortInfo:
+        field:  name
+        dir: ASC
+metaData:
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field:  name
+        direction: ASC
+    fields:
+        -    name: uid
+        -    name: name
+        -    name: Uid
+        -    name: Name
+        -    name: class
+        -    name: value
+    cm:
+        -    header: <%[Name]%>
+             sortable: true
+             dataIndex: Name
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+        -    header: <%[Value]%>
+             sortable: true
+             dataIndex: value
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+end: true

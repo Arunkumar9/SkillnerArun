@@ -1,0 +1,94 @@
+#
+#     CRM Setup layout definition
+# CustomerTown, CustomerPostcode, CoverageArea, Delivery Run, Customer Type, Customer Status, Money Locations, Payment Type, Customer Heard, Fundraiser, Complaints, Actions
+#
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                ^function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#
+#
+#     -  name: TypedEditorColumn
+#        using: [ lib/ext/ux/TypedEditorColumn/TypedEditorColumn.js ]
+description:
+    name: setup-win
+    text: Setup
+    iconCls: icon-setup-win
+    hideIcon: true
+    authLevel: 
+        min: 300
+        max: 1000
+objects:
+     -  name: newsCategoriesStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'news-categories-store'
+            })
+     -  name: hdcloudJobStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'hdcloudjobs-store'
+            })
+component:
+    id:              setup-win
+    title:           Setup
+    width:           600
+    height:          400
+    x:               ^this.desktop.getWinX(700)
+    y:               ^this.desktop.getWinY(400)
+    iconCls:         icon-setup-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    layout: fit
+    items:
+        -   xtype: tabpanel
+            stateful: false
+            autoScroll: true
+            resizeTabs: false
+            enableTabScroll: true
+            layoutOnTabChange: true
+            deferredRender: false
+            activeTab: 0
+            defaults:
+                closable: false
+                collapsed: false
+                clicksToEdit: 1
+                stateful: false
+                askBeforeChange: true
+                loadMask: true
+                border: true
+                autoWidth: true
+                autoScroll: true
+                layout: fit
+                frame: false
+                stripeRows: true
+                stateful: false
+                viewConfig:
+                    forceFit: true
+                tbar: 
+                    -   ^this.actions.saveGridTool
+                    -   ^this.actions.cancelGridTool
+                    -   ^this.actions.addGridTool
+                    -   ^this.actions.deleteGridTool
+                    -   ^this.actions.reloadGrid
+                plugins:
+                    -   ^new Ext.ux.Plugin.FormToButtons()
+            items:
+                -   title: <%[ News Categories ]%>
+                    xtype: autogrid
+                    id:    news-categories-grid
+                -   title: <%[ HDCloud Jobs ]%>
+                    xtype: autogrid
+                    id:    hdcloudjobs-grid
+                    tbar:
+                        -   ^this.actions.deleteGridTool
+                        -   ^this.actions.reloadGrid
+end: true

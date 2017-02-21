@@ -1,0 +1,82 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+.x-form-item { 
+/*	background: 1px solid #DFE8F6;*/
+/*padding-top: 3px;
+padding-bottom: 3px;*/
+}
+
+
+.x-form-item:hover{ 
+	background: #F0F4FB;
+}
+
+
+
+
+.x-slider-ticks .x-form-field-wrap {
+	background-image: url(images/ticks.gif);
+	background-repeat: no-repeat;
+	background-position: top left;
+	height: 25px;
+}
+
+.x-slider-horz .x-slider-thumb {
+	background-image: url(images/slider-thumb.png) !important;	
+}
+
+
+#x-shortcuts dt {
+	-moz-border-radius: 8px;
+	height: 90px;
+	padding: 10px;
+	border: 1px solid #F3F3F3;
+	cursor: pointer;	
+}
+
+#x-shortcuts dt:hover {
+	background-color: #F0FAFF; 
+	border: 1px solid #E1F2FF;
+}
+
+
+
+
+/*#knt-win-shortcut img {
+	width: 48px;
+	height: 48px;
+    background-image:url(images/iconKNT48.png) !important;
+}
+
+
+.icon-knt-win {
+    background-image:url(images/iconKNT16.png) !important;		
+}
+*/
+#x-desktop {
+	background-image: url(images/bckgWall.jpg) !important;	
+	background-position: bottom left;
+	background-repeat:no-repeat;
+	background-color: #FFF;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

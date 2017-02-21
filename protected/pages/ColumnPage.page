@@ -1,0 +1,30 @@
+<%@  %>
+<com:TContent ID="main" >
+	<com:FContentRepeater >
+	<prop:ItemTemplate>
+		  <com:FShowContent ID="ContentRecord" 
+							Content="<%# $this->Data %>" 
+							cssClass="Content" />
+	</prop:ItemTemplate> 
+	</com:FContentRepeater>
+
+<div class="rightColumn" >
+	<com:FContentRepeater ContentColumn="right" >
+		<prop:ItemTemplate>
+			  <com:FShowContent ID="ContentRecord" 
+								Content="<%# $this->Data %>" 
+								cssClass="Content" />
+		</prop:ItemTemplate> 
+	</com:FContentRepeater>	
+</div>
+<div class="leftColumn" >
+	<com:FContentRepeater ID="RepeaterLeft" ContentColumn="left" >
+		<prop:ItemTemplate>
+			  <com:FShowContent ID="ContentRecord" 
+								Content="<%# $this->Data %>" 
+								cssClass="Content" />
+		</prop:ItemTemplate> 
+	</com:FContentRepeater>	
+</div>
+</com:TContent>
+	

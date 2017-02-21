@@ -1,0 +1,22 @@
+#
+# Form view
+#
+name: news-form-view
+serverSide:
+    recordClass: NewsRecord 
+    findBy: uid
+    properties: all
+    add-properties:
+        - fromDateAsDate
+        - toDateAsDate
+        - images
+    
+    dataRoot: data
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ News saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

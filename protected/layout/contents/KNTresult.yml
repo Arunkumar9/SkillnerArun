@@ -1,0 +1,21 @@
+KNTresult:
+    name: KNTresult
+    description: KNT result
+    t: content
+    data: 
+        ContentEditClass: KNTresult
+        iconCls: image
+KNTbasic:
+    name: KNTbasic
+    description: KNT basic analysis
+    t: content
+    data:
+        ContentEditClass: KNTBasicAnalysis
+        iconCls: image
+KNTmeals:
+    name: KNTbasic
+    description: KNT meal recomendation
+    t: content
+    data:
+        ContentEditClass: KNTmeals
+        iconCls: image

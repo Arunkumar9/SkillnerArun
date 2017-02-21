@@ -1,0 +1,8 @@
+ContactForm:
+    uid: 107
+    name: ContactForm
+    description: contact form
+    t: content
+    data:
+        ContentEditClass: ContactForm
+        iconCls: news

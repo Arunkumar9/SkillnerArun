@@ -1,0 +1,25 @@
+#
+# Mail
+#
+name: newsletter-mail
+serverSide:
+    recordClass: MailingRecord 
+    findBy: uid
+    addresses:
+        recordClass: ContactRecord
+        emailField: email
+        condition: is_moments = 1
+    sendInterval: 15
+    sendAtOnce: 20
+    template: mailing
+    successMsg: 
+    xxsuccessMsg: <%[Mailing submited ok!]%>
+    errors:
+      -  regexp: "/Curently sending/"
+         text: <%[Curently sending.]%>
+      -  text: <%[Error submiting mailing.]%>
+    context:
+        single-mail:
+            successMsg: Mail sent ok.
+            action: singleMail
+        

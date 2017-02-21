@@ -1,0 +1,28 @@
+
+Fatal error: require_once(): Failed opening required '/prado/prado.php' (include_path='.:/php/includes:/usr/share/pear:/local/PEAR/') in /var/www/html/newtrunk/Process/PradoInstance.php on line 26
+
+Call Stack:
+    0.0009     372460   1. {main}() /var/www/html/newtrunk/PradoScheduler.php:0
+    0.0015     387112   2. include_once('/var/www/html/newtrunk/Process/PradoInstance.php') /var/www/html/newtrunk/PradoScheduler.php:246
+
+
+Fatal error: require_once(): Failed opening required '/prado/prado.php' (include_path='.:/php/includes:/usr/share/pear:/local/PEAR/') in /var/www/html/newtrunk/Process/PradoInstance.php on line 26
+
+Call Stack:
+    0.0009     372460   1. {main}() /var/www/html/newtrunk/PradoScheduler.php:0
+    0.0015     387112   2. include_once('/var/www/html/newtrunk/Process/PradoInstance.php') /var/www/html/newtrunk/PradoScheduler.php:246
+
+
+Fatal error: require_once(): Failed opening required '/prado/prado.php' (include_path='.:/php/includes:/usr/share/pear:/local/PEAR/') in /var/www/html/newtrunk/Process/PradoInstance.php on line 26
+
+Call Stack:
+    0.0009     372460   1. {main}() /var/www/html/newtrunk/PradoScheduler.php:0
+    0.0015     387112   2. include_once('/var/www/html/newtrunk/Process/PradoInstance.php') /var/www/html/newtrunk/PradoScheduler.php:246
+
+
+Fatal error: require_once(): Failed opening required '/prado/prado.php' (include_path='.:/php/includes:/usr/share/pear:/local/PEAR/') in /var/www/html/newtrunk/Process/PradoInstance.php on line 26
+
+Call Stack:
+    0.0005     372460   1. {main}() /var/www/html/newtrunk/PradoScheduler.php:0
+    0.0009     387112   2. include_once('/var/www/html/newtrunk/Process/PradoInstance.php') /var/www/html/newtrunk/PradoScheduler.php:246
+

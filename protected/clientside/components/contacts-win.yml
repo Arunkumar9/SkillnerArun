@@ -1,0 +1,342 @@
+#
+#                        -     text: <%[ Save ]%>
+#                              handler: ^this.actions.saveGridHandler.createDelegate(this,['contacts-grid'],true)
+#                        -     text: <%[ Cancel ]%>
+#                              handler: ^this.actions.cancelGridHandler.createDelegate(this,['contacts-grid'],true)
+#
+description:
+    name: contacts-win
+    text: <%[ Contacts Management ]%>
+    iconCls: icon-contacts-win
+    hideIcon: true
+    autoRun: false
+    findStores: true
+    authLevel: 
+        min: 200
+        max: 1000
+objects:
+     -  name: WindowDrawer
+        using:
+          -   lib/ext/ux/WindowDrawers/Ext.ux.plugins.WindowDrawer.js
+          -   lib/ext/ux/Ext.ux.form.SelectGrids.js
+     -  name: usersStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'users-store'
+            })
+     -  name: addressesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'user-addresses-store',
+                autoLoad: false
+            })
+     -  name: personsStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'contact-persons-store',
+                autoLoad: false
+            })
+     -  name: rolesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'roles-store'
+            })
+     -  name: useThis
+        evalTo: local
+        definition: >
+            function(grid){
+                grid = Ext.getCmp(grid);
+                var rf = grid.recordForm;
+                if (rf.form.getForm().isValid()) {
+                  rf.updateRecord();
+                  if(rf.autoHide) {
+                    rf.window.hide(null);
+                  }
+                  this.fieldClient.setValue(rf.record.get('uid'));
+                  this.win.minimize();
+                }
+            }
+component:
+    id:              contacts-win
+    title:           <%[ Contacts Management ]%>
+    width:           400
+    height:          500
+    x:               ^this.desktop.getWinX(900)
+    y:               ^this.desktop.getWinY(500)
+    iconCls:         icon-contacts-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    minimized: true
+    stateful: false
+    deferredRender: false
+    tbar:
+          -    text: <%[ New User ]%>
+               iconCls: icon-action
+               handler: >
+                        ^function() {
+                          var tb = this.win.drawers.e;
+                          tb.getLayout().setActiveItem(2);
+                          var grid = Ext.getCmp('client-users-grid');
+                          var rec = grid.addRecord();
+                          grid.recordForm.show(rec);
+                          grid.getSelectionModel().selectRecords([rec]);
+                          tb.setTitle(__('Add User'));
+                          tb.show();
+                        }.createDelegate(this)
+          -    text: <%[ New User Address ]%>
+               iconCls: icon-action
+               handler: >
+                        ^function() {
+                          var users = Ext.getCmp('client-users-grid');
+                          var rec = users.getSelectionModel().getSelected();
+                          if (!rec || rec.phantom) {
+                              Ext.Msg.alert(__('Alert'),__('You have to select user to add address to'));
+                              return;
+                          }
+                          var tb = this.win.drawers.e;
+                          tb.getLayout().setActiveItem(0);
+                          var grid = Ext.getCmp('user-addresses-grid');
+                          var rec = grid.addRecord();
+                          grid.recordForm.show(rec);
+                          if (Ext.isFunction(grid.getSelectionModel().selectRecords))
+                            grid.getSelectionModel().selectRecords([rec]);
+                          else
+                            grid.getSelectionModel().select(0,0,false,false,rec);
+                          tb.setTitle(__('Add User Address'));
+                          tb.show();
+                        }.createDelegate(this)
+          -    text: <%[ New Contact Person ]%>
+               iconCls: icon-action
+               handler: >
+                        ^function() {
+                          var users = Ext.getCmp('client-users-grid');
+                          var rec = users.getSelectionModel().getSelected();
+                          if (!rec || rec.phantom) {
+                              Ext.Msg.alert(__('Alert'),__('You have to select user to add contact person to'));
+                              return;
+                          }
+                          var tb = this.win.drawers.e;
+                          tb.getLayout().setActiveItem(1);
+                          var grid = Ext.getCmp('contact-persons-grid');
+                          var rec = grid.addRecord();
+                          grid.recordForm.show(rec);
+                          grid.getSelectionModel().selectRecords([rec]);
+                          tb.setTitle(__('Add Contact Person'));
+                          tb.show();
+                        }.createDelegate(this)
+          -    xtype: tbfill
+    layout: border
+    items:
+        -    xtitle: <%[ Users ]%>
+             split:        true
+             region: west
+             width: ^this.maxWidth(200,0.25)
+             stateful: false
+             collapsible: true
+             stateful: false
+             xtype: cautogrid
+             region: west
+             id:  client-users-grid
+             store: users-store
+             closable: false
+             collapsed: false
+             collapsible: false
+             clicksToEdit: 2
+             askBeforeChange: true
+             loadMask: true
+             border: true
+             deferredRender: false
+             autoWidth: true
+             autoScroll: true
+             layout: fit
+             frame: false
+             stripeRows: true
+             stateful: false
+             noStorePreload: false
+             linkedGrid: contacts-grid
+             infoField: name
+             split: true
+             loadFormFromStore: true
+             formOkSave: true
+             formIgnoreFields:
+                  NameUserId: true
+                  UpdateRoles: true
+                  Userid: true
+                  RolesAsList: true
+             linkedGrid: user-addresses-grid
+             viewConfig:
+                forceFit: true
+             sm: >
+                 ^new Ext.grid.RowSelectionModel({singleSelect: true})
+             bbar: >
+                ^new Ext.PagingToolbar({
+                      pageSize:      20
+                      ,store:         'users-store'
+                      ,displayInfo:   true
+                      ,displayMsg:    '<%[Count {2}]%>'
+                      ,emptyMsg:      '<%[No classes to display]%>'
+                 })
+             tbar:
+                -   ^this.actions.reloadGrid
+             plugins:
+                -   pformtobuttons
+                -   ptype: pgridsearch
+                    iconCls: icon-viewmag
+                    minChars: 2
+                    width: 200
+                    position: bottom
+                    showSelectAll: false
+                    mode: remote
+                    checkIndexes: [ name ]
+                    autoFocus: false
+                -   ptype: pmultigridlinker
+                    clickEvent: rowclick
+                    linkedGrid: user-addresses-grid
+                -   ptype: pmultigridlinker
+                    clickEvent: rowclick
+                    linkedGrid: contact-persons-grid
+             clickOpensForm: true
+             formCt: user-form
+             formColumns: 1
+             formLayout: form
+             formConfig:
+                  autoHeight: false
+                  frame: false
+                  moreButtons:
+                     -  text: <%[Use this]%>
+                        iconCls: icon-plus
+                        handler: ^this.useThis.createDelegate(this,['client-users-grid'])
+                        disabled: ^!this.fieldClient
+             listeners:
+                click:
+                    fn: >
+                        ^function(e) {
+                              if (Ext.isFunction(this.ownerCt.drawers.e.getLayout().setActiveItem)) {
+                                  var tb = this.ownerCt.drawers.e;
+                                  tb.getLayout().setActiveItem(2);
+                                  tb.setTitle(__('Edit User'));
+                                  this.ownerCt.drawers.e.show();
+                              }
+                         }
+             stateful: false
+        -    xtype: panel
+             activeTab: 0
+             region: center
+             split: true
+             layout: vbox
+             stateful: false
+             width: 150
+             collapsible: false
+             defferedRender: false
+             stateful: false
+             defaults:
+                 formOkSave: true
+                 layout: fit
+                 flex: 1
+                 align: stretch
+                 noStorePreload: false
+                 tbar: ^[]
+                 clickOpensForm: true
+                 formColumns: 1
+                 formLayout: form
+                 formConfig:
+                      autoHeight: false
+                      frame: false
+                 stateful: false
+             items:
+                -    xtitle: <%[ User Addresses ]%>
+                     xtype: cautogrid
+                     id:   user-addresses-grid
+                     formCt: address-form
+                     formConfig:
+                          autoHeight: false
+                          frame: false
+                          defaults:
+                             anchor: 95%
+                             lableWidth: 50
+                     listeners:
+                        rowclick:
+                            fn: >
+                                ^function(e) {
+                                    var tb = this.ownerCt.ownerCt.drawers.e;
+                                    if (Ext.isFunction(tb.getLayout().setActiveItem) && this.store.getCount()>0) {
+                                        tb.getLayout().setActiveItem(0);
+                                        tb.setTitle(__('Edit User Address'));
+                                        tb.show();
+                                    }
+                                 }
+                -    xtitle: <%[ Contact Persons ]%>
+                     xtype: cautogrid
+                     id:   contact-persons-grid
+                     formCt: person-form
+                     formLayout: form
+                     formConfig:
+                          autoHeight: false
+                          frame: false
+                          defaults:
+                             anchor: 95%
+                             lableWidth: 50
+                             colspan: 4
+                     descriptionField: surname
+                     listeners:
+                        rowmousedown:
+                            fn: >
+                                ^function(e) {
+                                    var tb = this.ownerCt.ownerCt.drawers.e;
+                                    if (Ext.isFunction(tb.getLayout().setActiveItem) && this.store.getCount()>0) {
+                                        tb.getLayout().setActiveItem(1);
+                                        tb.setTitle(__('Edit Contact Person'));
+                                        tb.show();
+                                    }
+                                 }
+    plugins:
+        -    ptype: pdrawer
+             size      : 400
+             side      : e
+             animate   : true
+             plain     :  true
+             closable  : true
+             title     : Edit record
+             activeItem: 0
+             split: true
+             stateful: false
+             zseed: 7000
+             region: east
+             layout: card
+             id: detail-panel
+             ref: detailPanel
+             collapsible: false
+             vvlayoutConfig:
+             deferedRender: false
+             stateful: false
+             defaults:
+                 split:        true
+                 stateful: false
+                 collapsible: false
+                 layout: fit
+                 frame: true
+                 anchor: 100% 100%
+                 listeners:
+                   hide:
+                     fn: >
+                         ^function() {
+                            this.ownerCt.hide();
+                         }
+                 defaults:
+                    labelAlign: right
+                    layoutConfig:
+                          columns: 2
+             items:
+                -    id: address-form
+                -    id: person-form
+                -    id: user-form
+references:
+end:
+

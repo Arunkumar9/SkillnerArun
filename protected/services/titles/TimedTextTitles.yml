@@ -1,0 +1,17 @@
+sitemap.xml:
+		encoding: utf-8
+		recordClass: CuepointRecord
+		rootItem: urlset
+		rootItemAttributes:
+					xmlns: http://www.w3.org/2006/10/ttaf1
+					'xml:lang' : <%= Prado::getApplication()->getGlobalization()->getCulture() %>
+					'xmlns:tts' : http://www.w3.org/2006/10/ttaf1#styling
+		condition: videos_id = <%= Prado::getApplication()->Request['vid'] %>
+		item:
+				tagname: url
+				flag: AbsoluteHref
+				content:
+						loc: $AbsoluteHref
+						lastmod: $changed
+						priority: 1
+						changefreq: weekly

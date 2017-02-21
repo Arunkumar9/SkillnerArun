@@ -1,0 +1,71 @@
+#
+# API for Lessons (videos)
+# 
+name: lessons-api
+serverSide:
+    allowedGrids: videos-grid
+    recordClass: VideoRecord
+    pageSize: 20
+    noBlankContext: true
+    context:
+        list:
+            condition: (1=1)
+            filterData: AND
+        store:
+            recordClass: VideoRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        delete:
+            recordClass: VideoRecord
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any videos in this category exist.]%>
+    sortInfo:
+        field: ordering
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: ordering
+        dir: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: user_id
+        -    name: is_enabled
+        -    name: ordering
+             type: int
+    context:
+        base:
+            cm: 
+                -    header: Uid 
+                     width: 40 
+                     sortable: true 
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Pos 
+                     width: 50 
+                     sortable: true 
+                     align: right
+                     dataIndex: ordering
+                     editor: "@new Ext.form.NumberField()"
+                -    >
+                     @new Ext.grid.CheckColumn({ 
+                        header: 'E', 
+                        dataIndex: 'is_enabled', 
+                        tooltip: "Enabled", 
+                        width: 25, 
+                        align: 'center' 
+                     })
+end: true
+

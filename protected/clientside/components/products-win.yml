@@ -1,0 +1,476 @@
+#
+#     CRM categorys layout definition
+#     listeners:
+#        beforeclose: 
+#            fn: >
+#                ^function(p) {
+#                    Ext.MessageBox.alert('Closing',p.title);
+#                    return false;
+#                }
+description:
+    name: courses-win
+    authLevels: true
+    text: <%[ Courses management ]%>
+    iconCls: icon-courses-win
+    hideIcon: <%= ($this->User->Level<100)?1:0 %>
+    autoRun: false
+    authLevel: 
+        min: 1000
+        max: 1000
+objects:
+     -  name: GridDnD
+        using:  lib/ext/ux/GridDnD.js
+     -  name: coursesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'course-store',
+                remoteSort: true
+            })
+     -  name: containersStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'containers-store'
+            })
+     -  name: lessonsStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'lesson-store'
+            })
+     -  name: quizesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'quizgroups-store'
+            })
+     -  name: courseContentsStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'coursecontent-store'
+            })
+component:
+     id:              courses-win
+     title:           <%[ Courses management ]%>
+     width:           ^this.winWidth
+     height:          ^this.winHeight
+     x:               ^this.desktop.getWinX(this.winWidth)
+     y:               ^this.desktop.getWinY(this.winHeight)
+     iconCls:         icon-courses-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader:     true
+     minimizable:          true
+     maximizable:          true
+     layout: border
+     tbar:
+          -    text: <%[ New course ]%>
+               iconCls: icon-action
+               handler: ^this.actions.newRecordHandler.createDelegate(this,['course-form'],true)
+          -    tbfill 
+          -    text: Exit 
+               iconCls: icon-exit32
+               scale: large
+               handler: ^this.actions.closeWindowHandler.createDelegate(this,['courses-win'])
+     listeners:
+        beforeclose:
+                fn: "^this.actions.askBeforeCloseHandler.createDelegate(this,['course-form'],true)"
+     items:
+       #
+       #     West panel with filter and search tabs
+       #
+       -    title: <%[ Components ]%>
+            region: west
+            elements: body
+            id: west-panel
+            collapsible: true
+            collapsed: false
+            cmargins: 0 0 0 0
+            margins: 0 0 0 0
+            width: ^this.maxWidth(300,0.2)
+            split: true
+            layout: fit
+            xtype: panel
+            items:
+                  - xtype: tabpanel
+                    layoutOnTabChange: true
+                    defaults:
+                        hideMode: offsets
+                    deferredRender: false
+                    layoutOnTabChange: true
+                    activeTab: 0
+                    items:
+                        #
+                        # Treepanel with filters
+                        #
+                        -   xtype: filtertree
+                            title: <%[ Categories ]%>
+                            id: tree-containers
+                            linkedGrid: course-grid
+                            layout: fit
+                            loader: >
+                                ^new Ext.tree.TreeLoader({
+                                    url: Fresh.Config.Service.Tree, 
+                                    baseParams: { view: 'tree-containers' },
+                                    baseAttrs: {
+                                        iconCls: 'filter',
+                                        leaf: true,
+                                        text: 'New category'
+                                    }
+                                })
+                            newNodeDefaults:
+                                leaf:
+                                    iconCls: 'filter'
+                                    leaf: true
+                                    text: '__New category'
+                                    allowChildren: false
+                                    menuType: filter
+                                    sortText: text
+                                    sortLeaf: true
+                                folder:
+                                    iconCls: 'folder'
+                                    leaf: false
+                                    text: '__New folder'
+                                    menuType: folder
+                                    sortText: text
+                                    sortLeaf: false
+                            rootVisible: true
+                            lines: false
+                            autoScroll: true
+                            autoHeight: false
+                            enableDD: true
+                            ddGroup: tree-containers
+                            ddAppendOnly: false
+                            orderable: true
+                            selModel: ^new Ext.tree.MultiSelectionModel()
+                            sortConfig:
+                                folderSort: true
+                            editorConfig:
+                                allowBlank: false
+                                blankText: A name is required
+                                selectOnFocus: true
+                                cancelOnEsc: true
+                            root: >
+                                ^new Ext.tree.AsyncTreeNode({
+                                    expanded: true,
+                                    allowDrag: false,
+                                    allowDrop: true,
+                                    text: '<%[Categories]%>',
+                                    id: 'root',
+                                    iconCls: 'user-root',
+                                    isTarget: false
+                                })
+                            tbar: 
+                                -    ^this.actions.reloadTree
+                                -    ^this.actions.expandTree
+                                -    ^this.actions.collapseTree
+                            dynamicPathMenu: 
+                                -    regexp: ^/root\/1\//
+                                     menu: deleteOnly
+                            contextMenus:
+                                any:
+                                    -    ^this.actions.newCategoryNode
+                                    -    ^this.actions.renameNode
+                                    -    ^this.actions.deleteNode
+                                folder:
+                                    -    ^this.actions.newCategoryNode
+                                    -    ^this.actions.renameNode
+                                    -    ^this.actions.deleteNode
+                                    -    ^this.actions.reloadNode
+                                recycleBin:
+                                    -    ^this.actions.emptyRecycleBin
+                                    -    ^this.actions.reloadNode
+                                deleteOnly:
+                                    -    ^this.actions.trueDeleteNode
+                                    -    ^this.actions.reloadNode
+                            sortConfig:
+                                property: sortText
+                                leafAttr: sortLeaf
+                            listeners:
+                                textchange:
+                                    fn: >
+                                        ^function(ed,v,vo) {
+                                              var store = Ext.StoreMgr.lookup('containers-store');
+                                              store.reload.defer(300,store);
+                                        }
+                            plugins: 
+                                -    ^new Ext.ux.Plugin.FormToButtons()
+                                -    ^new Ext.ux.Plugin.TreeEditor()
+           #
+           #     end of west region
+           #
+      #
+      #     Center panel splits to east with grid and center with tabpanel
+      #
+      #-    region:          center
+      #     border:          false
+      #     layout:          border
+      #     margins:         0 0 0 0
+      #     items:
+        #
+        #     Panel with grid with categorys
+        #
+       -    title:        <%[ List of course ]%>
+            region:       center
+            elements:     body
+            split:        true
+            layout:      fit
+            xxxwidth:      ^this.maxWidth(200,0.2)
+            stateful: true
+            items:
+                        -    xtype:    autogrid 
+                             id:    courses-grid
+                             loadMask: true
+                             store:    course-store
+                             sm: >
+                                ^new Ext.grid.RowSelectionModel({singleSelect: true})
+                             stripeRows: true                            
+                             viewConfig: 
+                                forceFit: true
+                             anchor:   100% 100%
+                             bbar: "^new Ext.PagingToolbar(%gridPagingDef%)"
+                             clicksToEdit: 1
+                             infoField: name
+                             stateful: false
+                             linkedForm: course-form
+                             noStorePreload: false
+                             xtbar: 
+                                 -    ^this.actions.filterNoAction
+                                 -    xtype: tbfill
+                                 -    xtype: tbtext
+                                      text: "<b>Reports:&nbsp;</b>"
+                                 -    xtype: tbspacer
+                             plugins:
+                                 -    ^new Ext.ux.Plugin.FormToButtons()
+                                 -    ^new Ext.ux.Plugin.FormLoader()
+                             buttonAlign: right
+                             xbuttons: 
+                                 -     ^this.actions.saveGridTool
+                                 -     ^this.actions.cancelGridTool
+                                 -     ^this.actions.deleteGridTool
+        #
+        # Tab panel with forms
+        #
+       -    title:      <%[ Course ]%>
+            region:     east
+            id:         course-form-east-region
+            elements:     body
+            margins:    0 0 0 0
+            collapsible:  true
+            split:      true
+            animCollapse: false
+            hideMode: offsets
+            layout:     fit
+            width:    ^this.maxWidth(900,0.6)
+            frame: true
+            items: 
+                -  xtype:     form
+                   id: course-form
+                   url: ^Fresh.Config.Service.Form
+                   trackResetOnLoad: true
+                   autoWidth: true
+                   hideMode: offsets
+                   linkedGrid: coursecontent-grid
+                   loadingMsg: <[% Loading course {name} %]>
+                   xxfocusOnNew: NameFirst
+                   formBaseParams: 
+                       view: course-form-view
+                       UpdateCategories: 1
+                       UpdateAvalton: 1
+                   buttonAlign: right
+                   buttons: 
+                       -   ^this.actions.save
+                       -   ^this.actions.cancel
+                   plugins:
+                       -   ^new Ext.ux.Plugin.FormToButtons()
+                   items:
+                       -   id: course-form-panel
+                           autoWidth: true
+                           anchor: 100% 100%
+                           border: false
+                           frame: false
+                           xtype: tabpanel
+                           deferredRender: false
+                           layoutOnTabChange: false
+                           activeTab: 0
+                           hideMode: offsets
+                           margins: 0 0 0 0
+                           defaults:
+                             autoWidth: false
+                             autoHeight: false
+                             hideMode: offsets
+                             region: center
+                             frame: true
+                             border: false
+                             anchor: 100% -10
+                             layout: form
+                             labelWidth: 120
+                             bodyStyle:
+                               padding: 5px 5px 5px 5px
+                             defaults:
+                                anchor: 100%
+                                xtype: textfield
+                           
+                           items:
+                              -  title: <%[ Data ]%>
+                                 autoWidth: false
+                                 autoHeight: false
+                                 hideMode: offsets
+                                 region: center
+                                 anchor: 100% -10
+                                 layout: form
+                                 bodyStyle:
+                                   padding: 5px 5px 5px 5px
+                                 defaults:
+                                    anchor: 100%
+                                    xtype: textfield
+                                 items:
+                                    -    xtype: hidden
+                                         name: uid
+                                    -    xtype: hidden
+                                         name: Finalized
+                                    -    xtype: hidden
+                                         name: content_id
+                                    -    fieldLabel: '<%[ Name ]%>'
+                                         name: name
+                                         allowBlank: false
+                                    -    fieldLabel: '<%[ Description ]%>'
+                                         name: description
+                                         allowBlank: true
+                                         xtype: textarea
+                                         height: 200
+                                    -    fieldLabel: <%[ Tags ]%>
+                                         name: CategoriesList
+                                         dataIndex: CategoriesList
+                                         allowBlank: true
+                                         xtype: csuperboxselect
+                                         displayField: name
+                                         valueField: uid
+                                         store: "^Ext.StoreMgr.lookup('containers-store')"
+                                         anchor: 90% 75%
+                                         plugins:
+                                            -   ^new Ext.ux.Plugin.DragDropSuperBoxSelect()
+                              -    id: course-content-tab
+                                   xtype: panel
+                                   layout: hbox
+                                   layoutConfig:
+                                        align: stretch
+                                   title: <%[ Content Definition ]%>
+                                   items:
+                                      -    xtype: tabpanel
+                                           flex: 1
+                                           activeTab: 0
+                                           border: false
+                                           frame: false
+                                           margin:
+                                                right: 5
+                                           deferredRender: false
+                                           defaults:
+                                                viewConfig: 
+                                                   forceFit: true
+                                                enableDragDrop: true
+                                                border: false
+                                                frame: true
+                                                stripeRows: true
+                                                ddGroup: depGridDD
+                                                stateful: false
+                                                xtype: autogrid
+                                           items:
+                                              -     id: course-lesson-grid
+                                                    store: lesson-store
+                                                    sm: >
+                                                       ^new Ext.grid.RowSelectionModel()
+                                                    title: Lessons
+                                              -     id: course-quizgroups-grid
+                                                    store: quizgroups-store
+                                                    sm: >
+                                                       ^new Ext.grid.RowSelectionModel()
+                                                    title: Quizzes
+                                      -    xtype: autogrid
+                                           flex: 1
+                                           title: Course Content
+                                           border: false
+                                           frame: true
+                                           stripeRows: true
+                                           enableDragDrop: true
+                                           ddGroup: depGridDD
+                                           stateful: false
+                                           id: coursecontent-grid
+                                           viewConfig: 
+                                               forceFit: true
+                                           sm: >
+                                               ^new Ext.grid.RowSelectionModel()
+                                           plugins:
+                                                -  pgriddragdrop
+references: 
+    prefGridStore:
+          url: ../../index.php?json=view
+          root: rows
+          reader: "^new Ext.data.JsonReader()"
+          baseParams: 
+             view: grid-list-of-prefs
+          remoteSort: false
+    gridPagingDef:
+          pageSize:      20
+          store:         course-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No product to display
+    filterRootDef:
+          text:         No filter
+          expanded:     true
+          children: 
+               -   text: Shared
+                   expanded: true
+                   children: 
+                         -  text: Payment not resolveds
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: To be called
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: Complaints
+                            iconCls: icon-action
+                            leaf: true
+               -   text:     My filters
+                   expanded:     true
+                   children: 
+                         -   text: All from Sydney fundraise
+                             iconCls: icon-action
+                             leaf: true
+                         -   text: All from TV fundraise
+                             iconCls: icon-action
+                             leaf: true
+    adminRootDef:
+          text: All admins
+          expanded: true
+          children:
+               -   text: Admins
+                   expanded: true
+                   children: 
+                        -   text: Bernie Segal
+                            iconCls: user
+                            leaf: true
+               -   text: SuperAdmins
+                   expanded:  true
+                   children: 
+                        -   text: Mr. Super
+                            iconCls: user
+                            leaf: true
+                        -   text: Mrs. Superee
+                            iconCls: user
+                            leaf: true
+                            
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+         autoFill: true
+
+spare: 
+    

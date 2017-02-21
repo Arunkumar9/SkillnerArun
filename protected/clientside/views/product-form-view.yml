@@ -1,0 +1,24 @@
+#
+# Form view
+#
+name: product-form-view
+serverSide:
+    recordClass: ProductRecord 
+    findBy: uid
+    properties: all
+    remove-properties:
+    add-properties:
+        - CategoriesList
+        - RelatedProductsAsList
+        - IconsAsList
+        - UpdateCategories
+        -	CoolUrlName
+    dataRoot: data
+    columns:
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Product saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: true

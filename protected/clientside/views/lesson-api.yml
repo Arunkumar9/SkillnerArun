@@ -1,0 +1,91 @@
+#
+# API for Lessons (videos)
+# 
+name: lessons-api
+serverSide:
+    allowedGrids: videos-grid
+    recordClass: LessonRecord
+    pageSize: 20
+    noBlankContext: true
+    context:
+        list:
+            filterData: AND
+        store:
+            recordClass: LessonRecord
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Changes saved ok.
+        prices:
+            action: callMethod
+            method: updatePrices
+            dataRoot: rows
+            successMsg: prices updated
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+        create:
+            recordClass: LessonRecord
+            action: updateRecords
+            checkExistence: content_id
+            dataRoot: rows
+            successMsg: Lesson created ok.
+            debug: true
+            errors:
+              -  regexp: "/1062 Duplicate entry (.*) for key 'content_id'/"
+                 text: Duplicate value of 'content_id'
+        delete:
+            recordClass: LessonRecord
+            action: callMethod
+            method: deleteNotFinished
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any videos in this category exist.]%>
+              -  regexp: "/error/"
+                 text: Error
+    sortInfo:
+        field: ordering
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field: ordering
+        dir: ASC
+    fields: 
+        -    name: content_id
+        -    name: uid
+        -    name: name
+        -    name: user_id
+        -    name: description
+        -    name: zoneids
+    context:
+        base:
+            cm: 
+                -    header: Uid 
+                     width: 40 
+                     sortable: true 
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     width: 150 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Pos 
+                     width: 50 
+                     sortable: true 
+                     align: right
+                     dataIndex: ordering
+                     editor: "@new Ext.form.NumberField()"
+                -    >
+                     @new Ext.grid.CheckColumn({ 
+                        header: 'E', 
+                        dataIndex: 'is_enabled', 
+                        tooltip: "Enabled", 
+                        width: 25, 
+                        align: 'center' 
+                     })
+end: true
+

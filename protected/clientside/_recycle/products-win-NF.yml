@@ -1,0 +1,575 @@
+#
+#     CRM categorys layout definition
+#     listeners:
+#        beforeclose: 
+#            fn: >
+#                ^function(p) {
+#                    Ext.MessageBox.alert('Closing',p.title);
+#                    return false;
+#                }
+description:
+    name: products-win
+    authLevels: true
+    text: <%[ Products management ]%>
+    iconCls: icon-products-win
+    hideIcon: false
+    autoRun: false
+    authLevel: 
+        min: 50
+        max: 1000
+objects:
+     -  name: productsStore
+        evalTo: global
+        definition: >
+            new Ext.data.GroupingStore({
+                id: 'products-store',
+                url: Fresh.Config.Service.View,
+                root : 'rows',
+                baseParams: { view: 'products-view' },
+                reader: new Ext.data.JsonReader(),
+                remoteSort: true,
+                autoLoad: false
+            })
+        
+     -  name: productAttributesStore
+        evalTo: local
+        definition: >
+            new Ext.data.GroupingStore({
+                id: 'product-attributes-store',
+                url: Fresh.Config.Service.View,
+                root : 'rows',
+                baseParams: { view: 'product-attributes-view' },
+                reader: new Ext.data.JsonReader(),
+                remoteSort: false,
+                autoLoad: false
+            })
+     -  name: productImagesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'product-images-store'
+            })
+     -  name: categoriesStore
+        evalTo: local
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'containers-store'
+            })
+
+component:
+     id:              products-win
+     title:           <%[ Products management ]%>
+     width:           ^this.winWidth
+     height:          ^this.winHeight
+     x:               ^this.desktop.getWinX(this.winWidth)
+     y:               ^this.desktop.getWinY(this.winHeight)
+     iconCls:         icon-products-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader:     true
+     minimizable:     true
+     maximizable:     false
+     draggable: true
+     collapsible: true
+     closable: true
+     layout: border
+     tbar:
+          -    text: Exit 
+               iconCls: icon-exit
+          -    text: <%[ New product ]%>
+               iconCls: icon-action
+               handler: ^this.actions.newRecordHandler.createDelegate(this,['product-form'],true)
+     items:
+       #
+       #     West panel with filter and search tabs
+       #
+       -    title: <%[ Categories ]%>
+            region: west
+            elements: body
+            id: west-panel
+            collapsible: true
+            collapsed: false
+            cmargins: 0 0 0 0
+            margins: 0 0 0 0
+            width: ^this.maxWidth(300,0.3)
+            split: true
+            layout: fit
+            xtype: panel
+            items:
+                  - xtype: tabpanel
+                    layoutOnTabChange: true
+                    defaults:
+                        hideMode: offsets
+                    deferredRender: false
+                    layoutOnTabChange: true
+                    activeTab: 0
+                    items:
+                        #
+                        # Treepanel with filters
+                        #
+                        -   xtype: filtertree
+                            title: <%[ Categories ]%>
+                            id: tree-containers
+                            linkedGrid: products-grid
+                            layout: fit
+                            loader: >
+                                ^new Ext.tree.TreeLoader({
+                                    url: Fresh.Config.Service.Tree, 
+                                    baseParams: { view: 'tree-containers' },
+                                    baseAttrs: {
+                                        iconCls: 'filter',
+                                        leaf: true,
+                                        text: 'New category'
+                                    }
+                                })
+                            newNodeDefaults:
+                                leaf:
+                                    iconCls: 'filter'
+                                    leaf: true
+                                    text: '__New category'
+                                    allowChildren: false
+                                    menuType: filter
+                                    sortText: text
+                                    sortLeaf: true
+                                folder:
+                                    iconCls: 'folder'
+                                    leaf: false
+                                    text: '__New folder'
+                                    menuType: folder
+                                    sortText: text
+                                    sortLeaf: false
+                            rootVisible: true
+                            lines: false
+                            autoScroll: true
+                            autoHeight: false
+                            enableDD: true
+                            ddAppendOnly: true
+                            selModel: ^new Ext.tree.MultiSelectionModel()
+                            sortConfig:
+                                folderSort: true
+                            editorConfig:
+                                allowBlank: false
+                                blankText: A name is required
+                                selectOnFocus: true
+                                cancelOnEsc: true
+                            root: >
+                                ^new Ext.tree.AsyncTreeNode({
+                                    expanded: true,
+                                    allowDrag: false,
+                                    allowDrop: true,
+                                    text: 'No categories',
+                                    id: 'root',
+                                    iconCls: 'user-root',
+                                    isTarget: false
+                                })
+                            tbar: 
+                                -    ^this.actions.reloadTree
+                                -    ^this.actions.expandTree
+                                -    ^this.actions.collapseTree
+                            dynamicPathMenu: 
+                                -    regexp: ^/root\/1\//
+                                     menu: deleteOnly
+                            contextMenus:
+                                any:
+                                    -    ^this.actions.newCategoryNode
+                                    -    ^this.actions.renameNode
+                                    -    ^this.actions.deleteNode
+                                folder:
+                                    -    ^this.actions.newCategoryNode
+                                    -    ^this.actions.renameNode
+                                    -    ^this.actions.deleteNode
+                                    -    ^this.actions.reloadNode
+                                recycleBin:
+                                    -    ^this.actions.emptyRecycleBin
+                                    -    ^this.actions.reloadNode
+                                deleteOnly:
+                                    -    ^this.actions.trueDeleteNode
+                                    -    ^this.actions.reloadNode
+                            sortConfig:
+                                property: sortText
+                                leafAttr: sortLeaf
+                            plugins: 
+                                -    ^new Ext.ux.Plugin.FormToButtons()
+                                -    ^new Ext.ux.Plugin.TreeSorter()
+                                -    ^new Ext.ux.Plugin.TreeEditor()
+                        #
+                        # Search panel
+                        #
+                        -    title: <%[ Search ]%>
+                             xtype: form
+                             id: search-form
+                             autoHeight: false
+                             border: false 
+                             autoWidth: true 
+                             linkedGrid: products-grid
+                             buttonAlign: right
+                             buttons:
+                                -    ^this.actions.search
+                             plugins: 
+                                -    ^new Ext.ux.Plugin.FormToButtons()
+                             items: 
+                                -    xtype: panel
+                                     frame: true
+                                     layout: anchor
+                                     anchor: "100% 100%"
+                                     autoWidth: true
+                                     bodyStyle: 
+                                         padding: 5px 5px 0
+                                     defaults: 
+                                          autoHeight: true
+                                          border: false 
+                                     autoScroll: true
+                                     items: 
+                                      -    layout: form
+                                           defaultType: textfield
+                                           anchor: 100%
+                                           items: 
+                                            -    fieldLabel: Uid
+                                                 xtype: numberfield
+                                                 name: uid
+                                                 anchor: 95%
+                                            -    fieldLabel: <%[ Name ]%>
+                                                 name: name
+                                                 anchor: 95%
+                                            -    fieldLabel: <%[ Description ]%>
+                                                 name: description
+                                                 anchor: 95%
+           #
+           #     end of west region
+           #
+      #
+      #     Center panel splits to east with grid and center with tabpanel
+      #
+      #-    region:          center
+      #     border:          false
+      #     layout:          border
+      #     margins:         0 0 0 0
+      #     items:
+        #
+        #     Panel with grid with categorys
+        #
+       -    title:        <%[ List of products ]%>
+            region:       center
+            elements:     body
+            split:        true
+            layout:      fit
+            stateful: true
+            items:
+                        -    xtype:    autogrid 
+                             id:    products-grid
+                             loadMask: true
+                             store:    products-store
+                             sm: >
+                                ^new Ext.grid.RowSelectionModel({singleSelect: true})
+                             stripeRows: true
+                             view: >
+                                ^new Ext.grid.GroupingView({
+                                    hideGroupedColumn: true, 
+                                    forceFit: true,
+                                    groupTextTpl: '{text} ({[values.rs.length]})' 
+                                })
+                             viewConfig: 
+                                forceFit: true
+                             anchor:   100% 100%
+                             bbar: "^new Ext.PagingToolbar(%gridPagingDef%)"
+                             clicksToEdit: 1
+                             infoField: model
+                             linkedForm: product-form
+                             noStorePreload: false
+                             tbar: 
+                                 -    ^this.actions.filterNoAction
+                                 -    xtype: tbfill
+                                 -    xtype: tbtext
+                                      text: "<b>Reports:&nbsp;</b>"
+                                 -    xtype: tbspacer
+                             plugins:
+                                 -    ^new Ext.ux.Plugin.FormToButtons()
+                                 -    ^new Ext.ux.Plugin.FormLoader()
+                             buttonAlign: right
+                             buttons: 
+                                 -     ^this.actions.saveGridTool
+                                 -     ^this.actions.cancelGridTool
+        #
+        # Tab panel with forms
+        #
+       -    title:      <%[ Product ]%>
+            region:     east
+            id:         product-form-east-region
+            elements:     body
+            margins:    0 0 0 0
+            collapsible:  true
+            split:      true
+            animCollapse: false
+            layout:     fit
+            width:    ^this.maxWidth(900,0.6)
+            frame: true
+            items:
+                -  xtype:     form
+                   id: product-form
+                   url: ^Fresh.Config.Service.Form
+                   trackResetOnLoad: true
+                   autoWidth: true
+                   linkedGrid: variants-grid
+                   loadingMsg: "Loading product {name}"
+                   xxfocusOnNew: NameFirst
+                   formBaseParams:
+                       view: product-form-view
+                       UpdateCategories: 1
+                   buttonAlign: right
+                   buttons:
+                       -   ^this.actions.save
+                       -   ^this.actions.cancel
+                   plugins:
+                       -   ^new Ext.ux.Plugin.FormToButtons()
+                   items:
+                       -   id: product-form-panel
+                           autoWidth: true
+                           nnlinkedGrid: product-images-view
+                           anchor: 100% 100%
+                           border: true
+                           frame: true
+                           xtype: tabpanel
+                           deferredRender: false
+                           layoutOnTabChange: true
+                           activeTab: 0
+                           margins: 0 0 0 0
+                           defaults:
+                             autoWidth: false
+                             autoHeight: false
+                             hideMode: offsets
+                             region: center
+                             frame: true
+                             anchor: 100% -10
+                             layout: form
+                             labelWidth: 120
+                             bodyStyle:
+                               padding: 5px 5px 5px 5px
+                             defaults:
+                                anchor: 100%
+                                xtype: textfield
+
+                           items:
+                              -  title: <%[ Data ]%>
+                                 autoWidth: false
+                                 autoHeight: false
+                                 hideMode: offsets
+                                 region: center
+                                 frame: true
+                                 anchor: 100% -10
+                                 layout: form
+                                 bodyStyle:
+                                   padding: 5px 5px 5px 5px
+                                 defaults:
+                                    anchor: 100%
+                                    xtype: textfield
+                                 items:
+                                    -    xtype: hidden
+                                         name: uid
+                                    -    fieldLabel: '<%[ Name ]%>'
+                                         name: nameLangCs
+                                         allowBlank: false
+                                    -    fieldLabel: '<%[ Cool Url Name ]%>'
+                                         name: CoolUrlName
+                                         maskRe: ^/[a-z0-9\-]/
+                                         allowBlank: true
+                                    -    fieldLabel: '<%[ Short Description ]%>'
+                                         name: short_descriptionLangCs
+                                         allowBlank: false
+                                    -    fieldLabel: '<%[ Availability ]%>'
+                                         valueField: name
+                                         displayField: name
+                                         forceSelection: false
+                                         xtype: ccombo
+                                         hiddenName: availability
+                                         anchor: 50%
+                                         xtype: ccombo
+                                         store: "^Ext.StoreMgr.lookup('stocks-store')"
+                                    -    fieldLabel: '<%[ Icons ]%>'
+                                         name: icons
+                                         width: 400
+                                         xtype: cmultiselect
+                                         store: "^Ext.StoreMgr.lookup('icons-store')"
+                                    -    fieldLabel: <%[ Category ]%>
+                                         name: CategoriesList
+                                         dataIndex: CategoriesList
+                                         allowBlank: true
+                                         xtype: textboxlist
+                                         displayField: <%= FU::LangVariant('name') %>
+                                         valueField: uid
+                                         mode: remote
+                                         store: "^Ext.StoreMgr.lookup('containers-store')"
+                                         anchor: 100% 75%
+                                    -    fieldLabel: '<%[ Special price addon ]%>'
+                                         name: type
+                                         xtype: numberfield
+                                         allowNegative: true
+                                         value: 0
+                              -    id: product-desc-tab
+                                   xtype: panel
+                                   title: <%[ Description ]%>
+                                   layout: fit
+                                   items:
+                                    -    name: descriptionLangCs
+                                         allowBlank: true
+                                         autoScroll: true
+                                         xtype: uxhtmleditor
+                                         enableFont: false
+                                         enableFontSize: false
+                                         hideLabel: true
+                                         autoHeight: false
+                                         autoWidth: false
+                                         anchor: 100% 100%
+                                         styles: lib/ext/ux/HtmlEditor/htmleditor.css
+                                         plugins:
+                                             -   ^new Ext.ux.HTMLEditorImage()
+                              -    id: product-variants-tab
+                                   xtype: panel
+                                   title: <%[ Variants ]%>
+                                   layout: fit
+                                   defaults:
+                                      anchor: 100%
+                                      xtype: panel
+                                   items:
+                                    -    xtype:    autogrid
+                                         id:    variants-grid
+                                         loadMask: true
+                                         store:    variants-store
+                                         width: 100%
+                                         clicksToEdit:1
+                                         border: false
+                                         stateful: false
+                                         anchor: 100% 90%
+                                         stripeRows: true
+                                         noStorePreload: false
+                                         viewConfig:
+                                            forceFit: true
+                                         tbar:
+                                            -   ^this.actions.saveGridTool
+                                            -   ^this.actions.cancelGridTool
+                                            -   ^this.actions.addGridTool
+                                            -   ^this.actions.deleteGridTool
+                                            -   ^this.actions.reloadGrid
+                                         plugins:
+                                            -   ^new Ext.ux.Plugin.FormToButtons()
+                              -    id: product-images-tab
+                                   layout: border
+                                   xtype: panel
+                                   title: <%[ Images ]%>
+                                   defaults:
+                                      anchor: 100%
+                                      xtype: panel
+                                   items:
+                                          -  xtype: filetreepanel
+                                             title: Files
+                                             region: center
+                                             url: index.php?json=fileProvider
+                                             baseParams:
+                                                panel: images
+                                             ddGroup: product-images-view
+                                             enableProgress: false
+                                             autoScroll: true
+                                          -  title: <%[ Product Images ]%>
+                                             autoScroll: false
+                                             region: east
+                                             width: 150
+                                             autoHeight: false
+                                             split: false
+                                             frame: true
+                                             layout: carouselvertical
+                                             xxxlayout: fit
+                                             margins: 0 0 0 5px
+                                             bodyStyle:
+                                                  padding:0 0 0 0
+                                             items:
+                                                  -     xtype: ddautoview
+                                                        id: product-images-view
+                                                        name: images
+                                                        xframe: true
+                                                        xlayout: fit
+                                                        hiddenName: images
+                                                        dropGroup: product-images-view
+                                                        dragGroup: product-images-view
+                                                        deletable: true
+                                                        itemSelector: div.thumb-wrap
+                                                        noStorePreload: true
+                                                        contextMenuItems:
+                                                            -   id: delete
+                                                                iconCls: icon-delete
+                                                                text: <%[ Delete image ]%>
+                                                        plugins:
+                                                            -   "^new Ext.DataView.LabelEditor({dataIndex: 'text'})"
+references:
+    prefGridStore:
+          url: ../../index.php?json=view
+          root: rows
+          reader: "^new Ext.data.JsonReader()"
+          baseParams:
+             view: grid-list-of-prefs
+          remoteSort: false
+    gridPagingDef:
+          pageSize:      20
+          store:         products-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No products to display
+    filterRootDef:
+          text:         No filter
+          expanded:     true
+          children:
+               -   text: Shared
+                   expanded: true
+                   children:
+                         -  text: Payment not resolveds
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: To be called
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: Complaints
+                            iconCls: icon-action
+                            leaf: true
+               -   text:     My filters
+                   expanded:     true
+                   children:
+                         -   text: All from Sydney fundraise
+                             iconCls: icon-action
+                             leaf: true
+                         -   text: All from TV fundraise
+                             iconCls: icon-action
+                             leaf: true
+    adminRootDef:
+          text: All admins
+          expanded: true
+          children:
+               -   text: Admins
+                   expanded: true
+                   children:
+                        -   text: Bernie Segal
+                            iconCls: user
+                            leaf: true
+                       -    text: Brian Adams
+                            iconCls: user
+                            leaf: true
+                      -     text: Jon Keneth
+                            iconCls: user
+                            leaf: true
+               -   text: SuperAdmins
+                   expanded:  true
+                   children:
+                        -   text: Mr. Super
+                            iconCls: user
+                            leaf: true
+                        -   text: Mrs. Superee
+                            iconCls: user
+                            leaf: true
+
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+         autoFill: true
+
+spare:

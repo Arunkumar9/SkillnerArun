@@ -1,0 +1,8 @@
+Sitemap:
+    uid: 107
+    name: Sitemap
+    description: sitemap
+    t: content
+    data:
+        ContentEditClass: Sitemap
+        iconCls: text

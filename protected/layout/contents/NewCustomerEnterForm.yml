@@ -1,0 +1,8 @@
+NewCustomerEnterForm:
+    uid: 107
+    name: NewCustomerEnterForm
+    description: new customer enter form
+    t: content
+    data:
+        ContentEditClass: NewCustomerEnterForm
+        iconCls: news

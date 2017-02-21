@@ -1,0 +1,90 @@
+#
+# API for Lessons (videos)
+# 
+name: quiz-api
+serverSide:
+    allowedGrids: quizgroup-grid
+    recordClass: QuizGroupRecord
+    pageSize: 50
+    condition: <%= QuizGroupRecord::getNoContextSql() %>
+    noBlankContext: false
+    context:
+        courses-grid:
+            condition: <%= QuizGroupRecord::getCourseGridContextSql() %>
+        course-form:
+            condition: <%= QuizGroupRecord::getCourseGridContextSql() %>
+        quiz-tags-grid:
+            condition: <%= QuizGroupRecord::getTagsGridContextSql() %>
+        content-tags-grid:
+            condition: (<%= QuizGroupRecord::getTagsGridContextSql() %>)
+        search-quizgroups-grid:
+            condition: (<%= QuizGroupRecord::getCoursequizesSearchContextSql() %>)
+        quizgroups-grid-delete:
+            action: callMethod
+            method: deleteNotFinished
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any videos in this category exist.]%>
+        quizgroups-grid-duplicate:
+            action: callMethod
+            method: duplicateQuizRecord
+            dataRoot: rows
+            successMsg: <%[Selected row duplicated ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot duplciate row while any quizes in this category exist.]%>
+    sortInfo:
+        field: name
+        dir: ASC
+metaData: 
+    root: rows
+    id: content_id
+    totalProperty: totalCount
+    sortInfo:
+        field: name
+        dir: ASC
+    fields: 
+        -    name: content_id
+        -    name: uid
+        -    name: name
+        -    name: user_id
+        -    name: CreatorName
+        -    name: ContentCreator
+        -    name: is_finished
+             type: int
+        -    name: description
+        -    name: zoneids
+        -    name: type
+    context:
+        base:
+            cm: 
+                -    header: Uid 
+                     width: 40 
+                     sortable: true 
+                     hidden: true
+                     dataIndex: uid
+                     align: right
+                -    header: Name 
+                     sortable: true 
+                     dataIndex: name
+                -    header: Creator 
+                     sortable: true 
+                     dataIndex: CreatorName
+                     hidden: true
+                     width: 40
+                -    header: Creator 
+                     sortable: true 
+                     dataIndex: ContentCreator
+                     width: 40
+                -    width: 24
+                     header: Status
+                     qTip: Status
+                     xtype: templatecolumn
+                     dataIndex: is_finished
+                     align: center
+                     tpl: >
+                          <div ext:qtip="<tpl if="is_finished==1">finished</tpl><tpl if="is_finished==0">not finished</tpl>" class='icon-size-fit <tpl if="is_finished==1">icon-lock</tpl><tpl if="is_finished==0">icon-unlock</tpl>'></div>
+end: true
+

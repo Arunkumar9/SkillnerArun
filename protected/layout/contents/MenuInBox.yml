@@ -1,0 +1,8 @@
+MenuInBox:
+    name: MenuInBox
+    description: menu simple in box
+    t: content
+    data:
+        ContentEditClass: MenuInBox
+        iconCls: table
+

@@ -1,0 +1,53 @@
+<%@ MasterClass="Application.layout.siteMaster" %>
+<com:TContent ID="main">
+<com:TClientScript PradoScripts="prado,effects" />
+<com:TClientScriptLoader PackagePath="Root.resources.shadowbox-2.build" PackageScripts="shadowbox" />
+
+<com:TOutputCache VaryByParam="uid,catid,id" Duration="360" >
+<com:FAncestorsHint Name="<%= $this->Product->nameLangAct %>" ParentId="<%= $this->Request['parent'] %>" />
+
+	<h1><%= $this->Product->nameLangAct %></h1>
+<!---    <p><%= $this->Product->short_description %></p> --->
+
+    <div class="detailLeft">
+        <a href="<%= $this->Product->firstImage %>" rel="shadowbox" class="detailImage"><img src="<%= $this->Product->firstImageAsThumbUrl155 %>" ></a>
+		<com:TConditional Condition="$this->Product->is_recommended" >
+			<prop:TrueTemplate>
+		        <div class="icon recommend"><%[ Doporučujeme ]%></div>				
+			</prop:TrueTemplate>
+		</com:TConditional>
+		<com:TConditional Condition="$this->Product->is_featured" >
+			<prop:TrueTemplate>
+		        <div class="icon inAction"><%[ Zboží v akci ]%></div>
+			</prop:TrueTemplate>
+		</com:TConditional>
+		<com:TConditional Condition="$this->Product->is_new" >
+			<prop:TrueTemplate>
+		        <div class="icon new"><%[ Novinka ]%></div>
+			</prop:TrueTemplate>
+		</com:TConditional>
+		<com:TConditional Condition="$this->Product->is_other_flag" >
+			<prop:TrueTemplate>
+		        <div class="icon recommend"><%[ Jiná vlastnost ]%></div>
+			</prop:TrueTemplate>
+		</com:TConditional>
+
+    </div>
+
+    <div class="detailRight">
+      <%= $this->Product->descriptionLangAct %>
+
+      <br>
+     <a href="<%= $this->EshopDetailLink %>"  class="cardEshopLinkBig"><%[ Chci koupit v e-shopu ]%></a> 
+    <!---  <a href="<%= $this->Page->getContainer(59)->Href %>"  class="cardEshopLinkBig">Chci koupit v e-shopu</a>--->
+    </div>
+</com:TOutputCache>
+<com:FClientEndScript>
+	Shadowbox.loadSkin('goldim', 'resources/shadowbox-2/src/skin');
+	Shadowbox.loadLanguage('<%= $this->Application->Globalization->Culture %>', 'resources/shadowbox-2/src/lang');
+	Shadowbox.loadPlayer(['img'], 'resources/shadowbox-2/src/player');
+	window.onload = function() {
+	Shadowbox.init({overlayColor: '#333', overlayOpacity: 0.7});
+	}
+</com:FClientEndScript>
+</com:TContent> 				

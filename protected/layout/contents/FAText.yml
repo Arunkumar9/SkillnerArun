@@ -1,0 +1,8 @@
+FAText:
+    name: FAText
+    description: fa text
+    t: content
+    data:
+        ContentEditClass: FAText
+        iconCls: text
+

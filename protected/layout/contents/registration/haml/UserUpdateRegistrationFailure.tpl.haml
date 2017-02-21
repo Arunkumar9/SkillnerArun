@@ -1,0 +1,9 @@
+%div{ class=`regForms` }
+	%h1~ Editace se nezdařila 
+	%h2~ Vaše změny NEBYLY dokončena. 
+	%br
+	%p
+		~ Zkuste znovu nebo kontaktujte administrátora 
+		$THyperLink
+			:Text= $this->Application->Parameters['siteAdmin']
+			:NavigateUrl= $this->Application->Parameters['siteAdmin'] 

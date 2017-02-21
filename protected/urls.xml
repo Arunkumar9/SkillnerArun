@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+ <modules>
+    <module id="request" class="THttpRequest" UrlManager="coolUrl" />
+  <module id="coolUrl" class="FreshSystem.FCmsUrlMapping" EnableCustomUrl="true" UrlPrefix="/">
+<!--  	<url ServiceParameter="NormalPage" pattern="{lang}/{stheme}/{code}/" parameters.stheme=".+" parameters.code=".+" parameters.lang="[a-z]{2}"/>
+
+  	<url ServiceParameter="ColumnPage" pattern="{code}/" parameters.code=".+" />
+  	<url ServiceParameter="NormalPage" pattern="{stheme}/{code}/" parameters.stheme=".+" parameters.code=".+" /> 
+  	<url ServiceParameter="shop.CategoryProductDetail" pattern="{lang}/obchod/kategorie/{catid}" parameters.catid="\d{2,3}.*" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="shop.CategoryProductDetail" pattern="obchod/kategorie/{catid}" parameters.catid="\d{2,3}.*" />
+  	<url ServiceParameter="shop.ProductDetail" pattern="{lang}/obchod/{catid}" parameters.catid="\d{2,3}.*" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="shop.ProductDetail" pattern="obchod/{catid}" parameters.catid="\d{2,3}.*" /> -->
+	<url ServiceParameter="NormalPage" pattern="{lang}/{code}/{catid}" parameters.code=".+" parameters.catid="\d{2,3}.*" parameters.lang="[a-z]{2}" />
+	<url ServiceParameter="NormalPage" pattern="{lang}/{uid}/{catid}" parameters.uid=".+" parameters.catid="\d{2,3}.*" parameters.lang="[a-z]{2}" />
+  	<url ServiceParameter="NormalPage" pattern="{lang}/{uid}/" parameters.uid=".+" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="NormalPage" pattern="{lang}/{code}/" parameters.code=".+" parameters.lang="[a-z]{2}"/>
+	<url ServiceParameter="NormalPage" pattern="{uid}/{catid}" parameters.uid=".+" parameters.catid="\d{2,3}.*" />
+	<url ServiceParameter="NormalPage" pattern="{code}/{catid}" parameters.code=".+" parameters.catid="\d{2,3}.*" />
+  	<url ServiceParameter="NormalPage" pattern="{uid}/" parameters.uid=".+" />
+  	<url ServiceParameter="NormalPage" pattern="{code}/" parameters.code=".+" />
+  	<url ServiceParameter="ColumnPage" pattern="{lang}/{code}/" parameters.code=".+" parameters.lang="[a-z]{2}"/>
+  	<url ServiceParameter="ColumnPage" pattern="{code}/" parameters.code=".+" />
+  </module>
+
+  </modules>

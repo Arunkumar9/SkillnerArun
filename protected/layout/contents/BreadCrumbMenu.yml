@@ -1,0 +1,7 @@
+BreadCrumbMenu:
+    name: BreadCrumbMenu
+    description: breadcrumb menu
+    t: content
+    data: 
+        ContentEditClass: BreadCrumbMenu
+        iconCls: table

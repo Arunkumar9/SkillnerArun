@@ -1,0 +1,76 @@
+#
+# Grid with Payment Types view
+#
+# INSERT INTO payment_type SELECT DISTINCT null as Uid, c.PaymentTypeText as Name FROM customers c ORDER BY c.PaymentTypeText;  
+#
+# update customers c,payment_type cs set c.`PaymentType` = cs.Uid WHERE c.PaymentTypeText like cs.Name
+#
+name: news-view 
+serverSide:
+    allowedGrids: news-grid
+    recordClass: NewsRecord 
+    noBlankContext: false
+    context:
+        news-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Comments saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        news-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo: 
+        field:  created
+        dir: DESC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    xxgroupField: category
+    sortInfo: 
+        field:  created
+        direction: DESC
+    fields: 
+        -    name: uid
+        -    name: created
+             type: date
+             dateFormat: U
+        -    name: name
+        -    name: toDate
+             type: date
+             dateFormat: U
+        -    name: fromDate
+             type: date
+             dateFormat: U
+        -    name: lang
+        -    name: publishedAsBoolean
+        -    name: category
+             convert: "^Fresh.GridRender.giveComboRenderer('newscategories-def-store','name','uid')"
+    cm: 
+        -    header: <%[Name]%>
+             sortable: true 
+             width: 100
+             dataIndex: name
+        -    header: <%[From]%>
+             sortable: true 
+             width: 60
+             dataIndex: fromDate
+             renderer: "@Ext.util.Format.dateRenderer('d.m.y')"
+        -    header: <%[To]%>
+             sortable: true 
+             width: 50
+             dataIndex: toDate
+             renderer: "@Ext.util.Format.dateRenderer('d.m.y')"
+        -    header: <%[Category]%>
+             sortable: true
+             hidden: false
+             width: 60
+             dataIndex: category
+end: true
+#        -    "@new Ext.grid.CheckColumn({ header: '<%[Publ]%>', dataIndex: 'publishedAsBoolean', width: 20, align: 'center' })"

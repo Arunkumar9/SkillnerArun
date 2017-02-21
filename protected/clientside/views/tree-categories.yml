@@ -1,0 +1,69 @@
+#
+#
+#
+name: tree-filters
+serverSide:
+    recordClass: CategoryRecord
+    child: uid
+    parent: parent_id
+    folderSign: is_folder
+    nodeTypeSign: NodeType
+    readAll: false
+    criteria:
+        ordersBy:
+                ordering: ASC
+    recycleBin:
+        iconCls: @recycle-bin
+        allowDrag: false
+        draggable: false
+        text: name
+        id: uid
+        ordering: ordering
+        qtip: @Recycle bin
+        menuType: @recycleBin
+        sortText: @zzzzzzzzzzzzzzzzzzz
+        sortLeaf: true
+    folder:
+        iconCls: @folder
+        allowDrag: true
+        draggable: true
+        text: name
+        id: uid
+        qtip: description
+        menuType: @folder
+        sortText: name
+        sortLeaf: false
+        ordering: ordering
+    leaf:
+        iconCls: @filter
+        text: name
+        allowDrag: true
+        draggable: true
+        id: uid
+        qtip: description
+        menuType: @leaf
+        sortText: name
+        sortLeaf: true
+        ordering: ordering
+    depth: 3    
+    columnMapping:
+        ParentId: parent_id
+        Name:   name
+        Ordering: ordering
+        IsFolder: is_folder
+    context:
+        tree-categories-update:
+            action: updateNodeDual
+            dataRoot: data
+            successMsg: Node updated ok.
+        tree-categories-add:
+            action: updateNodeDual
+            dataRoot: data
+            successMsg: Node inserted ok.
+        tree-categories-remove:
+            action: removeNode
+            dataRoot: data
+            successMsg: Node deleted ok.
+           
+metaData: 
+    edit: 100

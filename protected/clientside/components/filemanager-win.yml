@@ -1,0 +1,228 @@
+#
+#     CRM categorys layout definition
+#     listeners:
+#        beforeclose: 
+#            fn: >
+#                @function(p) {
+#                    Ext.MessageBox.alert('Closing',p.title);
+#                    return false;
+#                }
+description:
+    name: filemanager-win
+    authLevels: true
+    text: <%[ Filemanager ]%>
+    iconCls: icon-filemanager-win
+    hideIcon: true
+    autoRun: false
+    authLevel: 
+        min: 300
+        max: 1000
+objects:
+     -  name: filemanagerStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'filemanager-store'
+                ,baseParams: { view: 'filemanager-view',meta: true }
+                ,remoteSort: false
+                ,autoLoad: false
+            })
+component:
+     id:              filemanager-win
+     title:           <%[ Filemanager ]%>
+     width:           900
+     height:          500
+     x:               @this.desktop.getWinX(900)
+     y:               @this.desktop.getWinY(500)
+     iconCls:         icon-filemanager-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader:     true
+     minimizable:          true
+     maximizable:          true
+     layout: border
+     tbar:
+          -    text: Exit 
+               iconCls: icon-exit
+               handler: @this.actions.closeWindowHandler.createDelegate(this,['filemanager-win'])
+          -    xtype: tbfill
+     listeners:
+        beforeclose:
+                fn: "@this.actions.askBeforeCloseHandler.createDelegate(this,['filemanager-form'],true)"
+        close: 
+            fn: >
+                @function (win) {
+                    return true; 
+                    Login.Logout(); 
+                }
+     items:
+       #
+       #     West panel with filter and search tabs
+       #
+       -    title: <%[ Files ]%>
+            region: west
+            xtype: filetreepanel
+            elements: body
+            id: filemanager-west-panel
+            collapsible: true
+            collapsed: false
+            cmargins: 0 0 0 0
+            margins: 0 0 0 0
+            width: @this.maxWidth(300,0.2)
+            split: true
+            enableOpen: false
+            maxFileSize: 25242880
+            rootText: <%= ($this->User->Level<150) ? 'galleries' : 'images' %>
+            layout: fit
+            linkedGrid: filemanager-grid
+            items:
+            url: index.php?json=fileProvider
+            baseParams:
+                panel: <%= ($this->User->Level<150) ? 'ResourcesGalleries' : 'Resources' %>
+            enableProgress: false
+            listeners:
+                click: >
+                       @function(node, e) {
+                          current_directory = node.attributes.uid;
+                          Fresh.console.log(node);
+                          ds = Ext.StoreMgr.lookup('filemanager-store');
+                          ds.load({
+                            params: {
+                              filter: this.getPath(node),
+                              context: this.id,
+                              meta: true
+                              }
+                          });
+                       }
+            autoScroll: true
+       -    title:        <%[ Files in folder ]%>
+            region:       center
+            elements:     body
+            split:        true
+            xtype: tabpanel
+            xxlayout:      fit
+            layoutOnTabChange: true
+            defaults:
+                hideMode: offsets
+            deferredRender: false
+            activeTab: 0
+            autoScroll: true
+            stateful: true
+            items:
+                -    xtype:    autogrid
+                     id:    filemanager-grid
+                     loadMask: true
+                     title: <%[ List ]%>
+                     store:    filemanager-store
+                     sm: >
+                        @new Ext.grid.RowSelectionModel({singleSelect: true})
+                     stripeRows: true
+                     viewConfig:
+                        forceFit: true
+                        emptyText: <%[ This folder contains no files. ]%>
+                     anchor:   100% 100%
+                     noStorePreload: false
+                     plugins:
+                         -   >
+                             @new Ext.ux.grid.Search({
+                             iconCls:'icon-viewmag'
+                             ,minChars:2
+                             ,width: 200
+                             ,position: 'top'
+                             ,showSelectAll: false
+                             ,mode: 'local'
+                             ,checkIndexes: ['name']
+                             ,toolbarContainer: 'filemanager-win'
+                             ,autoFocus:false
+                             })
+                -    xtype: ddautoview
+                     id: filemanager-images-view
+                     title: <%[ Thumbnails ]%>
+                     loadMask: true
+                     store: filemanager-store
+                     name: images
+                     autoScroll: true
+                     xframe: true
+                     xlayout: fit
+                     xxxhiddenName: images
+                     xxdropGroup: product-images-view
+                     xxdragGroup: product-images-view
+                     deletable: false
+                     itemSelector: div.thumb-wrap
+                     noStorePreload: true
+references:
+    prefGridStore:
+          url: ../../index.php?json=view
+          root: rows
+          reader: "@new Ext.data.JsonReader()"
+          baseParams: 
+             view: grid-list-of-prefs
+          remoteSort: false
+    gridPagingDef:
+          pageSize:      20
+          store:         filemanager-store
+          displayInfo:   true
+          displayMsg:    "Count {2}"
+          autoShow:      true
+          emptyMsg:      No Filemanager to display
+    filterRootDef:
+          text:         No filter
+          expanded:     true
+          children: 
+               -   text: Shared
+                   expanded: true
+                   children: 
+                         -  text: Payment not resolveds
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: To be called
+                            iconCls: icon-action
+                            leaf: true
+                         -  text: Complaints
+                            iconCls: icon-action
+                            leaf: true
+               -   text:     My filters
+                   expanded:     true
+                   children: 
+                         -   text: All from Sydney fundraise
+                             iconCls: icon-action
+                             leaf: true
+                         -   text: All from TV fundraise
+                             iconCls: icon-action
+                             leaf: true
+    adminRootDef:
+          text: All admins
+          expanded: true
+          children:
+               -   text: Admins
+                   expanded: true
+                   children: 
+                        -   text: Bernie Segal
+                            iconCls: user
+                            leaf: true
+                       -    text: Brian Adams
+                            iconCls: user
+                            leaf: true
+                      -     text: Jon Keneth
+                            iconCls: user
+                            leaf: true
+               -   text: SuperAdmins
+                   expanded:  true
+                   children: 
+                        -   text: Mr. Super
+                            iconCls: user
+                            leaf: true
+                        -   text: Mrs. Superee
+                            iconCls: user
+                            leaf: true
+                            
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+         autoFill: true
+
+spare: 
+    

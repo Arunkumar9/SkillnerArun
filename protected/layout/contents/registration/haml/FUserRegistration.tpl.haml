@@ -1,0 +1,43 @@
+$FActivePanelReceiver#ActiveReceiver
+    :ListenOn OnRegistrationSubmit
+    $TMultiView#View{ ActiveViewIndex='000' }
+        $TView#RegistrationView
+            & UserRegistrationForm
+        $TView#SuccessView
+            & UserAfterRegistration
+        $TView#FailureView
+            & UserFailureRegistration
+        $TView#UpdateSuccessView
+            & UserUpdateRegistrationSuccess
+        $TView#UpdateFailureView
+            & UserUpdateRegistrationFailure
+$FWidgetControl#MetaData:=
+properties:
+	-	usecaptcha
+	-	pageafter
+	-	email
+	-	otherinfo
+fields:
+	-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Use Captcha]%>
+		name: <%= $this->MetaData->getFieldName('usecaptcha') %>
+		editor:
+			xtype: xcheckbox
+	-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Other Info]%>
+		name: <%= $this->MetaData->getFieldName('otherinfo') %>
+		editor:
+			xtype: textfield
+			allowBlank: true
+			width: 200
+	-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Page to go after]%>
+		name: <%= $this->MetaData->getFieldName('pageafter') %>
+		editor:
+			xtype: textfield
+			allowBlank: true
+			width: 200
+	-	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Email to send question]%>
+		name: <%= $this->MetaData->getFieldName('email') %>
+		editor:
+			xtype: textfield
+			vtype: email
+			allowBlank: true
+			width: 200

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<com:THead Title="<%$ siteTitle %>" 
+            >
+<meta http-equiv="Content-Type" content="text/html; utf-8" />
+
+<!-- EXT -->
+<link rel="stylesheet" type="text/css" href="lib/ext/2.0/resources/css/ext-all.css" />
+<!---<script type="text/javascript" src="lib/ext/2.0/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="lib/ext/2.0/ext-all-debug.js"></script> --->
+<com:TClientScriptLoader PackagePath="Application.common.ext" PackageScripts="extAllBase"/>
+<com:TClientScript ScriptUrl="index.php?json=localize" />
+
+<!-- THEME / DESKTOP STYLES
+<link id="theme" rel="stylesheet" type="text/css" href="lib/desktop/resources/themes/xtheme-vista/css/xtheme-vista.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="lib/desktop/resources/themes/xtheme-darkgray/css/xtheme-darkgray.css" />
+<link id="theme" rel="stylesheet" type="text/css" href="resources/ext/resources/css/xtheme-indexer.css" />
+-->
+<link rel="stylesheet" type="text/css" href="lib/desktop/resources/css/desktop.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/cherry/resources/cherryonext.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/Multiselect/Multiselect.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/CheckTristate/TriCheckColumn.css" />
+<link rel="stylesheet" type="text/css" href="lib/ext/ux/Spinner/Spinner.css" />
+
+<link rel="stylesheet" type="text/css" href="lib/desktop/source/helpers/color-picker/color-picker.ux.css" />
+<link rel="stylesheet" type="text/css" href="lib/desktop/source/helpers/preferences/preferences.css" />
+<link rel="stylesheet" type="text/css" href="lib/desktop/source/modules/docs/css/docs.css" />
+<link rel="stylesheet" type="text/css" href="resources/ext.ux/carousel.layout.css" />
+
+<com:TControl Visible="<%= true || Prado::getApplication()->User->IsGuest %>">
+    <!-- LOGIN -->
+    <script type="text/javascript" src="lib/desktop/source/login/cookies.js"></script>
+    <link rel="stylesheet" type="text/css" href="resources/css/login.css" /> 
+    <script type="text/javascript" src="lib/desktop/source/login/login.js"></script>
+</com:TControl>
+
+<com:TControl Visible="<%= true || !Prado::getApplication()->User->IsGuest %>">
+   <%include Application.pages.admin.includes.desktopJs %> 
+</com:TControl>
+</com:THead>
+
+<body scroll="no" id="desktop-body">
+<com:FExtForm >
+
+<com:TControl Visible="<%= Prado::getApplication()->User->IsGuest %>" >
+    <div id='loginDialogId'></div>
+    <script>
+        Ext.onReady(Login.Init, Login);
+        Ext.onReady(function(){Fresh.setUser(<%= json_encode(unserialize(Prado::getApplication()->User->saveToString())); %>); });
+    </script>
+</com:TControl>
+
+<com:TControl Visible="<%= !Prado::getApplication()->User->IsGuest %>" >
+    <%include Application.pages.admin.includes.desktopHtml %> 
+    <script>
+        Fresh = Fresh || {};
+        Fresh.ComponentList = <%= $this->Page->ComponentListJson %>;
+        Fresh.User = <%= json_encode(unserialize(Prado::getApplication()->User->saveToString())); %>;
+//        Ext.onReady(function(){Fresh.setUser(<%= json_encode(unserialize(Prado::getApplication()->User->saveToString())); %>); });
+        Ext.onReady(MyDesktop.initApp, MyDesktop);
+    </script>
+</com:TControl>
+
+</com:FExtForm>
+<script type="text/javascript" src="lib/ext/2.0/source/locale/ext-lang-<%= $this->Application->Globalization->Culture %>.js"></script>
+</body>
+</html>

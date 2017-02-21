@@ -1,0 +1,97 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Ext.ux.Plugin.RemoteComponent - Demo / author: Timo Michna  - www.matikom.de</title>
+<link rel="stylesheet" type="text/css" href="http://extjs.com/deploy/dev/resources/css/ext-all.css">
+
+<style type="text/css">
+body{
+	padding: 50px;
+	color: #15428B;
+	text-align: center;
+}
+
+.matikom-logo{
+	margin-bottom: 50px;
+}
+
+.content-box{
+	border: 2px;
+	border-style: solid;
+	border-color: #15428B;
+	padding: 10px;
+	width: 600px;
+	margin-bottom: 25px;
+	text-align: left;
+}
+
+#footer{
+	margin-top: 50px;
+}
+
+</style>
+</head>
+<body>
+	<a href="http://www.matikom.de">
+		<img class="matikom-logo" title="matikom Homepage" src="http://pics.matikom.de/matikom-logo-sm.gif">
+	</a>
+	
+	<div id="intro" class="content-box">
+		<h1><u>Ext - Plugin - RemoteComponent / LiteRemoteComponent - Demo</u></h1>
+		<br/>
+		<p> <b>Plugin for Ext.Container / Ext.Toolbar Elements to dynamically 
+	 add Components<br/> from a remote / AJAX source to the Element´s body.<br/>author: Timo Michna / matikom</b></p>
+	 	<br/>
+	 	<p>* Loads configuration as JSON-String from a remote / AJAX source.</p>
+		<p>* Adds the Components to the Container body.</p>
+		<p>* Additionally to its own config options the class accepts all the configuration options <br> required to configure its internal Ext.Ajax.request().</p>
+  		<br/>
+ 		<p>* The RemoteComponent consists of the lightweight <b>Ext.ux.Plugin.LiteRemoteComponent</b> class and </br>
+		 the more configurable <b>Ext.ux.Plugin.RemoteComponent</b> which extends Ext.util.Observable.</p>
+ 		<br/>
+		<p> <b>Ext.ux.Plugin.RemoteComponent:</b></p>
+		<p>* Several events, which can be used to stop further processing by returning false.</p>
+		<p>* Processing can also be stopped by config option <b>breakOn</b> at any of the plugins events.</p>
+		<p>* AJAX requests to the remote source can be defered by config option <b>loadOn</b> to any event of the container. Usefull for lazy loading etc.</p>
+		<p>* LiteRemoteComponent and RemoteComponent - Plugins can be nested. So a Plugin can load and create Components, which also have (a) RemoteComponent - Plugin(s)</p>
+
+	</div>
+		
+	<div id="changelog" class="content-box">
+		<h1><u>ChangeLog</u></h1>
+		<br/>
+		<p>*<b> v 0.2.0 / Nov. 12 2007</b><br/>initial public release</p>
+		<br/>
+		<p>*<b> v 0.2.1 / Nov. 13 2007</b><br/>fixed bug: With config option "loadOn" the plugins AJAX request has been called every time the specified container´s event has been fired. Now it´s called only once - the first time the event fires.</p>		
+	</div>
+	
+	<div id="legend" class="content-box">
+		<h1><u>Demo - Explanation</u></h1>
+		<br/>
+		<p>* The demo application consists of a Ext.TabPanel within a Ext.Panel.</p>
+		<p>* Each of the demo´s AJAX requests makes a call to the same remote source. The conveyed config definition has a nested RemoteComponent-Plugin, which makes a request to another remote source.</p>
+		<p>* The Ext.TabPanel has a RemoteComponent-Plugin defined in its config definition and so it´s loaded and rendered when the Ext.TabPanel is created. > 'Instant Tab'</p>
+		<p>* The BottomBar has three buttons (check for tooltips).</p>
+		<p><i><b>default</b></i> : Each click adds another Tab with a <b>Ext.ux.Plugin.RemoteComponent</b> - Plugin </p>
+		<p><i><b>lite</b></i> : Adds one Tab with a <b>Ext.ux.Plugin.LiteRemoteComponent</b> - Plugin.</p>
+		<p><i><b>defered</b></i> : Adds a Tab with a <b>Ext.ux.Plugin.RemoteComponent</b> - Plugin. The processing of the AJAX request and Component creation is defered to the container´s "show"-event (lazy loading).</p>
+	</div>
+
+	<div id="demo"  class="content-box"></div>
+
+	<br/>
+	<div id="footer">
+		Ext.ux.Plugin.RemoteComponent development sponsored by:<br/>
+		<a href="http://www.matikom.de">
+			<img class="matikom-logo" title="matikom Homepage" src="http://pics.matikom.de/matikom-logo-sm.gif">
+		</a>
+	</div>
+	
+	
+</body>
+</html>
+<script type="text/javascript" src="http://extjs.com/deploy/dev/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="http://extjs.com/deploy/dev/ext-all-debug.js"></script>
+<script type="text/javascript" src="Ext.ux.Plugin.RemoteComponent.js"></script>
+<script type="text/javascript" src="RemoteComponent-Demo.js"></script>
+

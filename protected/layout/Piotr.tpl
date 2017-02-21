@@ -1,0 +1,119 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">  
+  <head>  
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>  
+     <title>test</title>
+     <base>http://swp.freshsystems.cz</base>
+    <!---
+.     <link rel="stylesheet" href="css/animated-menu2.css"/>  
+    
+      <script src="http://jqueryjs.googlecode.com/files/jquery-1.3.js" type="text/javascript"></script>  
+     <script src="js/jquery.easing.1.3.js" type="text/javascript"></script>  
+     <script src="js/animated-menu.js" type="text/javascript"></script>  
+     <script src="js/jquery.color.js" type="text/javascript"></script>  
+--->
+     <script>
+
+	  jQuery(document).ready(function(){
+		
+	  
+		  jQuery('#chapters').toggle(
+
+			function()
+			{
+			  jQuery('#sidebar_bg').stop().animate({left:0},1000, 'easeOutCubic');
+			
+			},
+			function()
+			{
+			  jQuery('#sidebar_bg').stop().animate({left:-255},1000, 'easeOutCubic');
+		
+		});
+	});
+
+
+</script>
+<script>
+	jQuery(document).mousemove(function(e) {
+	jQuery('#mouse_axis').html("X Axis : " + e.pageX + " | Y Axis " + e.pageY);
+	jQuery('#offset').html("Top : " + jQuery('#sidebar').offset().top + " |Left "
+	+ jQuery('#sidebar').offset().left);
+	});
+</script>
+
+</head>  
+
+
+ <body>  
+   
+    <div id="wrapper">
+   
+        <img src="img/player.jpg" />
+
+			<div class="interaction">
+                <ul>
+                    <li><a href="#">Comment</a></li>
+                    <li><a href="#">Pause & Comment</a></li>
+                    <li><a href="#">Edit</a></li> 
+                </ul>
+            </div>
+       
+               <ul id="chapters_button"><li id="chapters">Chapters</li></ul> 
+
+            <div id="sidebar_bg">
+		
+                <div class="arrow">&nbsp;</div>
+
+                <span><br />
+                    Title of a video
+                </span><br /><br />
+
+        		<div id="sidebar">
+            
+                	<div id="shadow_top">&nbsp;</div>
+
+           			<ul id="menu">
+    
+                        <li><a href="#"><span>ch01</span> / Introduction</a></li>
+                        <li><a href="#"><span>ch02</span> / Commentary</a></li>
+                        <li><a href="#"><span>ch03</span> / Training </a></li>
+                        <li><a href="#"><span>ch04</span> / Techniques </a></li>
+                        <li><a href="#"><span>ch05</span> / Longer title techniques pt.2</a></li>
+                        <li><a href="#"><span>ch06</span> / Introduction</a></li>
+                        <li><a href="#"><span>ch07</span> / Introduction</a></li>
+                        <li><a href="#"><span>ch08</span> / Introduction</a></li>
+                        <li><a href="#"><span>ch09</span> / Introduction</a></li>
+                        <li><a href="#"><span>ch10</span> / Introduction</a></li>
+                        <li><a href="#"><span>ch11</span> / Introduction</a></li>
+                           
+           			</ul>
+
+               		<div id="shadow_bottom">&nbsp;</div>
+
+             </div>
+
+      </div>
+
+        <textarea name="ctl0$main$ctl0$content39$commentsBox" rows="4" cols="20" id="ctl0_main_ctl0_content39_commentsBox" style="width:1250px; height: 150px;">[0:11:18]  hot
+            [0:0:3]  testing of the 
+            [00:11:31]
+            [00:05:41]  testing ....
+            [00:05:49]  testing ......
+            [00:11:19]  
+            [00:11:31]  this is difficult, do not understand it ...
+            [NaN:NaN:NaN]
+            [00:00:04]  test ....
+            [00:00:02]
+            [00:00:9]  ffff
+            [00:05:43]  
+            [00:05:43]  
+            [00:05:43]
+            [00:00:13]
+		</textarea>
+	
+</div>
+
+ </body>  
+ </html>  

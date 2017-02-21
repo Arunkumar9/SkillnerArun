@@ -1,0 +1,43 @@
+$TRepeater#Repeater
+	:EmptyTemplate
+		.newsContainer.newsEmpty~ Nejsou žádné otázky a odpovědi.
+	:HeaderTemplate:= <table cellspacing="0" cellpadding="3" border="0"><tbody>
+	:ItemTemplate:=
+		%tr
+			%td{ width='3%' }
+				%img{ width='16' height='16' alt='otázka' }@themes/Base/images/otazka.gif 
+			%td{ width='97%' }= $this->Data->question
+		%tr
+			%td{ width='3%' }
+				%img{ width='16' height='16' alt='odpověď' }@themes/Base/images/odpoved.gif 
+			%td{ width='97%' }= $this->Data->answer
+		%tr
+			%td{ height='1' colspan='2' }
+				%hr
+	:FooterTemplate:= </tbody></table>
+$TPager#Pager.pager 
+	:ControlToPaginate Repeater
+	:OnPageIndexChanged pageChanged
+	:Mode Numeric
+	:FirstPageText &lt;&lt;
+	:LastPageText &gt;&gt;
+$FWidgetControl#MetaData:=
+	properties:
+		-	respectdates
+		-	respectculture
+		-	pagesize
+	fields:
+	    -	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Respect dates]%>
+			name: <%= $this->MetaData->getFieldName('respectdates') %>
+			editor:
+				xtype: xcheckbox
+	    -	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Respect culture]%>
+			name: <%= $this->MetaData->getFieldName('respectculture') %>
+			editor:
+				xtype: xcheckbox
+	    -	fieldLabel: <%= $this->MetaData->getRecord()->name %> / <%[Page size]%>
+			name: <%= $this->MetaData->getFieldName('pagesize') %>
+			editor:
+				xtype: numberfield
+				allowNegative: false
+				width: 200

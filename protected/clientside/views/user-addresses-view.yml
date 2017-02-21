@@ -1,0 +1,114 @@
+name: user-addresses-view
+serverSide:
+    allowedGrids: user-addresses-grid
+    recordClass: UserAddresRecord
+    noBlankContext: false
+    condition: (1=0)
+    context:
+        client-users-grid:
+            condition: user_id IN(%filter%)
+        search-user_address-grid:
+            filterData: OR
+        user-addresses-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[user address saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        user-addresses-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo:
+        field:  company
+        dir: ASC
+metaData:
+    root: rows
+    formBinding: user_id
+    id: uid
+    totalProperty: totalCount
+    sortInfo:
+        field:  company
+        direction: ASC
+    fields:
+        -    name: uid
+        -    name: type
+             type: int
+             formEditor:
+                    xtype: ccombo
+                    displayField: nameLangAct
+                    store: addresstype-def-store
+        -    name: user_id
+        -    name: company
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Company ]%>
+        -    name: address
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Address ]%>
+        -    name: address2
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Address 2 ]%>
+        -    name: city
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ City ]%>
+        -    name: zip
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Zip ]%>
+        -    name: companyID
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Company ID ]%>
+        -    name: vatID
+             formEditor:
+                    xtype: textfield
+                    fieldLabel: <%[ Vat ID ]%>
+        -    name: country
+             formEditor:
+                    fieldLabel: <%[ Country ]%>
+                    xtype: ccombo
+                    displayField: nameLangAct
+                    store: addresscountry-def-store
+        -    name: contacts
+             formEditor:
+                    xtype: optionsgrid
+                    allowBlank: true
+                    headerRowName: <%[ Type ]%>
+                    headerRowValue: <%[ Value ]%>
+                    autoScroll: false
+                    height: 150
+                    fieldLabel: <%[ Contacts ]%>
+    cm:
+        -    header: <%[ User Addresses ]%>
+             sortable: true
+             width: 100
+             dataIndex: company
+             formEditor:
+                    xtype: ccombo
+                    displayField: nameLangAct
+                    store: addresstype-def-store
+                    fieldLabel: <%[ Company ]%>
+        -    >
+             ^new Ext.ux.grid.RowAction({
+                header: 'X',
+                align: 'center',
+                iconCls:'icon-cross',
+                qtip: __('Delete Record'),
+                width: 30,
+                listeners: {
+                      action: {
+                        fn: function(grid,rec,row,col) {
+                            grid.deleteRecord(rec,rec.get('company'));
+                        }
+                      }
+                }
+             })
+end: true

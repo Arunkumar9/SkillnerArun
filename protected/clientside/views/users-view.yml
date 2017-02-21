@@ -1,0 +1,62 @@
+#
+# Grid with Payment Types view
+#
+# INSERT INTO payment_type SELECT DISTINCT null as Uid, c.PaymentTypeText as Name FROM customers c ORDER BY c.PaymentTypeText;  
+#
+# update customers c,payment_type cs set c.`PaymentType` = cs.Uid WHERE c.PaymentTypeText like cs.Name
+#
+name: users-view 
+serverSide:
+    allowedGrids: users-grid
+    recordClass: UserRecord 
+    noBlankContext: false
+    condition: (branch_id = <%= (int) $this->User->UserRecord->branch_id %> OR <%= $this->User->MaxLevel %> >= 300)
+    context:
+        users-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: Users saved ok.
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: Cannot enter row with duplicate value %1$s.
+        search-users-grid:
+            filterData: OR
+            conditionsOp: AND
+        users-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: Selected rows deleted ok!
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: Cannot delete row while any customer with this dealer.
+    sortInfo: 
+        field:  Name
+        dir: ASC
+        substitute:
+            NameUid: 
+               - Name
+metaData: 
+    root: rows
+    id: Uid
+    totalProperty: totalCount
+    sortInfo: 
+        field:  Name
+        direction: ASC
+    fields: 
+        -    name: Uid
+        -    name: Name
+        -    name: Username
+        -    name: branch_id
+             convert: "^Fresh.GridRender.giveComboRenderer('pobocka-def-store','name','uid')"
+    cm: 
+        -    header: <%[Name]%>
+             sortable: true 
+             dataIndex: Name
+        -    header: <%[Username]%>
+             sortable: true
+             dataIndex: Username
+        -    header: <%[Branch]%>
+             sortable: true
+             dataIndex: branch_id
+
+

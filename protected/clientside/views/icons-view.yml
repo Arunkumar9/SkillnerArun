@@ -1,0 +1,50 @@
+#
+# Grid with icons view
+#
+#
+name: icons-view
+serverSide:
+    allowedGrids: icons-grid
+    recordClass: IconRecord
+    noBlankContext: false
+    context:
+        icons-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[icons saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '(.*?)' /"
+                 text: <%[Cannot enter row with duplicate value %1$s.]%>
+        icons-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row while any news in this category exist.]%>
+    sortInfo: 
+        field:  Name
+        dir: ASC
+metaData: 
+    root: rows
+    id: Uid
+    totalProperty: totalCount
+    remoteSort: false
+    sortInfo: 
+        field:  Name
+        direction: ASC
+    fields: 
+        -    name: Uid
+        -    name: Name
+        -    name: Filename
+    cm: 
+        -    header: <%[ Filename ]%>
+             sortable: true 
+             dataIndex: Filename
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+        -    header: <%[ Name ]%>
+             sortable: true 
+             dataIndex: Name
+             editor: "@new Ext.form.TextField({allowBlank: false})"
+
+

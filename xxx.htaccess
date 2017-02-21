@@ -1,0 +1,65 @@
+#php_value output_buffering On
+FileETag MTime Size
+RewriteEngine On
+#RewriteLogLevel 4
+RewriteBase /
+RewriteRule \.git -   [F]
+
+#RewriteCond %{REMOTE_ADDR}       !^84\.21\.102\.35|127\.0\.0\.1|80\.188\.72\.206|94\.127\.131\.50$
+#RewriteRule ^(.*)$ -   [F]
+
+
+RewriteCond %{REQUEST_URI} \.dt\.css$
+RewriteRule     ^(.*\.dt\.css)$ /FreshSystem/3rdparty/dtcss/rewrite_css.php?f=$1 [QSA,L]
+
+RewriteCond %{REQUEST_URI} \.xml$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule titles([0-9]+)\.xml$ index.php?feed=titles&vid=$1  [NC,L]
+
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-z]{2}/)?(.*\.jpg|.*\.png|.*\.gif)\.([0-9]+)x([0-9]+)$ http://tvexpo.freshsystems.cz/index.php?image=thumb&id=$2&w=$3&h=$4  [R,NC,L]
+
+
+RewriteCond %{REQUEST_URI} \.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^[a-z]{2}/(.*)$ http://tvexpo.freshsystems.cz/$1  [R,NC,L]
+
+RewriteCond %{HTTP_HOST} admin\. 
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$|\.js$
+RewriteRule ^cms/(.*)$ index.php/$1?_cms=1  [NC,QSA,L]
+
+RewriteCond %{HTTP_HOST} !admin.freshsystems.cz
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$|\.js$
+RewriteRule ^/?$ http://tvexpo.freshsystems.cz/%{HTTP_HOST} [NC,L]
+
+RewriteCond %{HTTP_HOST} !admin.freshsystems.cz
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([a-z]{2})(|/.*)$ index.php/$2?lang=$1  [NC,QSA,L]
+
+RewriteCond %{HTTP_HOST} !admin.freshsystems.cz
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)video-(.+)$ index.php/$1?vid=$2  [NC,QSA,L]
+
+RewriteCond %{HTTP_HOST} !admin.freshsystems.cz
+RewriteCond %{REQUEST_URI} !\.jpg$|\.png$|\.gif$
+RewriteCond %{REQUEST_FILENAME} !/themes/|/assets/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1  [NC,L]
+

@@ -1,0 +1,121 @@
+#
+# Grid with Payment Types view
+#
+# INSERT INTO payment_type SELECT DISTINCT null as Uid, c.PaymentTypeText as Name FROM customers c ORDER BY c.PaymentTypeText;  
+#
+# update customers c,payment_type cs set c.`PaymentType` = cs.Uid WHERE c.PaymentTypeText like cs.Name
+#
+name: filemanager-view
+serverSide:
+    allowedGrids: filemanager-grid
+    recordClass: FileRecord
+    noBlankContext: false
+    context:
+        filemanager-west-panel:
+            condition: %filter%
+        imagechooser-west-panel:
+            recordClass: ImageFileRecord
+            condition: %filter%
+        filechooser-west-panel:
+            condition: %filter%
+        filemanager-grid-store:
+            action: updateRecords
+            dataRoot: rows
+            successMsg: <%[Questions saved ok.]%>
+            errors:
+              -  regexp: "/1062 Duplicate entry '.*?' /"
+                 text: <%[Cannot enter row with duplicate value]%>
+        filemanager-grid-delete:
+            action: deleteRecords
+            dataRoot: rows
+            successMsg: <%[Selected rows deleted ok!]%>
+            errors:
+              -  regexp: "/General error: 1451/"
+                 text: <%[Cannot delete row]%>.
+    sortInfo: 
+        field:  name
+        dir: ASC
+metaData: 
+    root: rows
+    id: uid
+    totalProperty: totalCount
+    sortInfo: 
+        field:  name
+        direction: ASC
+    fields: 
+        -    name: uid
+        -    name: name
+        -    name: size
+        -    name: ctime
+             type: date
+             dateFormat: timestamp
+        -    name: mtime
+             type: date
+             dateFormat: timestamp
+        -    name: type
+        -    name: permissions
+        -    name: owner
+        -    name: group
+        -    name: full_path
+        -    name: web_path
+        -    name: extension
+    context:
+        base:
+            cm:
+                -    header: <%[ Name ]%>
+                     sortable: true
+                     dataIndex: name
+                -    header: <%[Size]%>
+                     sortable: true
+                     width: 50
+                     dataIndex: size
+                     renderer: @Ext.util.Format.fileSize
+                -    header: <%[Created]%>
+                     sortable: true
+                     width: 70
+                     dataIndex: ctime
+                     renderer: "@Ext.util.Format.dateRenderer('d.m.Y H:i:s')"
+                -    header: <%[Modified]%>
+                     sortable: true
+                     width: 70
+                     dataIndex: mtime
+                     renderer: "@Ext.util.Format.dateRenderer('d.m.Y H:i:s')"
+                -    header: <%[Perm]%>
+                     width: 50
+                     dataIndex: permissions
+            tpl: >
+               <tpl for=".">
+               <div class="thumb-wrap" id="{uid}">
+               <div class="thumb">
+               <tpl if="uid.match(/png|gif|jpg$/im)" ><img src="{web_path}.120x240" title="{name}" style="width: 120px" /></tpl>
+               <tpl if="!uid.match(/png|gif|jpg$/im)" ><img src="lib/desktop/resources/images/LinspireClear/48x48/mimetypes/{extension}.png" title="{name}" style="width: 48px" /></tpl>
+               </div>
+               <span class="x-editable">{name}</span></div>
+               </tpl>
+               <div class="x-clear"></div>
+        filechooser-grid:
+            cm:
+                -    header: <%[ Name ]%>
+                     sortable: true
+                     dataIndex: name
+                -    header: <%[Size]%>
+                     sortable: true
+                     width: 50
+                     dataIndex: size
+                     renderer: @Ext.util.Format.fileSize
+                -    header: <%[Modified]%>
+                     sortable: true
+                     width: 70
+                     dataIndex: mtime
+                     renderer: "@Ext.util.Format.dateRenderer('d.m.Y H:i:s')"
+    tpl: >
+       <tpl for=".">
+       <div class="thumb-wrap" id="{uid}">
+       <div class="thumb">
+			 <tpl if="uid.match(/png|gif|jpg$/im)" ><img src="{web_path}.120x240" title="{name}" style="width: 120px" /></tpl>
+			 <tpl if="!uid.match(/png|gif|jpg$/im)" ><img src="lib/desktop/resources/images/LinspireClear/48x48/mimetypes/{extension}.png" title="{name}" style="width: 48px" /></tpl>
+       </div>
+       <span class="x-editable">{name}</span></div>
+       </tpl>
+       <div class="x-clear"></div>
+end: true

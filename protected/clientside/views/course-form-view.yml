@@ -1,0 +1,41 @@
+#
+# Form view
+#
+name: course-form-view
+serverSide:
+    recordClass: CourseRecord
+    findBy: content_id
+    returnAllDiff: true
+    condition: <%= CourseRecord::getNoContextSql() %>
+    sortInfo:
+        field: name
+        dir: ASC
+    properties: all
+    remove-properties:
+        - images
+    add-properties:
+        - CategoriesList
+        - UpdateAvalton
+        - Finalized
+        - ContentChanged
+        - UpdateCategories
+        - FileSize
+    dataRoot: data
+    secured: true
+    columns:
+        images:
+            default: "[]"
+        UpdateAvalton:
+            default:true
+        ContentChanged:
+            default:true
+        name:
+            default:'..New Course'
+        uid:
+            type: integer
+            range: [0,1000000]
+    successMsg:	<%[ Course saved ok. ]%>
+    context:
+        new-record:
+            sendBlank: false
+            newRecordReal:true

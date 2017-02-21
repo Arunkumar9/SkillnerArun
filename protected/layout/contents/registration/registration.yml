@@ -1,0 +1,8 @@
+ForgetPassword:
+    uid: 10
+    name: FUserForgetPassword
+    description: forget password
+    t: content
+    data:
+        ContentEditClass: Application.layout.contents.registration.FUserForgetPassword
+        iconCls: mail

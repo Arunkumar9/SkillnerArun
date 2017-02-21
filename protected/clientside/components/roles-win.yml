@@ -1,0 +1,204 @@
+#
+#     CRM User Management layout definition
+#
+
+description:
+    name: roles-win
+    text: <%[Role management]%>
+    iconCls: icon-roles-win
+    hideIcon: true
+    authLevel: 
+        min: 300
+        max: 1000
+objects:
+     -  name: usersStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'users-store'
+            })
+component:
+     id:              roles-win
+     title:           <%[Roles management]%>
+     width:           700
+     height:          400
+     x:               @this.desktop.getWinX(700)
+     y:               @this.desktop.getWinY(400)
+     iconCls:         icon-roles-win
+     shim:            false
+     animCollapse:    false
+     constrainHeader:     true
+     minimizable:          true
+     maximizable:          true
+     layout: border
+     tbar:
+          -    text: Exit
+               iconCls: icon-exit
+               handler: @this.actions.closeWindowHandler.createDelegate(this,['roles-win'])
+     items:
+       #
+       #     West panel with filter and search tabs
+       #
+        -   xtype: filtertree
+            title: <%[ Roles ]%>
+            id: tree-roles
+            region: west
+            linkedForm: roles-form
+            layout: fit
+            region: west
+            elements: body
+            collapsible: true
+            collapsed: false
+            cmargins: 5 5 5 5
+            margins: 0 0 0 0
+            width: @this.maxWidth(250,0.3)
+            split: true
+            autoScroll: true
+            elements: body
+            layoutOnTabChange: true
+            deferredRender: false
+            leafIconCls: user
+            dblClickOpensForm: true
+            loadingText: <%[ Loading user ]%>
+            loader: >
+                @new Ext.tree.TreeLoader({
+                    url: Fresh.Config.Service.Tree,
+                    baseParams: { view: 'tree-roles' },
+                    baseAttrs: {
+                        iconCls: 'group',
+                        leaf: true,
+                        text: 'New role'
+                    }
+                })
+            newNodeDefaults:
+                leaf:
+                    iconCls: 'filter'
+                    leaf: true
+                    text: '__New role'
+                    allowChildren: false
+                    menuType: filter
+                    sortText: text
+                    sortLeaf: true
+                folder:
+                    iconCls: 'folder'
+                    leaf: false
+                    text: 'New Role'
+                    menuType: folder
+                    sortText: text
+                    sortLeaf: false
+            rootVisible: true
+            lines: false
+            autoScroll: true
+            autoHeight: false
+            enableDD: true
+            ddAppendOnly: true
+            orderable: false
+            sortConfig:
+                folderSort: true
+            editorConfig:
+                allowBlank: false
+                blankText: A name is required
+                selectOnFocus: true
+                cancelOnEsc: true
+            root: >
+                @new Ext.tree.AsyncTreeNode({
+                    expanded: true,
+                    allowDrag: false,
+                    allowDrop: true,
+                    text: 'Roles',
+                    id: 'root',
+                    menuType: 'folder',
+                    IsFolder: true,
+                    iconCls: 'user-root',
+                    isTarget: false
+                })
+            tbar:
+                -    @this.actions.reloadTree
+                -    @this.actions.expandTree
+                -    @this.actions.collapseTree
+            dynamicPathMenu:
+                -    regexp: @/root\/1\//
+                     menu: deleteOnly
+            contextMenus:
+                xxany:
+                    -    @this.actions.newCategoryNode
+                    -    @this.actions.renameNode
+                    -    @this.actions.deleteNode
+                folder:
+                    -    text: <%[ New Role ]%>
+                         handler: @this.actions.newFolderNodeHandler.createDelegate(this,['tree-roles'],true)
+                         iconCls: group
+                    -    @this.actions.renameNode
+                    -    @this.actions.deleteNode
+                    -    @this.actions.reloadNode
+                recycleBin:
+                    -    @this.actions.emptyRecycleBin
+                    -    @this.actions.reloadNode
+                deleteOnly:
+                    -    @this.actions.trueDeleteNode
+                    -    @this.actions.reloadNode
+            sortConfig:
+                property: sortText
+                leafAttr: sortLeaf
+            plugins:
+                -    @new Ext.ux.Plugin.FormToButtons()
+                -    "@new Ext.ux.Plugin.TreeSorter()"
+                -    "@new Ext.ux.Plugin.TreeEditor()"
+           #
+           #     end of west region
+           #
+      #
+      #     Center panel splits to east with grid and center with tabpanel
+      #
+       -    region:          center
+            title: <%[ Role Properties ]%>
+            layout: fit
+            items:
+             -  xtype:     form
+                border:    true
+                frame:     true
+                anchor: 100%
+                id: roles-form
+                url: @Fresh.Config.Service.Form
+                leafIconCls: user
+                trackResetOnLoad: true
+                autoWidth: true
+                bodyStyle:
+                    padding: 5px 5px 5px 5px
+                formBaseParams: 
+                   view: roles-form-view
+                   UpdateUsers: 1
+                plugins:
+                   -    @new Ext.ux.Plugin.FormToButtons()
+                buttonAlign: right
+                buttons: 
+                  -     @this.actions.save
+                  -     @this.actions.cancel
+                defaultType: textfield
+                items: 
+                    -    fieldLabel: uid
+                         id: roles-form-uid-field
+                         name: uid
+                         readOnly: true
+                         anchor: 95%
+                         xtype: hidden
+                    -    fieldLabel: <%[ Name ]%>
+                         name: name
+                         allowBlank: false
+                         anchor: 95%
+                    -    fieldLabel: <%[ Policy ]%>
+                         name: policy
+                         vtype: alphanum
+                         allowBlank: false
+                         anchor: 95%
+                    -    fieldLabel: <%[ Level ]%>
+                         name: level
+                         xtype: numberfield
+                         allowBlank: false
+                         allowNegative: false
+                         anchor: 95%
+                    -    fieldLabel: <%[ Description ]%>
+                         name: description
+                         allowBlank: true
+                         xtype: textarea
+                         anchor: 95% 30%

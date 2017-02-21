@@ -1,0 +1,248 @@
+§#
+#                    tools:
+#                        -   id: refresh
+#                            handler: >
+#                                @function(e,t,p) {
+#                                    p.store.load({params: {}});
+#                                }
+#                            qtip: Refresh grid
+#     -  name: Ext.ux.Plugins.DataView.js
+#        using: [ lib/ext/ux/Ext.ux.Plugins.DataView.js ]
+#
+description:
+    name: feusers-win
+    text: <%[ Students Management ]%>
+    iconCls: icon-feusers-win
+    hideIcon: true
+    authLevel: 
+        min: 1000
+        max: 1000
+objects:
+     -  name: feUsersStore
+        evalTo: global
+        definition: >
+            new Fresh.data.ViewProvider({
+                id: 'feusers-store'
+            })
+component:
+    id:              feusers-win
+    title:           <%[ Students Management ]%>
+    width:           900
+    height:          500
+    x:               @this.desktop.getWinX(900)
+    y:               @this.desktop.getWinY(500)
+    iconCls:         icon-feusers-win
+    shim:            false
+    animCollapse:    false
+    constrainHeader: true
+    minimizable:     true
+    maximizable:     true
+    plugins:
+          -    @new Ext.ux.Plugin.FormToButtons()
+    tbar:
+          -    text: <%[ New Student ]%>
+               iconCls: icon-action
+               handler: @this.actions.newRecordHandler.createDelegate(this,['feuser-form'],true)
+          -    xtype: tbfill
+          -    xtype: tbtext
+               text: "<b>Student:&nbsp;</b>"
+          -    xtype: tbspacer
+          -    text: <%[ Send credentials ]%>
+               iconCls: icon-action
+               disabled: false
+               handler: >
+                 @function(b,e) {
+                    var form = Ext.getCmp('feuser-form');
+                    if (!form.formBaseParams.id || form.formBaseParams.id=='new')
+                      return;
+                    Ext.MessageBox.confirm('Request',__('RESET and Send students credential?'),function(btn,text){
+                        if (btn != 'no') {
+                            var form = Ext.getCmp('feuser-form');
+                            var email = form.getForm().findField('Email').getValue();
+                            var options = {
+                                url: Fresh.Config.Service.Mail,
+                                params: { id: form.formBaseParams.id, email: email, view: 'feuser-mail', context: 'single-mail' },
+                                success: function(response){
+                                    var result = Ext.decode(response.responseText);
+                                    if (result.success) {
+                                        Fresh.Msg.SlideBox('Success!', result.message || '');
+                                    }
+                                    else {
+                                        Ext.MessageBox.alert(__('Error'), result.message || '');
+                                    }
+                                },
+                                failure: function(){
+                                    Ext.MessageBox.alert(__('Error'), __('Error occured.'));
+                                }
+                            };
+                            Ext.Ajax.request(options);
+                        }
+                    });
+                 }
+    layout: border
+    items:
+        -    title: <%[ Students ]%>
+             elements:     body
+             split:        true
+             layout:      fit
+             region: west
+             width: @this.maxWidth(350,0.3)
+             stateful: true
+             collapsible: false
+             xtype: autogrid
+             region: west
+             id:   feusers-management-grid
+             closable: false
+             collapsed: false
+             collapsible: false
+             clicksToEdit: 2
+             askBeforeChange: true
+             loadMask: true
+             border: true
+             autoWidth: true
+             autoScroll: true
+             layout: fit
+             frame: false
+             stripeRows: true
+             stateful: false
+             store: feusers-store
+             noStorePreload: false
+             linkedForm: feuser-form
+             split: true
+             loadFormFromStore: true
+             viewConfig:
+                forceFit: true
+             sm: >
+                 @new Ext.grid.RowSelectionModel({singleSelect: true})
+             bbar: >
+                @new Ext.PagingToolbar({
+                      pageSize:      20
+                      ,store:         'feusers-store'
+                      ,displayInfo:   true
+                      ,displayMsg:    '<%[Count {2}]%>'
+                      ,emptyMsg:      '<%[No students]%>'
+                 })
+             tbar:
+                -   @this.actions.deleteGridTool
+                -   @this.actions.reloadGrid
+                -   xtype: tbfill
+             plugins:
+                -   @new Ext.ux.Plugin.FormToButtons()
+                -   @new Ext.ux.Plugin.FormLoader()
+                -   >
+                     @new Ext.ux.grid.Search({
+                     iconCls:'icon-viewmag'
+                     ,minChars:2
+                     ,position: 'top'
+                     ,showSelectAll: false
+                     ,autoFocus:false
+                     })
+             listeners:
+                xxxafterlayout:
+                    fn: >
+                        @function(ct,layout) {
+                            ct.getView().refresh();
+                        }
+        -    title: <%[ Details ]%>
+             elements:     body
+             split:        true
+             layout:      fit
+             region: center
+             stateful: true
+             collapsible: false
+             items:
+								-    id: feuser-form
+										 elements:  body
+										 margins:    0 0 0 0
+										 layout: fit
+										 frame: false
+										 border: false
+										 xtype: form
+										 url: @Fresh.Config.Service.Form
+										 trackResetOnLoad: true
+										 focusOnNew: Name
+										 loadingMsg: "<%[ Loading student {Name} ]%>"
+										 formBaseParams:
+												 view: feuser-form-view
+										 buttonAlign: right
+										 buttons:
+												-     @this.actions.save
+												-     @this.actions.cancel
+										 plugins:
+												-    @new Ext.ux.Plugin.FormToButtons()
+										 items:
+																		-    xtype:     panel
+																				 id: feusers-form-panel
+																				 autoWidth: true
+																				 nnlinkedGrid: feusers-images-view
+																				 anchor: 100% 100%
+																				 layout: border
+																				 frame: true
+																				 border: true
+																				 margins: 0 0 0 0
+																				 items:
+																									-  autoWidth: false
+																										 autoHeight: true
+																										 hideMode: offsets
+																										 region: center
+																										 xcolumnWidth: 0.75
+																										 border: false
+																										 frame: false
+																										 layout: fit
+																										 anchor: 100% 100%
+																										 xxbodyStyle:
+																										 xxxpadding: 5px 5px 5px 5px
+																										 items:
+																												-    layout: form
+																														 anchor: 100% 100%
+																														 defaults:
+																																anchor: 95%
+																																xtype: textfield
+																														 items:
+																																-    xtype: hidden
+																																		 name: uid
+																																-    fieldLabel: '<%[ Student Name ]%>'
+																																		 name: Name
+																																		 allowBlank: false
+																																-    fieldLabel: '<%[ Username ]%>'
+																																		 name: Username
+																																		 allowBlank: false
+																																-    fieldLabel: '<%[ Email ]%>'
+																																		 name: Email
+																																		 allowBlank: false
+																																		 vtype: email
+																																-    fieldLabel: <%[Address]%>
+																																		 name: Address
+																																		 height: 100
+																																		 xtype: textarea
+																																-    fieldLabel: <%[Phone]%>
+																																		 name: Phone
+																																-    fieldLabel: <%[Phone 1]%>
+																																		 name: PhoneOther
+																																-    fieldLabel: <%[ Date of Birth ]%>
+																																		 name: DateOfBirthAsDate
+																																		 anchor: 50%
+																																		 xtype: xdatefield
+ references:
+    gridPagingDef:
+         pageSize:      20
+         store:         @this.store
+         displayInfo:   true
+         displayMsg:    "Count {2}"
+         autoShow:      true
+         emptyMsg:      No customers to display
+    prefGroupingViewDef:
+         startCollapsed: true
+         forceFit: true
+         hideGroupedColumn: true
+         groupTextTpl: "{text} ({[values.rs.length]})"
+         enableNoGroups: true
+            tbar: 
+                -   @this.actions.saveGridTool
+                -   @this.actions.cancelGridTool
+                -   @this.actions.addGridTool
+                -   @this.actions.deleteGridTool
+                -   @this.actions.reloadGrid
+end:
+-   "@new Ext.DataView.DragSelector({dragSafe: true})"
+

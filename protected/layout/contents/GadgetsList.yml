@@ -1,0 +1,35 @@
+GadgetsList1:
+    name: GadgetsList1
+    description: G-1 - icons
+    t: content
+    data: 
+        ContentEditClass: GadgetsList1
+        iconCls: gadgets
+GadgetsListText:
+    name: GadgetsListText
+    description: G-2 - textual
+    t: content
+    data:
+        ContentEditClass: GadgetsListText
+        iconCls: gadgets
+GadgetsList2:
+    name: GadgetsList2
+    description: G-3 - catalog
+    t: content
+    data:
+        ContentEditClass: GadgetsList2
+        iconCls: gadgets
+GadgetsList4:
+    name: GadgetsList4
+    description: G-4 - textual
+    t: content
+    data:
+        ContentEditClass: GadgetsList4
+        iconCls: gadgets
+GadgetsList5:
+    name: GadgetsList5
+    description: G-5 - columns
+    t: content
+    data:
+        ContentEditClass: GadgetsList5
+        iconCls: gadgets

@@ -1,0 +1,40 @@
+#
+#
+#
+name: tree-users
+serverSide:
+    recordClass: UserRecord
+    readAll: true
+    child: Uid
+    parent: Role
+    folderSign: IsFolder
+    folder:
+        iconCls: @folder
+        text: Name
+        id: Uid
+        qtip: Uid
+    leaf:
+        iconCls: @user
+        text: Name
+        id: Uid
+        qtip: Uid
+    depth: 2
+    criteria:
+        OrdersBy: 
+           Name: ASC
+    context:
+        tree-users-update:
+            action: updateNode
+            dataRoot: data
+            successMsg: User updated ok.
+        tree-users-add:
+            action: updateNode
+            dataRoot: data
+            successMsg: User inserted ok.
+        tree-users-remove:
+            action: removeNode
+            dataRoot: data
+            successMsg: User removed ok.
+metaData: 
+    edit: 100
+    enableDD: 100

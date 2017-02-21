@@ -1,0 +1,9 @@
+%div{ class=`regForms` }
+	%h1~ Registrace se nezdařila 
+	%h2~ Vaše registrace NEBYLA dokončena. 
+	%br
+	%p
+		~ Zkuste znovu nebo kontaktujte administrátora 
+		$THyperLink
+			:Text= $this->Application->Parameters['siteAdmin']
+			:NavigateUrl= $this->Application->Parameters['siteAdmin'] 
