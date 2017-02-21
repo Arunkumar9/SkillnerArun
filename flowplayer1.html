@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title>Wow! This is video</title>
+    <script src="flowplayer/flowplayer-3.2.12.min.js"></script>
+  </head>
+  <body>
+    <a 
+       style="display:block;width:425px;height:300px;"
+       id="player">
+    </a>
+ 
+    <script language="JavaScript">
+    registered=false;
+      flowplayer("player", "flowplayer/flowplayer-3.2.16.swf",{
+        clip:{
+          urlResolvers:["smil","bwcheck"],
+          provider:"rtmp",
+          url:'http://web28.streamhoster.com/jnovak/17/V6515.smil.xml',
+          autoPlay:false
+
+        },
+        
+        plugins:{
+              rtmp:{
+                url : 'flowplayer/flowplayer.rtmp-3.2.12.swf',
+
+                netConnectionUrl:"rtmp:\/\/fss28.streamhoster.com\/jnovak"
+              },
+
+              
+                
+            captions: {
+
+              url : 'flowplayer/flowplayer.captions-3.2.9.swf'
+                     // pointer to a content plugin (see below)
+                    , captionTarget: 'content'
+                    , button:null
+                 },
+            smil:{
+                   url : 'flowplayer/flowplayer.smil-3.2.8.swf'
+
+            },
+            bwcheck:{
+              url : 'flowplayer/flowplayer.bwcheck-httpstreaming-3.2.12.swf',
+
+              serverType:"wowza",
+              dynamic:true,
+              netConnectionUrl:"rtmp:\/\/fss28.streamhoster.com\/jnovak"
+              
+            },
+            content:{
+              url : 'flowplayer/flowplayer.content-3.2.8.swf',
+
+                   backgroundColor: 'transparent',
+                   backgroundGradient: 'none',
+                   border: 0,
+                   textDecoration: 'outline',
+                   style: {
+                       body: {
+                           fontSize: 14,
+                           fontFamily: 'Arial',
+                           textAlign: 'center',
+                           color: '#ffffff'
+                       }
+                   }
+        }
+      }
+      });
+
+function start (){
+
+
+          
+          console.log('start Called');
+          if( registered)
+            return;
+
+
+          
+          // debugger;
+          $f().play();
+          $f().seek(0);
+          $f().onBegin(function(){
+
+           console.log('onbegin Called');
+             if( registered){
+                  return;
+              }
+
+                console.log('cuipoints registered');
+            $f().getClip().onCuepoint([4000, 1100, 3600],
+     
+            // this function is triggered when a cuepoint is reached
+            function(clip, cuepoint) {
+                console.log("cuepoint " + cuepoint + " entered on clip " + clip.url);
+            });
+            registered=true;
+          });
+        
+}
+    </script>
+
+    <button onClick="start()"> Start</button>
+  </body>
+</html>

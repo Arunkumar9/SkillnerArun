@@ -1,0 +1,95 @@
+/*
+* All the toolbar button related css.
+*/
+.x-tbar-page-first {
+
+	background: url($spritePath) -5px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-page-first {
+
+	background: url($spritePath) -5px -390px !important;
+	background-color: $icon-background !important;
+}
+
+.x-item-disabled .x-tbar-page-first{
+
+	background: url($spritePath) -5px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-tbar-page-prev {
+
+	background: url($spritePath) -25px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-page-prev {
+
+	background: url($spritePath) -25px -390px !important;
+	background-color: $icon-background !important;
+}
+
+.x-item-disabled .x-tbar-page-prev{
+
+	background: url($spritePath) -28px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-tbar-page-next {
+
+	background: url($spritePath) -46px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-page-next {
+
+	background: url($spritePath) -46px -390px !important;
+	background-color: $icon-background !important;
+}
+
+.x-item-disabled .x-tbar-page-next{
+
+	background: url($spritePath) -46px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-tbar-page-last {
+
+	background: url($spritePath) -68px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-page-last {
+
+	background: url($spritePath) -68px -390px !important;
+	background-color: $icon-background !important;
+}
+
+.x-item-disabled .x-tbar-page-last{
+
+	background: url($spritePath) -69px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-tbar-loading{
+
+	background: url($spritePath) -91px -368px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-loading {
+
+	background: url($spritePath) -91px -389px !important;
+	background-color: $icon-background !important;
+}

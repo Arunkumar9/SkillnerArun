@@ -1,0 +1,1 @@
+Any widget/module that is a helper for the desktop environment goes in here.

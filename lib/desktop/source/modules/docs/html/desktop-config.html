@@ -1,0 +1,124 @@
+<p><b>Desktop Config</b></p>
+
+<p>Your modules are created and you have added them to the getModules() method.  Now
+you need to setup your desktopConfig.  This allows you to state which modules will be
+added to the Start Menu, Quick Start panel and Desktop Context Menu.</p>
+
+<p>1. The desktop config can be hard coded as shown here.</p>
+
+<div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;">Code: <font color="Gray">DesktopConfig.js</font></div>
+<pre>
+getDesktopConfig : function(){		
+	// can hard code the module id's
+	this.initDesktopConfig({
+		'autorun' : [
+			'docs-win'
+		],
+		'desktopcontextmenu': [
+			'preferences-win'
+		],
+		'quickstart': [
+			'grid-win',
+			'tab-win',
+			'acc-win',
+			'layout-win'
+		],
+		'startmenu': [
+			'docs-win',
+			'grid-win',
+			'tab-win',
+			'acc-win',
+			'layout-win',
+			'bogus-menu'
+		],
+		'styles': {
+			'backgroundcolor': 'f9f9f9',
+			'theme': {
+				'id': 'Vista',
+				'path': 'resources/themes/xtheme-vista/css/xtheme-vista.css'
+			},
+			'transparency': false,
+			'wallpaper': {
+				'id': 'qWikiOffice',
+				'path': 'resources/wallpapers/qwikioffice.jpg'
+			},
+			'wallpaperposition': 'center'
+		}
+	});
+}
+</pre>
+</div>
+
+<p>2. The desktop config can also be passed in with ajax.</p>
+
+<div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;">Code: <font color="Gray">DesktopConfig.js</font></div>
+<pre>
+getDesktopConfig : function(){
+	// can call server for saved module id's
+	Ext.Ajax.request({
+		success: function(o){
+			var decoded = Ext.decode(o.responseText);
+			
+			if(decoded.success){
+				this.initDesktopConfig(decoded.config);
+			}else{
+				// error
+			}
+		},
+		failure: function(){
+			// error
+		},
+		scope: this,
+		url: 'php/DesktopConfig.php'
+	});
+}
+</pre>
+</div>
+
+<p>Where the PHP script is returning:</p>
+
+<div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;">Code: <font color="Gray">DesktopConfig.php</font></div>
+<pre>
+{
+	'success': true,
+	'config': {
+		'autorun' : [
+			'docs-win'
+		],
+		'desktopcontextmenu': [
+			'preferences-win'
+		],
+		'quickstart': [
+			'grid-win',
+			'tab-win',
+			'acc-win',
+			'layout-win'
+		],
+		'startmenu': [
+			'docs-win',
+			'grid-win',
+			'tab-win',
+			'acc-win',
+			'layout-win',
+			'bogus-menu'
+		],
+		'styles': {
+			'backgroundcolor': 'f9f9f9',
+			'theme': {
+				'id': 'Vista',
+				'path': 'resources/themes/xtheme-vista/css/xtheme-vista.css'
+			},
+			'transparency': false,
+			'wallpaper': {
+				'id': 'qWikiOffice',
+				'path': 'resources/wallpapers/qwikioffice.jpg'
+			},
+			'wallpaperposition': 'center'
+		}
+	}
+}
+</pre>
+</div>

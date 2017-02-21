@@ -1,0 +1,71 @@
+
+.download-all-btn { 
+
+ 	top: 5px !important; 
+ 	left: 2px !important;
+ 	background: url($spritePath) -2px -315px !important; 
+ 	width: 17px !important; 
+ 	height: 17px !important;
+ 	position: relative; 
+ } 
+ 
+ .triangular-icon{
+	
+	background: url($spritePath) 0px -410px !important; 
+	width: 27px !important;
+	height: 27px !important;
+}
+
+.fileSize {
+
+   font-size: 6pt;
+   color: lightslategray;
+}
+
+.filename {
+	
+	margin-bottom: 17px;
+	text-decoration: none;
+	color: black;
+	font-size: 8pt;
+}
+
+.totalAttachment {
+	
+	font-size: 1em;
+	margin-right: 3px;
+	padding-top: 10px;
+	color: $total-attachment-text ;
+	font-family: timesnewroman;
+	word-break: break-all;
+}
+
+.downloadattachmentss {
+	
+	border-style: none;
+	padding-left:10px;
+	background-color: $download-attachments-background ;
+}
+
+.x-wtc-attachment-div-icon {
+	
+	width: 16px;
+	height: 16px;
+}
+
+.x-wtc-attachment-div img {
+	
+	cursor: pointer;
+}
+
+.x-wtc-attachment-div {
+
+	bottom: -3px;
+	position: relative;
+}
+
+.download-container{
+	
+	left : 0px !important;
+	top: 6px !important;
+}

@@ -1,0 +1,200 @@
+<html>
+  <head>
+    <title>Wow! This is video</title>
+    <script src="flowplayer/flowplayer-3.2.12.min.js"></script>
+  </head>
+  <body>
+    <a 
+       style="display:block;width:925px;height:500px;"
+       id="player">
+    </a>
+ 
+    <script language="JavaScript">
+console={log:function(){}};
+chapter = null;    
+captionFontSize=14;
+    registered=false;
+    //flowplayer/flowplayer-3.2.16.swf
+     //http://releases.flowplayer.org/swf/flowplayer-3.2.18.swf
+      flowplayer("player", "http://releases.flowplayer.org/swf/flowplayer-3.2.17.swf",{
+        clip:{
+          id:"dinesh",
+          onCuepoint: [
+				[1,,5, 10, 20,40,100,120,300,400 ],
+			 
+				// this function is triggered when a cuepoint is reached
+				function(clip, cuepoint) {
+				    alert("cuepoint " + cuepoint + " entered on clip " + clip.url);
+				}
+			    ],
+          urlResolvers:["smil","bwcheck"],
+          provider:"rtmp",
+          //url:'http://web28.streamhoster.com/jnovak/161/V202.smil.xml',
+         // url:'http://web28.streamhoster.com/jnovak/161/V210.smil.xml',
+          autoPlay:false
+
+        },
+        
+        plugins:{
+              rtmp:{
+                url : 'flowplayer.rtmp-3.2.13.swf',
+
+                netConnectionUrl:"rtmp:\/\/fss28.streamhoster.com\/jnovak"
+              },
+
+              
+ls:{
+             autoHide:false,
+             url : 'flowplayer.controls-3.2.16.swf',
+             backgroundColor: "transparent",
+             buttonOffColor: 'rgba(130,130,130,1)',
+             progressGradient: 'none',
+             volumeSliderColor: '#e6e6e6',
+             timeSeparator: ' ',
+             timeColor: '#383838',
+             timeBorder: '0px solid rgba(0, 0, 0, 0.3)',
+             buttonOverColor: '#595959',
+             tooltipColor: '#000000',
+             sliderGradient: 'none',
+             volumeColor: '#e8e8e8',
+             durationColor: '#999999',
+             backgroundGradient: 'none',
+             backgroundColor: '#cfcfcf',
+             callType: 'default',
+             progressColor: '#f2f2f2',
+             bufferColor: '#f0f0f0',
+             autoHide: 'never',
+             disabledWidgetColor: '#555555',
+             tooltipTextColor: '#ffffff',
+             buttonColor: '#333333',
+             timeBgColor: '#e3e3e3',
+             sliderColor: '#cccccc',
+             borderRadius: '0',
+             bufferGradient: 'none',
+             sliderBorder: '1px solid rgba(128, 128, 128, 0.7)',
+             volumeBorder: '1px solid rgba(128, 128, 128, 0.7)',
+             volumeSliderGradient: 'none',
+             height: 32,
+             opacity: 1.0
+         },    
+            captions: {
+
+              url : 'flowplayer.captions-3.2.10.swf'
+                     // pointer to a content plugin (see below)
+                    , captionTarget: 'content'
+                    , button:null
+                 },
+            smil:{
+                   url : 'flowplayer.smil-3.2.9.swf'
+
+            },
+            bwcheck:{
+              url : 'flowplayer.bwcheck-3.2.13.swf',
+
+              serverType:"wowza",
+              dynamic:true,
+              netConnectionUrl:"rtmp:\/\/fss28.streamhoster.com\/jnovak"
+              
+            },
+            content:{
+              url : 'flowplayer.content-3.2.9.swf',
+                bottom: 35,
+
+                   backgroundColor: '#cdcdcd',
+                   backgroundGradient: 'none',
+                   border: 0,
+                   textDecoration: 'outline',
+                   style: {
+                       body: {
+                            
+                           fontSize: 14,
+                           fontFamily: 'Arial',
+                           textAlign: 'center',
+                           color: '#ffffff'
+                       }
+                   }
+        }
+      }
+      });
+
+function start (chapter){
+
+          
+          console.log('start Called');
+        //  if( registered)
+          //  return;
+
+	var playerObj =  $f();
+	/*if( playerObj.isPlaying()){
+	   playerObj.pause();
+	   playerObj.stopBuffering();
+	   playerObj.unload();
+	   
+	}*/
+	playerObj.setClip({
+		url: chapter
+		
+	});
+
+        // var pclip= playerObj.getClip();
+          // debugger;
+          $f().play();
+          $f().seek(0);
+         
+        
+}
+function playChapter(playurl){
+   start(playurl);
+}
+
+function showCaptions(){
+
+        $f().getPlugin('content').show();
+
+              $f().getPlugin('captions').loadCaptions( 0 ,'https://swpuat.s3.amazonaws.com/images/videocaptionfiles/143729236758/L7.1.1+captions.srt');
+
+		//$f().getPlugin('captions').loadCaptions( 0 ,'http://phani.walkingtree.in/sample1.srt');
+
+}
+
+function increaseCaptions(){
+captionFontSize= captionFontSize+10;
+  $f().getPlugin('content').css({
+
+       'body': {
+
+         
+
+         "fontSize" : captionFontSize+'px'
+
+       }
+
+     });
+
+$f().getPlugin('content').animate({'height':captionFontSize*4});
+document.getElementById('captionsize').innerHTML ='Captions '+ captionFontSize +'  +10';
+}
+
+function seekTo(){
+  // $f().pause();
+  debugger;
+ //if( $f() && $f().isPlaying())
+  $f().seek($f().getTime()+20);
+  // $f().play();
+}
+    </script>
+
+ 
+    <button onClick="playChapter('http://web28.streamhoster.com/jnovak/161/V202.smil.xml')"> Chapter1</button>
+    <button onClick="playChapter('http://web28.streamhoster.com/jnovak/161/V210.smil.xml')"> Chapter2</button>
+     <button onClick="playChapter('http://web28.streamhoster.com/jnovak/161/V202.smil.xml')"> Chapter3</button>
+    <button onClick="playChapter('http://web28.streamhoster.com/jnovak/161/V210.smil.xml')"> Chapter4</button>
+     <button onClick="playChapter('http://web28.streamhoster.com/jnovak/161/V202.smil.xml')"> Chapter5</button>
+    
+
+   <!-- <button onClick="showCaptions()"> Captions </button>
+    <button id="captionsize" onClick="increaseCaptions()"> Captions +10 </button>-->
+
+     <button onClick="seekTo()"> Seek to +20 Secs </button>
+  </body>
+</html>

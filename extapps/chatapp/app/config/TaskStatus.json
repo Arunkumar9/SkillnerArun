@@ -1,0 +1,52 @@
+[
+  {
+	"ID" : "1",
+	"statustext" : "TASKSTATUS.OPENED",
+	"InitialStatus" : "False",
+	 "FinalStatus":false,
+	"Cls" : "status01"
+  },{
+	"ID" : "2",
+	"statustext" : "TASKSTATUS.CLOSED",
+	"InitialStatus" : "False",
+	 "FinalStatus":false,
+	"Cls" : "status02"
+  },{ 
+    "ID": "3",
+    "statustext" : "TASKSTATUS.OPEN_TASK",
+    "InitialStatus" : "True",
+    "FinalStatus":false,
+    "Cls" : "status03",
+    "lessontooltip":"TASKSTATUS.LESSON_TOOLTIP_TASKSTATUS03",
+	"quiztooltip":"TASKSTATUS.QUIZ_TOOLTIP_TASKSTATUS03",
+	"quiztabtooltip":"TASKSTATUS.QUIZ_TAB_TOOLTIP_TASKSTATUS03"
+  },{ 
+    "ID": "4",
+    "statustext" : "TASKSTATUS.OPEN_UPDATED_BY_INSTRUCTOR",
+    "InitialStatus" : "False",
+     "FinalStatus":false,
+    "Cls" : "status04",
+    "lessontooltip":"TASKSTATUS.LESSON_TOOLTIP_TASKSTATUS04",
+	"quiztooltip":"TASKSTATUS.QUIZ_TOOLTIP_TASKSTATUS04",
+	"quiztabtooltip":"TASKSTATUS.QUIZ_TAB_TOOLTIP_TASKSTATUS04"
+  },{ 
+    "ID": "5",
+    "statustext" : "TASKSTATUS.OPEN_UPDATED_BY_STUDENT",
+    "InitialStatus" : "False",
+    "FinalStatus":false,
+    "StudentUpdateStatus":true,
+    "Cls" : "status05",
+    "lessontooltip":"TASKSTATUS.LESSON_TOOLTIP_TASKSTATUS05",
+	"quiztooltip":"TASKSTATUS.QUIZ_TOOLTIP_TASKSTATUS05",
+	"quiztabtooltip":"TASKSTATUS.QUIZ_TAB_TOOLTIP_TASKSTATUS05"
+  },{ 
+    "ID": "99",
+    "statustext" : "TASKSTATUS.TASK_COMPLETED",
+    "InitialStatus" : "False",
+    "FinalStatus":true,
+    "Cls" : "status099",
+    "lessontooltip":"TASKSTATUS.LESSON_TOOLTIP_TASKSTATUS06",
+	"quiztooltip":"TASKSTATUS.QUIZ_TOOLTIP_TASKSTATUS06",
+	"quiztabtooltip":"TASKSTATUS.QUIZ_TAB_TOOLTIP_TASKSTATUS99"
+  }
+  ]

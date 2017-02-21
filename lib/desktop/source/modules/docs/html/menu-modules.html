@@ -1,0 +1,88 @@
+<p><b>Menu Modules</b></p>
+
+<p>If you want to create a sub-menu to add to the Start Menu.</p>
+
+<p>1. Create a menu module.  Any module's that you want added as items to this menu need to have
+their id's listed in the menu's items array.</p>
+
+<div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;">Code: <font color="Gray">DesktopConfig.js</font></div>
+<pre>
+MyDesktop.subMenu = Ext.extend(Ext.app.Module, {
+
+	appType : 'menu', <font color="Red"><-- Important, give it an appType of 'menu'</font>
+	id : 'bogus-menu',
+
+	// id's of modules to add to this menu,  can't hard code them in directly.
+	// desktop needs to initialize them first
+	items : [
+		'bogus-win' <font color="Green"><-- Id of module to add as an item of this menu</font>
+	],
+
+	init : function(){
+		this.launcher = {
+			text: 'Bogus Menu',
+			iconCls: 'bogus',
+			handler: function(){
+				return false;
+			},
+			menu: {
+				items: []
+			}
+		}
+	}
+});
+</pre>
+</div>
+
+<p>2. Add it to getModules() to initialize it.</p>
+
+<div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;">Code: <font color="Gray">DesktopConfig.js</font></div>
+<pre>
+// get modules to initialize (make available to your desktop)
+getModules : function(){
+	return [
+		new Plugin.LayoutWindow(),
+		new Plugin.Docs(),
+		new MyDesktop.GridWindow(),
+		new MyDesktop.TabWindow(),
+		new MyDesktop.AccordionWindow(),
+		new MyDesktop.subMenu(),  <font color="Green"><-- initialize your menu module</font>
+		new MyDesktop.BogusModule(),
+		new MyDesktop.Preferences()
+	];
+}
+</pre>
+</div>
+
+<p>3. Add your menu module's id to the desktopConfig.</p>
+
+<div style="margin: 5px 20px 20px;">
+<div class="smallfont" style="margin-bottom: 2px;">Code: <font color="Gray">DesktopConfig.js</font></div>
+<pre>
+getDesktopConfig : function(){		
+	// can hard code the module id's
+	var o = {
+		'desktopcontextmenu': [
+			'preferences-win'
+		],
+		'quickstart': [
+			'grid-win',
+			'tab-win',
+			'acc-win',
+			'layout-win'
+		],
+		'startmenu': [
+			'grid-win',
+			'tab-win',
+			'acc-win',
+			'layout-win',
+			'bogus-menu' <font color="Green"><-- your menu module's id</font>
+		]
+	}
+		
+	this.initDesktopConfig(o);
+}
+</pre>
+</div>

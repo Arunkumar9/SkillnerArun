@@ -1,0 +1,214 @@
+@import 'variables.scss';
+$relative-image-path-for-uis: true;
+
+/**
+ * Component Global_CSS	
+ **/
+$include-ie :true !default;
+$include-default-uis :ture !default;
+$include-toolbar-default-ui : true !default;
+$include-button-default-toolbar-small-ui : true !default;
+$base-color : $content-bgr !default;
+
+/**
+ * button/Button
+ **/
+ //for toolbar buttons.
+$button-toolbar-color :  $text-font-color !default;
+$button-toolbar-background-color: transparent !default;
+$button-toolbar-background-image: $container-bgr !default;
+$button-toolbar-background-gradient: null !default;
+$button-toolbar-background-color-over : $icon-background !default;
+$button-toolbar-background-gradient-over : null;
+$button-toolbar-background-color-pressed:$icon-background !default;
+
+//for normal buttons
+$button-default-color: $text-font-color !default;
+$button-default-background-color : $container-bgr !default;
+$button-default-background-color-over : $content-bgr !default;
+$button-default-background-gradient : null !default;
+$button-default-border-color :$content-bgr !default;
+$button-default-border-color-over : $container-bgr !default;
+
+$button-default-background-gradient :none ;
+$button-default-background-gradient-focus :none ;
+$button-default-background-gradient-over :none ;
+$button-default-background-gradient-pressed :none ;
+
+/**
+ * form/field/Text
+ **/
+ 
+$form-field-background-color : $search-field-bgr !default;
+$form-field-color : $search-field-text !default;
+$form-field-font-size : $search-text-size !default;
+
+/**
+ * form/field/Display
+ **/
+ 
+$form-display-field-color  : $text-font-color !default;
+
+/**
+ * form/Lableable
+ **/
+ 
+$form-label-font-color : $text-font-color !default;
+  
+/**
+ * grid/column/Column
+ **/
+ 
+$grid-header-background-color : $container-bgr !default; 
+$grid-header-over-background-color : null;
+$grid-header-over-background-gradient : null !default;
+$grid-column-header-color : $text-font-color !default;
+ 
+/**
+ * grid/feature/Grouping 
+ **/
+ 
+$grid-grouped-header-background-color : $content-bgr ;
+$grid-grouped-header-border-color : transparent !default;
+$grid-grouped-title-color : $text-font-color !default;
+
+/**
+ * grid/header/Container 
+ **/
+ 
+$grid-header-border-color: $container-bgr !default;
+
+/**
+ * grid/Panel
+ **/
+
+$grid-body-background-color : $content-bgr ;
+$grid-row-cell-alt-background-color : $grid-even-row !default;
+$grid-row-cell-background-color : $grid-odd-row !default;
+
+/**
+ * panel/Panel
+ **/
+ 
+$panel-body-background-color : $content-bgr !default; 
+$panel-header-background-color : $container-bgr !default;
+$grid-row-cell-background-color : $main-menu-chapter-separator-line !default;
+$panel-body-border-color : $content-bgr !default;
+$panel-header-background-gradient: none !default;
+$panel-header-color : $text-font-color !default; //header title text color 
+$panel-body-color : $text-font-color !default; // body text color
+ 
+/**
+ * panel/Table
+ **/
+
+$grid-row-cell-over-background-color : $content-bgr !default;
+$grid-cell-selected-background-color : null;
+$grid-body-background-color: #d6d6d6 !default;
+$grid-row-cell-selected-background-color : $main-menu-active-item-bgr !default;
+$grid-row-cell-background-color : $grid-odd-row !default;
+$grid-row-cell-border-color : $main-menu-chapter-separator-line !default;
+$grid-row-cell-over-border-color : $main-menu-chapter-separator-line !default;
+$grid-body-border-color : $content-bgr !default;
+
+/**
+ * tab/Bar
+ **/
+ 
+$tabbar-base-color : $inactive-quiz-tab-bgr !default;
+$tabbar-background-gradient : null !default;
+$tabbar-strip-background-color : $segment-separator-line !default;
+
+/**
+ * tab/Tab
+ **/
+
+$tab-base-color : $inactive-quiz-tab-bgr !default;
+$tab-base-color-active : $active-quiz-tab-bgr !default;
+$tab-base-color-over : $mouse-over-inactive-quiz-tab-bgr !default;
+$tab-color: $text-font-color !default; //tab text colors
+$tab-color-active: $text-font-color !default;
+$tab-color-disabled: $text-font-color !default;
+$tab-border-radius: 0 !default;
+$tab-font-size : 12px !default;
+$tab-border-color : $quiz-tab-separator-line !default;
+
+$tab-background-gradient : null;
+$tab-background-gradient-active : null ;
+$tab-background-gradient-disabled : null ;
+$tab-background-gradient-over : null ;
+/**
+ * tip/Tip
+ **/
+
+$tip-background-color: $tooltip-bgr !default;
+$tip-body-color: $tooltip-text !default;
+$tip-body-font-size: $tooltip-text-size !default;
+
+/**
+ * toolbar/Toolbar
+ **/
+ 
+$toolbar-background-color: $content-bgr !default; //tab bar background color 
+$toolbar-border-color: $container-bgr !default; //tab bar border color 
+$toolbar-text-color : $text-font-color !default;
+$toolbar-background-gradient : null !default;
+
+/**
+ * window/Window
+ **/
+ 
+$window-header-color : $text-font-color !default;
+
+/**
+ * grid/plugin/RowEditor
+ **/
+ 
+$grid-row-editor-background-color : $container-bgr !default;
+
+
+/**
+ * window/MessageBox
+ **/
+ 
+$messagebox-body-background-color : #d6d6d6 !default;
+
+/**
+ * layout/container/Border
+ **/
+ 
+$border-layout-ct-background-color :$container-bgr !default;
+
+/**
+ * window/Window
+ **/
+
+$window-header-background-color :$container-bgr !default;
+$window-background-color :$container-bgr !default;
+$window-border-color : $container-bgr !default;
+$window-border-radius : 0px !default;
+$window-body-background-color : $container-bgr !default;
+
+$grid-row-cell-focus-border-color : #cdcdcd !default;
+
+$ui-line-height: $tab-line-height;
+
+/**
+  * Remove the radius for all components
+  **/
+
+$btn-group-border-radius : 0px ;
+$btn-group-framed-border-radius : 0px ;
+$progress-border-radius : 0px ;
+$menu-item-active-border-radius : 0px ;
+$button-small-border-radius : 0px ;
+$button-medium-border-radius : 0px ;
+$button-large-border-radius : 0px ;
+$panel-frame-border-radius : 0px ;
+$window-border-radius : 0px ;
+$grid-row-editor-button-container-border-radius : 0px ;
+$tip-border-radius : 0px ;
+$tip-error-border-radius : 0px ;
+$css-shadow-border-radius : 0px ;
+$loadmask-msg-border-radius : 0px ;
+$tab-border-radius : 0px ;

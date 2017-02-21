@@ -1,0 +1,1854 @@
+/**
+ * Task/Issue      Author    			UniqueID        Comment   
+ *---------------------------------------------------------------------------------------------------------------------------------------------------
+ *  23232          Arunkumar.muddada    201311120221     Added "x-unselectable" for the template so this group button entire div not accept the hand simbol.
+ *  														This will problem when the Lesson open task icon needs to show hand icon so modified 
+ *  														css class in the SWP_images.css =>.fbarCls3:hover=> cursor: pointer !important;
+ *  23525		   Tapaswini Sabat		201311211212	 Earlier the css was for IE9, so in other version of IE, it was giving the prob, so made it to IE.
+ */
+ 
+.icon-next-question {
+	background: url(../../build/resources/images/swp_sprite.png) -42px -363px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-ie8 .next-img-over {
+	background: url(../../build/resources/images/swp_sprite.png) -42px -385px !important;
+	background-color: #282828 !important;
+}
+
+.x-over .icon-next-question{
+	background: url(../../build/resources/images/swp_sprite.png) -42px -385px !important;
+	background-color: #282828 !important;
+}
+
+.icon-prev-question {
+	background: url(../../build/resources/images/swp_sprite.png) -20px -363px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-ie8 .prev-img-over {
+	background: url(../../build/resources/images/swp_sprite.png) -20px -363px !important;
+	background-color: #282828 !important;
+}
+
+.x-over .icon-prev-question{
+	background: url(../../build/resources/images/swp_sprite.png) -20px -385px !important;
+	background-color: #282828 !important;
+}
+
+.icon-summary {
+	background: url(../../build/resources/images/swp_sprite.png) -52px -1px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .icon-summary {
+	background: url(../../build/resources/images/swp_sprite.png) -52px -26px !important;
+	background-color: #282828 !important;
+}
+
+.icon-figures {
+	background: url(../../build/resources/images/swp_sprite.png) -78px -1px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .icon-figures {
+	background: url(../../build/resources/images/swp_sprite.png) -78px -26px !important;
+	background-color: #282828 !important;
+}
+
+.icon-video {
+	background: url(../../build/resources/images/swp_sprite.png) 0 -1px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-btn-default-toolbar-small-disabled .icon-video:hover{
+	background: url(../../build/resources/images/swp_sprite.png) 0 -1px !important;
+	background-color: #282828 !important;
+}
+
+.x-over .icon-video{
+	background: url(../../build/resources/images/swp_sprite.png) 0 -26px !important;
+	background-color: #282828 !important;
+}
+
+.result-ok {
+	background: url(../../build/resources/images/swp_sprite.png) -180px -278px !important;
+	width: 15px !important;
+	height: 15px !important;
+	margin-top: 4px !important;
+	margin-left: 1px;
+}
+
+/*.result-ok:hover {
+	background: url(../../build/resources/images/swp_sprite.png) -180px -278px !important;
+	width: 15px !important;
+	height: 15px !important;
+	margin-top: 4px !important;
+	margin-left: 1px;
+	
+}*/
+
+.result-error {
+	background: url(../../build/resources/images/swp_sprite.png) -194px -278px !important;
+	width: 15px !important;
+	height: 15px !important;
+	margin-top: 4px !important;
+}
+
+/*.result-error:hover {
+	background: url(../../build/resources/images/swp_sprite.png) -194px -278px !important;
+	width: 15px !important;
+	height: 15px !important;
+	margin-top: 4px !important;
+}*/
+
+
+.previouslesson {
+	background: url(../../build/resources/images/swp_sprite.png) -130px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .previouslesson {
+	background: url(../../build/resources/images/swp_sprite.png) -130px -86px !important;
+	background-color: #282828 !important;
+}
+
+.previouschapter {
+	background: url(../../build/resources/images/swp_sprite.png)  -156px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .previouschapter {
+	background: url(../../build/resources/images/swp_sprite.png)  -156px -86px !important;
+	background-color: #282828 !important;
+}
+
+.rewindmovie {
+	background: url(../../build/resources/images/swp_sprite.png) -182px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .rewindmovie {
+	background: url(../../build/resources/images/swp_sprite.png) -182px -86px !important;
+	background-color: #282828 !important;
+}
+
+.forwardmovie {
+	background: url(../../build/resources/images/swp_sprite.png) -208px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .forwardmovie {
+	background: url(../../build/resources/images/swp_sprite.png) -208px -86px !important;
+	background-color: #282828 !important;
+}
+
+.nextchapter {
+	background: url(../../build/resources/images/swp_sprite.png) -234px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .nextchapter {
+	background: url(../../build/resources/images/swp_sprite.png) -234px -86px !important;
+	background-color: #282828 !important;
+}
+
+.nextlesson {
+	background: url(../../build/resources/images/swp_sprite.png) -260px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .nextlesson {
+	background: url(../../build/resources/images/swp_sprite.png) -260px -86px !important;
+	background-color: #282828 !important;
+}
+
+.x-grid-center-icon-make-discussion{
+	background: url(../../build/resources/images/swp_sprite.png) -52px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+	display: visible;
+	margin: 0 auto;
+	cursor: hand;
+}
+
+.x-grid-center-icon-make-discussion:hover {
+	background: url(../../build/resources/images/swp_sprite.png) -52px -86px !important;
+	background-color: #282828 !important;
+}
+
+.x-grid-center-icon-view-discussion{
+	background: url(../../build/resources/images/swp_sprite.png) -26px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+    display:visible; 
+    margin:0 auto; 
+    cursor:hand;
+}
+
+.x-grid-center-icon-view-discussion:hover {
+	background: url(../../build/resources/images/swp_sprite.png) -26px -86px !important;
+	background-color: #282828 !important;
+}
+
+.deletebutton{
+	background: url(../../build/resources/images/swp_sprite.png) -1px -60px !important;
+	padding-right: 1px !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-repeat: no-repeat;
+}
+
+.deletebutton:hover {
+	background: url(../../build/resources/images/swp_sprite.png) 0px -86px !important;
+	background-color: #282828 !important;
+}
+
+.seek-icon-cls {
+	
+	background: url(../../build/resources/images/swp_sprite.png) -78px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.seek-icon-cls:hover {
+	background: url(../../build/resources/images/swp_sprite.png) -78px -86px !important;
+	border-color: #000000;
+	background-color: #282828 !important;
+	-webkit-border-radius: 3px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.seek-icon-cls-onrow-select {
+	background: url(../../build/resources/images/swp_sprite.png) -78px -86px !important;
+	width: 26px !important;
+	height: 26px !important;
+	border-color: #000000;
+	background-color: #282828 !important;
+	-webkit-border-radius: 3px;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.x-tbar-page-first {
+	background: url(../../build/resources/images/swp_sprite.png) 0 -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-page-first {
+	background: url(../../build/resources/images/swp_sprite.png) 0 -387px !important;
+	background-color: #282828 !important;
+}
+
+.x-item-disabled .x-tbar-page-first{
+	background: url(../../build/resources/images/swp_sprite.png) 0 -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-tbar-page-prev {
+	background: url(../../build/resources/images/swp_sprite.png) -22px -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-page-prev {
+	background: url(../../build/resources/images/swp_sprite.png) -22px -387px !important;
+	background-color: #282828 !important;
+}
+
+.x-item-disabled .x-tbar-page-prev{
+	background: url(../../build/resources/images/swp_sprite.png) -22px -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-tbar-page-next {
+	background: url(../../build/resources/images/swp_sprite.png) -44px -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-page-next {
+	background: url(../../build/resources/images/swp_sprite.png) -44px -387px !important;
+	background-color: #282828 !important;
+}
+
+.x-item-disabled .x-tbar-page-next{
+	background: url(../../build/resources/images/swp_sprite.png) -44px -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-tbar-page-last {
+	background: url(../../build/resources/images/swp_sprite.png) -66px -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-page-last {
+	background: url(../../build/resources/images/swp_sprite.png) -66px -387px !important;
+	background-color: #282828 !important;
+}
+
+.x-item-disabled .x-tbar-page-last{
+	background: url(../../build/resources/images/swp_sprite.png) -66px -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-tbar-loading{
+	background: url(../../build/resources/images/swp_sprite.png) -88px -365px !important;
+	width: 22px !important;
+	height: 22px !important;
+}
+
+.x-over .x-tbar-loading {
+	background: url(../../build/resources/images/swp_sprite.png) -88px -387px !important;
+	background-color: #282828 !important;
+}
+
+.icon-close {
+	background: url(../../build/resources/images/swp_sprite.png) -26px -1px !important;
+	width:26px !important;
+	height:26px !important;
+}
+
+.x-over .icon-close{
+
+	background: url(../../build/resources/images/swp_sprite.png) -26px -26px !important;
+	background-color: #282828 !important;
+}
+
+/*.quizOpenCls {*/
+/*	*/
+/*	background: url(../../build/resources/images/swp_sprite.png) -68px -292px !important;*/
+/*	background-repeat: no-repeat !important;*/
+/*	width:17px !important;*/
+/*	height:18px !important;*/
+/*	margin-top: -5px;*/
+/*	*/
+/*}*/
+/**/
+/*.quizClosedCls {*/
+/*	background: url(../../build/resources/images/swp_sprite.png) -86px -292px !important;*/
+/*	background-repeat: no-repeat !important;*/
+/*	font-weight : bold !important;*/
+/*	width:17px !important;*/
+/*	height:18px !important;*/
+/*	margin-top: -6px;*/
+/*}*/
+
+.lesson-open-expanded {
+	background: url(../../build/resources/images/swp_sprite.png) -19px -290px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:10px !important;
+	margin: 5px 0 0 2px !important;
+}
+
+.lesson-open-collapsed {
+	background: url(../../build/resources/images/swp_sprite.png) 0px -290px !important;
+	background-repeat: no-repeat !important;
+	width:13px !important;
+	height:10px !important;
+	margin: 5px 0 0 2px !important;
+}
+
+.lesson-close-expanded {
+	background: url(../../build/resources/images/swp_sprite.png) -19px -302px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:10px !important;
+	margin: 5px 0 0 2px !important;
+}
+
+.lesson-close-collapsed {
+	background: url(../../build/resources/images/swp_sprite.png) 0 -302px !important;
+	background-repeat: no-repeat !important;
+	width:13px !important;
+	height:10px !important;
+	margin: 5px 0 0 2px !important;
+}
+
+
+.x-ie8 .reload-item {
+	    background-position: -52px -122px !important;
+	    
+	}
+	
+	.x-ie8 .x-over .reload-item{
+	    background-position: -52px -147px !important;
+}
+	
+.reload-item {
+	background: url('../../build/resources/images/swp_sprite.png') -52px -120px !important;
+	width: 26px !important;
+	height: 26px !important;
+
+	
+}
+
+.x-over .reload-item{
+	background-position: -52px -145px !important;
+	background-color: #ededed !important;
+}
+
+.reload-item-hover{
+	background: url('../../build/resources/images/swp_sprite.png') -52px -145px !important;
+	background-color: #ededed !important;
+}
+
+.add-item {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -26px -120px !important;
+}
+
+.x-over .add-item {
+	background: url('../../build/resources/images/swp_sprite.png') -26px -146px  !important;
+	background-color: #ededed !important;
+}
+
+.comment-cls{
+	background: url(../../build/resources/images/swp_sprite.png) !important;
+	background-position : -156px -1px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .comment-cls{
+	background-position : -156px -26px !important;
+	background-color: #282828 !important;
+}
+
+.pause-comment-cls {
+	background: url(../../build/resources/images/swp_sprite.png) -130px -1px  !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .pause-comment-cls {
+	background: url(../../build/resources/images/swp_sprite.png) -130px -26px !important;
+	background-color: #282828 !important;
+}
+
+.Messages{
+	background:url(../../build/resources/images/swp_sprite.png) -182px -1px !important; 
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .Messages {
+	background: url(../../build/resources/images/swp_sprite.png) -182px -26px !important;
+	background-color: #282828 !important;
+}
+
+.training-files-cls {
+	background: url(../../build/resources/images/swp_sprite.png) !important;
+	background-position : -260px -1px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .training-files-cls {
+	background-position : -260px -26px !important;
+	background-color: transparent !important;
+}
+
+.videocaptionsettings{
+	background: url(../../build/resources/images/swp_sprite.png)  -234px -1px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .videocaptionsettings {
+	background: url(../../build/resources/images/swp_sprite.png)  -234px -26px !important;
+	background-color: transparent !important;
+}
+
+.next {
+	background: url('../../build/resources/images/swp_sprite.png') -182px -120px !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .next {
+	background: url('../../build/resources/images/swp_sprite.png') -182px -146px !important;
+	background-repeat: no-repeat !important;
+	background-color: #ededed !important;
+}
+
+.previous {
+	background: url('../../build/resources/images/swp_sprite.png') -156px -120px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .previous {
+	background: url('../../build/resources/images/swp_sprite.png') -156px -146px !important;
+	background-color: #ededed !important;
+}
+
+.messagelist {
+	background: url('../../build/resources/images/swp_sprite.png') -130px -120px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .messagelist {
+	background: url('../../build/resources/images/swp_sprite.png') -130px -146px !important;
+	background-color: #ededed !important;
+}
+
+.refresh {
+	background: url('../../build/resources/images/swp_sprite.png') -208px -120px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .refresh {
+	background: url('../../build/resources/images/swp_sprite.png') -208px -146px !important;
+	background-color: #ededed !important;
+}
+
+.collapse {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	margin-left: 10px;
+}
+
+.reply {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	background-repeat: no-repeat !important;
+	height: 17px;
+	width: 17px;
+	background-position: -86px -315px !important;
+}
+
+.reply:hover {
+	background-position: -86px -331px !important;
+	background-color: #ededed !important;
+}
+	
+.link {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	background-position: -78px -60px !important;
+	background-repeat: no-repeat !important;
+	height: 26px !important ;
+	width: 26px !important;
+	margin-top: -5px;
+}
+
+.link:hover {
+	
+	background-position: -78px -86px !important;
+	background-color: #ededed !important;
+}
+
+.context {
+	
+	background: url("../../build/resources/images/swp_sprite.png") repeat scroll 0 0 transparent !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 26px;
+	background-position: -44px -84px !important;
+	opacity: 0.55;
+}
+
+.hidecontext {
+	background: url('../../build/resources/images/swp_sprite.png')  !important;
+	background-repeat: no-repeat !important;
+	background-position : 0 -122px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .hidecontext{
+	background-position: 0 -147px !important;
+	background-color: #ededed !important;
+}
+
+.hidecontext-hover{
+	background: url('../../build/resources/images/swp_sprite.png') 0 -147px !important;
+	background-color: #ededed !important;
+}
+
+.expanding-collapsing {
+	background: url('../../build/resources/images/swp_sprite.png');
+	background-position: -18px -315px ;
+	margin-top: 2px !important;
+	width: 17px !important;
+	height: 17px !important;
+	position: absolute;
+    top: 4px;
+	left: 5px;
+}
+
+.x-over .expanding-collapsing {
+	
+	background-position: -18px -332px ;
+	background-color: #ededed !important;
+		position: absolute;
+    top: 4px;
+	left: 5px;
+}
+
+.x-img-btn-expand-collapse{
+	background: url('../../build/resources/images/swp_sprite.png');
+   	background-position: -35px -313px !important;
+   	width: 17px !important;
+	height: 17px !important;
+	position: absolute;
+    top: 4px;
+	left: 5px;
+}
+
+.x-over .x-img-btn-expand-collapse {
+	background: url('../../build/resources/images/swp_sprite.png');
+   	background-position: -35px -330px !important;
+   	background-color: #ededed !important;
+}
+
+.expanding {
+	background: url('../../build/resources/images/swp_sprite.png');
+	background-repeat: no-repeat !important;
+	width: 17px !important;
+	height: 17px !important;
+	background-position: -51px -314px !important;
+}
+
+.expanding:hover {
+	background-position: -51px -331px !important;
+}
+
+.x-img-btn-collapse{
+   background: url('../../build/resources/images/swp_sprite.png');
+   background-position: -0px -314px !important;
+   width: 17px !important;
+   height: 17px !important;
+}
+.x-img-btn-collapse:hover {
+	
+   background-position: -0px -331px !important;
+   background-color: #ededed !important;
+}
+	
+.attachment {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -78px -172px !important;
+}
+
+.no-attachment {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -52px -172px !important;
+}
+
+.ref-link {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	background-position: -78px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+	padding-right: 20px;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	word-break: break-all;
+}
+
+.ref-link:hover {
+	background-position: -78px -86px !important;
+	background-color: #ededed !important;
+}
+
+.status01 {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -0px -172px !important;
+	
+}
+.status02 {
+	background: url('../../build/resources/images/swp_sprite.png') !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -27px -172px !important;
+	
+}
+
+.status03-3, .status04-4, .status05-5, .status099-99 {
+	
+	width: 15px !important;
+	height: 15px !important;
+
+}
+
+.status03-3:hover, .status04-4:hover, .status05-5:hover, .status099-99:hover {
+	
+	cursor : default;
+
+}
+
+.status03-3 {
+	
+	background: url(../../build/resources/images/swp_sprite.png) -213px -206px !important;
+	background-repeat: no-repeat !important;
+
+}
+
+.status04-4 {
+	
+	background: url(../../build/resources/images/swp_sprite.png) -196px -206px !important;
+	background-repeat: no-repeat !important;
+
+}
+
+.status05-5 {
+	background: url(../../build/resources/images/swp_sprite.png) -180px -206px !important;
+	background-repeat: no-repeat !important;
+
+}
+
+.status099-99 {
+	
+	background: url(../../build/resources/images/swp_sprite.png) -230px -206px !important;
+	background-repeat: no-repeat !important;
+
+}
+
+.instructions-cls {
+	background: url(../../build/resources/images/swp_sprite.png) -92px -206px !important;
+	background-repeat: no-repeat !important;
+	width: 16px !important;
+	height: 15px !important;
+	cursor: pointer !important;
+}
+
+.instructions-cls:hover {
+	background: url(../../build/resources/images/swp_sprite.png) -92px -222px !important;
+	background-repeat: no-repeat !important;
+}
+
+.fbarCls3, .student .fbarCls4, .instructor .fbarCls5, .student .fbarCls5, .instructor .fbarCls4, .fbarCls99 {
+	
+	width: 22px !important;
+	height: 15px !important;
+	
+	}
+
+.fbarCls3 {
+	background: url('../../build/resources/images/swp_sprite.png') -47px -206px !important;
+	background-repeat: no-repeat !important;
+	border-width: 0px !important;
+	margin: 0px;
+	top: 0px;
+
+}
+
+.fbarOverCls3 {
+	background: url('../../build/resources/images/swp_sprite.png') -47px -222px !important;
+	background-repeat: no-repeat !important;
+}
+
+/*
+*201311120221
+*/
+.fbarCls3:hover {
+	background: url('../../build/resources/images/swp_sprite.png') -47px -222px !important;
+	background-repeat: no-repeat !important;
+	cursor: pointer !important;
+}
+
+.student .fbarCls4,
+.instructor .fbarCls5 {
+	background: url('../../build/resources/images/swp_sprite.png') -24px -206px !important;
+	background-repeat: no-repeat !important;
+	border-width: 0px !important;
+	margin: 0px;
+	top: 0px;
+
+}
+
+.fbarOverCls4-hover{
+	background: url('../../build/resources/images/swp_sprite.png') -24px -222px !important;
+	background-repeat: no-repeat !important;
+}
+
+.student .fbarCls4:hover,
+.instructor .fbarCls5:hover{
+	background: url('../../build/resources/images/swp_sprite.png') -24px -222px !important;
+	background-repeat: no-repeat !important;
+	cursor: pointer !important;
+}
+
+.student .fbarCls5,
+.instructor .fbarCls4{
+	background: url('../../build/resources/images/swp_sprite.png') -1px -206px !important;
+	background-repeat: no-repeat !important;
+	border-width: 0px !important;
+	margin: 0px;
+	top: 0px;
+
+}
+
+.fbarOverCls5 {
+	background: url('../../build/resources/images/swp_sprite.png') -1px -222px !important;
+	background-repeat: no-repeat !important;
+	
+}
+
+.student .fbarCls5:hover,
+.instructor .fbarCls4:hover  {
+	background: url('../../build/resources/images/swp_sprite.png') -1px -222px !important;
+	background-repeat: no-repeat !important;
+	cursor: pointer !important;
+}
+
+.fbarCls99 {
+	background: url('../../build/resources/images/swp_sprite.png') -69px -206px !important;
+	background-repeat: no-repeat !important;
+	border-width: 0px !important;
+	margin: 0px;
+	top: 0px;
+
+}
+
+.fbarOverCls99 {
+	background: url('../../build/resources/images/swp_sprite.png') -69px -222px !important;
+	background-repeat: no-repeat !important;
+}
+
+.fbarCls99:hover {
+	background: url('../../build/resources/images/swp_sprite.png') -69px -222px !important;
+	background-repeat: no-repeat !important;
+	cursor: pointer !important;
+}
+
+.group-header-badgeCls {
+	background: url('../../build/resources/images/swp_sprite.png') -110px -206px !important;
+	width: 19px !important;
+	height: 18px !important;
+	background-clip: padding-box;
+	background-color: #CC0000;
+	background-image: none;
+	color: white;
+	display: inline-block;
+	font-family: tahoma,arial,verdana,sans-serif;
+	font-size: 7pt;
+	font-weight: normal;
+	line-height: 1.2em;
+	min-width: 1.5em;
+	max-width: 95%;
+	overflow: visible;
+	padding: 0.2em;
+	text-align: center !important;
+	text-shadow: 0 -0.08em 0 rgba(0, 0, 0, 0.5);
+	width: auto;
+	z-index: 12;
+	padding-left : 6px;
+	padding-top: 2.5px;
+}
+
+.x-ie8 .group-header-badgeCls {
+	background: url('../../build/resources/images/swp_sprite.png') -110px -206px !important;
+	width: 21px !important;
+	height: 18px !important;
+	background-clip: padding-box;
+	background-color: #CC0000;
+	background-image: none;
+	color: white;
+	display: inline-block;
+	font-family: tahoma,arial,verdana,sans-serif;
+	font-size: 7pt;
+	font-weight: normal;
+	line-height: 1.2em;
+	min-width: 1.5em;
+	max-width: 95%;
+	overflow: visible;
+	padding: 2px 2px 0px 0px !important;
+/* 	padding-left : 0.6em !important; */
+/* 	padding-bottom : 0px !important; */
+/* 	padding-right : 0px !important; */
+	position: relative;
+	text-align: center !important;
+	text-shadow: 0 -0.08em 0 rgba(0, 0, 0, 0.5);
+	width: auto;
+	z-index: 12;
+}
+
+/*.course-task-badge {
+	background: url('../../build/resources/images/swp_sprite.png') -130px -205px !important;
+	width: 21px !important;
+	height: 18px !important;
+	background-clip: padding-box;
+	background-color: #C00;
+	background-image: none;
+	left: 9px;
+	color: white;
+	display: inline-block;
+	font-family: tahoma,arial,verdana,sans-serif;
+	font-size: 7pt;
+	font-weight: normal;
+	line-height: 1.2em;
+	overflow: visible;
+	padding: 0.2em;
+	position: relative;
+	text-align: center !important;
+	text-shadow: 0 -0.08em 0 rgba(0, 0, 0, 0.5);
+	z-index: 12;
+	top:1px;
+	padding-left: 8px !important;
+}*/
+
+.course-task-badge {
+height: 17px;
+background: url("../../build/resources/images/swp_sprite.png") repeat scroll -110px -206px
+ rgba(0, 0, 0, 0) !important;
+color: #FFFFFF;
+display: inline-block;
+font-family: tahoma,arial,verdana,sans-serif;
+font-size: 6pt;
+font-weight: normal;
+margin-left: 9px;
+line-height: 1.2em;
+overflow: visible;
+padding-bottom: 0;
+padding-left: 5px !important;
+padding-right: 0.2em;
+padding-top: 0.5em;
+position: relative;
+text-align: center !important;
+text-shadow: 0 -0.08em 0 rgba(0, 0, 0, 0.5);
+top: 3px;
+width: 17px !important;
+z-index: 12;
+}
+
+.trainingfileicon {
+	background: url(../../build/resources/images/swp_sprite.png) -264px -121px !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-color: #d6d6d6 !important;
+}
+
+.trainingfileicon:hover{
+	background: url(../../build/resources/images/swp_sprite.png) -264px -147px !important;
+	background-repeat: no-repeat !important;
+	background-color: #ededed !important;
+}
+
+.post-header-hidecontext {
+	background: url('../../build/resources/images/swp_sprite.png')  !important;
+	background-repeat: no-repeat !important;
+	background-position : -102px -314px !important;
+	width: 17px !important;
+	height: 17px !important;
+}
+
+.post-header-hidecontext:hover {
+	
+	background-position:  -102px -331px !important;
+	background-color: #ededed !important;
+}
+
+.course-status-03{
+	background: url(../../build/resources/images/swp_sprite.png) -38px -250px no-repeat !important;
+	width: 18px !important;
+	height: 19px !important;
+}
+
+.course-status-03:hover{
+	background: url(../../build/resources/images/swp_sprite.png) -38px -270px no-repeat !important;
+}
+
+.course-status-04{
+	background: url(../../build/resources/images/swp_sprite.png) -18px -249px no-repeat !important;
+	width: 18px !important;
+	height: 19px !important;
+}
+
+.course-status-04:hover{
+	background: url(../../build/resources/images/swp_sprite.png) -18px -269px no-repeat !important;
+}
+
+.course-status-05{
+	background: url(../../build/resources/images/swp_sprite.png) 0px -250px no-repeat !important;
+	width: 18px !important;
+	height: 19px !important;
+}
+
+.course-status-05:hover{
+	background: url(../../build/resources/images/swp_sprite.png) 0px -270px no-repeat !important;
+}
+
+.course-status-099{
+	background: url(../../build/resources/images/swp_sprite.png) -56px -250px no-repeat !important;
+	width: 18px !important;
+	height: 19px !important;
+}
+
+.course-status-099:hover{
+	background: url(../../build/resources/images/swp_sprite.png) -56px -270px no-repeat !important;
+}
+
+.x-btn-badgeCls{
+	background: url('../../build/resources/images/swp_sprite.png') -110px -206px !important;
+	width: 18px !important;
+	height: 15px !important;
+	top: 5px;
+	right: 0.01em;
+	font-family: tahoma,arial,verdana,sans-serif;
+	z-index: 12;
+	color: white;
+	position: absolute;
+	font-size: 7pt;
+	max-width: 95%;
+	display: inline-block;
+	padding: 2px 0px 0px 9px !important;
+	
+}
+
+.messagebtn-badge{
+	background: url('../../build/resources/images/swp_sprite.png') -147px -206px !important;
+	width: 21px !important;
+	height: 18px !important;
+} 
+
+
+.x-ie .x-tab-badgeCls {
+
+	background: url('../../build/resources/images/swp_sprite.png') -110px -206px !important;
+	width: 18px !important;
+	height: 15px !important;
+	top: -0.05em;
+	right:-0.9em;
+	font-family: tahoma,arial,verdana,sans-serif;
+	z-index: 12;
+	color: white;
+	position: absolute;
+	font-weight:normal; 
+	min-width: 1.8em;
+	line-height: 1.2em;
+	font-size: 7pt;
+	max-width: 95%;
+	display: inline-block;
+	padding: 2px 0px 0px 10px !important;
+	float: right !important;
+}
+
+.x-tab-badgeCls{
+	background: url('../../build/resources/images/swp_sprite.png') -110px -206px !important;
+	width: 18px !important;
+	height: 15px !important;
+/* 	top: -0.05em; */
+	right:-0.6em;
+	font-family: tahoma,arial,verdana,sans-serif;
+	z-index: 12;
+	color: white;
+	position: absolute;
+	font-weight:normal; 
+	min-width: 1.8em;
+	line-height: 1.2em;
+	font-size: 7pt;
+	max-width: 95%;
+	display: inline-block;
+/* 	padding: 2px 0px 0px 9px !important; */
+	float: right !important;
+}
+
+.even-row-cls {
+  	background: #3d3d3d  !important; 
+}
+
+.odd-row-cls {
+  	background:#545454 !important;  
+}
+
+.status03 {
+
+	background: url('../../build/resources/images/swp_sprite.png') -47px -206px !important;
+	background-repeat: no-repeat !important;
+	width: 22px;
+	height: 15px;
+}
+
+.student .status04,
+.instructor .status05 {
+
+	background: url('../../build/resources/images/swp_sprite.png') -24px -206px !important;
+	background-repeat: no-repeat !important;
+	width: 22px;
+	height: 15px;
+}
+
+.instructor .status04,
+.student .status05 {
+
+	background: url('../../build/resources/images/swp_sprite.png') 1px -206px !important;
+	background-repeat: no-repeat !important;
+	width: 22px;
+	height: 15px;
+}
+
+.status099 {
+
+	background: url('../../build/resources/images/swp_sprite.png') -69px -206px !important;
+	background-repeat: no-repeat !important;
+	width: 22px;
+	height: 15px;
+}
+
+.status03-quiz {
+
+	background: url('../../build/resources/images/swp_sprite.png') -180px -250px !important;
+	background-repeat: no-repeat !important;
+	width: 13px !important;
+	height: 13px !important;
+	margin-left: -5px;
+	margin-top: 2px;
+}
+
+.status03-quiz:hover {
+
+/* 	background: url('../../build/resources/images/swp_sprite.png') -180px -264px !important; */
+}
+
+.student .status04-quiz,
+.instructor .status05-quiz {
+
+	background: url('../../build/resources/images/swp_sprite.png') -208px -250px !important;
+	background-repeat: no-repeat !important;
+	width: 13px !important;
+	height: 13px !important;
+	margin-left: -5px;
+	margin-top: 2px;
+}
+
+.student .status04-quiz:hover,
+.instructor .status05-quiz:hover {
+
+/* 	background: url('../../build/resources/images/swp_sprite.png') -208px -264px !important; */
+}
+
+.student .status05-quiz,
+.instructor .status04-quiz {
+
+	background: url('../../build/resources/images/swp_sprite.png') -194px -250px !important;
+	background-repeat: no-repeat !important;
+	width: 13px !important;
+	height: 13px !important;
+	margin-left: -5px;
+	margin-top: 2px;
+	
+}
+
+.student .status05-quiz:hover,
+.instructor .status04-quiz:hover {
+
+/* 		background: url('../../build/resources/images/swp_sprite.png') -194px -264px !important; */
+}
+
+.status099-quiz {
+
+	background: url('../../build/resources/images/swp_sprite.png') -222px -250px !important;
+	background-repeat: no-repeat !important;
+	width: 13px !important;
+	height: 13px !important;
+	margin-left: -5px;
+	margin-top: 2px;
+}
+
+.status099-quiz:hover {
+	background: url('../../build/resources/images/swp_sprite.png') -222px -264px !important;
+}
+
+.status03-3-summary {
+	background: url('../../build/resources/images/swp_sprite.png') -47px -203px !important;
+	background-repeat: no-repeat !important;
+	width: 22px;
+	height: 15px;
+}
+
+.student .status04-4-summary,
+ .instructor .status05-5-summary{
+
+	background: url('../../build/resources/images/swp_sprite.png')  -24px -203px !important ;
+	background-repeat: no-repeat !important;
+	width: 22px;
+	height: 15px;
+}
+
+.student .status05-5-summary,
+.instructor .status04-4-summary {
+
+	background: url('../../build/resources/images/swp_sprite.png')  -1px -203px !important ;
+	background-repeat: no-repeat !important;
+	width: 22px;
+	height: 15px;
+}
+
+.status099-99-summary {
+	background: url('../../build/resources/images/swp_sprite.png')  -69px -203px !important ;
+	background-repeat: no-repeat !important;
+	width: 22px;
+	height: 15px;
+}
+
+.fieldset-cls{
+	border: 1px solid #b5b8c8 !important;
+}
+
+.seen-font {
+	color : #6f6f6f !important;
+}
+
+.notseen-font{
+	color : #c2c2c2 !important;
+}
+
+.editcolumn{
+	position:relative;
+	float:right;
+	margin-right : 3px !important;
+	color: #c2c2c2 !important;
+	text-decoration : none !important;
+}
+
+.x-boundlist-list-ct{
+	color : #c2c2c2 !important;
+}
+/**
+  *IE related theme CSS
+  *START
+  **/
+
+.x-nlg .x-toolbar-default {
+	background-image: none !important;
+}
+
+.x-nlg .x-panel-header-default-top{
+	background :none !important;
+}
+
+.x-nlg .x-grid-header-ct {
+	background-image :none !important;
+	border-bottom-width:1px !important;
+	border-color: #0e0e0e !important; 
+}
+
+.x-nlg .x-column-header{
+	
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#444444', endColorstr='#323232',GradientType=0 ) ;
+}
+
+ .download-all-btn { 
+	cursor: pointer !important;
+ 	top: 5px !important; 
+ 	left: 2px !important;
+ 	background: url(../../build/resources/images/swp_sprite.png) -2px -315px !important; 
+ 	width: 17px !important; 
+ 	height: 17px !important;
+ 	position: relative; 
+ } 
+/**
+  *END
+  * */
+
+.triangular-icon{
+	
+	background: url(../../build/resources/images/swp_sprite.png) 0px -410px !important; 
+	width: 27px !important;
+	height: 27px !important;
+}
+
+/**
+  * Data list empty row background color 
+  **/
+.rowcls .x-grid-empty{
+	background-color: #c2c2c2 !important;
+}
+
+/**
+  * Dark theme font text color
+  */
+.x-body{
+	
+	color:  #c2c2c2 !important;
+}
+
+/**
+  *Chapter list sub container background color is #393939
+  **/
+.chapter-list-toolbar-cls{
+	
+	background-image: none !important;
+	background-color: #444444 !important;
+	border-color: #393939 !important;
+}
+
+/**
+  *Add the splitter line background color #161616 
+  **/
+.x-splitter-horizontal {
+	
+	background-color: transparent !important;
+	height: 2px !important;
+}
+
+/**
+  *Add the Quiz tab separator line color become #161616
+  **/
+.quiz-panel-cls .x-tab-bar-default {
+	top : 0px !important;
+	border-color: #161616 !important;
+	border-left-width: 0px !important;
+	border-right-width: 0px !important;
+}
+.quiz-panel-cls .x-tab-bar-horizontal .x-tab-bar-strip {
+	border-color: #161616 !important;
+}
+
+/**
+  * Group beader top border color is #444444,bottom border color is #e1e1e1
+  **/
+.chapterslist-grid-cls .x-grid-group-hd	{
+	border-top-color: #1e1e1e !important ;
+	border-bottom-color: #444444 !important ;
+}
+
+/**
+  *The tab color is the segment separator color #161616
+  **/
+.quiz-panel-cls .x-tab-default  {
+	border-color: #161616;
+}
+
+.quiz-panel-cls .x-tab-default-active {
+	border-bottom-color: #444444 !important;
+}
+
+.quiz-panel-cls .x-tab-bar-strip-default {
+	background-color: #444444;
+}
+/**
+  *comments grid border color should be contianer-bg
+  **/
+.comments-grid-cls {
+	border-color: #323232 !important;
+}
+
+/**
+  * Added the box shadow for the tooltip 
+  **/
+.x-tip {
+	-moz-box-shadow:    0px 0px 3px 1px #323232 !important;
+	 -webkit-box-shadow: 0px 0px 3px 1px #323232 !important;
+	 box-shadow:         0px 0px 3px 1px #323232 !important;
+ 	 behavior:url('/pie/PIE.htc');
+
+}
+
+.x-form-display-field-body .x-form-display-field{
+
+	color: #595959 ;
+}
+
+/**
+  *	Change the Quiz panel body text color
+  * */
+.quiz-panel-cls .x-form-display-field{
+	margin-left : 5px !important;
+	color: #c2c2c2  !important;
+	padding-right: 25px !important;
+}
+
+.two-digit-badge{
+	padding-left : 7px !important;
+
+}
+
+.x-form-search-trigger {
+	
+	background-image: url(../../build/resources/images/swp_sprite.png);
+	background-position: -222px -388px !important;
+}
+
+.x-form-search-trigger-over {
+	border-color: #B5B8C8 !important;
+/*	background-image: url(../../build/resources/images/swp_sprite.png) -220px -387px !important;*/
+/*	background-position: -206px -387px !important;*/
+}
+
+.not-yet-seen .x-grid-cell-inner {
+	margin-top: -11px ;
+	color: #C2C2C2 !important ;
+	font-size: 24px;
+	padding: 0px;
+	padding-bottom: 3px;
+}
+
+.now-seen .x-grid-cell-inner {
+	color: #82FF38 !important;
+	font-size: 24px !important;
+	padding: 0px !important;
+	padding-bottom: 3px !important;
+}
+
+.comments-grid-cls .x-grid-body {
+	background: #444444 !important;
+}
+
+.chapterslist-grid-cls .x-grid-row-alt .x-grid-cell { 
+	
+     background-color: #393939 !important ; 
+}
+.chapterslist-grid-cls .x-grid-row .x-grid-cell { 
+	
+     background-color: #393939 !important ;
+}
+.x-window-default {
+
+	border-style: none !important;
+}
+.x-window-header-default-top {
+
+	border-style: none !important;
+}
+.comments-grid-cls .x-grid-editor .x-form-text {
+	height: 28px !important ;
+	margin-top: 5px !important;
+	background: none !important;
+	color : #C2C2C2 !important;
+}
+.captionsettings .x-grid-cell{
+	background-color : #ededed !important;
+}
+
+
+.required-subsequent-cls {
+	background: url(../../build/resources/images/swp_sprite.png) -180px -295px !important;
+	background-repeat: no-repeat !important;
+	width: 10px !important;
+	height: 10px !important;
+	display: block;
+	margin-left: 23px !important;
+    margin-top: 4px !important;
+}
+
+.passed-score-cls{
+	background-color: #9dbc31 ;
+	text-align: center;
+/*	color: white !important;*/
+}
+
+.failed-score-cls{
+	background-color: #824344 ;
+	color: #d9d8d9 !important ;
+	text-align: center;
+}
+
+.required-score-cls,.quiz-reset-cls{
+	background-color:#3d3d3d;
+	text-align: center;
+}
+
+.regular-quiz-completed{
+	background: url(../../build/resources/images/swp_sprite.png) -86px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: 0;
+
+}
+
+.regular-quiz-incomplete{
+	background: url(../../build/resources/images/swp_sprite.png) -68px -292px !important;
+	background-repeat: no-repeat !important;
+	font-weight : bold !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: 0;
+
+}
+
+.required-quiz-incomplete{
+	background: url(../../build/resources/images/swp_sprite.png) -104px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: 0;
+
+}
+
+.required-quiz-passed{
+	background: url(../../build/resources/images/swp_sprite.png) -122px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: 0;
+
+}
+
+.required-quiz-failed{
+	background: url(../../build/resources/images/swp_sprite.png) -140px -292px !important;
+	background-repeat: no-repeat !important;
+	width:17px !important;
+	height:18px !important;
+	margin-top: 0;
+
+}
+
+.x-column-header {
+	background-image: -webkit-gradient(linear,50% 0,50% 100%,color-stop(0%,#666),color-stop(100%,#4D5056)) !important ;
+	background-image: -webkit-linear-gradient(top,#666,#4D5056) !important;
+	background-image: -moz-linear-gradient(top,#666,#4D5056) !important;
+	background-image: -o-linear-gradient(top,#666,#4D5056) !important ;
+	background-image: linear-gradient(top,#666,#4D5056) !important ;
+}
+
+.settings-group {
+	
+	background-color : #323232 !important;
+	float : right !important;
+}
+
+.videocaptions.x-btn-default-small-over , 
+.trainingfiles.x-btn-default-small-over {
+	
+	background-color : #323232 !important;
+}
+
+.icon-report {
+	background: url(../../build/resources/images/swp_sprite.png) -213.5px -7px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .icon-report {
+	background: url(../../build/resources/images/swp_sprite.png) -213.5px -32px !important;
+	background-color:  #eeeeee !important;
+}
+.reports-tree-cls .x-grid-body {
+
+	background : #444 !important;
+	border-right-color	: #323232 !important;
+}
+.reports-tree-cls .x-grid-cell {
+
+	background : transparent !important;
+}
+.reports-tree-cls .x-grid-row-selected .x-grid-td {
+
+	background-color : #545454 !important
+}
+
+
+.replay-button{
+	
+	background: url(../../build/resources/images/swp_sprite.png) -302px -93px !important;
+	width: 50px !important;
+	height: 50px !important;
+	
+}
+.replay-button:hover {
+background: url(../../build/resources/images/swp_sprite.png) -302px -13px !important;
+width: 50px !important;
+height: 50px !important;
+}
+
+.next-Steps-button {
+	background: url(../../build/resources/images/swp_sprite.png) -303px -175px !important;
+	width: 62px !important;
+	height: 50px !important;
+}
+
+.next-Steps-button:hover {
+	background: url(../../build/resources/images/swp_sprite.png) -303px -253px !important;
+	width: 62px !important;
+	height: 50px !important;
+}
+
+.quiz-name tspan{
+	cursor: pointer !important;
+}
+
+.quiz-name tspan:hover{
+	cursor: pointer !important;
+	font-weight:bold;
+}
+
+
+.icon-report {
+	background: url(../../build/resources/images/swp_sprite.png) -209px -1px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .icon-report {
+	background: url(../../build/resources/images/swp_sprite.png) -209px -26px !important;
+	width: 26px !important;
+	height: 26px !important;	/* background-color:  #eeeeee !important; */
+}
+
+
+
+
+
+
+
+
+.vscrollerbaseend {
+	height:15px !important;
+background: url(../../build/resources/images/swp_sprite.png) -100px -410px !important;
+ 
+}
+.vscrollerbaseend:hover {
+	height:15px !important;
+background: url(../../build/resources/images/swp_sprite.png) -190px -410px !important;
+}
+
+
+
+.vscrollerbaseend:active {
+	height:15px !important;
+background: url(../../build/resources/images/swp_sprite.png) -145px -410px !important;
+}
+
+
+.hscrollerbaseend{
+	width:15px !important;
+	background: url(../../build/resources/images/swp_sprite.png) -100px -410px !important;
+	
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=-1, M21=1, M22=-1.836909530733566e-16, SizingMethod='auto expand')";
+
+
+-moz-transform:    rotate(270deg);
+-webkit-transform: rotate(270deg);
+transform:         rotate(270deg);
+}
+
+.hscrollerbaseend:hover {
+	height:15px !important;
+background: url(../../build/resources/images/swp_sprite.png) -190px -410px !important;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=-1, M21=1, M22=-1.836909530733566e-16, SizingMethod='auto expand')";
+
+
+-moz-transform:    rotate(270deg);
+-webkit-transform: rotate(270deg);
+transform:         rotate(270deg);
+}
+
+
+
+.hscrollerbaseend:active {
+	height:15px !important;
+background: url(../../build/resources/images/swp_sprite.png) -145px -410px !important;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=-1, M21=1, M22=-1.836909530733566e-16, SizingMethod='auto expand')";
+
+
+-moz-transform:    rotate(270deg);
+-webkit-transform: rotate(270deg);
+transform:         rotate(270deg);
+}
+
+.vscrollerbasebeg {
+	height:15px !important;
+
+background: url(../../build/resources/images/swp_sprite.png) -115px -410px !important;
+
+}
+.vscrollerbasebeg:hover {
+	height:15px !important;
+
+background: url(../../build/resources/images/swp_sprite.png) -205px -410px !important;
+}
+
+.vscrollerbasebeg:active {
+	height:15px !important;
+
+background: url(../../build/resources/images/swp_sprite.png) -160px -410px !important;
+
+}
+
+.hscrollerbasebeg {
+	width:15px !important;
+
+background: url(../../build/resources/images/swp_sprite.png) -115px -410px !important;
+ -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=-1, M21=1, M22=-1.836909530733566e-16, SizingMethod='auto expand')";
+
+
+-moz-transform:    rotate(270deg);
+-webkit-transform: rotate(270deg);
+transform:         rotate(270deg);
+}
+
+.hscrollerbasebeg:hover {
+	height:15px !important;
+
+background: url(../../build/resources/images/swp_sprite.png) -205px -410px !important;
+ -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=-1, M21=1, M22=-1.836909530733566e-16, SizingMethod='auto expand')";
+
+
+-moz-transform:    rotate(270deg);
+-webkit-transform: rotate(270deg);
+transform:         rotate(270deg);
+}
+
+
+.hscrollerbasebeg:active {
+	height:15px !important;
+
+background: url(../../build/resources/images/swp_sprite.png) -160px -410px !important;
+ -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=-1.836909530733566e-16, M12=-1, M21=1, M22=-1.836909530733566e-16, SizingMethod='auto expand')";
+
+
+-moz-transform:    rotate(270deg);
+-webkit-transform: rotate(270deg);
+transform:         rotate(270deg);
+}
+
+
+
+
+.vscrollerbase, .hscrollerbase {
+	background:none !important;
+	background-color: #252525 !important;
+}
+
+.vscrollerbar, .hscrollerbar {
+	background-color: #444444 !important;
+	/*height:98px !important;*/
+	padding: 15px !important; 
+}
+
+.vscrollerbarmid ,.hscrollerbarmid  {
+	top: 45% !important;
+width: 15px;	
+height: 15px !important;
+background: url(../../build/resources/images/swp_sprite.png) -130px -410px !important;
+
+}
+
+
+.vscrollerbarbeg{
+	background: none !important;
+	height:45% !important;
+}
+.vscrollerbarend {
+background: none !important;
+width: 15px;
+height: 50% !important;
+}
+
+.scrollerjogbox{
+	background: none !important;
+}
+
+.x-toolbar-plain{
+	background-color: #D6D6D6;
+}
+
+.hscrollerbasebeg{
+	
+	height:15px !important;
+	background: url(../../build/resources/images/swp_sprite.png) -115px -410px !important;
+}
+.hscrollerbasebeg:hover {
+	height:15px !important;
+
+background: url(../../build/resources/images/swp_sprite.png) -205px -410px !important;
+}
+.replay-button{
+	
+	background: url(../../build/resources/images/swp_sprite.png) -302px -93px !important;
+	width: 50px !important;
+	height: 50px !important;
+	
+}
+.replay-button:hover {
+background: url(../../build/resources/images/swp_sprite.png) -302px -13px !important;
+width: 50px !important;
+height: 50px !important;
+}
+
+.next-Steps-button {
+	background: url(../../build/resources/images/swp_sprite.png) -303px -175px !important;
+	width: 62px !important;
+	height: 50px !important;
+}
+
+.next-Steps-button:hover {
+	background: url(../../build/resources/images/swp_sprite.png) -303px -253px !important;
+	width: 62px !important;
+	height: 50px !important;
+}
+
+.quiz-name tspan{
+	cursor: pointer !important;
+}
+
+.quiz-name tspan:hover{
+	cursor: pointer !important;
+	font-weight:bold;
+}
+
+.quiz-question .x-form-cb-label{
+	display: inline;
+	margin-left: 5px !important;
+}
+
+.quiz-question .x-form-cb{
+	margin-top: 1px;
+	margin-top:1px !important
+}
+
+.x-ie .x-tab-default-top-disabled .x-frame-mc {
+	background-color : #323232 !important ;
+}
+
+
+	.x-ie .skipchapteralignmentstyles .x-btn-default-small-ml{
+	    background-image :none !important ; ZOOM: 0;    
+	}
+	.x-ie .skipchapteralignmentstyles{
+	border-radius: 0;
+	padding: 2px 2px 2px 2px;
+	border-width: 1px;
+	border-style: solid;
+	opacity:0.7;
+	background-image :none !important ; ZOOM: 0; 
+	background-color: #323232;	
+	}
+	
+	.x-ie .skipchapteralignmentstyles .x-btn-default-small-mc{
+	border-width: 1px;
+	border-style: solid;
+	border-color : #323232;
+	background-image :none !important ; ZOOM: 0;
+	background-color: transparent;
+	}
+
+::-ms-clear {
+   display: none;
+}

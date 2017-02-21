@@ -1,0 +1,12 @@
+<smil>
+  <head>
+    <meta base="rtmp://fss28.streamhoster.com/jnovak" />
+  </head>
+  <body>
+    <switch>
+        <video src="mp4:161/L6.1.2_1280x720_48kbps_500kbps.mp4" system-bitrate="500" width="1280" />
+<video src="mp4:161/L6.1.2_1280x720_48kbps_1000kbps.mp4" system-bitrate="1000" width="1280" />
+
+    </switch>
+  </body>
+</smil>

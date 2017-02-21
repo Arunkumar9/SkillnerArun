@@ -1,0 +1,33 @@
+ [
+ { 
+    "ID": "2",
+    "name" : "TASKACTIONS.UNREQUEST_FILES",
+    "StatusCode" : "04",
+    "actiontext" : "TASKACTIONS.NO_ACTION_REQUIRED" ,
+    "initialactiontext" : "TASKACTIONS.REQUEST_FILES_BODY",
+    "Transitions" : "99,3",
+    "body" : "TASKACTIONS.UNREQUEST_FILES_BODY",
+    "InitialAction" :"False"
+    
+  }, { 
+    "ID":"3",
+    "name" : " TASKACTIONS.REQUEST_FILES",
+    "StatusCode" :"04" ,
+    "actiontext" : "TASKACTIONS.COMPLETED_SUBMISSIONS" ,
+    "initialactiontext" : "TASKACTIONS.REQUEST_FILES_BODY",
+    "Transitions" :"2,99" ,
+    "body" : "TASKACTIONS.REQUEST_FILES_BODY",
+    "InitialAction" :"True"
+    
+  },  { 
+    "ID":"99",
+    "name" : "TASKACTIONS.CLOSE_TASK",
+    "StatusCode" : "99",
+    "actiontext" : "TASKACTIONS.NO_ACTION_REQUIRED",
+    "initialactiontext" : "TASKACTIONS.INITIAL_COMPLETED_SUBMISSIONS",
+    "Transitions" : "2,3",
+    "body" : "TASKACTIONS.CLOSED_TASK_BODY",
+    "InitialAction" :"False"
+    
+  }
+  ]

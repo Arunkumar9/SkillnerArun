@@ -1,0 +1,254 @@
+@CHARSET "UTF-8";
+
+.button-icon .x-btn-center .x-btn-inner  {
+	font-family: sans-serif;
+	font-weight: bold;
+    font-size: 7px;
+    text-align: center;
+    color :white !important; 
+    background:red !important;
+	
+}
+
+/* .reload-item { */
+/* 	background: url('../../../resources/images/sprite_light.png') -54px -124px !important; */
+/* 	width: 25px !important; */
+/* 	height: 25px !important; */
+/* 	background-position: -54px -124px !important; */
+/* } */
+
+/* .x-over .reload-item{ */
+/* 	background-position: -54px -149px !important; */
+/* } */
+
+/* .reload-item-hover{ */
+/* 	background: url('../../../resources/images/sprite_light.png') -53px -148px !important; */
+/* } */
+
+/* .add-item { */
+/* 	background: url('../../../resources/images/sprite_light.png') !important; */
+/* 	width: 26px !important; */
+/* 	height: 25px !important; */
+/* 	background-position: -27px -124px !important; */
+/* } */
+
+/* .x-over .add-item { */
+/* 	background: url('../../../resources/images/sprite_light.png') -26px -148px  !important; */
+/* } */
+
+/* .add-item:hover{ */
+/* 	background-position: -27px -149px !important; */
+/* } */
+
+/*.ref-link {*/
+/*	*/
+/*	white-space: normal;*/
+/*	word-break: break-all;*/
+/*}*/
+.text {
+    float:right;
+    margin-right:15px;
+}
+.subject {
+	font-size: 11px;
+	white-space: normal;
+	word-break: break-all;
+}
+
+/**
+  * BRS6.5.8 4th point text color
+  **/
+.description {
+	 text-overflow: ellipsis;
+    overflow: hidden;
+	font-weight:bold !important;
+	font-size:7pt !important;
+	color: #595959  !important;
+	white-space: nowrap;
+	word-break: break-all;
+}
+
+.authorname{
+
+	color:#666666 !important;
+}
+	
+.img{
+	
+	padding-right:1.5em !important;
+}
+
+/**
+*	For Chrome 21st version, bold is not getting applied if it was written with font. Hence, 
+*	Added x-chrome x-liux classes to below css.	
+*/
+
+.x-chrome.x-linux .unread .x-grid-cell .subject{
+		
+	color:#595959 !important;
+	font-weight: bold;
+	font-family:  Arial black !important;
+	font-size: 9pt !important;
+	white-space: normal;
+}
+
+.unread .x-grid-cell .subject{
+		
+	color:#355491 !important;
+	font-weight: bold;
+	font-family:  Arial black !important;
+	font-size: 11pt !important;
+	white-space: normal;
+}
+
+.x-grid-cell .x-grid-cell-inner .subject {
+	overflow: hidden;
+    text-overflow: ellipsis;
+	color:#595959 !important;
+	white-space: nowrap;
+	font-size: 9pt !important;
+	font-family: Helvetica !important;
+/*	font-weight:bold;*/
+	
+}
+
+.unread {
+
+		font-weight:bold !important;
+}
+/*.unread .x-grid-cell .x-grid-cell-inner .subject {*/
+/*	color:#595959 !important;*/
+/*	font-size: 9pt !important;*/
+/*	white-space: normal;*/
+/*	font-family: Helvetica !important;*/
+	font-family: Arial black !important;
+/**/
+/*}*/
+.newtopicbody {
+	
+/* 	overflow-y : auto !important;*/
+/* 	overflow-x : hidden !important;  */
+	background-color : white !important;
+	border: 1px solid #D0D0D0;
+}
+.category-combo-cls{
+	
+	width: 120px !imporant;
+}
+.attachments-btn-cls{
+
+	backgroundColor: white;
+	border: 1px solid #D0D0D0;
+/* 	margin-top: -3px !important; */
+}
+
+.tinymce-textarea-cls{
+	margin-top: -6px !important;
+}
+
+.closeButton {
+	
+   margin-left: 260px !important;
+   background: url("../images/close.png") repeat scroll 0 0 transparent !important;
+   background-repeat: no-repeat !important;
+   width: 16px;
+   height:16px;
+}
+.tabview-body-cls {
+
+	overflow : hidden !important;
+}
+.nomessages-cls {
+	font-family: arial black !important;
+	font-size: 160%;
+	color: black;
+}
+.x-body-masked SELECT{
+	
+	visibility : visible !important;
+	
+}
+
+.filesGridCls {
+	
+	height : 300px;
+}
+
+/* .comment-cls{ */
+	
+/* 	background: url(../../../resources/images/sprite_light.png) !important; */
+/* 	background-position : -161px -5px !important; */
+/* } */
+
+/* .x-over .comment-cls{ */
+	
+/* 	background-position : -161px -31px !important; */
+/* } */
+
+/* .pause-comment-cls { */
+	
+/* 	background: url(../../../resources/images/sprite_light.png) -135px -5px  !important; */
+/* } */
+
+/* .x-over .pause-comment-cls { */
+	
+/* 	background: url(../../../resources/images/sprite_light.png)  -135px -31px !important; */
+/* } */
+
+/* .Messages{ */
+
+/* 	background:url(../../../resources/images/sprite_light.png) -183px -5px !important;  */
+/* 	width: 25px !important; */
+/* 	height: 18px !important; */
+/* } */
+
+/* .x-over .Messages { */
+
+/* 	background: url(../../../resources/images/sprite_light.png) -183px -31px !important; */
+/* } */
+
+.icon-center {
+ 	margin-left: 9px !important;
+}
+
+/* .training-files-cls { */
+
+/* 	background: url(../../../resources/images/sprite_light.png) !important; */
+/* 	background-position : -265px -122px !important; */
+/* 	height: 22px !important; */
+/* 	width: 18px !important; */
+/* } */
+
+/* .x-over .training-files-cls { */
+
+/* 	background-position : -265px -148px !important; */
+/* } */
+
+/* .videocaptionsettings{ */
+	
+/* 	background: url(../../../resources/images/sprite_light.png)  -236px -2px !important; */
+/* 	height: 25px !important; */
+/* 	width: 25px !important; */
+/* } */
+
+/* .x-over .videocaptionsettings { */
+	
+/* 	background: url(../../../resources/images/sprite_light.png)  -236px -28px !important; */
+/* } */
+
+/* .rowcls .x-grid-row .x-grid-cell {  */
+	
+/*      background-color: #c6c6c6 !important;  */
+/* }  */
+ 
+/* .rowcls .x-grid-row-alt .x-grid-cell {  */
+	
+/*      background-color: #cbcbcb !important;  */
+/* } */
+
+/* .datalist-toolbar{ */
+
+/* 	background-color: #d6d6d6 !important;  */
+/* } */
+
+

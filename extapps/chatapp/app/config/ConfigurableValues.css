@@ -1,0 +1,16 @@
+
+/*
+* To specify the background color of the private messages.
+*/
+.private .x-grid-cell {
+/* 	background:orange !important; */
+	white-space: normal;
+}
+
+/*
+* To specify the background color of the hidden messages.
+*/
+.hide .x-grid-cell {
+	background:#E0E0E0 !important;
+}
+

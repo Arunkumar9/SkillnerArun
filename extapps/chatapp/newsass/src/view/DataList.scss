@@ -1,0 +1,445 @@
+/*
+* All the css related to datalist toolbar.
+*/
+
+.reload-item {
+
+	background: url($spritePath) -54px -124px !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -54px -124px !important;
+}
+
+.x-over .reload-item{
+
+	background-position: -54px -149px !important;
+	background-color: $icon-background !important;
+}
+
+.reload-item-hover{
+
+	background: url($spritePath) -53px -148px !important;
+	background-color: $icon-background !important;
+}
+
+.add-item {
+
+	background: url($spritePath) !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -27px -124px !important;
+}
+
+.x-over .add-item {
+
+	background: url($spritePath) -26px -148px  !important;
+	background-color: $icon-background !important;
+}
+
+.x-form-search-trigger {
+	
+	background-image: url($spritePath) !important;
+	background-position: -222px -388px !important;
+}
+
+.x-form-search-trigger-over {
+
+	border-color: $form-search-trigger-over-border !important;
+}
+
+.attachment {
+
+	background: url($spritePath) !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -78px -172px !important;
+}
+
+.no-attachment {
+
+	background: url($spritePath) !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -52px -172px !important;
+}
+
+/*
+* All the corresponding icons related to status
+*/
+.status01 {
+
+	background: url($spritePath) !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -0px -172px !important;
+}
+
+.status02 {
+
+	background: url($spritePath) !important;
+	width: 26px !important;
+	height: 26px !important;
+	background-position: -27px -172px !important;
+}
+
+.status03 {
+
+	background: url($spritePath) -51px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+
+.student .status04,
+.instructor .status05 {
+
+	background: url($spritePath) 0px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+
+.instructor .status04,
+.student .status05 {
+
+	background: url($spritePath) -26px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+
+.status099 {
+
+	background: url($spritePath) -78px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 18px;
+}
+
+.status03-3 {
+	
+	background: url($spritePath) -218px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 18px !important;
+	height: 18px !important;
+}
+
+.status03-3:hover {
+
+	cursor : default;
+}
+
+.status04-4 {
+	
+	background: url($spritePath) -199px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 18px !important;
+	height: 18px !important;
+}
+
+.status04-4:hover {
+
+	cursor : default;
+}
+
+.status05-5 {
+
+	background: url($spritePath) -180px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 18px !important;
+	height: 18px !important;
+	opacity : 0.8;
+}
+
+.status05-5:hover {
+
+	cursor : default;
+}
+
+.status099-99 {
+	
+	background: url($spritePath) -237px -205px !important;
+	background-repeat: no-repeat !important;
+	width: 18px !important;
+	height: 18px !important;
+}
+
+.status099-99:hover {
+
+	cursor : default;
+}
+
+.datalist-header .x-btn-default-small{
+
+	padding-left : 0px !important;
+}
+
+.x-ie8 .x-grid-group-hd .x-grid-cell{
+
+	text-overflow : none !important;
+}
+
+.firstcolumn{
+
+	font-weight:bold !important;
+	font-family:Arial !important;
+}
+
+.rowcls .x-grid-row .x-grid-cell-special {
+
+    background-color: $grid-cell-special-background !important;
+    background-image: none !important;
+}
+
+.rowcls .x-grid-row.x-grid-row-alt.x-grid-row-selected .x-grid-cell-special {
+
+    background-color: $datalist-even-row !important;
+}
+
+.rowcls .x-grid-row.x-grid-row-selected .x-grid-cell-special {
+
+    background-color: $datalist-odd-row !important;
+}
+
+.rowcls .x-grid-row .x-grid-cell { 
+	
+     background-color: $datalist-odd-row !important ;
+} 
+ 
+.rowcls .x-grid-row-alt .x-grid-cell { 
+	
+     background-color: $datalist-even-row !important ; 
+}
+
+.rowcls .x-grid-row:hover .x-grid-cell { 
+
+     background-color: $grid-row-over  !important; 
+}
+
+.rowcls .x-grid-body{
+
+	background-color: $grid-body-color  !important; 
+}
+
+.x-boxselect.x-form-field.x-form-text{
+
+	padding: 0px !important;
+}
+
+table {
+
+    border:0px ;
+    border-collapse:collapse;
+}
+
+.messagewindowCls .x-window-header-text-default {
+	
+		 font-size:16px !important;
+}
+
+.data-grid-cls .x-grid-body{
+
+	background: $grid-body-color !important ;  
+	color: $grid-body-text !important ; 
+}
+
+.data-grid-cls .x-grid-row .x-grid-cell { 
+
+     background-color: $datalist-odd-row !important ;   
+} 
+ 
+.data-grid-cls .x-grid-row-alt .x-grid-cell { 
+
+     background-color: $datalist-even-row !important ;  
+}
+
+.x-toolbar-separator-horizontal{
+
+	border: none !important;
+}
+
+.rowcls .x-grid-body {
+
+	border-bottom: 0px !important;
+}
+
+.datalist-toolbar-cls{
+
+	border-width: 0px !important;
+	padding: 0px !important;
+	background-image: none !important;
+}
+
+.counttext-cls{
+
+	background-color: lightgrey;
+	padding: 7px 0px 0px 6px;
+	color: black !important;
+	height: 29px;
+	top: -4px !important;
+	margin: 2px !important;
+}
+
+/**
+  *Remove the suppurate line b/w the toolbar,window body in datalist.
+  **/
+.rowcls .x-grid-header-ct {
+
+	border-top-color: $grid-header-border-top !important;
+}
+
+/**
+  * Make datalist Top toolbar button icons background white 
+  **/
+.datalist-top-toolbar .x-btn-default-toolbar-small {
+	
+	border-color: $datalist-toolbar-button-background !important ;
+	background-color: $datalist-toolbar-button-background !important ;
+}
+
+/**
+  * For IE
+  **/
+.datalist-top-toolbar .x-btn-default-toolbar-small-mc{
+	
+	background-color: $datalist-toolbar-button-background !important ;
+}
+
+/**
+  * The search text color in  datalist,details window is #595959
+  **/
+.datalist-top-toolbar .x-form-text{
+
+	color: $datalist-form-text !important;
+}
+
+/**
+  *BRS 6.5.8 The vertical separator line on the left side, separating the selection checkboxes and the rows of 
+  *the threads segment is of the color: #c6c6c6
+  **/
+.rowcls .x-grid-cell-special{
+
+	border-right-color: $grid-cell-special-vertical-separator-line !important;
+}
+
+.datalist-top-toolbar .x-btn-default-toolbar-small-ml,
+.message-details-toolbar .x-btn-default-toolbar-small-ml,
+.datalist-top-toolbar .x-btn-default-toolbar-small-mr,
+.message-details-toolbar .x-btn-default-toolbar-small-mr,
+.datalist-top-toolbar .x-btn-default-toolbar-small-bc,
+.message-details-toolbar .x-btn-default-toolbar-small-bc,
+.datalist-top-toolbar .x-btn-default-toolbar-small-tc,
+.message-details-toolbar .x-btn-default-toolbar-small-tc,
+.datalist-top-toolbar .x-btn-default-toolbar-small-tr,
+.message-details-toolbar .x-btn-default-toolbar-small-tr,
+.datalist-top-toolbar .x-btn-default-toolbar-small-tl,
+.message-details-toolbar .x-btn-default-toolbar-small-tl,
+.datalist-top-toolbar .x-btn-default-toolbar-small-bl,
+.message-details-toolbar .x-btn-default-toolbar-small-bl,
+.datalist-top-toolbar .x-btn-default-toolbar-small-br,
+.message-details-toolbar .x-btn-default-toolbar-small-br{
+	
+	background-image: none !important;
+}
+
+.button-icon .x-btn-center .x-btn-inner  {
+
+	font-family: sans-serif;
+	font-weight: bold;
+    font-size: 7px;
+    text-align: center;
+    color :white !important; 
+    background:red !important;
+	
+}
+
+.text {
+
+    float:right;
+    margin-right:15px;
+}
+
+.subject {
+
+	font-size: 11px;
+	white-space: normal;
+	word-break: break-all;
+}
+
+/**
+  * BRS6.5.8 4th point text color
+  **/
+.description {
+	
+	font-weight:bold !important;
+	font-size:7pt !important;
+	color: $grid-body-text  !important;
+	white-space: normal;
+	word-break: break-all;
+}
+
+.authorname{
+
+	color: $authorname-text !important;
+}
+	
+.img{
+	
+	padding-right:1.5em !important;
+}
+
+/**
+*	For Chrome 21st version, bold is not getting applied if it was written with font. Hence, 
+*	Added x-chrome x-liux classes to below css.	
+*/
+
+.x-chrome.x-linux .unread .x-grid-cell .subject{
+		
+	color:$datagrid-cell-subject-read-text !important;
+	font-weight: bold;
+	font-family:  Arial black !important;
+	font-size: 9pt !important;
+	white-space: normal;
+}
+
+.unread .x-grid-cell .subject{
+		
+	color: $datagrid-cell-subject-unread-text !important;
+	font-weight: bold;
+	font-family:  Arial black !important;
+	font-size: 11pt !important;
+	white-space: normal;
+}
+
+.x-grid-cell .x-grid-cell-inner .subject {
+	
+	color: $datagrid-cell-subject-read-text !important;
+	white-space: normal;
+	font-size: 9pt !important;
+	font-family: Helvetica !important;
+	
+}
+
+.unread {
+
+		font-weight:bold !important;
+}
+
+/**
+  * Dark theme font text color
+  */
+.x-body{
+	
+	color: $text-font-color !important;
+}
+
+/*.datalist-toolbar-cls .x-form-trigger-input-cell .x-form-field{*/
+.x-panel-body-default-docked-bottom .x-box-inner .x-form-item-body .x-form-trigger-wrap .x-form-trigger-input-cell .x-form-field.x-form-text{
+
+	border: none !important;
+	text-align: center !important;
+	background: #d6d6d6 !important;
+	font-weight : bold !important;
+}

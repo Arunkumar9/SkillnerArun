@@ -1,0 +1,280 @@
+.x-tree-node img.brick, .x-tree-node-collapsed img.brick,
+.x-combo-list-inner .brick,
+.x-form-field-wrap .brick  {
+    background-image:url(../images/fam/brick.png);
+}
+
+.x-tree-node-expanded img.brick {
+    background-image:url(../images/fam/brick.png);
+}
+
+.x-tree-node img.homepage, .x-tree-node-collapsed img.homepage, .x-tree-node-expanded img.homepage,
+.x-combo-list-inner .homepage,
+.x-form-field-wrap .homepage  {
+    background-image:url(../images/fam/house.png);
+}
+
+.x-tree-node img.column, .x-tree-node-collapsed img.column, .x-tree-node-expanded img.column,
+.x-combo-list-inner .column,
+.x-form-field-wrap .column  {
+    background-image:url(../images/fam/text_columns.png);
+}
+
+.x-tree-node img.bin, .x-tree-node-collapsed img.bin,
+.x-combo-list-inner .bin,
+.x-form-field-wrap .bin  {
+    background-image:url(../images/fam/bin_closed.png);
+}
+
+.x-tree-node-expanded img.bin {
+    background-image:url(../images/fam/bin.png);
+}
+
+.x-tree-node img.templates, .x-tree-node-collapsed img.templates,
+.x-combo-list-inner .templates,
+.x-form-field-wrap .templates  {
+    background-image:url(../images/fam/brick_edit.png);
+}
+
+.x-tree-node-expanded img.templates {
+    background-image:url(../images/fam/brick_edit.png);
+}
+
+.x-tree-node-leaf img.image,
+.x-combo-list-inner .image,
+.x-form-field-wrap .image  {
+    background-image:url(../images/fam/picture.png);
+}
+
+.x-tree-node-leaf img.search,
+.x-combo-list-inner .search,
+.x-form-field-wrap .search  {
+    background-image:url(../images/fam/application_form_magnify.png);
+}
+
+.x-tree-node-leaf img.spreadsheet,
+.x-combo-list-inner .spreadsheet,
+.x-form-field-wrap .spreadsheet  {
+    background-image:url(../images/fam/table.png);
+}
+
+.x-tree-node-leaf img.images,
+.x-combo-list-inner .images,
+.x-form-field-wrap .images  {
+    background-image:url(../images/fam/images.png);
+}
+
+.x-tree-node-leaf img.pagepath,
+.x-combo-list-inner .pagepath,
+.x-form-field-wrap .pagepath  {
+    background-image:url(../images/fam/script_go.png);
+}
+
+.x-tree-node img.link, .x-tree-node-collapsed img.link {
+    background-image:url(../images/fam/folder_link.png);
+}
+
+.x-tree-node-leaf img.link,
+.x-combo-list-inner .link,
+.x-form-field-wrap .link  {
+    background-image:url(../images/fam/link.png);
+}
+
+.x-tree-node img.tag-green, .x-tree-node-collapsed img.tag-green,
+.x-tree-node-leaf img.tag-green,
+.x-combo-list-inner .tag-green,
+.x-form-field-wrap .tag-green  {
+    background-image:url(../images/fam/tag_green.png);
+}
+
+.x-tree-node img.tag-red, .x-tree-node-collapsed img.tag-red,
+.x-tree-node-leaf img.tag-red,
+.x-combo-list-inner .tag-red,
+.x-form-field-wrap .tag-red  {
+    background-image:url(../images/fam/tag_red.png);
+}
+
+.x-tree-node-leaf img.text,
+.x-combo-list-inner .text,
+.x-form-field-wrap .text  {
+    background-image:url(../images/fam/text_dropcaps.png);
+}
+.x-tree-node-leaf img.heading1,
+.x-combo-list-inner .heading1,
+.x-form-field-wrap .heading1  {
+    background-image:url(../images/fam/text_heading_1.png);
+}
+.x-tree-node-leaf img.heading2,
+.x-combo-list-inner .heading2 {
+    background-image:url(../images/fam/text_heading_2.png);
+}
+
+.x-tree-node-leaf img.news,
+.x-combo-list-inner .news,
+.x-form-field-wrap .news {
+   background-image: url(../images/LinspireClear/16x16/apps/knewsticker.png); 
+}    
+
+.x-tree-node-leaf img.cartpage,
+.x-combo-list-inner .cartpage,
+.x-form-field-wrap .cartpage,
+.x-tree-node img.cartpage, .x-tree-node-collapsed img.cartpage {
+    background-image:url(../images/fam/folder_page.png);
+}
+
+
+.x-tree-node-leaf img.cart,
+.x-combo-list-inner .cart,
+.x-form-field-wrap .cart
+{
+    background-image:url(../images/fam/cart.png);
+}
+
+.x-combo-list-inner .container,
+.x-combo-list-inner .undefined,
+.x-form-field-wrap .undefined  {
+    background-image:url(../images/fam/page_white_text.png);
+}
+
+.x-tree-node-leaf img.content,
+.x-combo-list-inner .content,
+.x-form-field-wrap .content  {
+    background-image:url(../images/fam/layout_content.png);
+}
+
+.x-tree-node-leaf img.comments,
+.x-combo-list-inner .comments,
+.x-form-field-wrap .comments  {
+    background-image:url(../images/fam/comments.png);
+}
+
+.x-tree-node-leaf img.html,
+.x-combo-list-inner .html,
+.x-form-field-wrap .html  {
+    background-image:url(../images/fam/html.png);
+}
+
+.x-tree-node img.gears, .x-tree-node-collapsed img.gears, .x-tree-node-expanded img.gears,
+.x-tree-node-leaf img.gears,
+.x-combo-list-inner .gears,
+.x-form-field-wrap .gears  {
+    background-image:url(../images/default/icons/gears.png);
+}
+
+.x-tree-node img.lock, .x-tree-node-collapsed img.lock, .x-tree-node-expanded img.lock,
+.x-tree-node-leaf img.lock,
+.x-combo-list-inner .lock,
+.x-form-field-wrap .lock  {
+    background-image:url(../images/silkcompanion/lock_key.png);
+}
+
+.x-tree-node img.nomenupage, .x-tree-node-collapsed img.nomenupage, .x-tree-node-expanded img.nomenupage,
+.x-combo-list-inner .nomenupage,
+.x-form-field-wrap .nomenupage  {
+    background-image:url(../images/fam/folder_delete.png);
+}
+
+.x-tree-node img.folderconnect, .x-tree-node-collapsed img.folderconnect, .x-tree-node-expanded img.folderconnect,
+.x-combo-list-inner .folderconnect,
+.x-form-field-wrap .folderconnect  {
+    background-image:url(../images/silkcompanion/folder_connect.png);
+}
+
+.x-tree-node-leaf img.theme,
+.x-combo-list-inner .theme,
+.x-form-field-wrap .theme  {
+    background-image:url(../images/silkcompanion/theme.png);
+}
+
+.x-tree-node-leaf img.mail,
+.x-combo-list-inner .mail,
+.x-form-field-wrap .mail  {
+   background-image: url(../images/LinspireClear/16x16/actions/mail_send.png);
+}
+
+.x-tree-node-leaf img.gadgets,
+.x-combo-list-inner .gadgets,
+.x-form-field-wrap .gadgets  {
+   background-image: url(../images/LinspireClear/16x16/apps/ksirtet.png);
+}
+
+.x-tree-node-leaf img.internet,
+.x-combo-list-inner .internet,
+.x-form-field-wrap .internet  {
+   background-image: url(../images/LinspireClear/16x16/apps/internet.png);
+}
+
+.x-tree-node-leaf img.langlocale,
+.x-combo-list-inner .langlocale,
+.x-form-field-wrap .langlocale  {
+   background-image: url(../images/LinspireClear/16x16/apps/locale.png);
+}
+
+
+/*  Icon Classes end */
+    .ux-icon-combo-icon {
+        background-repeat: no-repeat;
+        background-position: 3px 50%;
+        display: inline-block;
+        width: 24px;
+        height: 14px;
+    }
+
+    /* X-BROWSER-WARNING: this is not being honored by Safari */
+    .ux-icon-combo-input {
+        padding-left: 25px;
+    }
+
+    .x-form-field-wrap .ux-icon-combo-icon {
+        top: 3px;
+        left: 5px;
+    }
+    .ux-icon-combo-item {
+        background-repeat: no-repeat ! important;
+        background-position: 3px 50% ! important;
+        padding-left: 24px ! important;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+.x-tree-node-leaf img.videoIcon,
+.x-combo-list-inner .videoIcon,
+.x-form-field-wrap .videoIcon  {
+   background-image: url(../images/fam/film.png);
+}
+
+.x-tree-node-leaf img.thumbIcon,
+.x-combo-list-inner .thumbIcon,
+.x-form-field-wrap .thumbIcon  {
+   background-image: url(../images/fam/photos.png);
+}
+
+
+.x-tree-node-leaf img.videoTextIcon,
+.x-combo-list-inner .videoTextIcon,
+.x-form-field-wrap .videoTextIcon {
+   background-image: url(../images/fam/pencil.png);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

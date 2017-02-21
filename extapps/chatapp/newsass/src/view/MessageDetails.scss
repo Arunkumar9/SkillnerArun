@@ -1,0 +1,566 @@
+/*
+* All the Message details tool bar button related css
+*/
+.next {
+
+	background: url($spritePath) -184px -123px !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .next {
+
+	background: url($spritePath) -184px -149px !important;
+	background-repeat: no-repeat !important;
+	background-color: $icon-background !important;
+}
+
+.previous {
+
+	background: url($spritePath) -157px -123px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .previous {
+
+	background: url($spritePath) -157px -149px !important;
+	background-color: $icon-background !important;
+}
+
+.messagelist {
+
+	background: url($spritePath) -131px -123px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .messagelist {
+
+	background: url($spritePath) -131px -149px !important;
+	background-color: $icon-background !important;
+}
+
+.refresh {
+
+	background: url($spritePath) -209px -123px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .refresh {
+
+	background: url($spritePath) -209px -149px !important;
+	background-color: $icon-background !important;
+}
+
+.collapse {
+
+	background: url($spritePath) !important;
+	margin-left: 10px;
+}
+
+.reply {
+
+	background: url($spritePath) !important;
+	background-repeat: no-repeat !important;
+	height: 17px;
+	width: 17px;
+	background-position: -86px -315px !important;
+}
+
+.reply:hover {
+
+	background-position: -86px -331px !important;
+	background-color: $datalist-icon-over-background !important;
+}
+	
+.link {
+
+	background: url($spritePath) !important;
+	background-position: -78px -60px !important;
+	background-repeat: no-repeat !important;
+	height: 26px !important ;
+	width: 26px !important;
+	margin-top: -5px;
+}
+
+.link:hover {
+	
+	background-position: -78px -86px !important;
+	background-color: $icon-background !important;
+}
+
+.context {
+	
+	background: url($spritePath) repeat scroll 0 0 transparent !important;
+	background-repeat: no-repeat !important;
+	width: 26px;
+	height: 26px;
+	background-position: -44px -84px !important;
+	opacity: 0.55;
+}
+
+.hidecontext {
+
+	background: url($spritePath)  !important;
+	background-repeat: no-repeat !important;
+	background-position : -3px -124px !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.x-over .hidecontext{
+
+	background-position: -3px -149px !important;
+	background-color: $icon-background !important;
+}
+
+.hidecontext-hover{
+
+	background: url($spritePath) -2px -148px !important;
+	background-color: $icon-background !important;
+}
+
+.expanding-collapsing {
+
+	background: url($spritePath);
+	background-position: -18px -315px ;
+	margin-top: 2px !important;
+	width: 17px !important;
+	height: 17px !important;
+}
+
+.x-over .expanding-collapsing {
+	
+	background-position: -18px -332px ;
+	background-color: $icon-background !important;
+}
+
+.x-img-btn-expand-collapse{
+
+	background: url($spritePath);
+   	background-position: -35px -313px !important;
+   	width: 17px !important;
+	height: 17px !important;
+}
+
+.x-over .x-img-btn-expand-collapse {
+
+	background: url($spritePath);
+   	background-position: -35px -330px !important;
+   	background-color: $icon-background !important;
+}
+
+.expanding {
+
+	background: url($spritePath);
+	background-repeat: no-repeat !important;
+	width: 17px !important;
+	height: 17px !important;
+	background-position: -51px -314px !important;
+}
+
+.expanding:hover {
+
+	background-position: -51px -331px !important;
+	background-color: $datalist-icon-over-background !important;
+}
+
+.x-img-btn-collapse{
+
+   background: url($spritePath);
+   background-position: -0px -314px !important;
+   width: 17px !important;
+   height: 17px !important;
+}
+
+.x-img-btn-collapse:hover {
+	
+   background-position: -0px -331px !important;
+   background-color: $datalist-icon-over-background !important;
+}
+
+.post-header-hidecontext {
+
+	background: url($spritePath)  !important;
+	background-repeat: no-repeat !important;
+	background-position : -102px -314px !important;
+	width: 17px !important;
+	height: 17px !important;
+}
+
+.post-header-hidecontext:hover {
+	
+	background-position:  -102px -331px !important;
+	background-color: $datalist-icon-over-background !important;
+}
+
+.ref-link {
+
+	background: url($spritePath) !important;
+	background-position: -78px -60px !important;
+	width: 26px !important;
+	height: 26px !important;
+	padding-right: 20px;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	word-break: break-all;
+}
+
+.ref-link:hover {
+
+	background-position: -78px -86px !important;
+	background-color: $datalist-icon-over-background !important;
+}
+
+.imagewidth {
+	 
+	width : 16px;
+	height : 16px;
+}
+
+.author-img {
+
+	padding:3px;
+	background-color:white;
+}
+
+.postheader-comp{
+
+	background-color: $post-header-background ;
+	margin-right: 12px !important;
+}
+
+.post-body-cont{
+
+	background-color: $post-body-content-background ;  
+}
+
+.post-body-cont::before{
+
+	clear : none !important;
+}
+
+.author-conent {
+
+	float:left;
+	background-color: $author-content-background ;
+	text-align:center; 
+	width:120px !important;
+	color: $author-content-text ;
+}
+
+.author-container {
+	
+	height: 0px !important;
+	width: 0px !important;
+	margin-left: -15px;
+	border-top: 7px solid transparent;
+	border-right: 15px solid $author-container-border ;
+	border-bottom: 7px solid transparent;
+	float:left;
+	position: absolute;
+}
+
+.postheader-subject{
+	
+	min-height: 50px;
+	padding-top: 15px;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, $post-header-gradiant-top), color-stop(11,$post-header-gradiant-bottom));
+	background: -moz-linear-gradient(center bottom,  $post-header-gradiant-bottom, $post-header-gradiant-top);
+	background-color: $post-header-subject-background ;
+	font-size: 14px !important;
+	color: $post-header-subject-text ;
+}
+ 
+.x-ie10 .postheader-subject{
+
+	background: -ms-linear-gradient(bottom, $post-header-gradiant-top, $post-header-gradiant-bottom );
+}
+
+.x-ie8 .postheader-subject{
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=$post-header-gradiant-top, endColorstr=$post-header-gradiant-bottom, gradientType='0')";
+}
+
+.x-ie9 .postheader-subject{
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=$post-header-gradiant-top, endColorstr=$post-header-gradiant-bottom, gradientType='0')";
+}
+
+.header-container {
+	
+	background-color: $post-body-content-background ;
+}
+
+.postBody .x-panel-body-default {
+	
+	border-style:none;
+}
+
+.post-actual-body {
+	
+	background-color: $post-actual-body-background !important;
+}
+
+.postBody .x-panel-body {
+
+	width : 100% !important;
+	background-color:  $post-panel-body-background ;
+}
+
+.postbody-authorarea {
+	
+	background-color: $post-body-authorarea-background ;
+}
+
+.quoted-text-area {
+	
+	background-color :  $quoted-text-area-background ;
+}
+
+.post-content-area , .post-attachments {
+	
+	background-color:  $post-actual-body-background ;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    white-space: normal;
+    word-wrap: break-word;
+    color:  $post-body-text ;
+}
+
+.post-comp-header {
+	
+	padding-right:1%;
+}
+
+.expand .collapse {
+	
+	transform:rotate(180deg);
+	-ms-transform:rotate(180deg); /* IE 9 */
+	-moz-transform:rotate(180deg); /* Firefox */
+	-webkit-transform:rotate(180deg); /* Safari and Chrome */
+	-o-transform:rotate(180deg); /* Opera */
+}
+
+.poc-collapsed {
+	
+	height: 0px !important;
+	display: none;
+}
+
+.author {
+
+	background: url($author-noimage) repeat scroll 0 0 transparent !important;
+	background-repeat: no-repeat !important;
+	height: 32px;
+	width: 32px;
+	float : left;
+}
+
+.ref-text {
+	
+	color: $post-body-text !important;
+	white-space:normal;
+	cursor: pointer;
+	text-align: left;
+	position: relative;
+	word-break: break-all;
+	float: right;
+	width: 90%;
+	margin-top: 5px !important;
+	
+}
+
+.reference-info-cls {
+	
+	display:inline;
+	float: left;
+	padding-top: 2px;
+}
+
+.avatar{
+
+	background: url($author-noimage) repeat scroll 0 0 transparent !important;
+	background-repeat: no-repeat !important;
+	position:relative;
+	float:right;
+	height: 32px;
+	width: 32px;
+	margin-top: 8px;
+	top: -7px ;
+
+}
+
+.postsubject {
+	
+	backgroundColor:white;
+	color:green;
+	height : 40px !important;
+}
+
+.postdescription {
+	
+	overflow: hidden;
+	font-size: .8889em;
+	margin-bottom: 5px;
+	min-height: 15px;
+	padding: 5px 5px 5px 10px;
+	color: gray !important;
+	font-weight: bold;
+}
+
+.read .x-grid-cell-inner, .unread .x-grid-cell-inner {
+	
+		white-space: normal !important;
+		padding-top: 10px !important ;
+}
+
+.headermsg {
+	
+	text-decoration: none;
+	word-wrap: break-word;
+	font-size:11pt;
+	padding-top: 10px;
+}
+
+.post-header-btn-cont{
+
+	padding-top: 10px;
+}
+
+.eachPostBody {
+	background-color: $post-panel-body-background ;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+.postBodyCls {
+	
+	border-radius: 5px;
+}
+
+.statustext{
+	
+	padding-top:10px !important;
+	padding-left:20px !important;
+	padding-bottom:10px !important;
+	margin-top:5px !important;
+	color: $post-header-subject-text;
+}
+
+.subject-cls {
+	
+	color: gray !important;
+	font-weight: bold;
+	font-size: 15px;
+	font-family: sans-serif !important;
+}
+
+.subject-field-cls{
+	
+	width: 90% !important;
+	float: right;
+	position: relative;
+}
+
+.fieldset-cls {
+	
+	padding: 5px;	
+}
+
+.instruction-win-training-icon{
+	
+	white-space:nowrap;
+	margin-right:10px;
+}
+
+.x-tab BUTTON .x-tab-inner {
+
+	overflow : visible !important;
+}
+
+.search-text-highlight{
+
+	background-color: $matching-free-text-highlighted !important;
+}
+
+.header-post-reference{
+	
+	float: left;
+	color: black !important;
+	font-family: arial !important;
+}
+
+.instruction-panel-body-cls{
+	
+	padding-left: 10px !important;
+	background-color: $post-panel-body-background;
+	color: $post-body-text;
+
+}
+
+.message-details-toolbar {
+	
+	background-image: none !important;
+}
+
+.message-details-toolbar .x-btn-default-toolbar-small-mc{
+	
+	background-color:  $datalist-toolbar-background !important ;
+}
+
+.message-details-toolbar .x-btn-default-toolbar-small {
+	
+	border-color:  $datalist-toolbar-background  !important ;
+	background-image: none;
+	background-color: $datalist-toolbar-background !important ;
+}
+
+/**
+  *Remove the suppurate line b/w the toolbar,window body in message details window.
+  **/
+.messagedetails-cls .x-panel-body-default {
+
+	border-top-color: $grid-header-border-top !important;
+}
+
+.message-details-toolbar .x-form-text{
+
+	color: $post-body-text !important;
+}
+
+.main-header-content {
+	
+	padding: 12px 5px 5px 10px;
+	background-color: #e2e2e2;
+}
+
+.header-pointer-cls{
+	
+	height: 0px !important;
+	width: 0px !important;
+	margin-left: 106px;
+	border-top: 7px solid #D6D6D6;
+	border-right: 15px solid #E4E4E4;
+	border-bottom: 7px solid #D6D6D6;
+	position: absolute;
+	margin-top: 16px;
+}
+
+.trainingfileicon {
+	background: url($spritePath) -264px -121px !important;
+	background-repeat: no-repeat !important;
+	width: 26px !important;
+	height: 26px !important;
+}
+
+.trainingfileicon:hover{
+	background: url($spritePath) -264px -147px !important;
+	background-repeat: no-repeat !important;
+	background-color: $icon-background !important;
+}

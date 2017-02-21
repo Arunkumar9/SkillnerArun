@@ -1,0 +1,45 @@
+#docs-nav .x-panel-body li {
+	margin:3px;
+}
+#docs-nav .x-panel-body li img {
+	width:1px;
+	height:16px;
+	vertical-align:middle;
+	margin-right:2px;
+	margin-bottom:2px;
+}
+#docs-nav .x-panel-body li a {
+	text-decoration:none;
+	color:#fff;
+}
+.icon-pref-startmenu {
+	//background-image:url(images/bogus.png);
+}
+.icon-pref-quickstart {
+	//background-image:url(images/bogus.png);
+}
+#docs-nav .x-panel-body {
+	background:#5b9d82 url(images/side-panel-bluegreen.gif) repeat-x;
+	color:#fff;
+	padding:10px
+}
+#docs-win-shortcut img {
+	height:48px;
+	width:48px;
+	background-image:url(images/desktop-icon.png);
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='source/modules/docs/css/images/desktop-icon.png', sizingMethod='scale');
+}
+#docs-content .x-panel-body {
+	padding:10px;
+}
+#docs-content pre {
+	background-color:#FAFAFA;
+	border-color:#DDDDDD !important;
+	border-style:solid !important;
+	border-width:1px 1px 1px 8px !important;
+	color:black;
+	font-family:monospace;
+	font-size:12px !important;
+	line-height:14px !important;
+	width:auto !important;
+}
